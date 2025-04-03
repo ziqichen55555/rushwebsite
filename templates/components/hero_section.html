@@ -1,24 +1,12 @@
 <section class="hero-section">
-    <div class="container">
-        <div class="row align-items-center">
-            <div class="col-lg-6">
-                <h1 class="display-4 fw-bold mb-3 text-white">Rent A Better Car</h1>
-                <p class="lead mb-4 text-white">Always better. Find the perfect car for your next adventure with the best prices guaranteed.</p>
-                
-                <div class="card bg-light text-dark mb-4">
+    <div class="container h-100">
+        <div class="row align-items-center justify-content-center h-100">
+            <div class="col-12">
+                <div class="card transparent-card">
                     <div class="card-body">
                         {% include 'components/search_form.html' %}
                     </div>
                 </div>
-                
-                <div class="d-grid d-md-block d-none">
-                    <a href="{% url 'car_list' %}" class="btn btn-warning btn-lg book-rush-btn">
-                        <i class="fas fa-car me-2"></i> Book Your Rush
-                    </a>
-                </div>
-            </div>
-            <div class="col-lg-6 mt-5 mt-lg-0 d-none d-lg-block">
-                <!-- Removed visible image and price tag, now background image is used instead -->
             </div>
         </div>
     </div>
