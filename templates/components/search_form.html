@@ -1,10 +1,12 @@
 <div class="booking-search-container">
     <h2 class="booking-title">Start a Booking</h2>
+    
     <div class="booking-highlights mb-4">
-        <span class="highlight-item"><i class="fas fa-check-circle text-success me-1"></i> Free Cancellation</span>
-        <span class="highlight-item"><i class="fas fa-check-circle text-success me-1"></i> Australian, P1, P2 and International licences accepted</span>
-        <span class="highlight-item"><i class="fas fa-check-circle text-success me-1"></i> Drivers aged 21-84</span>
+        <div class="highlight-item"><i class="fas fa-check-circle text-success me-2"></i> Free Cancellation</div>
+        <div class="highlight-item"><i class="fas fa-check-circle text-success me-2"></i> Australian, P1, P2 and International licences accepted</div>
+        <div class="highlight-item"><i class="fas fa-check-circle text-success me-2"></i> Drivers aged 21-84</div>
     </div>
+    
     <form action="{% url 'car_list' %}" method="get" class="search-form">
         <div class="mb-3">
             <label for="pickup_location" class="search-label">PICK UP LOCATION</label>
@@ -20,17 +22,17 @@
             </div>
         </div>
         
-        <div class="row mb-3">
-            <div class="col-md-6">
+        <div class="row mb-4">
+            <div class="col-6">
                 <label class="search-label">PICK UP</label>
                 <div class="date-time-select">
                     <div class="date-select">
                         <i class="fas fa-calendar-alt date-icon"></i>
-                        <input type="text" class="form-control" id="pickup_date" name="pickup_date" placeholder="Fri 04 Apr" value="{{ search_params.pickup_date|default:'' }}">
+                        <input type="text" class="form-control" id="pickup_date" name="pickup_date" placeholder="Fri 04 Apr" value="{{ search_params.pickup_date|default:'Fri 04 Apr' }}">
                     </div>
                     <div class="time-select">
                         <select class="form-select" id="pickup_time" name="pickup_time">
-                            <option value="11:00 AM">11:00 AM</option>
+                            <option value="11:00 AM" selected>11:00 AM</option>
                             <option value="12:00 PM">12:00 PM</option>
                             <option value="1:00 PM">1:00 PM</option>
                             <option value="2:00 PM">2:00 PM</option>
@@ -39,16 +41,16 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-6">
+            <div class="col-6">
                 <label class="search-label">RETURN</label>
                 <div class="date-time-select">
                     <div class="date-select">
                         <i class="fas fa-calendar-alt date-icon"></i>
-                        <input type="text" class="form-control" id="return_date" name="return_date" placeholder="Fri 11 Apr" value="{{ search_params.return_date|default:'' }}">
+                        <input type="text" class="form-control" id="return_date" name="return_date" placeholder="Sat 05 Apr" value="{{ search_params.return_date|default:'Sat 05 Apr' }}">
                     </div>
                     <div class="time-select">
                         <select class="form-select" id="return_time" name="return_time">
-                            <option value="11:00 AM">11:00 AM</option>
+                            <option value="11:00 AM" selected>11:00 AM</option>
                             <option value="12:00 PM">12:00 PM</option>
                             <option value="1:00 PM">1:00 PM</option>
                             <option value="2:00 PM">2:00 PM</option>
@@ -60,7 +62,7 @@
         </div>
         
         <div class="d-grid">
-            <button type="submit" class="btn btn-warning select-car-btn">
+            <button type="submit" class="btn select-car-btn">
                 Select Car <i class="fas fa-arrow-right ms-2"></i>
             </button>
         </div>

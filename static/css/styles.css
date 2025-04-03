@@ -50,9 +50,21 @@ body {
     position: relative;
     background: url('https://images.unsplash.com/photo-1503376780353-7e6692767b70?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80') no-repeat center center;
     background-size: cover;
-    padding: 5rem 0;
-    min-height: 600px;
+    padding: 0;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     box-shadow: inset 0 0 0 2000px rgba(0, 0, 0, 0.6);
+}
+
+.transparent-card {
+    background-color: rgba(255, 255, 255, 0.9);
+    border: none;
+    border-radius: 10px;
+    max-width: 800px;
+    margin: 0 auto;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
 }
 
 .price-tag {
@@ -78,14 +90,16 @@ body {
 
 /* New Booking Search Styles */
 .booking-search-container {
-    padding: 1rem;
+    padding: 2rem;
 }
 
 .booking-title {
     font-weight: bold;
-    margin-bottom: 1.5rem;
+    font-size: 2.2rem;
+    margin-bottom: 1.2rem;
     position: relative;
-    padding-bottom: 0.5rem;
+    padding-bottom: 0.8rem;
+    color: #333;
 }
 
 .booking-title:after {
@@ -94,20 +108,27 @@ body {
     left: 0;
     bottom: 0;
     width: 210px; 
-    height: 3px;
+    height: 4px;
     background-color: var(--rush-yellow);
 }
 
 .booking-highlights {
     display: flex;
-    flex-wrap: wrap;
-    gap: 1rem;
+    flex-direction: column;
+    gap: 0.7rem;
+    margin-bottom: 2rem;
 }
 
 .highlight-item {
-    font-size: 0.9rem;
+    font-size: 1rem;
     display: flex;
     align-items: center;
+    color: #444;
+}
+
+.highlight-item i {
+    color: #47b65c;
+    font-size: 1.2rem;
 }
 
 .search-label {
@@ -188,10 +209,18 @@ body {
     border: none;
     color: #000;
     font-weight: bold;
-    padding: 0.8rem;
+    font-size: 1.1rem;
+    padding: 0.75rem;
     border-radius: 5px;
-    margin-top: 0.5rem;
+    margin-top: 1rem;
     transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.select-car-btn i {
+    font-size: 0.9rem;
 }
 
 .select-car-btn:hover {
@@ -275,9 +304,28 @@ body {
 /* Responsive adjustments */
 @media (max-width: 768px) {
     .hero-section {
+        min-height: 100vh;
+        padding: 1rem;
+    }
+    
+    .transparent-card {
+        width: 100%;
+        margin: 0;
+    }
+    
+    .booking-search-container {
+        padding: 1.5rem;
+    }
+    
+    .booking-title {
+        font-size: 1.8rem;
         text-align: center;
-        min-height: auto;
-        padding: 3rem 0;
+    }
+    
+    .booking-title:after {
+        left: 50%;
+        transform: translateX(-50%);
+        width: 150px;
     }
     
     .card-img-top, .city-card .city-image {
@@ -290,11 +338,6 @@ body {
         font-size: 1.2rem;
     }
     
-    .booking-highlights {
-        flex-direction: column;
-        gap: 0.5rem;
-    }
-    
     .date-time-select {
         flex-direction: column;
     }
@@ -304,8 +347,9 @@ body {
         border-bottom: 1px solid #ddd;
     }
     
-    .booking-title:after {
-        width: 150px;
+    .select-car-btn {
+        margin-top: 1.5rem;
+        padding: 1rem;
     }
 }
 
