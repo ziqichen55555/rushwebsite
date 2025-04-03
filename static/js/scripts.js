@@ -28,12 +28,28 @@ function setMinDates() {
     const today = new Date();
     const todayFormatted = today.toISOString().split('T')[0];
     
+    // Format date for display (e.g., "Fri 04 Apr")
+    const formatDateForDisplay = (date) => {
+        const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+        const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+        return `${days[date.getDay()]} ${String(date.getDate()).padStart(2, '0')} ${months[date.getMonth()]}`;
+    };
+    
     // Get all date inputs for pickup
     const pickupDateInputs = document.querySelectorAll('input[name="pickup_date"]');
     pickupDateInputs.forEach(input => {
-        input.min = todayFormatted;
-        if (!input.value) {
-            input.value = todayFormatted;
+        if (input.type === 'date') {
+            input.min = todayFormatted;
+            if (!input.value) {
+                input.value = todayFormatted;
+            }
+        } else {
+            // For text inputs (new design)
+            if (!input.value) {
+                input.value = formatDateForDisplay(today);
+                // Store actual date value as data attribute for form submission
+                input.dataset.actualDate = todayFormatted;
+            }
         }
     });
     
@@ -46,9 +62,18 @@ function setMinDates() {
     const tomorrowFormatted = tomorrow.toISOString().split('T')[0];
     
     returnDateInputs.forEach(input => {
-        input.min = todayFormatted;
-        if (!input.value) {
-            input.value = tomorrowFormatted;
+        if (input.type === 'date') {
+            input.min = todayFormatted;
+            if (!input.value) {
+                input.value = tomorrowFormatted;
+            }
+        } else {
+            // For text inputs (new design)
+            if (!input.value) {
+                input.value = formatDateForDisplay(tomorrow);
+                // Store actual date value as data attribute for form submission
+                input.dataset.actualDate = tomorrowFormatted;
+            }
         }
     });
 }
@@ -104,15 +129,66 @@ function setupSearchFormListeners() {
                 }
             });
         }
+        
+        // Handle form submission for new design
+        form.addEventListener('submit', function(e) {
+            // Handle text-based date inputs (convert from display format to YYYY-MM-DD)
+            const pickupDateInput = form.querySelector('input[name="pickup_date"]');
+            const returnDateInput = form.querySelector('input[name="return_date"]');
+            
+            // Only process if these are not date type inputs
+            if (pickupDateInput && pickupDateInput.type !== 'date') {
+                if (pickupDateInput.dataset.actualDate) {
+                    // Create a hidden input with the actual date
+                    const hiddenPickupDate = document.createElement('input');
+                    hiddenPickupDate.type = 'hidden';
+                    hiddenPickupDate.name = 'pickup_date_actual';
+                    hiddenPickupDate.value = pickupDateInput.dataset.actualDate;
+                    form.appendChild(hiddenPickupDate);
+                }
+            }
+            
+            if (returnDateInput && returnDateInput.type !== 'date') {
+                if (returnDateInput.dataset.actualDate) {
+                    // Create a hidden input with the actual date
+                    const hiddenReturnDate = document.createElement('input');
+                    hiddenReturnDate.type = 'hidden';
+                    hiddenReturnDate.name = 'return_date_actual';
+                    hiddenReturnDate.value = returnDateInput.dataset.actualDate;
+                    form.appendChild(hiddenReturnDate);
+                }
+            }
+            
+            // Get time values
+            const pickupTimeSelect = form.querySelector('select[name="pickup_time"]');
+            const returnTimeSelect = form.querySelector('select[name="return_time"]');
+            
+            if (pickupTimeSelect) {
+                const hiddenPickupTime = document.createElement('input');
+                hiddenPickupTime.type = 'hidden';
+                hiddenPickupTime.name = 'pickup_time';
+                hiddenPickupTime.value = pickupTimeSelect.value;
+                form.appendChild(hiddenPickupTime);
+            }
+            
+            if (returnTimeSelect) {
+                const hiddenReturnTime = document.createElement('input');
+                hiddenReturnTime.type = 'hidden';
+                hiddenReturnTime.name = 'return_time';
+                hiddenReturnTime.value = returnTimeSelect.value;
+                form.appendChild(hiddenReturnTime);
+            }
+        });
     });
 }
 
 /**
  * Copy pickup location to drop-off location if they're empty
+ * Works with both input fields and select elements
  */
 function setupLocationCopy() {
+    // Handle input fields
     const pickupLocationInputs = document.querySelectorAll('input[name="pickup_location"]');
-    
     pickupLocationInputs.forEach(pickupInput => {
         pickupInput.addEventListener('blur', function() {
             const form = this.closest('form');
@@ -123,6 +199,30 @@ function setupLocationCopy() {
             
             // Copy pickup location to drop-off location if drop-off is empty
             dropoffInput.value = this.value;
+        });
+    });
+    
+    // Handle select elements (for new design)
+    const pickupLocationSelects = document.querySelectorAll('select[name="pickup_location"]');
+    pickupLocationSelects.forEach(pickupSelect => {
+        pickupSelect.addEventListener('change', function() {
+            const form = this.closest('form');
+            if (!form) return;
+            
+            // In new design, we don't have a separate dropoff location selector
+            // But we'll add a hidden input to store that the dropoff is same as pickup
+            
+            // Check if hidden input exists, if not create it
+            let hiddenDropoff = form.querySelector('input[name="dropoff_location"]');
+            if (!hiddenDropoff) {
+                hiddenDropoff = document.createElement('input');
+                hiddenDropoff.type = 'hidden';
+                hiddenDropoff.name = 'dropoff_location';
+                form.appendChild(hiddenDropoff);
+            }
+            
+            // Set dropoff location same as pickup
+            hiddenDropoff.value = this.value;
         });
     });
 }
