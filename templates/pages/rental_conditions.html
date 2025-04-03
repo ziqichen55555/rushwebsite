@@ -1,0 +1,139 @@
+{% extends 'base.html' %}
+
+{% block title %}Rental Conditions - Rush Car Rental{% endblock %}
+
+{% block content %}
+<!-- Breadcrumb -->
+<div class="bg-light py-3">
+    <div class="container">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb mb-0">
+                <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Rental Conditions</li>
+            </ol>
+        </nav>
+    </div>
+</div>
+
+<section class="py-5">
+    <div class="container">
+        <h1 class="mb-4">Rental Conditions</h1>
+        
+        <div class="card shadow-sm mb-4">
+            <div class="card-body">
+                <h4 class="card-title">Driver Requirements</h4>
+                <div class="mt-3">
+                    <h5 class="border-bottom pb-2 mb-3">Age Requirements</h5>
+                    <ul>
+                        <li>Minimum age: 21 years old</li>
+                        <li>Drivers under 25 may be subject to a Young Driver Surcharge</li>
+                        <li>Maximum age: 75 years old (may vary by vehicle type)</li>
+                        <li>Seniors aged 70-75 must provide a valid medical certificate confirming fitness to drive</li>
+                    </ul>
+                    
+                    <h5 class="border-bottom pb-2 mb-3">License Requirements</h5>
+                    <ul>
+                        <li>All drivers must hold a valid driver's license for at least 12 months</li>
+                        <li>International visitors must have an International Driving Permit along with their original license</li>
+                        <li>License must be presented at the time of vehicle pickup</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <div class="card shadow-sm mb-4">
+            <div class="card-body">
+                <h4 class="card-title">Reservation and Payment</h4>
+                <div class="mt-3">
+                    <h5 class="border-bottom pb-2 mb-3">Booking and Payment Policy</h5>
+                    <ul>
+                        <li>Credit card used for booking must be presented at pickup</li>
+                        <li>Valid credit card required for security deposit</li>
+                        <li>Full payment is required at the time of vehicle pickup</li>
+                        <li>Accepted payment methods: Visa, MasterCard, American Express</li>
+                    </ul>
+                    
+                    <h5 class="border-bottom pb-2 mb-3">Security Deposit</h5>
+                    <ul>
+                        <li>A security deposit (bond) will be held on your credit card during the rental period</li>
+                        <li>Standard vehicles: $500 AUD</li>
+                        <li>Premium vehicles: $1,000 AUD</li>
+                        <li>Luxury vehicles: $2,000 AUD</li>
+                        <li>The deposit will be refunded upon vehicle return, subject to vehicle condition</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <div class="card shadow-sm mb-4">
+            <div class="card-body">
+                <h4 class="card-title">Vehicle Usage</h4>
+                <div class="mt-3">
+                    <h5 class="border-bottom pb-2 mb-3">Prohibited Usage</h5>
+                    <ul>
+                        <li>Off-road driving is strictly prohibited</li>
+                        <li>Vehicles must not be used for towing without prior authorization</li>
+                        <li>No smoking in any of our vehicles</li>
+                        <li>Pets are not allowed in vehicles unless a pet-friendly vehicle is specifically booked</li>
+                        <li>Vehicles must not be used for commercial purposes</li>
+                    </ul>
+                    
+                    <h5 class="border-bottom pb-2 mb-3">Geographical Restrictions</h5>
+                    <ul>
+                        <li>Vehicles must not be driven outside of Australia</li>
+                        <li>Some vehicle categories have restrictions on unsealed roads</li>
+                        <li>Traveling to certain remote areas may require prior authorization</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <div class="card shadow-sm mb-4">
+            <div class="card-body">
+                <h4 class="card-title">Additional Fees and Charges</h4>
+                <div class="mt-3">
+                    <h5 class="border-bottom pb-2 mb-3">Additional Driver Fee</h5>
+                    <p>Additional drivers must be registered at the time of pickup. A fee of $5 AUD per day applies per additional driver.</p>
+                    
+                    <h5 class="border-bottom pb-2 mb-3">Late Return Fee</h5>
+                    <p>A late return fee of $50 AUD plus the daily rate will apply for vehicles returned after the agreed return time without prior notification.</p>
+                    
+                    <h5 class="border-bottom pb-2 mb-3">Fuel Policy</h5>
+                    <p>Vehicles are provided with a full tank of fuel and must be returned with a full tank. A refueling fee will apply if the vehicle is not returned with a full tank.</p>
+                    
+                    <h5 class="border-bottom pb-2 mb-3">Cleaning Fee</h5>
+                    <p>A cleaning fee of $100-$300 AUD may apply if the vehicle is returned in an excessively dirty condition.</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <h4 class="card-title">Insurance and Liability</h4>
+                <div class="mt-3">
+                    <h5 class="border-bottom pb-2 mb-3">Standard Coverage</h5>
+                    <p>All rentals include standard insurance with an excess/deductible amount that varies by vehicle category.</p>
+                    
+                    <h5 class="border-bottom pb-2 mb-3">Excess Reduction Options</h5>
+                    <p>We offer several excess reduction options to reduce your liability in case of damage or accident:</p>
+                    <ul>
+                        <li>Standard Protection: Included in rental rate (excess applies)</li>
+                        <li>Premium Protection: Additional daily fee, reduces excess by 50%</li>
+                        <li>Full Protection: Additional daily fee, eliminates excess completely</li>
+                    </ul>
+                    
+                    <h5 class="border-bottom pb-2 mb-3">What's Not Covered</h5>
+                    <p>Insurance does not cover:</p>
+                    <ul>
+                        <li>Damage to the undercarriage, roof, or windscreen</li>
+                        <li>Water damage</li>
+                        <li>Damage resulting from negligence or violation of rental terms</li>
+                        <li>Interior damage</li>
+                        <li>Loss or damage to personal belongings</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

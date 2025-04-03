@@ -1,0 +1,115 @@
+{% extends 'base.html' %}
+
+{% block title %}Rush Car Rental - Book Your Car Today{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+{% include 'components/hero_section.html' %}
+
+<!-- Featured Cars Section -->
+<section class="py-5">
+    <div class="container">
+        <h2 class="text-center mb-4">Our Featured Cars</h2>
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+            {% for car in featured_cars %}
+                <div class="col">
+                    {% include 'components/car_card.html' with car=car %}
+                </div>
+            {% empty %}
+                <div class="col-12 text-center">
+                    <p>No featured cars available at the moment.</p>
+                </div>
+            {% endfor %}
+        </div>
+        <div class="text-center mt-4">
+            <a href="{% url 'car_list' %}" class="btn btn-warning btn-lg">View All Cars</a>
+        </div>
+    </div>
+</section>
+
+<!-- Why Choose Us Section -->
+<section class="py-5 bg-light">
+    <div class="container">
+        <h2 class="text-center mb-5">Why Choose Rush Car Rental?</h2>
+        <div class="row g-4">
+            <div class="col-md-3">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body text-center">
+                        <div class="feature-icon text-warning mb-3">
+                            <i class="fas fa-dollar-sign fa-3x"></i>
+                        </div>
+                        <h5 class="card-title">Unbeatable Prices</h5>
+                        <p class="card-text">We offer the best prices compared to other car rental platforms.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body text-center">
+                        <div class="feature-icon text-warning mb-3">
+                            <i class="fas fa-shield-alt fa-3x"></i>
+                        </div>
+                        <h5 class="card-title">Top-Tier Coverage</h5>
+                        <p class="card-text">Comprehensive insurance options for your peace of mind.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body text-center">
+                        <div class="feature-icon text-warning mb-3">
+                            <i class="fas fa-headset fa-3x"></i>
+                        </div>
+                        <h5 class="card-title">Reliable Service</h5>
+                        <p class="card-text">24/7 customer support to assist you with any concerns.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body text-center">
+                        <div class="feature-icon text-warning mb-3">
+                            <i class="fas fa-car fa-3x"></i>
+                        </div>
+                        <h5 class="card-title">Wide Selection</h5>
+                        <p class="card-text">Choose from a variety of vehicles to suit your needs.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- City Recommendations -->
+{% include 'components/city_recommendations.html' %}
+
+<!-- How It Works Section -->
+<section class="py-5">
+    <div class="container">
+        <h2 class="text-center mb-5">How It Works</h2>
+        <div class="row">
+            <div class="col-md-4 text-center">
+                <div class="step-circle mx-auto mb-3 d-flex justify-content-center align-items-center">
+                    <span class="display-5 text-warning">1</span>
+                </div>
+                <h4>Search</h4>
+                <p>Enter your location, dates, and age to find available cars.</p>
+            </div>
+            <div class="col-md-4 text-center">
+                <div class="step-circle mx-auto mb-3 d-flex justify-content-center align-items-center">
+                    <span class="display-5 text-warning">2</span>
+                </div>
+                <h4>Book</h4>
+                <p>Choose your perfect car and complete the booking process.</p>
+            </div>
+            <div class="col-md-4 text-center">
+                <div class="step-circle mx-auto mb-3 d-flex justify-content-center align-items-center">
+                    <span class="display-5 text-warning">3</span>
+                </div>
+                <h4>Drive</h4>
+                <p>Pick up your car and enjoy your journey with Rush Car Rental.</p>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,100 @@
+{% extends 'base.html' %}
+
+{% block title %}Our Cars - Rush Car Rental{% endblock %}
+
+{% block content %}
+<!-- Breadcrumb -->
+<div class="bg-light py-3">
+    <div class="container">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb mb-0">
+                <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Cars</li>
+            </ol>
+        </nav>
+    </div>
+</div>
+
+<section class="py-5">
+    <div class="container">
+        <h1 class="mb-4">Available Cars</h1>
+        
+        <!-- Search form at the top -->
+        <div class="card shadow-sm mb-4">
+            <div class="card-body">
+                <h5 class="card-title mb-3">Find Your Perfect Car</h5>
+                {% include 'components/search_form.html' with search_params=search_params %}
+            </div>
+        </div>
+        
+        <div class="row">
+            <!-- Filter sidebar -->
+            <div class="col-lg-3">
+                <div class="card shadow-sm mb-4">
+                    <div class="card-header bg-dark text-white">
+                        <h5 class="mb-0">Filter Options</h5>
+                    </div>
+                    <div class="card-body">
+                        <h6 class="border-bottom pb-2 mb-3">Car Categories</h6>
+                        <div class="list-group mb-4">
+                            <a href="{% url 'car_list' %}" class="list-group-item list-group-item-action {% if not search_params.category %}active{% endif %}">
+                                All Categories
+                            </a>
+                            {% for category in categories %}
+                            <a href="{% url 'car_list' %}?category={{ category.name }}" class="list-group-item list-group-item-action {% if search_params.category == category.name %}active{% endif %}">
+                                {{ category.name }}
+                            </a>
+                            {% endfor %}
+                        </div>
+                        
+                        <h6 class="border-bottom pb-2 mb-3">Price Range</h6>
+                        <div class="mb-3">
+                            <div class="d-flex justify-content-between mb-2">
+                                <span>$0</span>
+                                <span>$500</span>
+                            </div>
+                            <input type="range" class="form-range" min="0" max="500" step="10" id="price-range">
+                        </div>
+                        
+                        <h6 class="border-bottom pb-2 mb-3">Car Features</h6>
+                        <div class="form-check mb-2">
+                            <input class="form-check-input" type="checkbox" id="feature1">
+                            <label class="form-check-label" for="feature1">Air Conditioning</label>
+                        </div>
+                        <div class="form-check mb-2">
+                            <input class="form-check-input" type="checkbox" id="feature2">
+                            <label class="form-check-label" for="feature2">Automatic Transmission</label>
+                        </div>
+                        <div class="form-check mb-2">
+                            <input class="form-check-input" type="checkbox" id="feature3">
+                            <label class="form-check-label" for="feature3">GPS Navigation</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Car list -->
+            <div class="col-lg-9">
+                {% if cars %}
+                <div class="row row-cols-1 row-cols-md-2 g-4">
+                    {% for car in cars %}
+                    <div class="col">
+                        {% include 'components/car_card.html' with car=car %}
+                    </div>
+                    {% endfor %}
+                </div>
+                {% else %}
+                <div class="card shadow-sm">
+                    <div class="card-body text-center py-5">
+                        <i class="fas fa-car-side fa-4x text-muted mb-3"></i>
+                        <h3>No cars found</h3>
+                        <p class="text-muted">Try adjusting your search criteria to find available cars.</p>
+                        <a href="{% url 'car_list' %}" class="btn btn-warning">Clear Filters</a>
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

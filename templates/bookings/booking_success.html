@@ -1,0 +1,83 @@
+{% extends 'base.html' %}
+
+{% block title %}Booking Confirmed - Rush Car Rental{% endblock %}
+
+{% block content %}
+<section class="py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 mx-auto">
+                <div class="card shadow">
+                    <div class="card-body text-center py-5">
+                        <i class="fas fa-check-circle text-success fa-5x mb-4"></i>
+                        <h1 class="card-title">Booking Confirmed!</h1>
+                        <p class="card-text mb-4">Your booking has been successfully confirmed. We've sent the details to your email.</p>
+                        
+                        <div class="booking-details p-4 my-4 bg-light rounded text-start">
+                            <h5 class="border-bottom pb-2 mb-3">Booking Summary</h5>
+                            <div class="row mb-4">
+                                <div class="col-md-6">
+                                    <p><strong>Booking ID:</strong> #{{ booking.id }}</p>
+                                    <p><strong>Vehicle:</strong> {{ booking.car.year }} {{ booking.car.make }} {{ booking.car.model }}</p>
+                                    <p><strong>Pick-up:</strong> {{ booking.pickup_location.name }}, {{ booking.pickup_date }}</p>
+                                    <p><strong>Drop-off:</strong> {{ booking.dropoff_location.name }}, {{ booking.return_date }}</p>
+                                </div>
+                                <div class="col-md-6">
+                                    <p><strong>Rental Duration:</strong> {{ booking.duration_days }} days</p>
+                                    <p><strong>Daily Rate:</strong> ${{ booking.car.daily_rate }}</p>
+                                    <p><strong>Total Cost:</strong> ${{ booking.total_cost }}</p>
+                                    <p><strong>Status:</strong> <span class="badge bg-success">{{ booking.status|title }}</span></p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="instructions mb-4">
+                            <h5 class="mb-3">What's Next?</h5>
+                            <div class="row text-start">
+                                <div class="col-md-4">
+                                    <div class="d-flex">
+                                        <div class="step-circle me-3 d-flex justify-content-center align-items-center">
+                                            <span>1</span>
+                                        </div>
+                                        <div>
+                                            <h6>Bring Required Documents</h6>
+                                            <p class="small">Remember to bring your driver's license and credit card when you pick up your car.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="d-flex">
+                                        <div class="step-circle me-3 d-flex justify-content-center align-items-center">
+                                            <span>2</span>
+                                        </div>
+                                        <div>
+                                            <h6>Check Vehicle</h6>
+                                            <p class="small">Inspect the vehicle before leaving and report any damages to our staff.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="d-flex">
+                                        <div class="step-circle me-3 d-flex justify-content-center align-items-center">
+                                            <span>3</span>
+                                        </div>
+                                        <div>
+                                            <h6>Return on Time</h6>
+                                            <p class="small">Return the vehicle by the specified date and time to avoid extra charges.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="d-flex justify-content-center gap-3">
+                            <a href="{% url 'booking_detail' booking.id %}" class="btn btn-primary">View Booking Details</a>
+                            <a href="{% url 'user_bookings' %}" class="btn btn-outline-secondary">My Bookings</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

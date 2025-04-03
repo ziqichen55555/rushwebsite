@@ -1,0 +1,128 @@
+{% extends 'base.html' %}
+
+{% block title %}Refund Policy - Rush Car Rental{% endblock %}
+
+{% block content %}
+<!-- Breadcrumb -->
+<div class="bg-light py-3">
+    <div class="container">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb mb-0">
+                <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Refund Policy</li>
+            </ol>
+        </nav>
+    </div>
+</div>
+
+<section class="py-5">
+    <div class="container">
+        <h1 class="mb-4">Refund Policy</h1>
+        
+        <div class="card shadow-sm mb-4">
+            <div class="card-body">
+                <h4 class="card-title">Booking Cancellations</h4>
+                <div class="mt-3">
+                    <h5 class="border-bottom pb-2 mb-3">Standard Bookings</h5>
+                    <p>Our refund policy for standard bookings is as follows:</p>
+                    <ul>
+                        <li><strong>More than 48 hours before pickup:</strong> Full refund</li>
+                        <li><strong>24-48 hours before pickup:</strong> 75% refund</li>
+                        <li><strong>12-24 hours before pickup:</strong> 50% refund</li>
+                        <li><strong>Less than 12 hours before pickup:</strong> No refund</li>
+                    </ul>
+                    
+                    <h5 class="border-bottom pb-2 mb-3">Premium and Luxury Vehicles</h5>
+                    <p>Due to high demand for our premium and luxury vehicles, a different cancellation policy applies:</p>
+                    <ul>
+                        <li><strong>More than 7 days before pickup:</strong> Full refund</li>
+                        <li><strong>3-7 days before pickup:</strong> 75% refund</li>
+                        <li><strong>1-3 days before pickup:</strong> 50% refund</li>
+                        <li><strong>Less than 24 hours before pickup:</strong> No refund</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <div class="card shadow-sm mb-4">
+            <div class="card-body">
+                <h4 class="card-title">Booking Modifications</h4>
+                <div class="mt-3">
+                    <h5 class="border-bottom pb-2 mb-3">Change of Dates</h5>
+                    <p>Modifications to booking dates are subject to the following conditions:</p>
+                    <ul>
+                        <li>Modifications made more than 48 hours before pickup: No fee</li>
+                        <li>Modifications made less than 48 hours before pickup: $30 AUD change fee</li>
+                        <li>All modifications are subject to vehicle availability</li>
+                        <li>If the new rental period is shorter than the original booking, the above cancellation policy applies to the difference</li>
+                    </ul>
+                    
+                    <h5 class="border-bottom pb-2 mb-3">Change of Vehicle</h5>
+                    <p>Changes to the booked vehicle type are subject to the following:</p>
+                    <ul>
+                        <li>Upgrade to a more expensive vehicle category: Pay only the difference in rate</li>
+                        <li>Downgrade to a less expensive vehicle category: Refund based on cancellation policy for the difference</li>
+                        <li>All vehicle changes are subject to availability</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <div class="card shadow-sm mb-4">
+            <div class="card-body">
+                <h4 class="card-title">Early Returns</h4>
+                <div class="mt-3">
+                    <p>If you return the vehicle earlier than the scheduled return date:</p>
+                    <ul>
+                        <li>No refund will be provided for unused rental days if the return is within 24 hours of the scheduled return</li>
+                        <li>Early returns with more than 24 hours remaining may be eligible for a partial refund (50% of the remaining rental value)</li>
+                        <li>All early returns must be communicated to us at least 24 hours in advance to be eligible for any refund</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <div class="card shadow-sm mb-4">
+            <div class="card-body">
+                <h4 class="card-title">No-Shows</h4>
+                <div class="mt-3">
+                    <p>If you fail to pick up the vehicle at the scheduled time without prior notification:</p>
+                    <ul>
+                        <li>The reservation will be held for a maximum of 2 hours after the scheduled pickup time</li>
+                        <li>After this period, the booking will be considered a "no-show" and no refund will be provided</li>
+                        <li>The full rental amount will be charged to the credit card used for booking</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <h4 class="card-title">Refund Process</h4>
+                <div class="mt-3">
+                    <h5 class="border-bottom pb-2 mb-3">How to Request a Refund</h5>
+                    <p>To request a refund for a cancelled booking, please:</p>
+                    <ol>
+                        <li>Log in to your Rush Car Rental account</li>
+                        <li>Navigate to "My Bookings"</li>
+                        <li>Select the booking you wish to cancel</li>
+                        <li>Click on "Cancel Booking" and follow the prompts</li>
+                    </ol>
+                    <p>Alternatively, you can contact our customer service team at:</p>
+                    <ul>
+                        <li>Email: refunds@rushcarrental.com</li>
+                        <li>Phone: 1800 RUSH CAR (1800 7874 227)</li>
+                    </ul>
+                    
+                    <h5 class="border-bottom pb-2 mb-3">Refund Timeframe</h5>
+                    <p>Once a refund is approved:</p>
+                    <ul>
+                        <li>Credit card refunds will be processed within 3-5 business days</li>
+                        <li>The funds may take an additional 5-10 business days to appear in your account, depending on your financial institution</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

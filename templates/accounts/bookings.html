@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+
+{% block title %}Your Bookings - Rush Car Rental{% endblock %}
+
+{% block content %}
+<section class="py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card mb-4">
+                    <div class="card-header bg-warning text-dark">
+                        <h4 class="mb-0">Account Navigation</h4>
+                    </div>
+                    <div class="list-group list-group-flush">
+                        <a href="{% url 'profile' %}" class="list-group-item list-group-item-action">Profile Information</a>
+                        <a href="{% url 'user_bookings' %}" class="list-group-item list-group-item-action active">My Bookings</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-8">
+                <div class="card shadow">
+                    <div class="card-header bg-warning text-dark">
+                        <h4 class="mb-0">Your Bookings</h4>
+                    </div>
+                    <div class="card-body">
+                        {% if bookings %}
+                            <div class="table-responsive">
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>Car</th>
+                                            <th>Dates</th>
+                                            <th>Locations</th>
+                                            <th>Status</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for booking in bookings %}
+                                        <tr>
+                                            <td>{{ booking.car.make }} {{ booking.car.model }}</td>
+                                            <td>{{ booking.pickup_date|date:"M d, Y" }} to {{ booking.return_date|date:"M d, Y" }}</td>
+                                            <td>
+                                                <small class="d-block">From: {{ booking.pickup_location.name }}</small>
+                                                <small class="d-block">To: {{ booking.dropoff_location.name }}</small>
+                                            </td>
+                                            <td>
+                                                {% if booking.status == 'confirmed' %}
+                                                <span class="badge bg-success">Confirmed</span>
+                                                {% elif booking.status == 'pending' %}
+                                                <span class="badge bg-warning text-dark">Pending</span>
+                                                {% elif booking.status == 'cancelled' %}
+                                                <span class="badge bg-danger">Cancelled</span>
+                                                {% elif booking.status == 'completed' %}
+                                                <span class="badge bg-info">Completed</span>
+                                                {% endif %}
+                                            </td>
+                                            <td>
+                                                <a href="{% url 'booking_detail' booking.id %}" class="btn btn-sm btn-outline-primary">View</a>
+                                                {% if booking.status == 'confirmed' or booking.status == 'pending' %}
+                                                <a href="{% url 'cancel_booking' booking.id %}" class="btn btn-sm btn-outline-danger">Cancel</a>
+                                                {% endif %}
+                                            </td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        {% else %}
+                            <div class="text-center py-4">
+                                <i class="fas fa-car-side fa-4x text-muted mb-3"></i>
+                                <h5>You don't have any bookings yet</h5>
+                                <p class="text-muted">Ready to start your journey? Browse our cars and make your first booking.</p>
+                                <a href="{% url 'car_list' %}" class="btn btn-warning">Find a Car</a>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

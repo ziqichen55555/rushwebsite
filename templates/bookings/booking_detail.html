@@ -1,0 +1,108 @@
+{% extends 'base.html' %}
+
+{% block title %}Booking #{{ booking.id }} - Rush Car Rental{% endblock %}
+
+{% block content %}
+<section class="py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card mb-4">
+                    <div class="card-header bg-warning text-dark">
+                        <h4 class="mb-0">Account Navigation</h4>
+                    </div>
+                    <div class="list-group list-group-flush">
+                        <a href="{% url 'profile' %}" class="list-group-item list-group-item-action">Profile Information</a>
+                        <a href="{% url 'user_bookings' %}" class="list-group-item list-group-item-action">My Bookings</a>
+                        <a href="{% url 'booking_detail' booking.id %}" class="list-group-item list-group-item-action active">Current Booking</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-8">
+                <div class="card shadow">
+                    <div class="card-header bg-warning text-dark d-flex justify-content-between align-items-center">
+                        <h4 class="mb-0">Booking #{{ booking.id }}</h4>
+                        <span class="badge bg-dark">{{ booking.status|title }}</span>
+                    </div>
+                    <div class="card-body">
+                        <div class="row mb-4">
+                            <div class="col-md-5">
+                                <img src="{{ booking.car.image_url }}" class="img-fluid rounded" alt="{{ booking.car.make }} {{ booking.car.model }}">
+                            </div>
+                            <div class="col-md-7">
+                                <h4>{{ booking.car.year }} {{ booking.car.make }} {{ booking.car.model }}</h4>
+                                <p class="text-muted">{{ booking.car.category.name }}</p>
+                                
+                                <div class="d-flex flex-wrap">
+                                    <div class="me-3 mb-3">
+                                        <small class="d-block text-muted">Seats</small>
+                                        <span>{{ booking.car.seats }}</span>
+                                    </div>
+                                    <div class="me-3 mb-3">
+                                        <small class="d-block text-muted">Bags</small>
+                                        <span>{{ booking.car.bags }}</span>
+                                    </div>
+                                    <div class="mb-3">
+                                        <small class="d-block text-muted">Transmission</small>
+                                        <span>{{ booking.car.get_transmission_display }}</span>
+                                    </div>
+                                </div>
+                                
+                                <h6 class="mt-2">Daily Rate</h6>
+                                <p class="text-warning fw-bold">${{ booking.car.daily_rate }}</p>
+                            </div>
+                        </div>
+                        
+                        <h5 class="border-bottom pb-2 mb-3">Booking Details</h5>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <p><strong>Booking Date:</strong> {{ booking.booking_date|date:"F d, Y, H:i" }}</p>
+                                <p><strong>Pickup Location:</strong> {{ booking.pickup_location.name }}</p>
+                                <p><strong>Pickup Date:</strong> {{ booking.pickup_date|date:"F d, Y" }}</p>
+                                <p><strong>Driver's Age:</strong> {{ booking.driver_age }}</p>
+                            </div>
+                            <div class="col-md-6">
+                                <p><strong>Status:</strong> 
+                                    {% if booking.status == 'confirmed' %}
+                                    <span class="badge bg-success">Confirmed</span>
+                                    {% elif booking.status == 'pending' %}
+                                    <span class="badge bg-warning text-dark">Pending</span>
+                                    {% elif booking.status == 'cancelled' %}
+                                    <span class="badge bg-danger">Cancelled</span>
+                                    {% elif booking.status == 'completed' %}
+                                    <span class="badge bg-info">Completed</span>
+                                    {% endif %}
+                                </p>
+                                <p><strong>Drop-off Location:</strong> {{ booking.dropoff_location.name }}</p>
+                                <p><strong>Return Date:</strong> {{ booking.return_date|date:"F d, Y" }}</p>
+                                <p><strong>Rental Duration:</strong> {{ booking.duration_days }} days</p>
+                            </div>
+                        </div>
+                        
+                        <h5 class="border-bottom pb-2 mb-3 mt-4">Price Summary</h5>
+                        <div class="card mb-4">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between mb-2">
+                                    <span>Base Rate ({{ booking.car.daily_rate }} x {{ booking.duration_days }} days)</span>
+                                    <span>${{ booking.total_cost }}</span>
+                                </div>
+                                <div class="d-flex justify-content-between pt-2 border-top">
+                                    <strong>Total</strong>
+                                    <strong>${{ booking.total_cost }}</strong>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        {% if booking.status == 'confirmed' or booking.status == 'pending' %}
+                        <div class="d-grid gap-2">
+                            <a href="{% url 'cancel_booking' booking.id %}" class="btn btn-danger">Cancel Booking</a>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
