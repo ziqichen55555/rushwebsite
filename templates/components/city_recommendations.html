@@ -1,0 +1,46 @@
+<section class="py-5 bg-white">
+    <div class="container">
+        <h2 class="text-center mb-5">Explore Popular Cities</h2>
+        <div class="row row-cols-1 row-cols-md-3 g-4">
+            {% for highlight in city_highlights %}
+            <div class="col">
+                <div class="card h-100 city-card">
+                    <img src="{{ highlight.image_url }}" class="card-img-top city-image" alt="{{ highlight.city }}">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ highlight.city }}, {{ highlight.state.code }}</h5>
+                        <p class="card-text">{{ highlight.description|truncatewords:25 }}</p>
+                        <a href="{% url 'car_list' %}?pickup_location={{ highlight.city }}" class="btn btn-outline-warning stretched-link">
+                            Explore Cars in {{ highlight.city }}
+                        </a>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body text-center">
+                        <h5>Explore Australia's Best Destinations</h5>
+                        <div class="row mt-4">
+                            <div class="col-md-4 mb-3">
+                                <h6>Melbourne</h6>
+                                <p class="text-muted small">Victoria's coastal capital with rich culture and arts scene</p>
+                                <a href="{% url 'car_list' %}?pickup_location=Melbourne" class="btn btn-sm btn-outline-warning">Find Cars</a>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <h6>Sydney</h6>
+                                <p class="text-muted small">Stunning harbor city with iconic landmarks and beaches</p>
+                                <a href="{% url 'car_list' %}?pickup_location=Sydney" class="btn btn-sm btn-outline-warning">Find Cars</a>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <h6>Brisbane</h6>
+                                <p class="text-muted small">Queensland's capital with beautiful river and sunny weather</p>
+                                <a href="{% url 'car_list' %}?pickup_location=Brisbane" class="btn btn-sm btn-outline-warning">Find Cars</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>

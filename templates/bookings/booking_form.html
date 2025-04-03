@@ -1,0 +1,116 @@
+{% extends 'base.html' %}
+
+{% block title %}Book {{ car.make }} {{ car.model }} - Rush Car Rental{% endblock %}
+
+{% block content %}
+<section class="py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 mx-auto">
+                <div class="card shadow">
+                    <div class="card-header bg-warning text-dark">
+                        <h3 class="card-title mb-0">Complete Your Booking</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="row mb-4">
+                            <div class="col-md-4">
+                                <img src="{{ car.image_url }}" class="img-fluid rounded" alt="{{ car.make }} {{ car.model }}">
+                            </div>
+                            <div class="col-md-8">
+                                <h4>{{ car.year }} {{ car.make }} {{ car.model }}</h4>
+                                <p class="text-muted">{{ car.category.name }}</p>
+                                <div class="d-flex">
+                                    <div class="me-3">
+                                        <small class="d-block text-muted">Seats</small>
+                                        <span>{{ car.seats }}</span>
+                                    </div>
+                                    <div class="me-3">
+                                        <small class="d-block text-muted">Bags</small>
+                                        <span>{{ car.bags }}</span>
+                                    </div>
+                                    <div>
+                                        <small class="d-block text-muted">Transmission</small>
+                                        <span>{{ car.get_transmission_display }}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <form action="{% url 'create_booking' car.id %}" method="post">
+                            {% csrf_token %}
+                            
+                            <h5 class="border-bottom pb-2 mb-3">Booking Details</h5>
+                            
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <label for="pickup_location" class="form-label">Pickup Location</label>
+                                    <select name="pickup_location" id="pickup_location" class="form-select" required>
+                                        {% for location in car.locations.all %}
+                                        <option value="{{ location.id }}" {% if search_params.pickup_location == location.name %}selected{% endif %}>
+                                            {{ location.name }}, {{ location.city }}
+                                        </option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="dropoff_location" class="form-label">Drop-off Location</label>
+                                    <select name="dropoff_location" id="dropoff_location" class="form-select" required>
+                                        {% for location in car.locations.all %}
+                                        <option value="{{ location.id }}" {% if search_params.dropoff_location == location.name %}selected{% endif %}>
+                                            {{ location.name }}, {{ location.city }}
+                                        </option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <label for="pickup_date" class="form-label">Pickup Date</label>
+                                    <input type="date" name="pickup_date" id="pickup_date" class="form-control" value="{{ search_params.pickup_date }}" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="return_date" class="form-label">Return Date</label>
+                                    <input type="date" name="return_date" id="return_date" class="form-control" value="{{ search_params.return_date }}" required>
+                                </div>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label for="driver_age" class="form-label">Driver's Age</label>
+                                <input type="number" name="driver_age" id="driver_age" class="form-control" min="18" max="99" value="{{ search_params.age }}" required>
+                                <div class="form-text">Driver must be between 25-75 years old for standard rates. Surcharges may apply for drivers under 25.</div>
+                            </div>
+                            
+                            <h5 class="border-bottom pb-2 mb-3 mt-4">Price Summary</h5>
+                            <div class="card mb-4">
+                                <div class="card-body">
+                                    <div class="d-flex justify-content-between mb-2">
+                                        <span>Base Rate ({{ car.daily_rate }} x {{ search_params.rental_days }} days)</span>
+                                        <span>${{ search_params.total_cost }}</span>
+                                    </div>
+                                    <div class="d-flex justify-content-between pt-2 border-top">
+                                        <strong>Total</strong>
+                                        <strong>${{ search_params.total_cost }}</strong>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <h5 class="border-bottom pb-2 mb-3">Rental Terms</h5>
+                            <div class="form-check mb-3">
+                                <input class="form-check-input" type="checkbox" id="terms" required>
+                                <label class="form-check-label" for="terms">
+                                    I agree to the <a href="{% url 'rental_conditions' %}" target="_blank">Rental Conditions</a> and <a href="{% url 'refund_policy' %}" target="_blank">Refund Policy</a>.
+                                </label>
+                            </div>
+                            
+                            <div class="d-grid gap-2">
+                                <button type="submit" class="btn btn-warning btn-lg">Confirm Booking</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

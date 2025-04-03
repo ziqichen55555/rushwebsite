@@ -1,0 +1,244 @@
+{% extends 'base.html' %}
+{% load humanize %}
+
+{% block title %}{{ car.year }} {{ car.make }} {{ car.model }} - Rush Car Rental{% endblock %}
+
+{% block content %}
+<!-- Breadcrumb -->
+<div class="bg-light py-3">
+    <div class="container">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb mb-0">
+                <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
+                <li class="breadcrumb-item"><a href="{% url 'car_list' %}">Cars</a></li>
+                <li class="breadcrumb-item active" aria-current="page">{{ car.make }} {{ car.model }}</li>
+            </ol>
+        </nav>
+    </div>
+</div>
+
+<section class="py-5">
+    <div class="container">
+        <div class="row">
+            <!-- Car Images and Details -->
+            <div class="col-lg-8">
+                <div class="card shadow-sm mb-4">
+                    <img src="{{ car.image_url }}" class="card-img-top" alt="{{ car.make }} {{ car.model }}">
+                    <div class="card-body">
+                        <h1 class="card-title">{{ car.year }} {{ car.make }} {{ car.model }}</h1>
+                        <p class="card-text text-muted mb-3">{{ car.category.name }}</p>
+                        
+                        <div class="row mb-4">
+                            <div class="col-6 col-md-3 mb-3">
+                                <div class="d-flex align-items-center">
+                                    <i class="fas fa-user-friends text-warning me-2"></i>
+                                    <div>
+                                        <small class="d-block text-muted">Seats</small>
+                                        <span>{{ car.seats }} People</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-6 col-md-3 mb-3">
+                                <div class="d-flex align-items-center">
+                                    <i class="fas fa-suitcase text-warning me-2"></i>
+                                    <div>
+                                        <small class="d-block text-muted">Luggage</small>
+                                        <span>{{ car.bags }} Bags</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-6 col-md-3 mb-3">
+                                <div class="d-flex align-items-center">
+                                    <i class="fas fa-door-open text-warning me-2"></i>
+                                    <div>
+                                        <small class="d-block text-muted">Doors</small>
+                                        <span>{{ car.doors }} Doors</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-6 col-md-3 mb-3">
+                                <div class="d-flex align-items-center">
+                                    <i class="fas fa-cog text-warning me-2"></i>
+                                    <div>
+                                        <small class="d-block text-muted">Transmission</small>
+                                        <span>{{ car.get_transmission_display }}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <h5 class="border-bottom pb-2 mb-3">Car Features</h5>
+                        <div class="row">
+                            {% for feature in car.features.all %}
+                            <div class="col-md-6 mb-2">
+                                <div class="d-flex align-items-center">
+                                    <i class="fas fa-check-circle text-warning me-2"></i>
+                                    <span>{{ feature.feature }}</span>
+                                </div>
+                            </div>
+                            {% empty %}
+                            <div class="col-12">
+                                <p class="text-muted">Features information not available.</p>
+                            </div>
+                            {% endfor %}
+                            {% if car.air_conditioning %}
+                            <div class="col-md-6 mb-2">
+                                <div class="d-flex align-items-center">
+                                    <i class="fas fa-check-circle text-warning me-2"></i>
+                                    <span>Air Conditioning</span>
+                                </div>
+                            </div>
+                            {% endif %}
+                        </div>
+                        
+                        <h5 class="border-bottom pb-2 mb-3 mt-4">Description</h5>
+                        <p>Experience the thrill of driving the {{ car.year }} {{ car.make }} {{ car.model }}. This {{ car.category.name|lower }} offers exceptional performance, comfort, and style for your journey.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Booking Form -->
+            <div class="col-lg-4">
+                <div class="card shadow-sm mb-4 sticky-top" style="top: 20px; z-index: 999;">
+                    <div class="card-header bg-warning text-dark">
+                        <h5 class="card-title mb-0">Book This Car</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="price-comparison mb-4">
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <span class="h3 mb-0 text-warning">${{ car.daily_rate|floatformat:2 }}</span>
+                                <span class="text-muted">per day</span>
+                            </div>
+                            
+                            {% if car.comparison_provider1_name and car.comparison_provider1_rate %}
+                            <div class="comparison-row d-flex justify-content-between align-items-center mb-1">
+                                <span>{{ car.comparison_provider1_name }}</span>
+                                <span>${{ car.comparison_provider1_rate|floatformat:2 }}</span>
+                            </div>
+                            {% endif %}
+                            
+                            {% if car.comparison_provider2_name and car.comparison_provider2_rate %}
+                            <div class="comparison-row d-flex justify-content-between align-items-center">
+                                <span>{{ car.comparison_provider2_name }}</span>
+                                <span>${{ car.comparison_provider2_rate|floatformat:2 }}</span>
+                            </div>
+                            {% endif %}
+                        </div>
+                        
+                        <form action="{% url 'create_booking' car.id %}" method="post">
+                            {% csrf_token %}
+                            
+                            <div class="mb-3">
+                                <label for="pickup_location" class="form-label">Pickup Location</label>
+                                <select name="pickup_location" id="pickup_location" class="form-select" required>
+                                    {% for location in car.locations.all %}
+                                    <option value="{{ location.id }}" {% if search_params.pickup_location == location.name %}selected{% endif %}>
+                                        {{ location.name }}, {{ location.city }}
+                                    </option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label for="dropoff_location" class="form-label">Drop-off Location</label>
+                                <select name="dropoff_location" id="dropoff_location" class="form-select" required>
+                                    {% for location in car.locations.all %}
+                                    <option value="{{ location.id }}" {% if search_params.dropoff_location == location.name %}selected{% endif %}>
+                                        {{ location.name }}, {{ location.city }}
+                                    </option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="pickup_date" class="form-label">Pickup Date</label>
+                                    <input type="date" name="pickup_date" id="pickup_date" class="form-control" value="{{ search_params.pickup_date }}" required>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="return_date" class="form-label">Return Date</label>
+                                    <input type="date" name="return_date" id="return_date" class="form-control" value="{{ search_params.return_date }}" required>
+                                </div>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label for="driver_age" class="form-label">Driver's Age</label>
+                                <input type="number" name="driver_age" id="driver_age" class="form-control" min="18" max="99" value="{{ search_params.age }}" required>
+                            </div>
+                            
+                            {% if search_params.rental_days and search_params.total_cost %}
+                            <div class="price-summary mt-4 mb-3 p-3 bg-light rounded">
+                                <div class="d-flex justify-content-between mb-2">
+                                    <span>${{ car.daily_rate|floatformat:2 }} x {{ search_params.rental_days }} days</span>
+                                    <span>${{ search_params.total_cost|floatformat:2 }}</span>
+                                </div>
+                                <div class="d-flex justify-content-between fw-bold pt-2 border-top">
+                                    <span>Total</span>
+                                    <span>${{ search_params.total_cost|floatformat:2 }}</span>
+                                </div>
+                            </div>
+                            {% endif %}
+                            
+                            {% if user.is_authenticated %}
+                            <div class="d-grid gap-2">
+                                <button type="submit" class="btn btn-warning">Book Now</button>
+                            </div>
+                            {% else %}
+                            <div class="alert alert-info mb-3">
+                                <i class="fas fa-info-circle me-2"></i> You need to login before booking.
+                            </div>
+                            <div class="d-grid gap-2">
+                                <a href="{% url 'login' %}" class="btn btn-warning">Login to Book</a>
+                                <a href="{% url 'register' %}" class="btn btn-outline-secondary">Create Account</a>
+                            </div>
+                            {% endif %}
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Calculate rental duration and update pricing when dates change
+    const pickupDateField = document.getElementById('pickup_date');
+    const returnDateField = document.getElementById('return_date');
+    
+    if(pickupDateField && returnDateField) {
+        const updatePricing = function() {
+            const pickupDate = new Date(pickupDateField.value);
+            const returnDate = new Date(returnDateField.value);
+            
+            if(pickupDate && returnDate && pickupDate <= returnDate) {
+                const diffTime = Math.abs(returnDate - pickupDate);
+                const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+                const dailyRate = {{ car.daily_rate }};
+                const totalCost = dailyRate * diffDays;
+                
+                // Update the price summary section
+                const priceSummary = document.querySelector('.price-summary');
+                if(priceSummary) {
+                    priceSummary.innerHTML = `
+                        <div class="d-flex justify-content-between mb-2">
+                            <span>$${dailyRate.toFixed(2)} x ${diffDays} days</span>
+                            <span>$${totalCost.toFixed(2)}</span>
+                        </div>
+                        <div class="d-flex justify-content-between fw-bold pt-2 border-top">
+                            <span>Total</span>
+                            <span>$${totalCost.toFixed(2)}</span>
+                        </div>
+                    `;
+                }
+            }
+        };
+        
+        pickupDateField.addEventListener('change', updatePricing);
+        returnDateField.addEventListener('change', updatePricing);
+    }
+});
+</script>
+{% endblock %}

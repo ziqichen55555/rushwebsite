@@ -1,0 +1,180 @@
+:root {
+    --rush-yellow: #ffd100;
+    --rush-dark: #212529;
+    --rush-white: #ffffff;
+    --rush-light-gray: #f8f9fa;
+    --rush-medium-gray: #e9ecef;
+    --rush-gray: #6c757d;
+}
+
+body {
+    font-family: 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    color: var(--rush-dark);
+}
+
+/* Navigation */
+.navbar-brand .text-warning {
+    color: var(--rush-yellow) !important;
+}
+
+.nav-link:hover {
+    color: var(--rush-yellow) !important;
+}
+
+/* Buttons */
+.btn-warning {
+    background-color: var(--rush-yellow);
+    border-color: var(--rush-yellow);
+    color: var(--rush-dark);
+    font-weight: 500;
+}
+
+.btn-warning:hover, .btn-warning:focus {
+    background-color: #e6bc00;
+    border-color: #e6bc00;
+    color: var(--rush-dark);
+}
+
+.btn-outline-warning {
+    color: var(--rush-dark);
+    border-color: var(--rush-yellow);
+}
+
+.btn-outline-warning:hover {
+    background-color: var(--rush-yellow);
+    color: var(--rush-dark);
+}
+
+/* Hero Section */
+.hero-section {
+    position: relative;
+    background: linear-gradient(to right, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.6));
+    padding: 3rem 0;
+}
+
+.hero-image-wrapper {
+    position: relative;
+}
+
+.price-tag {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    background-color: var(--rush-yellow);
+    color: var(--rush-dark);
+    padding: 10px 15px;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+.price-tag .price {
+    font-size: 1.5rem;
+}
+
+.search-form .search-btn {
+    height: 100%;
+}
+
+/* Card Styles */
+.card {
+    border: none;
+    border-radius: 0.5rem;
+    overflow: hidden;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.card-img-top {
+    height: 200px;
+    object-fit: cover;
+}
+
+.city-card .city-image {
+    height: 180px;
+    object-fit: cover;
+}
+
+/* Car Features */
+.feature-item {
+    font-size: 0.9rem;
+}
+
+.car-features {
+    margin-bottom: 1rem;
+}
+
+/* Pricing Section */
+.price-comparison {
+    font-size: 0.85rem;
+}
+
+.competitor-price {
+    color: var(--rush-gray);
+    text-decoration: line-through;
+}
+
+/* Step Circles */
+.step-circle {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: var(--rush-yellow);
+    color: var(--rush-dark);
+    font-weight: bold;
+    font-size: 1.5rem;
+}
+
+/* Location Page */
+.location-dot {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+/* Car Detail Page */
+.price-summary {
+    background-color: var(--rush-light-gray);
+    padding: 1rem;
+    border-radius: 0.5rem;
+}
+
+/* Bookings */
+.booking-details {
+    background-color: var(--rush-light-gray);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .hero-section {
+        text-align: center;
+    }
+    
+    .card-img-top, .city-card .city-image {
+        height: 160px;
+    }
+    
+    .step-circle {
+        width: 40px;
+        height: 40px;
+        font-size: 1.2rem;
+    }
+}
+
+/* Footer */
+footer {
+    background-color: var(--rush-dark);
+}
+
+footer a {
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+footer a:hover {
+    color: var(--rush-yellow) !important;
+}

@@ -1,0 +1,63 @@
+<div class="card h-100 shadow-sm">
+    <img src="{{ car.image_url }}" class="card-img-top" alt="{{ car.make }} {{ car.model }}">
+    <div class="card-body">
+        <div class="d-flex justify-content-between align-items-start mb-2">
+            <h5 class="card-title mb-0">{{ car.make }} {{ car.model }}</h5>
+            <span class="badge bg-dark">{{ car.category.name }}</span>
+        </div>
+        
+        <div class="car-features d-flex flex-wrap mb-3">
+            <div class="feature-item me-3 mb-2">
+                <small class="d-block text-muted">Seats</small>
+                <div class="d-flex align-items-center">
+                    <i class="fas fa-user-friends text-warning me-1"></i> {{ car.seats }}
+                </div>
+            </div>
+            <div class="feature-item me-3 mb-2">
+                <small class="d-block text-muted">Bags</small>
+                <div class="d-flex align-items-center">
+                    <i class="fas fa-suitcase text-warning me-1"></i> {{ car.bags }}
+                </div>
+            </div>
+            <div class="feature-item me-3 mb-2">
+                <small class="d-block text-muted">Doors</small>
+                <div class="d-flex align-items-center">
+                    <i class="fas fa-door-open text-warning me-1"></i> {{ car.doors }}
+                </div>
+            </div>
+            <div class="feature-item mb-2">
+                <small class="d-block text-muted">Transmission</small>
+                <div class="d-flex align-items-center">
+                    <i class="fas fa-cog text-warning me-1"></i> 
+                    {% if car.transmission == 'A' %}Automatic{% else %}Manual{% endif %}
+                </div>
+            </div>
+        </div>
+        
+        <div class="price-section">
+            <div class="price-comparison">
+                {% if car.comparison_provider1_name and car.comparison_provider1_rate %}
+                <div class="competitor-price mb-1">
+                    <small>{{ car.comparison_provider1_name }}:</small> 
+                    <span>${{ car.comparison_provider1_rate }} / day</span>
+                </div>
+                {% endif %}
+                
+                {% if car.comparison_provider2_name and car.comparison_provider2_rate %}
+                <div class="competitor-price mb-1">
+                    <small>{{ car.comparison_provider2_name }}:</small> 
+                    <span>${{ car.comparison_provider2_rate }} / day</span>
+                </div>
+                {% endif %}
+            </div>
+            
+            <div class="our-price d-flex justify-content-between align-items-end mt-2">
+                <div>
+                    <span class="fs-5 fw-bold text-warning">${{ car.daily_rate }}</span>
+                    <small class="text-muted">/ day</small>
+                </div>
+                <a href="{% url 'car_detail' car.id %}" class="btn btn-sm btn-warning">View Details</a>
+            </div>
+        </div>
+    </div>
+</div>
