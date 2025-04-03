@@ -1,28 +1,28 @@
 <form action="{% url 'car_list' %}" method="get" class="search-form">
     <div class="row g-2">
-        <div class="col-md-6 col-lg-3 mb-2">
+        <div class="col-md-2 mb-2">
             <label for="pickup_location" class="form-label">Pick-up Location</label>
             <input type="text" class="form-control" id="pickup_location" name="pickup_location" placeholder="Enter city or airport" value="{{ search_params.pickup_location|default:'' }}">
         </div>
-        <div class="col-md-6 col-lg-3 mb-2">
+        <div class="col-md-2 mb-2">
             <label for="dropoff_location" class="form-label">Drop-off Location</label>
             <input type="text" class="form-control" id="dropoff_location" name="dropoff_location" placeholder="Enter city or airport" value="{{ search_params.dropoff_location|default:'' }}">
         </div>
-        <div class="col-md-6 col-lg-2 mb-2">
+        <div class="col-md-2 mb-2">
             <label for="pickup_date" class="form-label">Pick-up Date</label>
             <input type="date" class="form-control" id="pickup_date" name="pickup_date" value="{{ search_params.pickup_date|default:'' }}">
         </div>
-        <div class="col-md-6 col-lg-2 mb-2">
+        <div class="col-md-2 mb-2">
             <label for="return_date" class="form-label">Return Date</label>
             <input type="date" class="form-control" id="return_date" name="return_date" value="{{ search_params.return_date|default:'' }}">
         </div>
-        <div class="col-md-6 col-lg-1 mb-2">
+        <div class="col-md-2 mb-2">
             <label for="age" class="form-label">Driver Age</label>
-            <input type="number" class="form-control" id="age" name="age" min="18" max="99" placeholder="25+" value="{{ search_params.age|default:'' }}">
+            <input type="number" class="form-control" id="age" name="age" min="18" max="99" placeholder="Age" value="{{ search_params.age|default:'' }}">
         </div>
-        <div class="col-md-6 col-lg-1 mb-2 d-flex align-items-end">
-            <button type="submit" class="btn btn-warning w-100 search-btn">
-                <i class="fas fa-search me-1"></i> Search
+        <div class="col-md-2 mb-2 d-flex align-items-center justify-content-center">
+            <button type="submit" class="btn btn-warning h-75 w-100 search-btn">
+                <span class="d-block">S<br>e<br>a<br>r<br>c<br>h</span>
             </button>
         </div>
     </div>
