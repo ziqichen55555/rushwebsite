@@ -53,9 +53,12 @@ body {
     padding: 0;
     min-height: 100vh;
     display: flex;
-    align-items: center;
-    justify-content: center;
     box-shadow: inset 0 0 0 2000px rgba(0, 0, 0, 0.6);
+}
+
+.search-form-wrapper {
+    padding-bottom: 80px;
+    margin-top: auto;
 }
 
 .transparent-card {
