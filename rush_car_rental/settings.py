@@ -29,6 +29,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.humanize',
     
+    # Third-party apps
+    'widget_tweaks',
+    
     # Project apps
     'accounts.apps.AccountsConfig',
     'cars.apps.CarsConfig',
