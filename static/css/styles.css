@@ -62,17 +62,33 @@ body {
     right: 20px;
     background-color: var(--rush-yellow);
     color: var(--rush-dark);
-    padding: 10px 15px;
-    border-radius: 5px;
+    padding: 12px 20px;
+    border-radius: 8px;
     font-weight: bold;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    transform: rotate(-5deg);
+    border: 2px solid rgba(0, 0, 0, 0.1);
 }
 
 .price-tag .price {
-    font-size: 1.5rem;
+    font-size: 1.8rem;
+    font-weight: 800;
+    margin-top: 2px;
 }
 
 .search-form .search-btn {
     height: 100%;
+    background-color: var(--rush-yellow);
+    border-color: var(--rush-yellow);
+    color: var(--rush-dark);
+    font-weight: bold;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 0.5rem;
+    line-height: 1.2;
 }
 
 /* Card Styles */
@@ -163,6 +179,25 @@ body {
         height: 40px;
         font-size: 1.2rem;
     }
+}
+
+/* Book Rush Button */
+.book-rush-btn {
+    background-color: var(--rush-yellow);
+    border-color: var(--rush-yellow);
+    color: var(--rush-dark);
+    font-weight: bold;
+    padding: 0.75rem 1.5rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+}
+
+.book-rush-btn:hover {
+    background-color: #f0c000;
+    border-color: #f0c000;
+    color: var(--rush-dark);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
 }
 
 /* Footer */
