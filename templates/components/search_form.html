@@ -1,29 +1,68 @@
-<form action="{% url 'car_list' %}" method="get" class="search-form">
-    <div class="row g-2">
-        <div class="col-md-2 mb-2">
-            <label for="pickup_location" class="form-label">Pick-up Location</label>
-            <input type="text" class="form-control" id="pickup_location" name="pickup_location" placeholder="Enter city or airport" value="{{ search_params.pickup_location|default:'' }}">
+<div class="booking-search-container">
+    <h2 class="booking-title">Start a Booking</h2>
+    <div class="booking-highlights mb-4">
+        <span class="highlight-item"><i class="fas fa-check-circle text-success me-1"></i> Free Cancellation</span>
+        <span class="highlight-item"><i class="fas fa-check-circle text-success me-1"></i> Australian, P1, P2 and International licences accepted</span>
+        <span class="highlight-item"><i class="fas fa-check-circle text-success me-1"></i> Drivers aged 21-84</span>
+    </div>
+    <form action="{% url 'car_list' %}" method="get" class="search-form">
+        <div class="mb-3">
+            <label for="pickup_location" class="search-label">PICK UP LOCATION</label>
+            <div class="location-select">
+                <i class="fas fa-map-marker-alt location-icon"></i>
+                <select class="form-select" id="pickup_location" name="pickup_location">
+                    <option value="Sydney, NSW" {% if search_params.pickup_location == 'Sydney, NSW' %}selected{% endif %}>Sydney City, NSW</option>
+                    <option value="Melbourne, VIC" {% if search_params.pickup_location == 'Melbourne, VIC' %}selected{% endif %}>Melbourne, VIC</option>
+                    <option value="Brisbane, QLD" {% if search_params.pickup_location == 'Brisbane, QLD' %}selected{% endif %}>Brisbane, QLD</option>
+                    <option value="Perth, WA" {% if search_params.pickup_location == 'Perth, WA' %}selected{% endif %}>Perth, WA</option>
+                </select>
+                <i class="fas fa-chevron-down dropdown-icon"></i>
+            </div>
         </div>
-        <div class="col-md-2 mb-2">
-            <label for="dropoff_location" class="form-label">Drop-off Location</label>
-            <input type="text" class="form-control" id="dropoff_location" name="dropoff_location" placeholder="Enter city or airport" value="{{ search_params.dropoff_location|default:'' }}">
+        
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <label class="search-label">PICK UP</label>
+                <div class="date-time-select">
+                    <div class="date-select">
+                        <i class="fas fa-calendar-alt date-icon"></i>
+                        <input type="text" class="form-control" id="pickup_date" name="pickup_date" placeholder="Fri 04 Apr" value="{{ search_params.pickup_date|default:'' }}">
+                    </div>
+                    <div class="time-select">
+                        <select class="form-select" id="pickup_time" name="pickup_time">
+                            <option value="11:00 AM">11:00 AM</option>
+                            <option value="12:00 PM">12:00 PM</option>
+                            <option value="1:00 PM">1:00 PM</option>
+                            <option value="2:00 PM">2:00 PM</option>
+                        </select>
+                        <i class="fas fa-chevron-down dropdown-icon"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <label class="search-label">RETURN</label>
+                <div class="date-time-select">
+                    <div class="date-select">
+                        <i class="fas fa-calendar-alt date-icon"></i>
+                        <input type="text" class="form-control" id="return_date" name="return_date" placeholder="Fri 11 Apr" value="{{ search_params.return_date|default:'' }}">
+                    </div>
+                    <div class="time-select">
+                        <select class="form-select" id="return_time" name="return_time">
+                            <option value="11:00 AM">11:00 AM</option>
+                            <option value="12:00 PM">12:00 PM</option>
+                            <option value="1:00 PM">1:00 PM</option>
+                            <option value="2:00 PM">2:00 PM</option>
+                        </select>
+                        <i class="fas fa-chevron-down dropdown-icon"></i>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="col-md-2 mb-2">
-            <label for="pickup_date" class="form-label">Pick-up Date</label>
-            <input type="date" class="form-control" id="pickup_date" name="pickup_date" value="{{ search_params.pickup_date|default:'' }}">
-        </div>
-        <div class="col-md-2 mb-2">
-            <label for="return_date" class="form-label">Return Date</label>
-            <input type="date" class="form-control" id="return_date" name="return_date" value="{{ search_params.return_date|default:'' }}">
-        </div>
-        <div class="col-md-2 mb-2">
-            <label for="age" class="form-label">Driver Age</label>
-            <input type="number" class="form-control" id="age" name="age" min="18" max="99" placeholder="Age" value="{{ search_params.age|default:'' }}">
-        </div>
-        <div class="col-md-2 mb-2 d-flex align-items-center justify-content-center">
-            <button type="submit" class="btn btn-warning h-75 w-100 search-btn">
-                <span class="d-block">S<br>e<br>a<br>r<br>c<br>h</span>
+        
+        <div class="d-grid">
+            <button type="submit" class="btn btn-warning select-car-btn">
+                Select Car <i class="fas fa-arrow-right ms-2"></i>
             </button>
         </div>
-    </div>
-</form>
+    </form>
+</div>
