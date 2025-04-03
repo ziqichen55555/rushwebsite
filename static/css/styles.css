@@ -62,9 +62,24 @@ body {
     background-color: rgba(255, 255, 255, 0.9);
     border: none;
     border-radius: 10px;
-    max-width: 800px;
+    max-width: 1200px;
     margin: 0 auto;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.long-form-card {
+    padding: 0;
+}
+
+.slogan-container {
+    margin-bottom: 2rem !important;
+}
+
+.slogan-text {
+    font-size: 1.5rem;
+    font-style: italic;
+    margin-top: 0.5rem;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }
 
 .price-tag {
@@ -90,7 +105,29 @@ body {
 
 /* New Booking Search Styles */
 .booking-search-container {
-    padding: 2rem;
+    padding: 0;
+}
+
+.long-search-container {
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.search-segment {
+    flex: 1;
+    padding: 1.2rem 1.5rem;
+    background-color: white;
+    border-right: 1px solid #eee;
+}
+
+.search-button-segment {
+    padding: 1.2rem;
+    display: flex;
+    align-items: center;
+    background-color: white;
 }
 
 .booking-title {
@@ -114,9 +151,11 @@ body {
 
 .booking-highlights {
     display: flex;
-    flex-direction: column;
-    gap: 0.7rem;
-    margin-bottom: 2rem;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin: 1rem;
+    justify-content: center;
 }
 
 .highlight-item {
@@ -210,13 +249,15 @@ body {
     color: #000;
     font-weight: bold;
     font-size: 1.1rem;
-    padding: 0.75rem;
+    padding: 0.75rem 1.5rem;
     border-radius: 5px;
-    margin-top: 1rem;
+    margin: 0;
+    height: 45px;
     transition: all 0.3s ease;
     display: flex;
     align-items: center;
     justify-content: center;
+    white-space: nowrap;
 }
 
 .select-car-btn i {
@@ -302,6 +343,39 @@ body {
 }
 
 /* Responsive adjustments */
+@media (max-width: 992px) {
+    .hero-section {
+        min-height: 100vh;
+        padding: 1rem;
+    }
+    
+    .transparent-card {
+        width: 100%;
+        margin: 0;
+    }
+    
+    .long-search-container {
+        flex-direction: column;
+    }
+    
+    .search-segment {
+        border-right: none;
+        border-bottom: 1px solid #eee;
+    }
+    
+    .search-button-segment {
+        padding: 1.5rem;
+    }
+    
+    .slogan-container {
+        margin-bottom: 1.5rem !important;
+    }
+    
+    .slogan-text {
+        font-size: 1.2rem;
+    }
+}
+
 @media (max-width: 768px) {
     .hero-section {
         min-height: 100vh;
@@ -320,6 +394,7 @@ body {
     .booking-title {
         font-size: 1.8rem;
         text-align: center;
+        margin-bottom: 1rem;
     }
     
     .booking-title:after {
@@ -348,7 +423,7 @@ body {
     }
     
     .select-car-btn {
-        margin-top: 1.5rem;
+        margin-top: 0.5rem;
         padding: 1rem;
     }
 }
