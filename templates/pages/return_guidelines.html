@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+
+{% block title %}Car Return Guidelines - Rush Car Rental{% endblock %}
+
+{% block content %}
+<!-- Enhanced Breadcrumb -->
+<div class="breadcrumb-container py-2">
+    <div class="container">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb breadcrumb-custom mb-0">
+                <li class="breadcrumb-item">
+                    <a href="{% url 'home' %}" class="breadcrumb-home">
+                        <i class="fas fa-home"></i> Home
+                    </a>
+                </li>
+                <li class="breadcrumb-item active" aria-current="page">
+                    <i class="fas fa-car-alt"></i> Car Return Guidelines
+                </li>
+            </ol>
+        </nav>
+    </div>
+</div>
+
+<section class="py-5">
+    <div class="container">
+        <h1 class="mb-4">Car Return Guidelines</h1>
+        <p class="lead">Experience hassle-free rentals with transparent pricing and no hidden fees, making every trip as smooth as possible. Book Now and Experience the Rush Difference!</p>
+        
+        <div class="card shadow-sm mb-4">
+            <div class="card-body">
+                <h4 class="card-title">What should I pay attention to when returning the car?</h4>
+                <div class="mt-3">
+                    <h5 class="border-bottom pb-2 mb-3">Inspection and Settlement</h5>
+                    <p>When you arrive at the return location, staff will inspect the vehicle and record their findings. They will print a settlement statement on the spot, which you should carefully review to ensure there are no extra charges.</p>
+                    
+                    <h5 class="border-bottom pb-2 mb-3">After-Hours Returns</h5>
+                    <p>If you plan to return the car outside of business hours, confirm in advance with the rental company whether after-hours returns are allowed. If permitted, you will typically need to park the car in a designated area, lock it, and record the fuel level, mileage, and vehicle exterior condition by taking photos (make sure the camera's timestamp is enabled). Then, place the keys in the key drop-off box. Keep all relevant documents for a certain period, as you are responsible for any risks that occur between the time you return the car and the next business day.</p>
+                    
+                    <h5 class="border-bottom pb-2 mb-3">No Smoking</h5>
+                    <p>Do not smoke in the car; otherwise, you may be charged a cleaning fee.</p>
+                    
+                    <h5 class="border-bottom pb-2 mb-3">Fuel Policy</h5>
+                    <p>If your fuel policy is "full-to-full," retain the fuel receipt from within 5 km of the return location. The rental company may request this receipt to verify that the tank is full. For electric vehicles, you don't need to return them fully charged; the rental company will deduct the appropriate amount based on the battery level.</p>
+                    
+                    <h5 class="border-bottom pb-2 mb-3">Document Retention</h5>
+                    <p>After returning the car, keep all contracts and receipts for some time, preferably until the deposit is refunded to your credit card. If there are no traffic violations during the rental period, the deposit will generally be unfrozen and returned to the main driver's credit card within a month. If there are additional charges during the rental period, they may be deducted from the deposit.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
