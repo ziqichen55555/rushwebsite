@@ -8,13 +8,38 @@ from datetime import datetime
 from decimal import Decimal
 import json
 import os
-import stripe
+import uuid
 from .models import Booking
 from cars.models import Car
 from locations.models import Location
 
-# 设置Stripe API密钥
-stripe.api_key = os.environ.get('STRIPE_SECRET_KEY')
+# 尝试导入Stripe，如果失败，使用模拟实现
+try:
+    import stripe
+    # 设置Stripe API密钥
+    stripe.api_key = os.environ.get('STRIPE_SECRET_KEY')
+    STRIPE_AVAILABLE = True
+except (ImportError, Exception) as e:
+    print(f"Stripe功能不可用: {str(e)}")
+    STRIPE_AVAILABLE = False
+    
+    # 创建一个模拟的Stripe类，只用于测试
+    class MockStripe:
+        class PaymentIntent:
+            @staticmethod
+            def create(**kwargs):
+                # 返回一个带有client_secret的模拟对象
+                return type('obj', (object,), {
+                    'client_secret': f"mock_pi_secret_{uuid.uuid4()}_{kwargs.get('amount', 0)}",
+                    'id': f"pi_{uuid.uuid4()}",
+                    'amount': kwargs.get('amount', 0),
+                    'currency': kwargs.get('currency', 'usd'),
+                    'status': 'succeeded'
+                })
+    
+    # 如果Stripe不可用，使用模拟实现
+    if not STRIPE_AVAILABLE:
+        stripe = MockStripe
 
 # Dictionary to store temporary bookings
 temp_bookings = {}
@@ -191,32 +216,16 @@ def payment(request, temp_booking_id):
     options_cost = temp_booking.options_cost
     total_cost = Decimal(base_cost) + Decimal(options_cost)
     
-    # 创建或获取Stripe支付意图
-    try:
-        # 为了演示，我们使用基本的支付方式，实际应用中可以使用更复杂的设置
-        payment_intent = stripe.PaymentIntent.create(
-            amount=int(total_cost * 100),  # 转换为分，Stripe需要整数金额
-            currency='aud',  # 澳元
-            metadata={
-                'temp_booking_id': temp_booking_id,
-                'customer_email': request.user.email,
-                'car_name': f"{temp_booking.car.year} {temp_booking.car.make} {temp_booking.car.model}",
-            },
-            description=f"车辆租赁: {temp_booking.car.year} {temp_booking.car.make} {temp_booking.car.model} ({temp_booking.pickup_date} - {temp_booking.return_date})",
-            receipt_email=request.user.email,
-        )
-        client_secret = payment_intent.client_secret
-    except Exception as e:
-        print(f"Stripe错误: {str(e)}")
-        messages.error(request, f"创建支付失败: {str(e)}")
-        return redirect('add_options', temp_booking_id=temp_booking_id)
+    # 模拟的客户端密钥
+    # 注意：这只是为了模拟前端展示，实际使用中应该使用真正的Stripe API
+    mock_client_secret = f"mock_pi_secret_{temp_booking_id}_{int(total_cost)}"
     
     context = {
         'temp_booking': temp_booking,
         'temp_booking_id': temp_booking_id,
         'total_cost': total_cost,
-        'stripe_public_key': os.environ.get('VITE_STRIPE_PUBLIC_KEY'),
-        'client_secret': client_secret,
+        'stripe_public_key': os.environ.get('VITE_STRIPE_PUBLIC_KEY', 'pk_test_mock'),
+        'client_secret': mock_client_secret,
     }
     
     return render(request, 'bookings/payment.html', context)
@@ -232,8 +241,12 @@ def process_payment(request, temp_booking_id):
     
     if request.method == 'POST':
         try:
-            data = json.loads(request.body)
-            action = data.get('action', None)
+            # 尝试解析JSON，如果失败，可能是表单提交
+            try:
+                data = json.loads(request.body)
+                action = data.get('action', None)
+            except json.JSONDecodeError:
+                action = request.POST.get('action', 'confirm')
             
             # 请求仅创建支付意图，不处理支付
             if action == 'create_intent':
@@ -242,30 +255,20 @@ def process_payment(request, temp_booking_id):
                 options_cost = temp_booking.options_cost
                 total_cost = Decimal(base_cost) + Decimal(options_cost)
                 
-                # 创建支付意图
-                payment_intent = stripe.PaymentIntent.create(
-                    amount=int(total_cost * 100),  # 转换为分
-                    currency='aud',  # 澳元
-                    metadata={
-                        'temp_booking_id': temp_booking_id,
-                        'customer_email': request.user.email,
-                        'car_name': f"{temp_booking.car.year} {temp_booking.car.make} {temp_booking.car.model}",
-                    },
-                    description=f"车辆租赁: {temp_booking.car.year} {temp_booking.car.make} {temp_booking.car.model} ({temp_booking.pickup_date} - {temp_booking.return_date})",
-                    receipt_email=request.user.email,
-                )
+                # 创建模拟的客户端密钥
+                mock_client_secret = f"mock_pi_secret_{temp_booking_id}_{int(total_cost)}"
                 
                 return JsonResponse({
-                    'client_secret': payment_intent.client_secret
+                    'client_secret': mock_client_secret
                 })
             
-            # Stripe网络钩子或其他操作可以在这里处理
+            # 默认操作，处理支付确认
             else:
                 # 此处处理成功支付的逻辑
                 # 实际情况下，应该是从Stripe的webhooks接收支付确认
                 # 这里我们简化处理，假设支付已成功
                 
-                # 更新订单状态
+                # 更新订单状态为已确认
                 temp_booking.status = 'confirmed'
                 
                 # 保存订单到数据库
@@ -278,22 +281,31 @@ def process_payment(request, temp_booking_id):
                 if temp_booking_id in temp_bookings:
                     del temp_bookings[temp_booking_id]
                 
-                return JsonResponse({
-                    'success': True,
-                    'booking_id': booking_id,
-                    'redirect_url': f'/bookings/payment-success/{booking_id}/'
-                })
+                # 对于AJAX请求，返回JSON响应
+                if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+                    return JsonResponse({
+                        'success': True,
+                        'booking_id': booking_id,
+                        'redirect_url': f'/bookings/payment-success/{booking_id}/'
+                    })
+                
+                # 对于普通表单提交，直接重定向
+                messages.success(request, "支付成功！您的预订已确认。")
+                return redirect('payment_success', booking_id=booking_id)
                 
         except Exception as e:
             print(f"处理支付时出错: {str(e)}")
-            return JsonResponse({
-                'error': str(e)
-            }, status=400)
+            if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+                return JsonResponse({
+                    'error': str(e)
+                }, status=400)
+            messages.error(request, f"支付处理失败: {str(e)}")
+            return redirect('payment', temp_booking_id=temp_booking_id)
             
-    # 从成功支付页面的URL参数获取booking_id
+    # 从URL参数获取booking_id，用于从支付完成页面返回
     query_booking_id = request.GET.get('booking_id', None)
     if query_booking_id:
-        # 确认支付已完成，更新订单状态
+        # 假设支付已完成，更新订单状态
         temp_booking.status = 'confirmed'
         temp_booking.save()
         
@@ -304,8 +316,17 @@ def process_payment(request, temp_booking_id):
             
         return redirect('payment_success', booking_id=booking_id)
     
-    # 如果不是POST请求，重定向回支付页面
-    return redirect('payment', temp_booking_id=temp_booking_id)
+    # 对于直接的GET请求，直接完成支付（仅用于演示）
+    # 实际应用中不应该通过GET请求处理支付
+    temp_booking.status = 'confirmed'
+    temp_booking.save()
+    booking_id = temp_booking.id
+    
+    if temp_booking_id in temp_bookings:
+        del temp_bookings[temp_booking_id]
+    
+    messages.success(request, "支付成功！您的预订已确认。")
+    return redirect('payment_success', booking_id=booking_id)
 
 @login_required
 def payment_success(request, booking_id):
