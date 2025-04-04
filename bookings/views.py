@@ -160,24 +160,73 @@ def confirm_booking(request, temp_booking_id):
         # Update total cost with options
         base_cost = temp_booking.car.daily_rate * temp_booking.duration_days
         options_cost = temp_booking.options_cost
-        temp_booking.total_cost = Decimal(base_cost) + Decimal(options_cost)
+        total_cost = Decimal(base_cost) + Decimal(options_cost)
+        temp_booking.total_cost = total_cost
         
-        # Change status to confirmed
+        # Instead of confirming and saving now, redirect to payment page
+        return redirect('payment', temp_booking_id=temp_booking_id)
+    
+    # If not a POST request, redirect back to add options
+    return redirect('add_options', temp_booking_id=temp_booking_id)
+
+@login_required
+def payment(request, temp_booking_id):
+    # Get the temporary booking from storage
+    temp_booking = temp_bookings.get(temp_booking_id)
+    
+    if not temp_booking:
+        messages.error(request, "Booking session expired. Please try again.")
+        return redirect('home')
+    
+    # Calculate total cost (base + options)
+    base_cost = temp_booking.car.daily_rate * temp_booking.duration_days
+    options_cost = temp_booking.options_cost
+    total_cost = Decimal(base_cost) + Decimal(options_cost)
+    
+    context = {
+        'temp_booking': temp_booking,
+        'temp_booking_id': temp_booking_id,
+        'total_cost': total_cost
+    }
+    
+    return render(request, 'bookings/payment.html', context)
+
+@login_required
+def process_payment(request, temp_booking_id):
+    # Get the temporary booking from storage
+    temp_booking = temp_bookings.get(temp_booking_id)
+    
+    if not temp_booking:
+        messages.error(request, "Booking session expired. Please try again.")
+        return redirect('home')
+    
+    if request.method == 'POST':
+        # This is where Stripe payment processing would occur with a real API key
+        # For now, we'll just mark the booking as confirmed and save it
+        
+        # Update the status
         temp_booking.status = 'confirmed'
         
         # Save the booking to the database
         temp_booking.save()
         
-        # Clean up temporary booking
+        # Get the new booking ID from the database
         booking_id = temp_booking.id
+        
+        # Clean up temporary booking
         if temp_booking_id in temp_bookings:
             del temp_bookings[temp_booking_id]
         
-        messages.success(request, "Your booking has been confirmed!")
-        return redirect('booking_success', booking_id=booking_id)
+        messages.success(request, "支付成功！您的预订已确认。")
+        return redirect('payment_success', booking_id=booking_id)
     
-    # If not a POST request, redirect back to add options
-    return redirect('add_options', temp_booking_id=temp_booking_id)
+    # If not a POST request, redirect back to payment page
+    return redirect('payment', temp_booking_id=temp_booking_id)
+
+@login_required
+def payment_success(request, booking_id):
+    booking = get_object_or_404(Booking, pk=booking_id, user=request.user)
+    return render(request, 'bookings/payment_success.html', {'booking': booking})
 
 @login_required
 def booking_success(request, booking_id):

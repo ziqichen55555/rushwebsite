@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block title %}支付成功 - Rush Car Rental{% endblock %}
+
+{% block content %}
+<!-- Enhanced Breadcrumb -->
+<div class="breadcrumb-container py-2">
+    <div class="container">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb breadcrumb-custom mb-0">
+                <li class="breadcrumb-item">
+                    <a href="{% url 'home' %}" class="breadcrumb-home">
+                        <i class="fas fa-home"></i> Home
+                    </a>
+                </li>
+                <li class="breadcrumb-item active" aria-current="page">
+                    <i class="fas fa-check-circle"></i> 支付成功
+                </li>
+            </ol>
+        </nav>
+    </div>
+</div>
+
+<section class="py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 mx-auto">
+                <div class="card shadow text-center py-5">
+                    <div class="card-body">
+                        <div class="mb-4">
+                            <i class="fas fa-check-circle text-success fa-5x"></i>
+                        </div>
+                        <h1 class="mb-3">支付成功!</h1>
+                        <p class="lead mb-4">您的订单已确认，预订编号为 #{{ booking.id }}</p>
+                        <p class="mb-4">我们已将确认邮件发送至您的邮箱。</p>
+                        
+                        <div class="d-flex justify-content-center gap-3">
+                            <a href="{% url 'booking_detail' booking.id %}" class="btn btn-primary">查看预订详情</a>
+                            <a href="{% url 'home' %}" class="btn btn-outline-secondary">返回首页</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
