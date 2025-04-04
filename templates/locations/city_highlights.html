@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+
+{% block title %}City Highlights - Rush Car Rental{% endblock %}
+
+{% block content %}
+<!-- Enhanced Breadcrumb -->
+<div class="breadcrumb-container py-2">
+    <div class="container">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb breadcrumb-custom mb-0">
+                <li class="breadcrumb-item">
+                    <a href="{% url 'home' %}" class="breadcrumb-home">
+                        <i class="fas fa-home"></i> Home
+                    </a>
+                </li>
+                <li class="breadcrumb-item active" aria-current="page">
+                    <i class="fas fa-city"></i> City Highlights
+                </li>
+            </ol>
+        </nav>
+    </div>
+</div>
+
+<section class="py-5">
+    <div class="container">
+        <h1 class="mb-4">Explore City Highlights</h1>
+        <p class="lead mb-5">Discover exciting destinations to explore with your rental car. From bustling city centers to serene natural escapes, make the most of your journey with these curated highlights.</p>
+
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+            {% for highlight in highlights %}
+            <div class="col">
+                <div class="card h-100 shadow-sm border-0 hover-shadow">
+                    <img src="{{ highlight.image_url }}" class="card-img-top" alt="{{ highlight.city }}" style="height: 200px; object-fit: cover;">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <h5 class="card-title mb-0">{{ highlight.city }}</h5>
+                            <span class="badge bg-primary">{{ highlight.state.code }}</span>
+                        </div>
+                        <p class="card-text">{{ highlight.description }}</p>
+                    </div>
+                    <div class="card-footer bg-white border-top-0">
+                        <a href="{% url 'location_list' %}?state={{ highlight.state.code }}" class="btn btn-outline-primary btn-sm">
+                            <i class="fas fa-car-side me-1"></i> Find Cars in {{ highlight.state.name }}
+                        </a>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <div class="col-12">
+                <div class="alert alert-info">
+                    <i class="fas fa-info-circle me-2"></i> No city highlights are available at the moment. Please check back later.
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endblock %}

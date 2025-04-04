@@ -3,13 +3,19 @@
 {% block title %}Refund Policy - Rush Car Rental{% endblock %}
 
 {% block content %}
-<!-- Breadcrumb -->
-<div class="bg-light py-3">
+<!-- Enhanced Breadcrumb -->
+<div class="breadcrumb-container py-2">
     <div class="container">
         <nav aria-label="breadcrumb">
-            <ol class="breadcrumb mb-0">
-                <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Refund Policy</li>
+            <ol class="breadcrumb breadcrumb-custom mb-0">
+                <li class="breadcrumb-item">
+                    <a href="{% url 'home' %}" class="breadcrumb-home">
+                        <i class="fas fa-home"></i> Home
+                    </a>
+                </li>
+                <li class="breadcrumb-item active" aria-current="page">
+                    <i class="fas fa-money-bill-wave"></i> Refund Policy
+                </li>
             </ol>
         </nav>
     </div>
