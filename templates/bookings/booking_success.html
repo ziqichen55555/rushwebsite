@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load booking_extras %}
 
 {% block title %}Booking Confirmed - Rush Car Rental{% endblock %}
 
@@ -46,6 +47,70 @@
                                     <p><strong>Total Cost:</strong> ${{ booking.total_cost }}</p>
                                     <p><strong>Status:</strong> <span class="badge bg-success">{{ booking.status|title }}</span></p>
                                 </div>
+                            </div>
+                            
+                            <!-- Added Options -->
+                            <h5 class="border-bottom pb-2 mb-3">Selected Options</h5>
+                            <div class="row">
+                                {% if booking.damage_waiver or booking.extended_area or booking.satellite_navigation or booking.child_seats > 0 or booking.additional_drivers > 0 %}
+                                    <div class="col-12">
+                                        <ul class="list-group list-group-flush">
+                                            {% if booking.damage_waiver %}
+                                            <li class="list-group-item d-flex justify-content-between align-items-start bg-light">
+                                                <div class="ms-2 me-auto">
+                                                    <div class="fw-bold"><i class="fas fa-shield-alt text-warning me-2"></i> Damage Waiver</div>
+                                                    Reduces Damage Fee from $5000 to $0
+                                                </div>
+                                                <span class="badge bg-warning text-dark">$14 per day</span>
+                                            </li>
+                                            {% endif %}
+                                            
+                                            {% if booking.extended_area %}
+                                            <li class="list-group-item d-flex justify-content-between align-items-start bg-light">
+                                                <div class="ms-2 me-auto">
+                                                    <div class="fw-bold"><i class="fas fa-map-marked-alt text-warning me-2"></i> Extended Area</div>
+                                                    Victoria & Queensland-South-of-Bundaberg
+                                                </div>
+                                                <span class="badge bg-warning text-dark">$150 flat fee</span>
+                                            </li>
+                                            {% endif %}
+                                            
+                                            {% if booking.satellite_navigation %}
+                                            <li class="list-group-item d-flex justify-content-between align-items-start bg-light">
+                                                <div class="ms-2 me-auto">
+                                                    <div class="fw-bold"><i class="fas fa-satellite-dish text-warning me-2"></i> Sat Nav (GPS)</div>
+                                                    Navigation system
+                                                </div>
+                                                <span class="badge bg-warning text-dark">$5 per day</span>
+                                            </li>
+                                            {% endif %}
+                                            
+                                            {% if booking.child_seats > 0 %}
+                                            <li class="list-group-item d-flex justify-content-between align-items-start bg-light">
+                                                <div class="ms-2 me-auto">
+                                                    <div class="fw-bold"><i class="fas fa-baby text-warning me-2"></i> Child Seats</div>
+                                                    {{ booking.child_seats }} seat(s)
+                                                </div>
+                                                <span class="badge bg-warning text-dark">$8 per day per seat</span>
+                                            </li>
+                                            {% endif %}
+                                            
+                                            {% if booking.additional_drivers > 0 %}
+                                            <li class="list-group-item d-flex justify-content-between align-items-start bg-light">
+                                                <div class="ms-2 me-auto">
+                                                    <div class="fw-bold"><i class="fas fa-user-friends text-warning me-2"></i> Additional Drivers</div>
+                                                    {{ booking.additional_drivers }} driver(s)
+                                                </div>
+                                                <span class="badge bg-warning text-dark">$5 per day per driver</span>
+                                            </li>
+                                            {% endif %}
+                                        </ul>
+                                    </div>
+                                {% else %}
+                                    <div class="col-12">
+                                        <p class="text-muted">No additional options selected.</p>
+                                    </div>
+                                {% endif %}
                             </div>
                         </div>
                         
