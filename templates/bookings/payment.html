@@ -1,13 +1,13 @@
 {% extends 'base.html' %}
 {% load booking_extras %}
 
-{% block title %}支付 - Rush Car Rental{% endblock %}
+{% block title %}Payment - Rush Car Rental{% endblock %}
 
 {% block extra_head %}
 <!-- Stripe JS -->
 <script src="https://js.stripe.com/v3/"></script>
 <style>
-    /* Stripe Elements样式 */
+    /* Stripe Elements styles */
     .StripeElement {
         box-sizing: border-box;
         height: 40px;
@@ -74,11 +74,11 @@
                 </li>
                 <li class="breadcrumb-item">
                     <a href="{% url 'add_options' temp_booking_id %}">
-                        <i class="fas fa-plus-circle"></i> 选项
+                        <i class="fas fa-plus-circle"></i> Options
                     </a>
                 </li>
                 <li class="breadcrumb-item active" aria-current="page">
-                    <i class="fas fa-credit-card"></i> 支付
+                    <i class="fas fa-credit-card"></i> Payment
                 </li>
             </ol>
         </nav>
@@ -89,57 +89,76 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-8 mb-4">
-                <h1 class="mb-4">确认付款</h1>
-                <p class="lead mb-4">请完成支付以确认您的预订</p>
+                <h1 class="mb-4">Confirm Payment</h1>
+                <p class="lead mb-4">Please complete payment to confirm your reservation</p>
                 
                 <div class="card shadow mb-4">
                     <div class="card-header bg-warning text-dark">
-                        <h5 class="mb-0">支付方式</h5>
+                        <h5 class="mb-0">Payment Method</h5>
                     </div>
                     <div class="card-body">
-                        <form id="payment-form">
+                        <form id="payment-form" method="post" action="{% url 'process_payment' temp_booking_id %}">
                             {% csrf_token %}
+                            <input type="hidden" name="action" value="confirm">
                             
                             <div class="mb-4">
-                                <h6 class="mb-3">卡片信息</h6>
+                                <h6 class="mb-3">Card Information</h6>
                                 
                                 <div class="form-group mb-3">
-                                    <label for="card-element" class="form-label">信用卡或借记卡</label>
+                                    <label for="card-element" class="form-label">Credit or Debit Card</label>
                                     <div id="card-element" class="form-control">
-                                        <!-- Stripe Elements将在这里插入 -->
+                                        <!-- Stripe Elements will be inserted here -->
+                                        <div class="mock-card-form">
+                                            <div class="row mb-3">
+                                                <div class="col-12">
+                                                    <label class="form-label">Card Number</label>
+                                                    <input type="text" name="card_number" class="form-control" placeholder="4242 4242 4242 4242" maxlength="19">
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-6">
+                                                    <label class="form-label">Expiry Date</label>
+                                                    <input type="text" name="expiry_date" class="form-control" placeholder="MM/YY" maxlength="5">
+                                                </div>
+                                                <div class="col-6">
+                                                    <label class="form-label">CVC</label>
+                                                    <input type="text" name="cvc" class="form-control" placeholder="123" maxlength="3">
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                     <div id="payment-message" class="text-danger mt-2"></div>
                                 </div>
                                 
                                 <div class="mb-3">
-                                    <label for="card-holder-name" class="form-label">持卡人姓名</label>
-                                    <input type="text" class="form-control" id="card-holder-name" placeholder="如卡片上所示" required>
+                                    <label for="card-holder-name" class="form-label">Cardholder Name</label>
+                                    <input type="text" class="form-control" id="card-holder-name" name="card_holder_name" placeholder="As shown on card" required>
                                 </div>
                             </div>
                             
                             <div class="mb-4">
-                                <h6 class="mb-3">账单地址</h6>
+                                <h6 class="mb-3">Billing Address</h6>
                                 
                                 <div class="mb-3">
-                                    <label for="billing-address" class="form-label">地址</label>
-                                    <input type="text" class="form-control" id="billing-address" placeholder="街道地址" required>
+                                    <label for="billing-address" class="form-label">Address</label>
+                                    <input type="text" class="form-control" id="billing-address" name="billing_address" placeholder="Street address" required>
                                 </div>
                                 
                                 <div class="row">
                                     <div class="col-md-6 mb-3">
-                                        <label for="billing-city" class="form-label">城市</label>
-                                        <input type="text" class="form-control" id="billing-city" placeholder="城市" required>
+                                        <label for="billing-city" class="form-label">City</label>
+                                        <input type="text" class="form-control" id="billing-city" name="billing_city" placeholder="City" required>
                                     </div>
                                     <div class="col-md-6 mb-3">
-                                        <label for="billing-zip" class="form-label">邮编</label>
-                                        <input type="text" class="form-control" id="billing-zip" placeholder="邮政编码" required>
+                                        <label for="billing-zip" class="form-label">Postal Code</label>
+                                        <input type="text" class="form-control" id="billing-zip" name="billing_zip" placeholder="Postal code" required>
                                     </div>
                                 </div>
                                 
                                 <div class="mb-3">
-                                    <label for="billing-country" class="form-label">国家</label>
-                                    <select class="form-select" id="billing-country" required>
-                                        <option value="">选择国家</option>
+                                    <label for="billing-country" class="form-label">Country</label>
+                                    <select class="form-select" id="billing-country" name="billing_country" required>
+                                        <option value="">Select Country</option>
                                         <option value="AU" selected>Australia</option>
                                         <option value="NZ">New Zealand</option>
                                         <option value="US">United States</option>
@@ -151,22 +170,22 @@
                             
                             <div class="mt-4">
                                 <div class="form-check mb-3">
-                                    <input class="form-check-input" type="checkbox" id="save-card">
+                                    <input class="form-check-input" type="checkbox" id="save-card" name="save_card">
                                     <label class="form-check-label" for="save-card">
-                                        保存此卡信息，方便下次使用
+                                        Save this card for future use
                                     </label>
                                 </div>
                                 
                                 <div class="d-grid">
                                     <button id="submit-button" type="submit" class="btn btn-warning btn-lg">
-                                        支付 ${{ total_cost|floatformat:2 }} <i class="fas fa-lock ms-2"></i>
+                                        Pay ${{ total_cost|floatformat:2 }} <i class="fas fa-lock ms-2"></i>
                                         <div id="loading-spinner"></div>
                                     </button>
                                 </div>
                                 
                                 <div class="text-center mt-3">
                                     <small class="text-muted">
-                                        <i class="fas fa-shield-alt me-2"></i> 支付安全由Stripe提供保障
+                                        <i class="fas fa-shield-alt me-2"></i> Payment security provided by Stripe
                                     </small>
                                 </div>
                             </div>
@@ -196,7 +215,7 @@
             <div class="col-lg-4">
                 <div class="card shadow-sm mb-4 sticky-top" style="top: 20px; z-index: 999;">
                     <div class="card-header bg-warning text-dark">
-                        <h5 class="card-title mb-0">预订摘要</h5>
+                        <h5 class="card-title mb-0">Booking Summary</h5>
                     </div>
                     <div class="card-body">
                         <div class="d-flex align-items-center mb-3">
@@ -209,33 +228,33 @@
                         
                         <div class="booking-details mb-3">
                             <div class="d-flex justify-content-between mb-1">
-                                <div><i class="fas fa-map-marker-alt text-muted me-2"></i> 取车:</div>
+                                <div><i class="fas fa-map-marker-alt text-muted me-2"></i> Pick-up:</div>
                                 <div class="text-end">{{ temp_booking.pickup_location.name }}</div>
                             </div>
                             <div class="d-flex justify-content-between mb-1">
-                                <div><i class="fas fa-calendar text-muted me-2"></i> 日期:</div>
+                                <div><i class="fas fa-calendar text-muted me-2"></i> Date:</div>
                                 <div class="text-end">{{ temp_booking.pickup_date|date:"M d, Y" }}</div>
                             </div>
                             <div class="d-flex justify-content-between mb-1">
-                                <div><i class="fas fa-map-marker-alt text-muted me-2"></i> 还车:</div>
+                                <div><i class="fas fa-map-marker-alt text-muted me-2"></i> Drop-off:</div>
                                 <div class="text-end">{{ temp_booking.dropoff_location.name }}</div>
                             </div>
                             <div class="d-flex justify-content-between mb-1">
-                                <div><i class="fas fa-calendar text-muted me-2"></i> 日期:</div>
+                                <div><i class="fas fa-calendar text-muted me-2"></i> Date:</div>
                                 <div class="text-end">{{ temp_booking.return_date|date:"M d, Y" }}</div>
                             </div>
                             <div class="d-flex justify-content-between">
-                                <div><i class="fas fa-clock text-muted me-2"></i> 时长:</div>
-                                <div class="text-end">{{ temp_booking.duration_days }} 天</div>
+                                <div><i class="fas fa-clock text-muted me-2"></i> Duration:</div>
+                                <div class="text-end">{{ temp_booking.duration_days }} day(s)</div>
                             </div>
                         </div>
                         
                         <!-- Price Breakdown -->
                         <div class="price-breakdown border-top pt-3 mb-3">
-                            <h6 class="mb-2">价格明细</h6>
+                            <h6 class="mb-2">Price Breakdown</h6>
                             {% with base_cost=temp_booking.car.daily_rate|multiply:temp_booking.duration_days %}
                             <div class="d-flex justify-content-between mb-2">
-                                <span>车辆租金</span>
+                                <span>Vehicle Rental</span>
                                 <span>${{ base_cost|floatformat:2 }}</span>
                             </div>
                             {% endwith %}
@@ -244,7 +263,7 @@
                             {% if temp_booking.damage_waiver %}
                             {% with damage_cost=14|multiply:temp_booking.duration_days %}
                             <div class="d-flex justify-content-between mb-2">
-                                <span>损伤保障 ($14 x {{ temp_booking.duration_days }} 天)</span>
+                                <span>Damage Waiver ($14 x {{ temp_booking.duration_days }} day(s))</span>
                                 <span>${{ damage_cost|floatformat:2 }}</span>
                             </div>
                             {% endwith %}
@@ -252,7 +271,7 @@
                             
                             {% if temp_booking.extended_area %}
                             <div class="d-flex justify-content-between mb-2">
-                                <span>扩展区域 (固定费用)</span>
+                                <span>Extended Area (flat fee)</span>
                                 <span>$150.00</span>
                             </div>
                             {% endif %}
@@ -260,7 +279,7 @@
                             {% if temp_booking.satellite_navigation %}
                             {% with nav_cost=5|multiply:temp_booking.duration_days %}
                             <div class="d-flex justify-content-between mb-2">
-                                <span>GPS导航 ($5 x {{ temp_booking.duration_days }} 天)</span>
+                                <span>GPS Navigation ($5 x {{ temp_booking.duration_days }} day(s))</span>
                                 <span>${{ nav_cost|floatformat:2 }}</span>
                             </div>
                             {% endwith %}
@@ -269,7 +288,7 @@
                             {% if temp_booking.child_seats > 0 %}
                             {% with seat_cost=8|multiply:temp_booking.duration_days|multiply:temp_booking.child_seats %}
                             <div class="d-flex justify-content-between mb-2">
-                                <span>儿童座椅 ($8 x {{ temp_booking.duration_days }} 天 x {{ temp_booking.child_seats }})</span>
+                                <span>Child Seats ($8 x {{ temp_booking.duration_days }} day(s) x {{ temp_booking.child_seats }})</span>
                                 <span>${{ seat_cost|floatformat:2 }}</span>
                             </div>
                             {% endwith %}
@@ -278,21 +297,21 @@
                             {% if temp_booking.additional_drivers > 0 %}
                             {% with driver_cost=5|multiply:temp_booking.duration_days|multiply:temp_booking.additional_drivers %}
                             <div class="d-flex justify-content-between mb-2">
-                                <span>额外驾驶员 ($5 x {{ temp_booking.duration_days }} 天 x {{ temp_booking.additional_drivers }})</span>
+                                <span>Additional Drivers ($5 x {{ temp_booking.duration_days }} day(s) x {{ temp_booking.additional_drivers }})</span>
                                 <span>${{ driver_cost|floatformat:2 }}</span>
                             </div>
                             {% endwith %}
                             {% endif %}
                             
                             <div class="d-flex justify-content-between pt-2 border-top">
-                                <strong>总计</strong>
+                                <strong>Total</strong>
                                 <strong>${{ total_cost|floatformat:2 }}</strong>
                             </div>
                         </div>
                         
                         <div class="booking-terms small text-muted mt-3">
                             <p class="mb-0">
-                                继续付款，即表示您同意我们的 <a href="{% url 'rental_conditions' %}">租赁条款</a> 和 <a href="{% url 'refund_policy' %}">退款政策</a>。
+                                By proceeding with payment, you agree to our <a href="{% url 'rental_conditions' %}">Rental Terms</a> and <a href="{% url 'refund_policy' %}">Refund Policy</a>.
                             </p>
                         </div>
                     </div>
@@ -305,134 +324,46 @@
 
 {% block scripts %}
 <script>
-    // 当使用模拟Stripe，我们不需要真正初始化Stripe API
-    // 这里创建一个模拟实现以便展示界面
-    let isMockStripe = true; // 设置为模拟模式
-    let stripe = null;
-    let elements = null;
-    let clientSecret = '{{ client_secret }}';
-    
     document.addEventListener('DOMContentLoaded', function() {
-        try {
-            // 由于我们已经确定使用模拟模式，直接设置模拟界面
-            console.log("使用模拟的Stripe支付界面");
-            setupMockPayment();
-        } catch (e) {
-            console.error("设置支付界面出错:", e);
-        }
+        const form = document.querySelector("#payment-form");
+        const submitButton = document.querySelector("#submit-button");
+        const loadingSpinner = document.querySelector("#loading-spinner");
+        const messageContainer = document.querySelector("#payment-message");
         
-        document.querySelector("#payment-form").addEventListener("submit", handleSubmit);
-    });
-    
-    // 设置模拟支付界面
-    function setupMockPayment() {
-        const cardElement = document.querySelector("#card-element");
-        
-        // 创建模拟的信用卡输入框
-        cardElement.innerHTML = `
-            <div class="mock-card-form">
-                <div class="row mb-3">
-                    <div class="col-12">
-                        <label class="form-label">卡号</label>
-                        <input type="text" class="form-control" placeholder="4242 4242 4242 4242" maxlength="19">
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-6">
-                        <label class="form-label">到期日期</label>
-                        <input type="text" class="form-control" placeholder="MM/YY" maxlength="5">
-                    </div>
-                    <div class="col-6">
-                        <label class="form-label">CVC</label>
-                        <input type="text" class="form-control" placeholder="123" maxlength="3">
-                    </div>
-                </div>
-            </div>
-        `;
-    }
-    
-    // 处理表单提交
-    async function handleSubmit(e) {
-        e.preventDefault();
-        
-        setLoading(true);
-        
-        // 获取表单信息
-        const cardHolderName = document.getElementById('card-holder-name').value;
-        const billingAddress = {
-            line1: document.getElementById('billing-address').value,
-            city: document.getElementById('billing-city').value,
-            postal_code: document.getElementById('billing-zip').value,
-            country: document.getElementById('billing-country').value,
-        };
-        
-        // 如果使用模拟支付
-        if (isMockStripe) {
-            // 检查是否填写了必要信息
-            if (!cardHolderName || !billingAddress.line1 || !billingAddress.city 
-                || !billingAddress.postal_code || !billingAddress.country) {
-                showMessage("请填写所有必要的支付信息");
-                setLoading(false);
+        form.addEventListener("submit", function(e) {
+            e.preventDefault();
+            
+            // Show loading state
+            submitButton.disabled = true;
+            loadingSpinner.style.display = "inline-block";
+            
+            // Check required fields
+            const cardHolderName = document.getElementById('card-holder-name').value;
+            const billingAddress = document.getElementById('billing-address').value;
+            const billingCity = document.getElementById('billing-city').value;
+            const billingZip = document.getElementById('billing-zip').value;
+            
+            if (!cardHolderName || !billingAddress || !billingCity || !billingZip) {
+                showMessage("Please fill in all required fields");
+                submitButton.disabled = false;
+                loadingSpinner.style.display = "none";
                 return;
             }
             
-            // 提交处理支付表单
-            try {
-                // 直接调用后端进行支付处理
-                const response = await fetch('{% url "process_payment" temp_booking_id %}', {
-                    method: "POST",
-                    headers: { 
-                        "Content-Type": "application/json",
-                        "X-Requested-With": "XMLHttpRequest",
-                        "X-CSRFToken": document.querySelector('[name=csrfmiddlewaretoken]').value 
-                    },
-                    body: JSON.stringify({ 
-                        action: 'confirm',
-                        billing_details: {
-                            name: cardHolderName,
-                            address: billingAddress 
-                        }
-                    })
-                });
-                
-                const result = await response.json();
-                if (result.success) {
-                    // 重定向到支付成功页面
-                    window.location.href = result.redirect_url;
-                } else {
-                    showMessage(result.error || "支付处理失败");
-                    setLoading(false);
-                }
-            } catch (e) {
-                console.error("支付处理时出错:", e);
-                // 出错时，我们仍然假设支付成功，直接重定向（仅用于演示）
-                window.location.href = '{% url "process_payment" temp_booking_id %}';
-            }
-        }
-    }
-    
-    // 显示错误消息
-    function showMessage(messageText) {
-        const messageContainer = document.querySelector("#payment-message");
+            // Submit the form
+            form.submit();
+        });
         
-        messageContainer.textContent = messageText;
-        messageContainer.style.display = "block";
-        
-        setTimeout(function() {
-            messageContainer.style.display = "none";
-            messageContainer.textContent = "";
-        }, 6000);
-    }
-    
-    // 设置加载状态
-    function setLoading(isLoading) {
-        if (isLoading) {
-            document.querySelector("#submit-button").disabled = true;
-            document.querySelector("#loading-spinner").style.display = "inline-block";
-        } else {
-            document.querySelector("#submit-button").disabled = false;
-            document.querySelector("#loading-spinner").style.display = "none";
+        // Show message function
+        function showMessage(messageText) {
+            messageContainer.textContent = messageText;
+            messageContainer.style.display = "block";
+            
+            setTimeout(function() {
+                messageContainer.style.display = "none";
+                messageContainer.textContent = "";
+            }, 6000);
         }
-    }
+    });
 </script>
 {% endblock %}

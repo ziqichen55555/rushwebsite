@@ -241,83 +241,86 @@ def process_payment(request, temp_booking_id):
     
     if request.method == 'POST':
         try:
-            # 尝试解析JSON，如果失败，可能是表单提交
-            try:
-                data = json.loads(request.body)
-                action = data.get('action', None)
-            except json.JSONDecodeError:
+            # For regular form submission (most likely case now)
+            if request.content_type and 'application/x-www-form-urlencoded' in request.content_type:
                 action = request.POST.get('action', 'confirm')
-            
-            # 请求仅创建支付意图，不处理支付
-            if action == 'create_intent':
-                # 计算总价格
-                base_cost = temp_booking.car.daily_rate * temp_booking.duration_days
-                options_cost = temp_booking.options_cost
-                total_cost = Decimal(base_cost) + Decimal(options_cost)
                 
-                # 创建模拟的客户端密钥
-                mock_client_secret = f"mock_pi_secret_{temp_booking_id}_{int(total_cost)}"
+                # Process the payment - this would interact with Stripe in production
+                # But for now, we'll just confirm the booking directly
                 
-                return JsonResponse({
-                    'client_secret': mock_client_secret
-                })
-            
-            # 默认操作，处理支付确认
-            else:
-                # 此处处理成功支付的逻辑
-                # 实际情况下，应该是从Stripe的webhooks接收支付确认
-                # 这里我们简化处理，假设支付已成功
-                
-                # 更新订单状态为已确认
+                # Update booking status to confirmed
                 temp_booking.status = 'confirmed'
                 
-                # 保存订单到数据库
+                # Save booking to database
                 temp_booking.save()
                 
-                # 获取新创建的订单ID
+                # Get the new booking ID
                 booking_id = temp_booking.id
                 
-                # 清理临时订单
+                # Clean up temporary booking
                 if temp_booking_id in temp_bookings:
                     del temp_bookings[temp_booking_id]
                 
-                # 对于AJAX请求，返回JSON响应
-                if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+                # Redirect to success page
+                messages.success(request, "Payment successful! Your booking has been confirmed.")
+                return redirect('payment_success', booking_id=booking_id)
+                
+            # For AJAX requests (JSON)
+            else:
+                try:
+                    data = json.loads(request.body)
+                    action = data.get('action', None)
+                except json.JSONDecodeError:
+                    action = 'confirm'
+                
+                # Request to create payment intent only
+                if action == 'create_intent':
+                    # Calculate total price
+                    base_cost = temp_booking.car.daily_rate * temp_booking.duration_days
+                    options_cost = temp_booking.options_cost
+                    total_cost = Decimal(base_cost) + Decimal(options_cost)
+                    
+                    # Create mock client secret
+                    mock_client_secret = f"mock_pi_secret_{temp_booking_id}_{int(total_cost)}"
+                    
+                    return JsonResponse({
+                        'client_secret': mock_client_secret
+                    })
+                
+                # Default action - handle payment confirmation
+                else:
+                    # Update booking status to confirmed
+                    temp_booking.status = 'confirmed'
+                    
+                    # Save booking to database
+                    temp_booking.save()
+                    
+                    # Get the new booking ID
+                    booking_id = temp_booking.id
+                    
+                    # Clean up temporary booking
+                    if temp_booking_id in temp_bookings:
+                        del temp_bookings[temp_booking_id]
+                    
+                    # Return JSON response for AJAX requests
                     return JsonResponse({
                         'success': True,
                         'booking_id': booking_id,
                         'redirect_url': f'/bookings/payment-success/{booking_id}/'
                     })
                 
-                # 对于普通表单提交，直接重定向
-                messages.success(request, "支付成功！您的预订已确认。")
-                return redirect('payment_success', booking_id=booking_id)
-                
         except Exception as e:
-            print(f"处理支付时出错: {str(e)}")
+            print(f"Error processing payment: {str(e)}")
             if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
                 return JsonResponse({
                     'error': str(e)
                 }, status=400)
-            messages.error(request, f"支付处理失败: {str(e)}")
+            messages.error(request, f"Payment processing failed: {str(e)}")
             return redirect('payment', temp_booking_id=temp_booking_id)
-            
-    # 从URL参数获取booking_id，用于从支付完成页面返回
-    query_booking_id = request.GET.get('booking_id', None)
-    if query_booking_id:
-        # 假设支付已完成，更新订单状态
-        temp_booking.status = 'confirmed'
-        temp_booking.save()
-        
-        # 获取新建订单ID并清理临时订单
-        booking_id = temp_booking.id
-        if temp_booking_id in temp_bookings:
-            del temp_bookings[temp_booking_id]
-            
-        return redirect('payment_success', booking_id=booking_id)
     
-    # 对于直接的GET请求，直接完成支付（仅用于演示）
-    # 实际应用中不应该通过GET请求处理支付
+    # For GET requests - simplified flow for testing
+    # In a real application, GET requests should not process payments
+    # This is only for demonstration purposes
     temp_booking.status = 'confirmed'
     temp_booking.save()
     booking_id = temp_booking.id
@@ -325,7 +328,7 @@ def process_payment(request, temp_booking_id):
     if temp_booking_id in temp_bookings:
         del temp_bookings[temp_booking_id]
     
-    messages.success(request, "支付成功！您的预订已确认。")
+    messages.success(request, "Payment successful! Your booking has been confirmed.")
     return redirect('payment_success', booking_id=booking_id)
 
 @login_required
