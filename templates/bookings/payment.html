@@ -1,370 +1,357 @@
 {% extends 'base.html' %}
-{% load booking_extras %}
+{% load static %}
+{% load custom_filters %}
 
-{% block title %}Payment - Rush Car Rental{% endblock %}
+{% block title %}Payment - {{ temp_booking.car.make }} {{ temp_booking.car.model }}{% endblock %}
 
-{% block extra_head %}
-<!-- Stripe JS -->
-<script src="https://js.stripe.com/v3/"></script>
+{% block extra_css %}
 <style>
-    /* Stripe Elements styles */
-    .StripeElement {
-        box-sizing: border-box;
-        height: 40px;
-        padding: 10px 12px;
-        border: 1px solid #ced4da;
-        border-radius: 4px;
-        background-color: white;
-        box-shadow: 0 1px 3px 0 #e6ebf1;
-        -webkit-transition: box-shadow 150ms ease;
-        transition: box-shadow 150ms ease;
-    }
-
-    .StripeElement--focus {
-        box-shadow: 0 1px 3px 0 #cfd7df;
-        border-color: #80bdff;
-    }
-
-    .StripeElement--invalid {
-        border-color: #fa755a;
-    }
-
-    .StripeElement--webkit-autofill {
-        background-color: #fefde5 !important;
+    .payment-form label {
+        font-weight: 500;
     }
     
-    #payment-message {
-        display: none;
-        color: #dc3545;
-        margin-top: 8px;
+    .payment-form .form-control {
+        border-radius: 0.5rem;
     }
     
-    #loading-spinner {
-        display: none;
-        width: 20px;
-        height: 20px;
-        border: 3px solid rgba(0, 0, 0, 0.1);
-        border-radius: 50%;
-        border-top-color: #007bff;
-        animation: spin 1s ease-in-out infinite;
-        margin-left: 12px;
-    }
-    
-    @keyframes spin {
-        to { transform: rotate(360deg); }
-    }
-
-    /* Custom Modal */
-    #payment-confirm-modal {
-        display: none;
-        position: fixed;
-        left: 0;
-        top: 0;
-        width: 100%;
-        height: 100%;
-        z-index: 1050;
+    .payment-details-card {
+        background-color: #f8f9fa;
+        border-left: 4px solid #ffc107;
     }
     
     .modal-overlay {
         position: fixed;
-        left: 0;
         top: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(0,0,0,0.5);
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: 1050;
     }
     
-    .modal-container {
-        position: absolute;
+    #payment-confirm-modal {
+        display: none;
+        position: fixed;
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
-        max-width: 500px;
-        width: 90%;
-        background-color: white;
-        border-radius: 8px;
-        box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        z-index: 1051;
+        max-width: 90%;
+        width: 550px;
     }
     
-    .modal-header {
-        padding: 15px;
-        border-bottom: 1px solid #e9ecef;
-        background-color: #f8f9fa;
-        border-top-left-radius: 8px;
-        border-top-right-radius: 8px;
+    .price-comparison {
+        font-size: 0.9rem;
     }
     
-    .modal-title {
-        margin: 0;
-        font-size: 1.25rem;
-    }
-    
-    .modal-body {
-        padding: 20px;
-    }
-    
-    .modal-footer {
-        display: flex;
-        justify-content: flex-end;
-        padding: 15px;
-        border-top: 1px solid #e9ecef;
-        gap: 10px;
+    .price-comparison .competitor-price {
+        text-decoration: line-through;
+        color: #dc3545;
     }
 </style>
 {% endblock %}
 
 {% block content %}
-<!-- Enhanced Breadcrumb -->
-<div class="breadcrumb-container py-2">
+<!-- Hero Section -->
+<section class="container-fluid bg-dark text-white py-4">
     <div class="container">
-        <nav aria-label="breadcrumb">
-            <ol class="breadcrumb breadcrumb-custom mb-0">
-                <li class="breadcrumb-item">
-                    <a href="{% url 'home' %}" class="breadcrumb-home">
-                        <i class="fas fa-home"></i> Home
-                    </a>
-                </li>
-                <li class="breadcrumb-item">
-                    <a href="{% url 'car_detail' temp_booking.car.id %}">
-                        <i class="fas fa-car"></i> {{ temp_booking.car.make }} {{ temp_booking.car.model }}
-                    </a>
-                </li>
-                <li class="breadcrumb-item">
-                    <a href="{% url 'add_options' temp_booking_id %}">
-                        <i class="fas fa-plus-circle"></i> Options
-                    </a>
-                </li>
-                <li class="breadcrumb-item active" aria-current="page">
-                    <i class="fas fa-credit-card"></i> Payment
-                </li>
-            </ol>
-        </nav>
-    </div>
-</div>
-
-<section class="py-5">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-8 mb-4">
-                <h1 class="mb-4">Confirm Payment</h1>
-                <p class="lead mb-4">Please complete payment to confirm your reservation</p>
-                
-                <div class="card shadow mb-4">
-                    <div class="card-header bg-warning text-dark">
-                        <h5 class="mb-0">Payment Method</h5>
-                    </div>
-                    <div class="card-body">
-                        <form id="payment-form" method="post" action="{% url 'process_payment' temp_booking_id %}">
-                            {% csrf_token %}
-                            <input type="hidden" name="action" value="confirm">
-                            
-                            <div class="mb-4">
-                                <h6 class="mb-3">Card Information</h6>
-                                
-                                <div class="form-group mb-3">
-                                    <label for="card-element" class="form-label">Credit or Debit Card</label>
-                                    <div id="card-element" class="form-control">
-                                        <!-- Stripe Elements will be inserted here -->
-                                        <div class="mock-card-form">
-                                            <div class="row mb-3">
-                                                <div class="col-12">
-                                                    <label for="card_number" class="form-label">Card Number</label>
-                                                    <input type="text" class="form-control" name="card_number" id="card_number" placeholder="1234 5678 9012 3456" maxlength="19" required>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-6">
-                                                    <label for="expiry_date" class="form-label">Expiry Date</label>
-                                                    <input type="text" class="form-control" name="expiry_date" id="expiry_date" placeholder="MM/YY" maxlength="5" required>
-                                                </div>
-                                                <div class="col-6">
-                                                    <label for="cvc" class="form-label">CVC</label>
-                                                    <input type="text" class="form-control" name="cvc" id="cvc" placeholder="123" maxlength="3" required>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div id="payment-message" class="alert alert-danger" role="alert"></div>
-                            </div>
-
-                            <div class="mb-4">
-                                <h6 class="mb-3">Billing Information</h6>
-                                <div class="row">
-                                    <div class="col-md-6 mb-3">
-                                        <label for="name" class="form-label">Cardholder Name</label>
-                                        <input type="text" class="form-control" id="name" name="name" required value="{{ request.user.get_full_name }}">
-                                    </div>
-                                    <div class="col-md-6 mb-3">
-                                        <label for="email" class="form-label">Email</label>
-                                        <input type="email" class="form-control" id="email" name="email" required value="{{ request.user.email }}">
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <div class="form-check mb-4">
-                                <input class="form-check-input" type="checkbox" name="terms_accepted" id="terms_accepted" required>
-                                <label class="form-check-label" for="terms_accepted">
-                                    I agree to the <a href="{% url 'rental_conditions' %}" target="_blank">Rental Conditions</a> and <a href="{% url 'refund_policy' %}" target="_blank">Refund Policy</a>
-                                </label>
-                            </div>
-                            
-                            <div class="d-grid gap-2">
-                                <button id="submit-button" class="btn btn-warning btn-lg" type="button">Continue to Payment</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
+        <div class="row align-items-center">
+            <div class="col-md-6">
+                <h1>Complete Your Booking</h1>
+                <p class="mb-0">Almost there! Please provide your payment details to complete your booking.</p>
             </div>
-            
-            <!-- Booking Details Summary -->
-            <div class="col-lg-4">
-                <div class="card shadow sticky-top" style="top: 20px; z-index: 1">
-                    <div class="card-header bg-dark text-white">
-                        <h5 class="mb-0">Booking Summary</h5>
-                    </div>
-                    <div class="card-body">
-                        <div class="d-flex align-items-center mb-3">
-                            <img src="{{ temp_booking.car.image_url }}" alt="{{ temp_booking.car.make }} {{ temp_booking.car.model }}" class="rounded" width="60" height="45" style="object-fit: cover;">
-                            <div class="ms-3">
-                                <h6 class="mb-0">{{ temp_booking.car.year }} {{ temp_booking.car.make }} {{ temp_booking.car.model }}</h6>
-                                <small class="text-muted">{{ temp_booking.car.category.name }}</small>
-                            </div>
-                        </div>
-                        
-                        <div class="mb-3">
-                            <div class="d-flex justify-content-between mb-2">
-                                <div>
-                                    <i class="fas fa-calendar-alt text-warning me-2"></i> Rental Period:
-                                </div>
-                                <div class="text-end">{{ temp_booking.duration_days }} day(s)</div>
-                            </div>
-                            <div class="d-flex justify-content-between mb-2">
-                                <div>
-                                    <i class="fas fa-map-marker-alt text-warning me-2"></i> Pick-up:
-                                </div>
-                                <div class="text-end">{{ temp_booking.pickup_date|date:"M d, Y" }}</div>
-                            </div>
-                            <div class="d-flex justify-content-between mb-2">
-                                <div>
-                                    <i class="fas fa-map-marker-alt text-warning me-2"></i> Drop-off:
-                                </div>
-                                <div class="text-end">{{ temp_booking.return_date|date:"M d, Y" }}</div>
-                            </div>
-                        </div>
-                        
-                        <hr>
-                        
-                        <div class="mb-3">
-                            <h6 class="mb-3">Cost Breakdown</h6>
-                            <div class="d-flex justify-content-between mb-2">
-                                <div>Base Rate ({{ temp_booking.duration_days }} days)</div>
-                                <div>${{ temp_booking.car.daily_rate|multiply:temp_booking.duration_days|floatformat:2 }}</div>
-                            </div>
-                            
-                            {% if temp_booking.damage_waiver %}
-                            <div class="d-flex justify-content-between mb-2">
-                                <div>Damage Waiver</div>
-                                <div>$18.00</div>
-                            </div>
-                            {% endif %}
-                            
-                            {% if temp_booking.extended_area %}
-                            <div class="d-flex justify-content-between mb-2">
-                                <div>Extended Area Cover</div>
-                                <div>$10.00</div>
-                            </div>
-                            {% endif %}
-                            
-                            {% if temp_booking.satellite_navigation %}
-                            <div class="d-flex justify-content-between mb-2">
-                                <div>GPS Navigation</div>
-                                <div>$14.95</div>
-                            </div>
-                            {% endif %}
-                            
-                            {% if temp_booking.child_seats > 0 %}
-                            <div class="d-flex justify-content-between mb-2">
-                                <div>Child Seats ({{ temp_booking.child_seats }})</div>
-                                <div>${{ temp_booking.child_seats|multiply:8.50|floatformat:2 }}</div>
-                            </div>
-                            {% endif %}
-                            
-                            {% if temp_booking.additional_drivers > 0 %}
-                            <div class="d-flex justify-content-between mb-2">
-                                <div>Additional Drivers ({{ temp_booking.additional_drivers }})</div>
-                                <div>${{ temp_booking.additional_drivers|multiply:5.00|floatformat:2 }}</div>
-                            </div>
-                            {% endif %}
-                        </div>
-                        
-                        <hr>
-                        
-                        <div class="d-flex justify-content-between mb-0">
-                            <div><strong>Total Amount</strong></div>
-                            <div><strong class="text-warning">${{ total_cost|floatformat:2 }}</strong></div>
-                        </div>
-                    </div>
-                </div>
+            <div class="col-md-6 d-none d-md-block text-end">
+                <img src="{% static 'images/secure-payment.svg' %}" alt="Secure Payment" class="img-fluid" style="max-height: 100px;">
             </div>
         </div>
     </div>
 </section>
 
-<!-- Payment Confirmation Modal -->
-<div id="payment-confirm-modal">
-    <div class="modal-overlay"></div>
-    <div class="modal-container">
-        <div class="modal-header">
-            <h4 class="modal-title"></h4>
+<!-- Content Section -->
+<section class="container my-5">
+    <div class="row">
+        <!-- Breadcrumb -->
+        <div class="col-12 mb-4">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb breadcrumb-custom mb-0">
+                    <li class="breadcrumb-item">
+                        <a href="{% url 'home' %}" class="breadcrumb-home">
+                            <i class="fas fa-home"></i> Home
+                        </a>
+                    </li>
+                    <li class="breadcrumb-item">
+                        <a href="{% url 'car_detail' temp_booking.car.id %}">
+                            <i class="fas fa-car"></i> {{ temp_booking.car.make }} {{ temp_booking.car.model }}
+                        </a>
+                    </li>
+                    <li class="breadcrumb-item">
+                        <a href="{% url 'add_options' temp_booking_id %}">
+                            <i class="fas fa-plus-circle"></i> Options
+                        </a>
+                    </li>
+                    <li class="breadcrumb-item active" aria-current="page">
+                        <i class="fas fa-credit-card"></i> Payment
+                    </li>
+                </ol>
+            </nav>
         </div>
-        <div class="modal-body">
-            <div class="card">
-                <div class="card-body p-3">
-                    <table class="table table-striped mb-0">
-                        <tbody>
-                            <tr>
-                                <th style="width: 40%;">Vehicle:</th>
-                                <td>{{ temp_booking.car.year }} {{ temp_booking.car.make }} {{ temp_booking.car.model }}</td>
-                            </tr>
-                            <tr>
-                                <th>Pick-up:</th>
-                                <td>{{ temp_booking.pickup_location.name }}, {{ temp_booking.pickup_date|date:"M d, Y" }}</td>
-                            </tr>
-                            <tr>
-                                <th>Drop-off:</th>
-                                <td>{{ temp_booking.dropoff_location.name }}, {{ temp_booking.return_date|date:"M d, Y" }}</td>
-                            </tr>
-                            <tr>
-                                <th>Duration:</th>
-                                <td>{{ temp_booking.duration_days }} day(s)</td>
-                            </tr>
-                            <tr>
-                                <th>Total Amount:</th>
-                                <td><strong>${{ total_cost|floatformat:2 }}</strong></td>
-                            </tr>
-                        </tbody>
-                    </table>
+        
+        <!-- Main Content -->
+        <div class="col-lg-8">
+            <div class="card shadow mb-4">
+                <div class="card-header bg-dark text-white py-3">
+                    <h5 class="mb-0">
+                        <i class="fas fa-credit-card me-2"></i>Payment Information
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <form id="payment-form" class="payment-form" method="post" action="{% url 'process_payment' temp_booking_id %}">
+                        {% csrf_token %}
+                        
+                        <!-- Payment Method Selection -->
+                        <div class="mb-4">
+                            <label class="form-label">Payment Method</label>
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <div class="card border h-100">
+                                        <div class="card-body p-3">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" name="payment_method" id="credit_card" value="credit_card" checked>
+                                                <label class="form-check-label w-100" for="credit_card">
+                                                    <div class="d-flex justify-content-between align-items-center">
+                                                        <span>Credit Card</span>
+                                                        <div>
+                                                            <i class="fab fa-cc-visa fa-lg text-primary me-1"></i>
+                                                            <i class="fab fa-cc-mastercard fa-lg text-danger me-1"></i>
+                                                            <i class="fab fa-cc-amex fa-lg text-info"></i>
+                                                        </div>
+                                                    </div>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="card border h-100">
+                                        <div class="card-body p-3">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" name="payment_method" id="paypal" value="paypal">
+                                                <label class="form-check-label w-100" for="paypal">
+                                                    <div class="d-flex justify-content-between align-items-center">
+                                                        <span>PayPal</span>
+                                                        <i class="fab fa-paypal fa-lg text-primary"></i>
+                                                    </div>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Credit Card Information -->
+                        <div id="credit-card-form">
+                            <div class="mb-3">
+                                <label for="card_holder" class="form-label">Card Holder Name</label>
+                                <input type="text" class="form-control" id="card_holder" name="card_holder" placeholder="John Doe" required>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label for="card_number" class="form-label">Card Number</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" id="card_number" name="card_number" placeholder="1234 5678 9012 3456" maxlength="19" required>
+                                    <span class="input-group-text bg-white">
+                                        <i class="fas fa-credit-card"></i>
+                                    </span>
+                                </div>
+                            </div>
+                            
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="expiry_date" class="form-label">Expiry Date</label>
+                                    <input type="text" class="form-control" id="expiry_date" name="expiry_date" placeholder="MM/YY" maxlength="5" required>
+                                </div>
+                                
+                                <div class="col-md-6 mb-3">
+                                    <label for="cvv" class="form-label">CVV</label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" id="cvv" name="cvv" placeholder="123" maxlength="4" required>
+                                        <span class="input-group-text bg-white" data-bs-toggle="tooltip" data-bs-placement="top" title="3 or 4 digit security code on the back of your card">
+                                            <i class="fas fa-question-circle"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Billing Address -->
+                        <h5 class="mt-4 mb-3">Billing Address</h5>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="billing_country" class="form-label">Country</label>
+                                <select class="form-select" id="billing_country" name="billing_country" required>
+                                    <option value="">Select Country</option>
+                                    <option value="US" selected>United States</option>
+                                    <option value="CA">Canada</option>
+                                    <option value="AU">Australia</option>
+                                    <option value="UK">United Kingdom</option>
+                                </select>
+                            </div>
+                            
+                            <div class="col-md-6 mb-3">
+                                <label for="billing_zip" class="form-label">Zip/Postal Code</label>
+                                <input type="text" class="form-control" id="billing_zip" name="billing_zip" required>
+                            </div>
+                        </div>
+                        
+                        <!-- Terms Acceptance -->
+                        <div class="form-check mb-4">
+                            <input class="form-check-input" type="checkbox" name="terms_accepted" id="terms_accepted" required>
+                            <label class="form-check-label" for="terms_accepted">
+                                I agree to the <a href="{% url 'rental_conditions' %}" target="_blank">Rental Conditions</a> and <a href="{% url 'refund_policy' %}" target="_blank">Refund Policy</a>
+                            </label>
+                        </div>
+                        
+                        <div class="d-grid gap-2">
+                            <button id="submit-button" class="btn btn-warning btn-lg" type="submit">Confirm Payment</button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
-        <div class="modal-footer">
-            <button type="button" id="cancel-payment" class="btn btn-outline-secondary">Cancel</button>
-            <button type="button" id="confirm-payment" class="btn btn-warning">Confirm Payment</button>
+        
+        <!-- Booking Details Summary -->
+        <div class="col-lg-4">
+            <div class="card shadow sticky-top" style="top: 20px; z-index: 1">
+                <div class="card-header bg-dark text-white">
+                    <h5 class="mb-0">Booking Summary</h5>
+                </div>
+                <div class="card-body">
+                    <!-- Car Details -->
+                    <div class="d-flex mb-3">
+                        <div class="flex-shrink-0">
+                            <img src="{{ temp_booking.car.image_url }}" alt="{{ temp_booking.car.make }} {{ temp_booking.car.model }}" class="rounded" width="80">
+                        </div>
+                        <div class="ms-3">
+                            <h5 class="mb-1">{{ temp_booking.car.make }} {{ temp_booking.car.model }}</h5>
+                            <div class="small text-muted">
+                                <span class="me-2"><i class="fas fa-car"></i> {{ temp_booking.car.category.name }}</span>
+                                <span class="me-2"><i class="fas fa-users"></i> {{ temp_booking.car.seats }} seats</span>
+                                <span><i class="fas fa-cog"></i> {{ temp_booking.car.get_transmission_display }}</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Rental Details -->
+                    <div class="card payment-details-card mb-3">
+                        <div class="card-body py-2 px-3">
+                            <div class="d-flex justify-content-between align-items-center mb-1">
+                                <span><i class="fas fa-calendar-alt text-secondary me-2"></i>Pickup Date:</span>
+                                <span class="fw-bold">{{ temp_booking.pickup_date }}</span>
+                            </div>
+                            <div class="d-flex justify-content-between align-items-center mb-1">
+                                <span><i class="fas fa-calendar-alt text-secondary me-2"></i>Return Date:</span>
+                                <span class="fw-bold">{{ temp_booking.return_date }}</span>
+                            </div>
+                            <div class="d-flex justify-content-between align-items-center mb-1">
+                                <span><i class="fas fa-map-marker-alt text-secondary me-2"></i>Pickup:</span>
+                                <span class="fw-bold">{{ temp_booking.pickup_location.name }}</span>
+                            </div>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span><i class="fas fa-map-marker-alt text-secondary me-2"></i>Return:</span>
+                                <span class="fw-bold">{{ temp_booking.dropoff_location.name }}</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Cost Breakdown -->
+                    <h6 class="mb-2">Cost Breakdown</h6>
+                    <div class="d-flex justify-content-between mb-2">
+                        <span>Daily Rate</span>
+                        <span>${{ temp_booking.car.daily_rate }} x {{ temp_booking.duration_days }} days</span>
+                    </div>
+                    
+                    <div class="d-flex justify-content-between mb-2">
+                        <span>Base Cost</span>
+                        <span>${{ temp_booking.car.daily_rate|multiply:temp_booking.duration_days }}</span>
+                    </div>
+                    
+                    {% if temp_booking.damage_waiver %}
+                    <div class="d-flex justify-content-between mb-2">
+                        <span>Damage Waiver</span>
+                        <span>$15 x {{ temp_booking.duration_days }} days</span>
+                    </div>
+                    {% endif %}
+                    
+                    {% if temp_booking.extended_area %}
+                    <div class="d-flex justify-content-between mb-2">
+                        <span>Extended Area Cover</span>
+                        <span>$20 x {{ temp_booking.duration_days }} days</span>
+                    </div>
+                    {% endif %}
+                    
+                    {% if temp_booking.satellite_navigation %}
+                    <div class="d-flex justify-content-between mb-2">
+                        <span>Satellite Navigation</span>
+                        <span>$10 x {{ temp_booking.duration_days }} days</span>
+                    </div>
+                    {% endif %}
+                    
+                    {% if temp_booking.child_seats > 0 %}
+                    <div class="d-flex justify-content-between mb-2">
+                        <span>Child Seats ({{ temp_booking.child_seats }})</span>
+                        <span>${{ temp_booking.child_seats|multiply:5 }} x {{ temp_booking.duration_days }} days</span>
+                    </div>
+                    {% endif %}
+                    
+                    {% if temp_booking.additional_drivers > 0 %}
+                    <div class="d-flex justify-content-between mb-2">
+                        <span>Additional Drivers ({{ temp_booking.additional_drivers }})</span>
+                        <span>${{ temp_booking.additional_drivers|multiply:10 }} per driver</span>
+                    </div>
+                    {% endif %}
+                    
+                    <hr>
+                    
+                    <div class="d-flex justify-content-between mb-2">
+                        <span class="h5">Total</span>
+                        <span class="h5">${{ temp_booking.total_cost }}</span>
+                    </div>
+                    
+                    <!-- Price Comparison -->
+                    {% if temp_booking.car.comparison_provider1_rate or temp_booking.car.comparison_provider2_rate %}
+                    <div class="price-comparison mt-3 bg-light p-2 rounded">
+                        <h6 class="mb-2">Compare Our Price</h6>
+                        {% if temp_booking.car.comparison_provider1_rate %}
+                        <div class="d-flex justify-content-between mb-1">
+                            <span>{{ temp_booking.car.comparison_provider1_name }}</span>
+                            <span class="competitor-price">${{ temp_booking.car.comparison_provider1_rate|multiply:temp_booking.duration_days }}</span>
+                        </div>
+                        {% endif %}
+                        
+                        {% if temp_booking.car.comparison_provider2_rate %}
+                        <div class="d-flex justify-content-between">
+                            <span>{{ temp_booking.car.comparison_provider2_name }}</span>
+                            <span class="competitor-price">${{ temp_booking.car.comparison_provider2_rate|multiply:temp_booking.duration_days }}</span>
+                        </div>
+                        {% endif %}
+                        
+                        <div class="mt-2 small text-success fw-bold">
+                            <i class="fas fa-check-circle"></i> Save up to ${{ temp_booking.car.comparison_provider1_rate|multiply:temp_booking.duration_days|subtract:temp_booking.total_cost }} with Rush Car Rental!
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
         </div>
     </div>
-</div>
+</section>
 {% endblock %}
 
 {% block extra_js %}
 <script>
     document.addEventListener("DOMContentLoaded", function() {
-        const submitButton = document.getElementById("submit-button");
         const paymentForm = document.getElementById("payment-form");
-        const modal = document.getElementById("payment-confirm-modal");
-        const confirmPaymentBtn = document.getElementById("confirm-payment");
-        const cancelPaymentBtn = document.getElementById("cancel-payment");
-        const modalOverlay = document.querySelector(".modal-overlay");
         
         // Format card number with spaces
         const cardNumberInput = document.querySelector("input[name='card_number']");
@@ -389,31 +376,6 @@
                 e.target.value = value;
             });
         }
-        
-        // Show payment modal
-        submitButton.addEventListener("click", function() {
-            // Basic form validation
-            if (paymentForm.checkValidity()) {
-                modal.style.display = "block";
-            } else {
-                paymentForm.reportValidity();
-            }
-        });
-        
-        // Hide modal when clicking cancel
-        cancelPaymentBtn.addEventListener("click", function() {
-            modal.style.display = "none";
-        });
-        
-        // Submit form when clicking confirm
-        confirmPaymentBtn.addEventListener("click", function() {
-            paymentForm.submit();
-        });
-        
-        // Close modal when clicking outside
-        modalOverlay.addEventListener("click", function() {
-            modal.style.display = "none";
-        });
     });
 </script>
 {% endblock %}
