@@ -1,0 +1,105 @@
+{% extends 'base.html' %}
+
+{% block title %}About Us - Rush Car Rental{% endblock %}
+
+{% block content %}
+<!-- Enhanced Breadcrumb -->
+<div class="breadcrumb-container py-2">
+    <div class="container">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb breadcrumb-custom mb-0">
+                <li class="breadcrumb-item">
+                    <a href="{% url 'home' %}" class="breadcrumb-home">
+                        <i class="fas fa-home"></i> Home
+                    </a>
+                </li>
+                <li class="breadcrumb-item active" aria-current="page">
+                    <i class="fas fa-info-circle"></i> About Us
+                </li>
+            </ol>
+        </nav>
+    </div>
+</div>
+
+<section class="py-5">
+    <div class="container">
+        <h1 class="mb-4">About Us</h1>
+        <h4 class="text-primary mb-4">Rush Car Rental: A Local Car Rental Brand in Australia's 8 Major Cities</h4>
+        
+        <div class="row mb-5">
+            <div class="col-lg-8">
+                <p class="lead">At Rush Car Rental, we provide a wide range of vehicles to suit our customers' needs, including economy, comfort, luxury, SUVs, sports cars, and business vehicles. Our promotional concept is "Drive Globally, Rent Easily," aiming to make our customers' travels in Australia more free and comfortable.</p>
+                <div class="d-flex justify-content-start mt-4">
+                    <a href="{% url 'car_list' %}" class="btn btn-warning btn-lg me-3">Book Now and Experience the Rush Difference!</a>
+                </div>
+            </div>
+            <div class="col-lg-4 text-center">
+                {% load static %}
+<img src="{% static 'images/logo.png' %}" alt="Rush Car Rental Logo" class="img-fluid" style="max-height: 200px;">
+            </div>
+        </div>
+        
+        <div class="card shadow-sm mb-4">
+            <div class="card-body">
+                <h4 class="card-title">Company Background</h4>
+                <div class="mt-3">
+                    <p>We are a locally-owned car rental service provider in Australia, dedicated to offering high-quality rental services. With locations in eight major cities across Australia, we also offer online booking and mobile app options, including WeChat mini-programs, making it easy for customers to book vehicles anytime, anywhere.</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="card shadow-sm mb-4">
+            <div class="card-body">
+                <h4 class="card-title">Vehicle Selection</h4>
+                <div class="mt-3">
+                    <p>At our branches, you will find a variety of vehicle types to choose from. Economy cars are ideal for daily commutes, comfort cars are better suited for long drives, and luxury cars are perfect for those who value quality. Our SUVs are great for exploring Australia's diverse terrains, while sports cars and business vehicles are tailored for business trips and group travel. We believe there is a vehicle to meet every need.</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="card shadow-sm mb-4">
+            <div class="card-body">
+                <h4 class="card-title">Rental Advantages</h4>
+                <div class="mt-3">
+                    <p>One of our key advantages is global driving. Whether you are on holiday in Australia or planning to travel to other countries, we offer convenient and swift rental services. We provide various rental plans, including short-term and long-term leases, to meet your different needs. Additionally, we offer 24-hour customer support to help you with any car-related issues.</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="card shadow-sm mb-4">
+            <div class="card-body">
+                <h4 class="card-title">Service Commitment</h4>
+                <div class="mt-3">
+                    <p>We are committed to providing excellent service and an outstanding experience to our customers. Attention to detail is our priority, from vehicle cleaning and maintenance to driver training and safety checks, all conducted to the highest standards. We strive to ensure every rental leaves our customers satisfied, making global driving the best choice for your travels in Australia.</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="card shadow-sm mb-4">
+            <div class="card-body">
+                <h4 class="card-title">Customer Feedback</h4>
+                <div class="mt-3">
+                    <div class="testimonial-card mb-3 p-3 border-start border-warning border-5">
+                        <p class="fst-italic">"The car rental experience was fantastic! The vehicle was new, and the driver service was excellent. The whole process was very smooth."</p>
+                        <p class="fw-bold mb-0">- Customer from Sydney</p>
+                    </div>
+                    <div class="testimonial-card mb-3 p-3 border-start border-warning border-5">
+                        <p class="fst-italic">"I was very satisfied with our SUV. It was comfortable and drove smoothly."</p>
+                        <p class="fw-bold mb-0">- Customer from Melbourne</p>
+                    </div>
+                    <p>These reviews attest to the quality of our services and the variety of our vehicles.</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <h4 class="card-title">Future Outlook</h4>
+                <div class="mt-3">
+                    <p>Looking ahead, we plan to expand our branch network, improve service quality, and introduce more new models and vehicle types to meet different customer needs. We believe that with the trend of global driving, car rental will become the choice for more and more people.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

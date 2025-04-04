@@ -30,3 +30,6 @@ def pickup_guidelines(request):
     
 def return_guidelines(request):
     return render(request, 'pages/return_guidelines.html')
+    
+def about_us(request):
+    return render(request, 'pages/about_us.html')
