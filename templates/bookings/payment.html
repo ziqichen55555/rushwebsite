@@ -54,81 +54,61 @@
         to { transform: rotate(360deg); }
     }
 
-    /* Modal styles */
-    .modal-backdrop {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(0, 0, 0, 0.5);
-        z-index: 1040;
-    }
-    
-    .payment-modal {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
+    /* Custom Modal */
+    #payment-confirm-modal {
         display: none;
+        position: fixed;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
         z-index: 1050;
     }
     
-    .payment-modal-dialog {
-        position: relative;
-        width: auto;
-        margin: 1.75rem auto;
-        max-width: 500px;
-        pointer-events: none;
-    }
-    
-    .payment-modal-content {
-        position: relative;
-        display: flex;
-        flex-direction: column;
+    .modal-overlay {
+        position: fixed;
+        left: 0;
+        top: 0;
         width: 100%;
-        pointer-events: auto;
-        background-color: #fff;
-        background-clip: padding-box;
-        border: 1px solid rgba(0, 0, 0, 0.2);
-        border-radius: 0.3rem;
-        box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.5);
-        outline: 0;
+        height: 100%;
+        background: rgba(0,0,0,0.5);
     }
     
-    .payment-modal-header {
-        display: flex;
-        flex-shrink: 0;
-        align-items: center;
-        justify-content: space-between;
-        padding: 1rem;
-        border-bottom: 1px solid #dee2e6;
-        border-top-left-radius: calc(0.3rem - 1px);
-        border-top-right-radius: calc(0.3rem - 1px);
+    .modal-container {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        max-width: 500px;
+        width: 90%;
+        background-color: white;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.2);
     }
     
-    .payment-modal-title {
-        margin-bottom: 0;
-        line-height: 1.5;
+    .modal-header {
+        padding: 15px;
+        border-bottom: 1px solid #e9ecef;
+        background-color: #f8f9fa;
+        border-top-left-radius: 8px;
+        border-top-right-radius: 8px;
+    }
+    
+    .modal-title {
+        margin: 0;
         font-size: 1.25rem;
     }
     
-    .payment-modal-body {
-        position: relative;
-        flex: 1 1 auto;
-        padding: 1rem;
+    .modal-body {
+        padding: 20px;
     }
     
-    .payment-modal-footer {
+    .modal-footer {
         display: flex;
-        flex-wrap: wrap;
-        flex-shrink: 0;
         justify-content: flex-end;
-        padding: 0.75rem;
-        border-top: 1px solid #dee2e6;
-        border-bottom-right-radius: calc(0.3rem - 1px);
-        border-bottom-left-radius: calc(0.3rem - 1px);
+        padding: 15px;
+        border-top: 1px solid #e9ecef;
+        gap: 10px;
     }
 </style>
 {% endblock %}
@@ -396,49 +376,47 @@
 </section>
 
 <!-- Payment Confirmation Modal -->
-<div id="paymentModal" class="payment-modal">
-    <div class="modal-backdrop"></div>
-    <div class="payment-modal-dialog">
-        <div class="payment-modal-content">
-            <div class="payment-modal-header bg-light">
-                <h5 class="payment-modal-title">Confirm Your Payment</h5>
-            </div>
-            <div class="payment-modal-body">
-                <p>Please review your booking details before confirming payment:</p>
-                
-                <div class="card mb-3">
-                    <div class="card-body">
-                        <table class="table table-borderless mb-0">
-                            <tbody>
-                                <tr>
-                                    <th style="width: 40%;">Vehicle:</th>
-                                    <td>{{ temp_booking.car.year }} {{ temp_booking.car.make }} {{ temp_booking.car.model }}</td>
-                                </tr>
-                                <tr>
-                                    <th>Pick-up:</th>
-                                    <td>{{ temp_booking.pickup_location.name }}, {{ temp_booking.pickup_date|date:"M d, Y" }}</td>
-                                </tr>
-                                <tr>
-                                    <th>Drop-off:</th>
-                                    <td>{{ temp_booking.dropoff_location.name }}, {{ temp_booking.return_date|date:"M d, Y" }}</td>
-                                </tr>
-                                <tr>
-                                    <th>Duration:</th>
-                                    <td>{{ temp_booking.duration_days }} day(s)</td>
-                                </tr>
-                                <tr>
-                                    <th>Total Amount:</th>
-                                    <td><strong>${{ total_cost|floatformat:2 }}</strong></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
+<div id="payment-confirm-modal">
+    <div class="modal-overlay"></div>
+    <div class="modal-container">
+        <div class="modal-header">
+            <h4 class="modal-title">Confirm Your Payment</h4>
+        </div>
+        <div class="modal-body">
+            <p>Please review your booking details before confirming payment:</p>
+            
+            <div class="card mb-3">
+                <div class="card-body p-3">
+                    <table class="table table-striped mb-0">
+                        <tbody>
+                            <tr>
+                                <th style="width: 40%;">Vehicle:</th>
+                                <td>{{ temp_booking.car.year }} {{ temp_booking.car.make }} {{ temp_booking.car.model }}</td>
+                            </tr>
+                            <tr>
+                                <th>Pick-up:</th>
+                                <td>{{ temp_booking.pickup_location.name }}, {{ temp_booking.pickup_date|date:"M d, Y" }}</td>
+                            </tr>
+                            <tr>
+                                <th>Drop-off:</th>
+                                <td>{{ temp_booking.dropoff_location.name }}, {{ temp_booking.return_date|date:"M d, Y" }}</td>
+                            </tr>
+                            <tr>
+                                <th>Duration:</th>
+                                <td>{{ temp_booking.duration_days }} day(s)</td>
+                            </tr>
+                            <tr>
+                                <th>Total Amount:</th>
+                                <td><strong>${{ total_cost|floatformat:2 }}</strong></td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
-            <div class="payment-modal-footer">
-                <button type="button" id="cancelPayment" class="btn btn-secondary me-2">Cancel</button>
-                <button type="button" id="confirmPayment" class="btn btn-warning">Confirm Payment</button>
-            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" id="cancel-payment" class="btn btn-outline-secondary">Cancel</button>
+            <button type="button" id="confirm-payment" class="btn btn-warning">Confirm Payment</button>
         </div>
     </div>
 </div>
@@ -451,9 +429,9 @@
         const submitButton = document.querySelector("#submit-button");
         const loadingSpinner = document.querySelector("#loading-spinner");
         const messageContainer = document.querySelector("#payment-message");
-        const paymentModal = document.getElementById("paymentModal");
-        const confirmPaymentBtn = document.getElementById("confirmPayment");
-        const cancelPaymentBtn = document.getElementById("cancelPayment");
+        const modal = document.getElementById("payment-confirm-modal");
+        const confirmPaymentBtn = document.getElementById("confirm-payment");
+        const cancelPaymentBtn = document.getElementById("cancel-payment");
         
         // Format card number with spaces
         const cardNumberInput = document.querySelector("input[name='card_number']");
@@ -499,18 +477,25 @@
                 return;
             }
             
-            // Show payment modal
-            paymentModal.style.display = "block";
+            // Show modal
+            modal.style.display = "block";
         });
         
-        // Close modal on cancel
+        // Close modal when cancel button is clicked
         cancelPaymentBtn.addEventListener("click", function() {
-            paymentModal.style.display = "none";
+            modal.style.display = "none";
         });
         
-        // Submit form on confirm
+        // Close modal when clicking outside the modal
+        window.addEventListener("click", function(e) {
+            if (e.target === modal.querySelector(".modal-overlay")) {
+                modal.style.display = "none";
+            }
+        });
+        
+        // Submit form when confirm button is clicked
         confirmPaymentBtn.addEventListener("click", function() {
-            paymentModal.style.display = "none";
+            modal.style.display = "none";
             loadingSpinner.style.display = "inline-block";
             submitButton.disabled = true;
             form.submit();
