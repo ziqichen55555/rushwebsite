@@ -27,3 +27,6 @@ def complaint(request):
     
 def pickup_guidelines(request):
     return render(request, 'pages/pickup_guidelines.html')
+    
+def return_guidelines(request):
+    return render(request, 'pages/return_guidelines.html')
