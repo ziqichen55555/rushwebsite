@@ -6,4 +6,5 @@ urlpatterns = [
     path('rental-conditions/', views.rental_conditions, name='rental_conditions'),
     path('refund-policy/', views.refund_policy, name='refund_policy'),
     path('complaint/', views.complaint, name='complaint'),
+    path('pickup-guidelines/', views.pickup_guidelines, name='pickup_guidelines'),
 ]

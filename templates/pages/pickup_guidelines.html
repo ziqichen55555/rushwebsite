@@ -1,0 +1,100 @@
+{% extends 'base.html' %}
+
+{% block title %}Car Pickup Guidelines - Rush Car Rental{% endblock %}
+
+{% block content %}
+<!-- Enhanced Breadcrumb -->
+<div class="breadcrumb-container py-2">
+    <div class="container">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb breadcrumb-custom mb-0">
+                <li class="breadcrumb-item">
+                    <a href="{% url 'home' %}" class="breadcrumb-home">
+                        <i class="fas fa-home"></i> Home
+                    </a>
+                </li>
+                <li class="breadcrumb-item active" aria-current="page">
+                    <i class="fas fa-car-side"></i> Car Pickup Guidelines
+                </li>
+            </ol>
+        </nav>
+    </div>
+</div>
+
+<section class="py-5">
+    <div class="container">
+        <h1 class="mb-4">Car Pickup Guidelines</h1>
+        <p class="lead">Discover the freedom of the open road with Rush Car Rental, where exceptional service meets unbeatable value. Book Now and Experience the Rush Difference!</p>
+        
+        <div class="card shadow-sm mb-4">
+            <div class="card-body">
+                <h4 class="card-title"><span class="badge bg-warning text-dark me-2">01</span>What should I pay attention to when picking up the car?</h4>
+                <div class="mt-3">
+                    <h5 class="border-bottom pb-2 mb-3">Documents Required</h5>
+                    <p>The main driver must bring all four essential documents and ensure that their international credit card (Mastercard / Visa / American Express) has sufficient credit limit. The rental deposit varies by car model and generally ranges from $500 to $3000. It is advisable for the main driver to carry two credit cards under their name to ensure sufficient credit for the pre-authorization hold.</p>
+                    
+                    <h5 class="border-bottom pb-2 mb-3">Early Pickup</h5>
+                    <p>If you pick up the car early with the store's permission, make sure to return it at the same earlier time. Otherwise, the store will charge you additional rental fees at the daily rate (usually an extra day's rent, even if you only use the car for an extra hour).</p>
+                    
+                    <h5 class="border-bottom pb-2 mb-3">Additional Drivers</h5>
+                    <p>If there is an additional driver, their relevant documents must be presented and registered at the store. If an unregistered driver has an accident, the insurance will be invalid.</p>
+                    
+                    <h5 class="border-bottom pb-2 mb-3">Inspecting the Car</h5>
+                    <p>Carefully inspect the car for any scratches or damage to the windows. If you notice any issues (even minor scratches), point them out to the staff and note them on the inspection form. Do not rely on verbal assurances from the staff about minor scratches; if possible, take photos for your records to avoid disputes when returning the car.</p>
+                    
+                    <h5 class="border-bottom pb-2 mb-3">Keeping Documents</h5>
+                    <p>Keep all contracts and receipts until the rental deposit is refunded.</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="card shadow-sm mb-4">
+            <div class="card-body">
+                <h4 class="card-title"><span class="badge bg-warning text-dark me-2">02</span>What should I do if the store offers additional insurance or services?</h4>
+                <div class="mt-3">
+                    <p>When picking up the car, staff may try to sell you additional insurance and services. Make sure to carefully check the total amount on the document (displayed as "Estimated charge"). If it differs from your booking receipt, the store may have added extra insurance or services. These are not mandatory, and you can choose whether to purchase them based on your needs. If you do not want them, inform the staff to remove them to avoid unnecessary charges.</p>
+                    
+                    <h5 class="border-bottom pb-2 mb-3">Commonly Offered Additional Insurance and Services</h5>
+                    <ul>
+                        <li>ROADSAFE (Roadside Assistance)</li>
+                        <li>Prepaid Fuel</li>
+                        <li>UPGRADE (Vehicle Upgrade)</li>
+                        <li>Personal Protection Plan</li>
+                        <li>Emergency Safe Assistance</li>
+                        <li>PLATEPASS ALL (Toll Device)</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <div class="card shadow-sm mb-4">
+            <div class="card-body">
+                <h4 class="card-title"><span class="badge bg-warning text-dark me-2">03</span>How do I use self-service pickup?</h4>
+                <div class="mt-3">
+                    <p>In Australia, some stores offer self-service pickup kiosks. During peak seasons, you can use these kiosks to reduce wait times. You can print your rental contract at the kiosk, avoiding direct interaction with staff and the potential sales of extra insurance and services. After printing the contract, proceed to the counter to pick up your car.</p>
+                    
+                    <p>Most self-service kiosks provide language options like Chinese, English, and local languages. Follow the instructions, verify the order information, and print the contract. If you wish to add extra insurance, services, or upgrade your vehicle, you can do so at the kiosk, but additional charges will apply.</p>
+                    
+                    <p>For airport pickup and drop-off, please notify us in advance. There might be a slight delay (no more than 30 minutes) for airport drop-offs. Confirm the pickup/drop-off address and time with the store by phone.</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <h4 class="card-title"><span class="badge bg-warning text-dark me-2">04</span>If I rent a car in Victoria and want to drive to other states, what should I be aware of?</h4>
+                <div class="mt-3">
+                    <h5 class="border-bottom pb-2 mb-3">Informing the Store</h5>
+                    <p>Inform the staff when picking up the car that you will be driving to other states. Otherwise, your insurance may become invalid once you cross state lines.</p>
+                    
+                    <h5 class="border-bottom pb-2 mb-3">One-Way Fees</h5>
+                    <p>There will be a cross-border one-way fee, which you must confirm with the store. This fee is paid at the local store upon arrival. Ensure to confirm by phone in advance whether cross-border one-way returns are permitted.</p>
+                    
+                    <h5 class="border-bottom pb-2 mb-3">Vehicle Restrictions</h5>
+                    <p>Due to rental company policies or vehicle restrictions, some cars cannot cross state borders. In such cases, you may need to try another rental company or different vehicle model.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

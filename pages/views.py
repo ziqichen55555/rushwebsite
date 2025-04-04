@@ -24,3 +24,6 @@ def refund_policy(request):
 
 def complaint(request):
     return render(request, 'pages/complaint.html')
+    
+def pickup_guidelines(request):
+    return render(request, 'pages/pickup_guidelines.html')
