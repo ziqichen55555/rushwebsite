@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block title %}About Us - Rush Car Rental{% endblock %}
 
@@ -24,60 +25,82 @@
 <section class="py-5">
     <div class="container">
         <h1 class="mb-4">About Us</h1>
-        <h4 class="text-primary mb-4">Rush Car Rental: A Local Car Rental Brand in Australia's 8 Major Cities</h4>
-        
-        <div class="row mb-5">
-            <div class="col-lg-8">
-                <p class="lead">At Rush Car Rental, we provide a wide range of vehicles to suit our customers' needs, including economy, comfort, luxury, SUVs, sports cars, and business vehicles. Our promotional concept is "Drive Globally, Rent Easily," aiming to make our customers' travels in Australia more free and comfortable.</p>
-                <div class="d-flex justify-content-start mt-4">
-                    <a href="{% url 'car_list' %}" class="btn btn-warning btn-lg me-3">Book Now and Experience the Rush Difference!</a>
-                </div>
-            </div>
-            <div class="col-lg-4 text-center">
-                {% load static %}
-<img src="{% static 'images/logo.png' %}" alt="Rush Car Rental Logo" class="img-fluid" style="max-height: 200px;">
-            </div>
-        </div>
+        <p class="lead">Discover the freedom of the open road with Rush Car Rental, where exceptional service meets unbeatable value. Our "Drive Globally, Rent Easily" philosophy makes your Australian travel experience truly memorable.</p>
         
         <div class="card shadow-sm mb-4">
             <div class="card-body">
-                <h4 class="card-title">Company Background</h4>
+                <h4 class="card-title"><span class="badge bg-warning text-dark me-2">01</span>Rush Car Rental: A Local Car Rental Brand in Australia's 8 Major Cities</h4>
                 <div class="mt-3">
-                    <p>We are a locally-owned car rental service provider in Australia, dedicated to offering high-quality rental services. With locations in eight major cities across Australia, we also offer online booking and mobile app options, including WeChat mini-programs, making it easy for customers to book vehicles anytime, anywhere.</p>
+                    <div class="row align-items-center">
+                        <div class="col-lg-8">
+                            <p>At Rush Car Rental, we provide a wide range of vehicles to suit our customers' needs, including economy, comfort, luxury, SUVs, sports cars, and business vehicles. Our promotional concept is "Drive Globally, Rent Easily," aiming to make our customers' travels in Australia more free and comfortable.</p>
+                            <div class="d-flex justify-content-start mt-4">
+                                <a href="{% url 'car_list' %}" class="btn btn-warning btn-lg me-3">Book Now and Experience the Rush Difference!</a>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 text-center">
+                            <img src="{% static 'images/logo.png' %}" alt="Rush Car Rental Logo" class="img-fluid" style="max-height: 200px;" onerror="this.src='https://placehold.co/200x200/FFD700/000000?text=RUSH';this.onerror=null;">
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
         
         <div class="card shadow-sm mb-4">
             <div class="card-body">
-                <h4 class="card-title">Vehicle Selection</h4>
+                <h4 class="card-title"><span class="badge bg-warning text-dark me-2">02</span>Company Background</h4>
                 <div class="mt-3">
-                    <p>At our branches, you will find a variety of vehicle types to choose from. Economy cars are ideal for daily commutes, comfort cars are better suited for long drives, and luxury cars are perfect for those who value quality. Our SUVs are great for exploring Australia's diverse terrains, while sports cars and business vehicles are tailored for business trips and group travel. We believe there is a vehicle to meet every need.</p>
+                    <h5 class="border-bottom pb-2 mb-3">Local Expertise</h5>
+                    <p>We are a locally-owned car rental service provider in Australia, dedicated to offering high-quality rental services. With locations in eight major cities across Australia, we understand the unique needs of travelers exploring our beautiful country.</p>
+                    
+                    <h5 class="border-bottom pb-2 mb-3">Digital Convenience</h5>
+                    <p>We offer online booking and mobile app options, including WeChat mini-programs, making it easy for customers to book vehicles anytime, anywhere. Our digital solutions streamline your rental experience from start to finish.</p>
                 </div>
             </div>
         </div>
         
         <div class="card shadow-sm mb-4">
             <div class="card-body">
-                <h4 class="card-title">Rental Advantages</h4>
+                <h4 class="card-title"><span class="badge bg-warning text-dark me-2">03</span>Vehicle Selection</h4>
                 <div class="mt-3">
-                    <p>One of our key advantages is global driving. Whether you are on holiday in Australia or planning to travel to other countries, we offer convenient and swift rental services. We provide various rental plans, including short-term and long-term leases, to meet your different needs. Additionally, we offer 24-hour customer support to help you with any car-related issues.</p>
+                    <h5 class="border-bottom pb-2 mb-3">Diverse Fleet</h5>
+                    <p>At our branches, you will find a variety of vehicle types to choose from. Economy cars are ideal for daily commutes, comfort cars are better suited for long drives, and luxury cars are perfect for those who value quality.</p>
+                    
+                    <h5 class="border-bottom pb-2 mb-3">Specialized Options</h5>
+                    <p>Our SUVs are great for exploring Australia's diverse terrains, while sports cars and business vehicles are tailored for business trips and group travel. We believe there is a vehicle to meet every need.</p>
                 </div>
             </div>
         </div>
         
         <div class="card shadow-sm mb-4">
             <div class="card-body">
-                <h4 class="card-title">Service Commitment</h4>
+                <h4 class="card-title"><span class="badge bg-warning text-dark me-2">04</span>Rental Advantages</h4>
                 <div class="mt-3">
-                    <p>We are committed to providing excellent service and an outstanding experience to our customers. Attention to detail is our priority, from vehicle cleaning and maintenance to driver training and safety checks, all conducted to the highest standards. We strive to ensure every rental leaves our customers satisfied, making global driving the best choice for your travels in Australia.</p>
+                    <h5 class="border-bottom pb-2 mb-3">Global Mobility</h5>
+                    <p>One of our key advantages is global driving. Whether you are on holiday in Australia or planning to travel to other countries, we offer convenient and swift rental services.</p>
+                    
+                    <h5 class="border-bottom pb-2 mb-3">Flexible Plans</h5>
+                    <p>We provide various rental plans, including short-term and long-term leases, to meet your different needs. Additionally, we offer 24-hour customer support to help you with any car-related issues.</p>
                 </div>
             </div>
         </div>
         
         <div class="card shadow-sm mb-4">
             <div class="card-body">
-                <h4 class="card-title">Customer Feedback</h4>
+                <h4 class="card-title"><span class="badge bg-warning text-dark me-2">05</span>Service Commitment</h4>
+                <div class="mt-3">
+                    <h5 class="border-bottom pb-2 mb-3">Quality Assurance</h5>
+                    <p>We are committed to providing excellent service and an outstanding experience to our customers. Attention to detail is our priority, from vehicle cleaning and maintenance to driver training and safety checks, all conducted to the highest standards.</p>
+                    
+                    <h5 class="border-bottom pb-2 mb-3">Customer Satisfaction</h5>
+                    <p>We strive to ensure every rental leaves our customers satisfied, making global driving the best choice for your travels in Australia.</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="card shadow-sm mb-4">
+            <div class="card-body">
+                <h4 class="card-title"><span class="badge bg-warning text-dark me-2">06</span>Customer Feedback</h4>
                 <div class="mt-3">
                     <div class="testimonial-card mb-3 p-3 border-start border-warning border-5">
                         <p class="fst-italic">"The car rental experience was fantastic! The vehicle was new, and the driver service was excellent. The whole process was very smooth."</p>
@@ -94,9 +117,13 @@
         
         <div class="card shadow-sm">
             <div class="card-body">
-                <h4 class="card-title">Future Outlook</h4>
+                <h4 class="card-title"><span class="badge bg-warning text-dark me-2">07</span>Future Outlook</h4>
                 <div class="mt-3">
-                    <p>Looking ahead, we plan to expand our branch network, improve service quality, and introduce more new models and vehicle types to meet different customer needs. We believe that with the trend of global driving, car rental will become the choice for more and more people.</p>
+                    <h5 class="border-bottom pb-2 mb-3">Expansion Plans</h5>
+                    <p>Looking ahead, we plan to expand our branch network and improve service quality to reach more customers throughout Australia.</p>
+                    
+                    <h5 class="border-bottom pb-2 mb-3">Fleet Innovation</h5>
+                    <p>We are committed to introducing more new models and vehicle types to meet different customer needs. We believe that with the trend of global driving, car rental will become the choice for more and more people.</p>
                 </div>
             </div>
         </div>
