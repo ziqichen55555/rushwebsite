@@ -1,0 +1,430 @@
+{% extends 'base.html' %}
+
+{% block title %}Add Options - Rush Car Rental{% endblock %}
+
+{% block content %}
+<!-- Enhanced Breadcrumb -->
+<div class="breadcrumb-container py-2">
+    <div class="container">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb breadcrumb-custom mb-0">
+                <li class="breadcrumb-item">
+                    <a href="{% url 'home' %}" class="breadcrumb-home">
+                        <i class="fas fa-home"></i> Home
+                    </a>
+                </li>
+                <li class="breadcrumb-item">
+                    <a href="{% url 'car_detail' temp_booking.car.id %}">
+                        <i class="fas fa-car"></i> {{ temp_booking.car.make }} {{ temp_booking.car.model }}
+                    </a>
+                </li>
+                <li class="breadcrumb-item active" aria-current="page">
+                    <i class="fas fa-plus-circle"></i> Add Options
+                </li>
+            </ol>
+        </nav>
+    </div>
+</div>
+
+<section class="py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8">
+                <h1 class="mb-4">Add options</h1>
+                <p class="lead mb-4">No hassle, just your options</p>
+                
+                <form method="post" action="{% url 'confirm_booking' temp_booking.id %}">
+                    {% csrf_token %}
+                    
+                    <!-- Damage Waiver Option -->
+                    <div class="card shadow-sm mb-3 border-0">
+                        <div class="card-body">
+                            <div class="row align-items-center">
+                                <div class="col-2 col-md-1">
+                                    <div class="option-icon bg-warning rounded-circle d-flex align-items-center justify-content-center" style="width: 50px; height: 50px;">
+                                        <i class="fas fa-shield-alt text-dark"></i>
+                                    </div>
+                                </div>
+                                <div class="col-7 col-md-8">
+                                    <h5 class="card-title mb-1">Damage Waiver</h5>
+                                    <p class="card-text text-muted mb-0">Reduces Damage Fee from $5000 to $0. Drivers aged 21-84.</p>
+                                </div>
+                                <div class="col-3 text-end">
+                                    <div class="d-flex flex-column align-items-end">
+                                        <div class="price mb-2">
+                                            <span class="h5 mb-0">${{ damage_waiver_cost }}</span>
+                                            <small class="text-muted">per day</small>
+                                        </div>
+                                        <button type="button" class="btn btn-outline-primary btn-sm add-option-btn" data-option="damage_waiver">
+                                            <i class="fas fa-plus"></i> ADD
+                                        </button>
+                                        <input type="hidden" name="damage_waiver" id="damage_waiver" value="false">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Extended Area Option -->
+                    <div class="card shadow-sm mb-3 border-0">
+                        <div class="card-body">
+                            <div class="row align-items-center">
+                                <div class="col-2 col-md-1">
+                                    <div class="option-icon bg-warning rounded-circle d-flex align-items-center justify-content-center" style="width: 50px; height: 50px;">
+                                        <i class="fas fa-map-marked-alt text-dark"></i>
+                                    </div>
+                                </div>
+                                <div class="col-7 col-md-8">
+                                    <h5 class="card-title mb-1">Extend Area of Use</h5>
+                                    <p class="card-text text-muted mb-0">To include Victoria & Queensland-South-of-Bundaberg.</p>
+                                </div>
+                                <div class="col-3 text-end">
+                                    <div class="d-flex flex-column align-items-end">
+                                        <div class="price mb-2">
+                                            <span class="h5 mb-0">${{ extended_area_cost }}</span>
+                                            <small class="text-muted">flat fee</small>
+                                        </div>
+                                        <button type="button" class="btn btn-outline-primary btn-sm add-option-btn" data-option="extended_area">
+                                            <i class="fas fa-plus"></i> ADD
+                                        </button>
+                                        <input type="hidden" name="extended_area" id="extended_area" value="false">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- GPS Navigation Option -->
+                    <div class="card shadow-sm mb-3 border-0">
+                        <div class="card-body">
+                            <div class="row align-items-center">
+                                <div class="col-2 col-md-1">
+                                    <div class="option-icon bg-warning rounded-circle d-flex align-items-center justify-content-center" style="width: 50px; height: 50px;">
+                                        <i class="fas fa-satellite-dish text-dark"></i>
+                                    </div>
+                                </div>
+                                <div class="col-7 col-md-8">
+                                    <h5 class="card-title mb-1">Sat Nav (GPS)</h5>
+                                    <p class="card-text text-muted mb-0">Don't get lost. Max charge $60.</p>
+                                </div>
+                                <div class="col-3 text-end">
+                                    <div class="d-flex flex-column align-items-end">
+                                        <div class="price mb-2">
+                                            <span class="h5 mb-0">${{ gps_cost }}</span>
+                                            <small class="text-muted">per day</small>
+                                        </div>
+                                        <button type="button" class="btn btn-outline-primary btn-sm add-option-btn" data-option="satellite_navigation">
+                                            <i class="fas fa-plus"></i> ADD
+                                        </button>
+                                        <input type="hidden" name="satellite_navigation" id="satellite_navigation" value="false">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Child Seat Option -->
+                    <div class="card shadow-sm mb-3 border-0">
+                        <div class="card-body">
+                            <div class="row align-items-center">
+                                <div class="col-2 col-md-1">
+                                    <div class="option-icon bg-warning rounded-circle d-flex align-items-center justify-content-center" style="width: 50px; height: 50px;">
+                                        <i class="fas fa-baby text-dark"></i>
+                                    </div>
+                                </div>
+                                <div class="col-7 col-md-8">
+                                    <h5 class="card-title mb-1">Child Seat</h5>
+                                    <p class="card-text text-muted mb-0">Child Seats, Capsules and Boosters. Choose on arrival. Max $96 each.</p>
+                                </div>
+                                <div class="col-3 text-end">
+                                    <div class="d-flex flex-column align-items-end">
+                                        <div class="price mb-2">
+                                            <span class="h5 mb-0">${{ child_seat_cost }}</span>
+                                            <small class="text-muted">per day</small>
+                                        </div>
+                                        <div class="quantity-control d-flex align-items-center justify-content-end">
+                                            <button type="button" class="btn btn-outline-secondary btn-sm quantity-btn minus-btn" data-option="child_seats">
+                                                <i class="fas fa-minus"></i>
+                                            </button>
+                                            <span class="mx-2 quantity-display" id="child_seats_display">0</span>
+                                            <button type="button" class="btn btn-outline-secondary btn-sm quantity-btn plus-btn" data-option="child_seats">
+                                                <i class="fas fa-plus"></i>
+                                            </button>
+                                            <input type="hidden" name="child_seats" id="child_seats" value="0">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Additional Driver Option -->
+                    <div class="card shadow-sm mb-3 border-0">
+                        <div class="card-body">
+                            <div class="row align-items-center">
+                                <div class="col-2 col-md-1">
+                                    <div class="option-icon bg-warning rounded-circle d-flex align-items-center justify-content-center" style="width: 50px; height: 50px;">
+                                        <i class="fas fa-user-friends text-dark"></i>
+                                    </div>
+                                </div>
+                                <div class="col-7 col-md-8">
+                                    <h5 class="card-title mb-1">Additional Driver</h5>
+                                    <p class="card-text text-muted mb-0">Additional Drivers aged between 21-84. Max $35 each.</p>
+                                </div>
+                                <div class="col-3 text-end">
+                                    <div class="d-flex flex-column align-items-end">
+                                        <div class="price mb-2">
+                                            <span class="h5 mb-0">${{ additional_driver_cost }}</span>
+                                            <small class="text-muted">per day</small>
+                                        </div>
+                                        <div class="quantity-control d-flex align-items-center justify-content-end">
+                                            <button type="button" class="btn btn-outline-secondary btn-sm quantity-btn minus-btn" data-option="additional_drivers">
+                                                <i class="fas fa-minus"></i>
+                                            </button>
+                                            <span class="mx-2 quantity-display" id="additional_drivers_display">0</span>
+                                            <button type="button" class="btn btn-outline-secondary btn-sm quantity-btn plus-btn" data-option="additional_drivers">
+                                                <i class="fas fa-plus"></i>
+                                            </button>
+                                            <input type="hidden" name="additional_drivers" id="additional_drivers" value="0">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="d-grid mt-4">
+                        <button type="submit" class="btn btn-warning btn-lg">
+                            Continue <i class="fas fa-chevron-right"></i>
+                        </button>
+                    </div>
+                </form>
+            </div>
+            
+            <!-- Booking Summary -->
+            <div class="col-lg-4">
+                <div class="card shadow-sm mb-4 sticky-top" style="top: 20px; z-index: 999;">
+                    <div class="card-header bg-warning text-dark">
+                        <h5 class="card-title mb-0">Booking Summary</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="d-flex align-items-center mb-3">
+                            <img src="{{ temp_booking.car.image_url }}" alt="{{ temp_booking.car.make }} {{ temp_booking.car.model }}" class="me-3" style="width: 60px; height: 60px; object-fit: cover; border-radius: 4px;">
+                            <div>
+                                <h5 class="mb-0">{{ temp_booking.car.year }} {{ temp_booking.car.make }} {{ temp_booking.car.model }}</h5>
+                                <p class="text-muted mb-0">{{ temp_booking.car.category.name }}</p>
+                            </div>
+                        </div>
+                        
+                        <div class="booking-details mb-3">
+                            <div class="d-flex justify-content-between mb-1">
+                                <div><i class="fas fa-map-marker-alt text-muted me-2"></i> Pick-up:</div>
+                                <div class="text-end">{{ temp_booking.pickup_location.name }}</div>
+                            </div>
+                            <div class="d-flex justify-content-between mb-1">
+                                <div><i class="fas fa-calendar text-muted me-2"></i> Date:</div>
+                                <div class="text-end">{{ temp_booking.pickup_date|date:"M d, Y" }}</div>
+                            </div>
+                            <div class="d-flex justify-content-between mb-1">
+                                <div><i class="fas fa-map-marker-alt text-muted me-2"></i> Drop-off:</div>
+                                <div class="text-end">{{ temp_booking.dropoff_location.name }}</div>
+                            </div>
+                            <div class="d-flex justify-content-between mb-1">
+                                <div><i class="fas fa-calendar text-muted me-2"></i> Date:</div>
+                                <div class="text-end">{{ temp_booking.return_date|date:"M d, Y" }}</div>
+                            </div>
+                            <div class="d-flex justify-content-between">
+                                <div><i class="fas fa-clock text-muted me-2"></i> Duration:</div>
+                                <div class="text-end">{{ temp_booking.duration_days }} days</div>
+                            </div>
+                        </div>
+                        
+                        <!-- Price Breakdown -->
+                        <div class="price-breakdown border-top pt-3 mb-3">
+                            <h6 class="mb-2">Price Breakdown</h6>
+                            <div class="d-flex justify-content-between mb-2">
+                                <span>Car Rental</span>
+                                <span>${{ base_cost|floatformat:2 }}</span>
+                            </div>
+                            
+                            <!-- Dynamic options will be added here via JavaScript -->
+                            <div id="options-breakdown"></div>
+                            
+                            <div class="d-flex justify-content-between pt-2 border-top mt-2">
+                                <strong>Total</strong>
+                                <strong id="total-price">${{ base_cost|floatformat:2 }}</strong>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Setup cost constants
+    const baseCost = {{ base_cost }};
+    const rentalDays = {{ temp_booking.duration_days }};
+    const damageWaiverCost = {{ damage_waiver_cost }};
+    const extendedAreaCost = {{ extended_area_cost }};
+    const gpsCost = {{ gps_cost }};
+    const childSeatCost = {{ child_seat_cost }};
+    const additionalDriverCost = {{ additional_driver_cost }};
+    
+    // Track total price
+    let totalPrice = baseCost;
+    let optionsSelected = {
+        damage_waiver: false,
+        extended_area: false,
+        satellite_navigation: false,
+        child_seats: 0,
+        additional_drivers: 0
+    };
+    
+    // Update price display
+    function updateTotalPrice() {
+        let optionsTotal = 0;
+        
+        // Calculate options cost
+        if (optionsSelected.damage_waiver) {
+            optionsTotal += damageWaiverCost * rentalDays;
+        }
+        
+        if (optionsSelected.extended_area) {
+            optionsTotal += extendedAreaCost;
+        }
+        
+        if (optionsSelected.satellite_navigation) {
+            optionsTotal += gpsCost * rentalDays;
+        }
+        
+        if (optionsSelected.child_seats > 0) {
+            optionsTotal += childSeatCost * rentalDays * optionsSelected.child_seats;
+        }
+        
+        if (optionsSelected.additional_drivers > 0) {
+            optionsTotal += additionalDriverCost * rentalDays * optionsSelected.additional_drivers;
+        }
+        
+        totalPrice = baseCost + optionsTotal;
+        document.getElementById('total-price').textContent = '$' + totalPrice.toFixed(2);
+        
+        // Update options breakdown
+        updateOptionsBreakdown();
+    }
+    
+    // Update the options breakdown section
+    function updateOptionsBreakdown() {
+        const optionsBreakdown = document.getElementById('options-breakdown');
+        optionsBreakdown.innerHTML = '';
+        
+        // Add each selected option to the breakdown
+        if (optionsSelected.damage_waiver) {
+            const cost = damageWaiverCost * rentalDays;
+            optionsBreakdown.innerHTML += `
+                <div class="d-flex justify-content-between mb-2">
+                    <span>Damage Waiver</span>
+                    <span>$${cost.toFixed(2)}</span>
+                </div>
+            `;
+        }
+        
+        if (optionsSelected.extended_area) {
+            optionsBreakdown.innerHTML += `
+                <div class="d-flex justify-content-between mb-2">
+                    <span>Extended Area</span>
+                    <span>$${extendedAreaCost.toFixed(2)}</span>
+                </div>
+            `;
+        }
+        
+        if (optionsSelected.satellite_navigation) {
+            const cost = gpsCost * rentalDays;
+            optionsBreakdown.innerHTML += `
+                <div class="d-flex justify-content-between mb-2">
+                    <span>Sat Nav (GPS)</span>
+                    <span>$${cost.toFixed(2)}</span>
+                </div>
+            `;
+        }
+        
+        if (optionsSelected.child_seats > 0) {
+            const cost = childSeatCost * rentalDays * optionsSelected.child_seats;
+            optionsBreakdown.innerHTML += `
+                <div class="d-flex justify-content-between mb-2">
+                    <span>Child Seats (${optionsSelected.child_seats})</span>
+                    <span>$${cost.toFixed(2)}</span>
+                </div>
+            `;
+        }
+        
+        if (optionsSelected.additional_drivers > 0) {
+            const cost = additionalDriverCost * rentalDays * optionsSelected.additional_drivers;
+            optionsBreakdown.innerHTML += `
+                <div class="d-flex justify-content-between mb-2">
+                    <span>Additional Drivers (${optionsSelected.additional_drivers})</span>
+                    <span>$${cost.toFixed(2)}</span>
+                </div>
+            `;
+        }
+    }
+    
+    // Handle binary options (add/remove)
+    const optionButtons = document.querySelectorAll('.add-option-btn');
+    optionButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const option = this.dataset.option;
+            const isAdded = optionsSelected[option];
+            
+            // Toggle option
+            optionsSelected[option] = !isAdded;
+            document.getElementById(option).value = optionsSelected[option];
+            
+            // Update button state
+            if (optionsSelected[option]) {
+                this.classList.remove('btn-outline-primary');
+                this.classList.add('btn-primary');
+                this.innerHTML = '<i class="fas fa-check"></i> ADDED';
+            } else {
+                this.classList.remove('btn-primary');
+                this.classList.add('btn-outline-primary');
+                this.innerHTML = '<i class="fas fa-plus"></i> ADD';
+            }
+            
+            // Update price
+            updateTotalPrice();
+        });
+    });
+    
+    // Handle quantity options (increase/decrease)
+    const plusButtons = document.querySelectorAll('.plus-btn');
+    const minusButtons = document.querySelectorAll('.minus-btn');
+    
+    plusButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const option = this.dataset.option;
+            optionsSelected[option]++;
+            document.getElementById(`${option}_display`).textContent = optionsSelected[option];
+            document.getElementById(option).value = optionsSelected[option];
+            updateTotalPrice();
+        });
+    });
+    
+    minusButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const option = this.dataset.option;
+            if (optionsSelected[option] > 0) {
+                optionsSelected[option]--;
+                document.getElementById(`${option}_display`).textContent = optionsSelected[option];
+                document.getElementById(option).value = optionsSelected[option];
+                updateTotalPrice();
+            }
+        });
+    });
+});
+</script>
+{% endblock %}
