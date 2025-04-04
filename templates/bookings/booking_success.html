@@ -1,5 +1,4 @@
 {% extends 'base.html' %}
-{% load booking_extras %}
 
 {% block title %}Booking Confirmed - Rush Car Rental{% endblock %}
 
@@ -44,43 +43,9 @@
                                 <div class="col-md-6">
                                     <p><strong>Rental Duration:</strong> {{ booking.duration_days }} days</p>
                                     <p><strong>Daily Rate:</strong> ${{ booking.car.daily_rate }}</p>
+                                    <p><strong>Total Cost:</strong> ${{ booking.total_cost }}</p>
                                     <p><strong>Status:</strong> <span class="badge bg-success">{{ booking.status|title }}</span></p>
                                 </div>
-                            </div>
-                            
-                            {% if booking.bookingaddon_set.exists %}
-                            <h5 class="border-bottom pb-2 mb-3">Selected Add-ons</h5>
-                            <div class="row mb-4">
-                                <div class="col-12">
-                                    <ul class="list-group">
-                                        {% for booking_addon in booking.bookingaddon_set.all %}
-                                        <li class="list-group-item d-flex justify-content-between align-items-center">
-                                            <div>
-                                                <i class="fas {{ booking_addon.addon.icon_class }} text-warning me-2"></i>
-                                                {{ booking_addon.addon.name }}
-                                                {% if booking_addon.quantity > 1 %}
-                                                <span class="badge bg-secondary ms-2">x{{ booking_addon.quantity }}</span>
-                                                {% endif %}
-                                            </div>
-                                            <span>
-                                                ${% if booking_addon.addon.pricing_type == 'per_day' %}
-                                                    {% with price_per_day=booking_addon.addon.price|multiply:booking.duration_days %}
-                                                        {{ price_per_day|multiply:booking_addon.quantity|floatformat:2 }}
-                                                    {% endwith %}
-                                                {% else %}
-                                                    {{ booking_addon.addon.price|multiply:booking_addon.quantity|floatformat:2 }}
-                                                {% endif %}
-                                            </span>
-                                        </li>
-                                        {% endfor %}
-                                    </ul>
-                                </div>
-                            </div>
-                            {% endif %}
-                            
-                            <div class="d-flex justify-content-between fw-bold pt-2 border-top">
-                                <span>Total</span>
-                                <span>${{ booking.total_cost|floatformat:2 }}</span>
                             </div>
                         </div>
                         
