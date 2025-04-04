@@ -4,6 +4,24 @@
 
 {% block title %}Your Profile - Rush Car Rental{% endblock %}
 
+<!-- Enhanced Breadcrumb -->
+<div class="breadcrumb-container py-2">
+    <div class="container">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb breadcrumb-custom mb-0">
+                <li class="breadcrumb-item">
+                    <a href="{% url 'home' %}" class="breadcrumb-home">
+                        <i class="fas fa-home"></i> Home
+                    </a>
+                </li>
+                <li class="breadcrumb-item active" aria-current="page">
+                    <i class="fas fa-user"></i> Your Profile
+                </li>
+            </ol>
+        </nav>
+    </div>
+</div>
+
 {% block content %}
 <section class="py-5">
     <div class="container">
