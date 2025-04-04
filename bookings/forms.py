@@ -1,6 +1,5 @@
 from django import forms
-from .models import Booking
-import datetime
+from .models import Booking, AddonOption
 
 class BookingForm(forms.ModelForm):
     """
@@ -19,21 +18,38 @@ class BookingForm(forms.ModelForm):
         cleaned_data = super().clean()
         pickup_date = cleaned_data.get('pickup_date')
         return_date = cleaned_data.get('return_date')
-        driver_age = cleaned_data.get('driver_age')
         
-        # Validate pickup date is not in the past
-        if pickup_date and pickup_date < datetime.date.today():
-            self.add_error('pickup_date', 'Pickup date cannot be in the past')
-        
-        # Validate return date is after pickup date
-        if pickup_date and return_date and return_date < pickup_date:
-            self.add_error('return_date', 'Return date must be after pickup date')
-        
-        # Validate driver age
-        if driver_age and (driver_age < 18 or driver_age > 99):
-            self.add_error('driver_age', 'Driver must be between 18 and 99 years old')
+        if pickup_date and return_date and pickup_date >= return_date:
+            raise forms.ValidationError('Return date must be after pickup date.')
         
         return cleaned_data
+
+class AddonSelectionForm(forms.Form):
+    """
+    Form for selecting booking add-ons
+    """
+    def __init__(self, *args, **kwargs):
+        addons = kwargs.pop('addons', [])
+        super().__init__(*args, **kwargs)
+        
+        for addon in addons:
+            max_qty = addon.max_quantity if addon.max_quantity > 0 else 10
+            choices = [(0, 'None')] + [(i, str(i)) for i in range(1, max_qty + 1)]
+            self.fields[f'addon_{addon.id}'] = forms.ChoiceField(
+                choices=choices,
+                initial=0,
+                required=False,
+                label='',
+            )
+    
+    def get_selected_addons(self):
+        """Returns a dictionary of addon IDs and their selected quantities"""
+        selected_addons = {}
+        for field_name, value in self.cleaned_data.items():
+            if field_name.startswith('addon_') and int(value) > 0:
+                addon_id = int(field_name.split('_')[1])
+                selected_addons[addon_id] = int(value)
+        return selected_addons
 
 class CancellationForm(forms.Form):
     """
