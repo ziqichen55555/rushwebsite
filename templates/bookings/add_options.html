@@ -33,7 +33,7 @@
                 <h1 class="mb-4">Add options</h1>
                 <p class="lead mb-4">No hassle, just your options</p>
                 
-                <form method="post" action="{% url 'confirm_booking' temp_booking.id %}">
+                <form method="post" action="{% url 'confirm_booking' temp_booking_id %}">
                     {% csrf_token %}
                     
                     <!-- Damage Waiver Option -->
@@ -426,5 +426,163 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 });
+</script>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Get base cost
+        const baseCost = {{ base_cost }};
+        const daysCount = {{ temp_booking.duration_days }};
+        
+        // Option costs from server
+        const damageWaiverCost = {{ damage_waiver_cost }};
+        const extendedAreaCost = {{ extended_area_cost }};
+        const gpsCost = {{ gps_cost }};
+        const childSeatCost = {{ child_seat_cost }};
+        const additionalDriverCost = {{ additional_driver_cost }};
+        
+        // Get DOM elements
+        const totalPriceDisplay = document.getElementById('total-price');
+        const optionsBreakdown = document.getElementById('options-breakdown');
+        
+        // Option buttons
+        const optionButtons = document.querySelectorAll('.add-option-btn');
+        optionButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const option = this.getAttribute('data-option');
+                const inputElement = document.getElementById(option);
+                
+                // Toggle option state
+                if (inputElement.value === 'false') {
+                    inputElement.value = 'true';
+                    this.classList.remove('btn-outline-primary');
+                    this.classList.add('btn-success');
+                    this.innerHTML = '<i class="fas fa-check"></i> ADDED';
+                } else {
+                    inputElement.value = 'false';
+                    this.classList.remove('btn-success');
+                    this.classList.add('btn-outline-primary');
+                    this.innerHTML = '<i class="fas fa-plus"></i> ADD';
+                }
+                
+                // Update price
+                updateTotalPrice();
+            });
+        });
+        
+        // Quantity controls
+        const minusButtons = document.querySelectorAll('.minus-btn');
+        const plusButtons = document.querySelectorAll('.plus-btn');
+        
+        minusButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const option = this.getAttribute('data-option');
+                const inputElement = document.getElementById(option);
+                const displayElement = document.getElementById(`${option}_display`);
+                
+                let value = parseInt(inputElement.value);
+                if (value > 0) {
+                    value--;
+                    inputElement.value = value;
+                    displayElement.textContent = value;
+                    updateTotalPrice();
+                }
+            });
+        });
+        
+        plusButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const option = this.getAttribute('data-option');
+                const inputElement = document.getElementById(option);
+                const displayElement = document.getElementById(`${option}_display`);
+                
+                let value = parseInt(inputElement.value);
+                // Set maximum values
+                let maxValue = 5;
+                if (option === 'child_seats') maxValue = 3;
+                if (option === 'additional_drivers') maxValue = 2;
+                
+                if (value < maxValue) {
+                    value++;
+                    inputElement.value = value;
+                    displayElement.textContent = value;
+                    updateTotalPrice();
+                }
+            });
+        });
+        
+        // Function to update total price
+        function updateTotalPrice() {
+            let totalPrice = baseCost;
+            let optionsHtml = '';
+            
+            // Damage Waiver
+            if (document.getElementById('damage_waiver').value === 'true') {
+                const cost = damageWaiverCost * daysCount;
+                totalPrice += cost;
+                optionsHtml += `
+                    <div class="d-flex justify-content-between mb-2">
+                        <span>Damage Waiver</span>
+                        <span>$${cost.toFixed(2)}</span>
+                    </div>
+                `;
+            }
+            
+            // Extended Area
+            if (document.getElementById('extended_area').value === 'true') {
+                totalPrice += extendedAreaCost;
+                optionsHtml += `
+                    <div class="d-flex justify-content-between mb-2">
+                        <span>Extended Area</span>
+                        <span>$${extendedAreaCost.toFixed(2)}</span>
+                    </div>
+                `;
+            }
+            
+            // Sat Nav
+            if (document.getElementById('satellite_navigation').value === 'true') {
+                const cost = gpsCost * daysCount;
+                totalPrice += cost;
+                optionsHtml += `
+                    <div class="d-flex justify-content-between mb-2">
+                        <span>Sat Nav</span>
+                        <span>$${cost.toFixed(2)}</span>
+                    </div>
+                `;
+            }
+            
+            // Child Seats
+            const childSeats = parseInt(document.getElementById('child_seats').value);
+            if (childSeats > 0) {
+                const cost = childSeatCost * daysCount * childSeats;
+                totalPrice += cost;
+                optionsHtml += `
+                    <div class="d-flex justify-content-between mb-2">
+                        <span>Child Seats (${childSeats})</span>
+                        <span>$${cost.toFixed(2)}</span>
+                    </div>
+                `;
+            }
+            
+            // Additional Drivers
+            const additionalDrivers = parseInt(document.getElementById('additional_drivers').value);
+            if (additionalDrivers > 0) {
+                const cost = additionalDriverCost * daysCount * additionalDrivers;
+                totalPrice += cost;
+                optionsHtml += `
+                    <div class="d-flex justify-content-between mb-2">
+                        <span>Additional Drivers (${additionalDrivers})</span>
+                        <span>$${cost.toFixed(2)}</span>
+                    </div>
+                `;
+            }
+            
+            // Update DOM elements
+            optionsBreakdown.innerHTML = optionsHtml;
+            totalPriceDisplay.textContent = '$' + totalPrice.toFixed(2);
+        }
+    });
 </script>
 {% endblock %}
