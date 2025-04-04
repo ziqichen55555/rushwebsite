@@ -3,6 +3,59 @@
 
 {% block title %}支付 - Rush Car Rental{% endblock %}
 
+{% block extra_head %}
+<!-- Stripe JS -->
+<script src="https://js.stripe.com/v3/"></script>
+<style>
+    /* Stripe Elements样式 */
+    .StripeElement {
+        box-sizing: border-box;
+        height: 40px;
+        padding: 10px 12px;
+        border: 1px solid #ced4da;
+        border-radius: 4px;
+        background-color: white;
+        box-shadow: 0 1px 3px 0 #e6ebf1;
+        -webkit-transition: box-shadow 150ms ease;
+        transition: box-shadow 150ms ease;
+    }
+
+    .StripeElement--focus {
+        box-shadow: 0 1px 3px 0 #cfd7df;
+        border-color: #80bdff;
+    }
+
+    .StripeElement--invalid {
+        border-color: #fa755a;
+    }
+
+    .StripeElement--webkit-autofill {
+        background-color: #fefde5 !important;
+    }
+    
+    #payment-message {
+        display: none;
+        color: #dc3545;
+        margin-top: 8px;
+    }
+    
+    #loading-spinner {
+        display: none;
+        width: 20px;
+        height: 20px;
+        border: 3px solid rgba(0, 0, 0, 0.1);
+        border-radius: 50%;
+        border-top-color: #007bff;
+        animation: spin 1s ease-in-out infinite;
+        margin-left: 12px;
+    }
+    
+    @keyframes spin {
+        to { transform: rotate(360deg); }
+    }
+</style>
+{% endblock %}
+
 {% block content %}
 <!-- Enhanced Breadcrumb -->
 <div class="breadcrumb-container py-2">
@@ -37,45 +90,30 @@
         <div class="row">
             <div class="col-lg-8 mb-4">
                 <h1 class="mb-4">确认付款</h1>
-                <p class="lead mb-4">请填写您的支付信息以完成预订</p>
+                <p class="lead mb-4">请完成支付以确认您的预订</p>
                 
                 <div class="card shadow mb-4">
                     <div class="card-header bg-warning text-dark">
                         <h5 class="mb-0">支付方式</h5>
                     </div>
                     <div class="card-body">
-                        <form id="payment-form" method="POST" action="{% url 'process_payment' temp_booking_id %}">
+                        <form id="payment-form">
                             {% csrf_token %}
                             
                             <div class="mb-4">
-                                <h6 class="mb-3">信用卡信息</h6>
+                                <h6 class="mb-3">卡片信息</h6>
                                 
                                 <div class="form-group mb-3">
-                                    <label for="card-number" class="form-label">卡号</label>
-                                    <div class="input-group">
-                                        <input type="text" class="form-control" id="card-number" placeholder="1234 5678 9012 3456" required>
-                                        <span class="input-group-text">
-                                            <i class="fab fa-cc-visa mx-1"></i>
-                                            <i class="fab fa-cc-mastercard mx-1"></i>
-                                            <i class="fab fa-cc-amex mx-1"></i>
-                                        </span>
+                                    <label for="card-element" class="form-label">信用卡或借记卡</label>
+                                    <div id="card-element" class="form-control">
+                                        <!-- Stripe Elements将在这里插入 -->
                                     </div>
-                                </div>
-                                
-                                <div class="row">
-                                    <div class="col-md-6 mb-3">
-                                        <label for="expiry-date" class="form-label">到期日期</label>
-                                        <input type="text" class="form-control" id="expiry-date" placeholder="MM/YY" required>
-                                    </div>
-                                    <div class="col-md-6 mb-3">
-                                        <label for="cvc" class="form-label">安全码</label>
-                                        <input type="text" class="form-control" id="cvc" placeholder="CVC" required>
-                                    </div>
+                                    <div id="payment-message" class="text-danger mt-2"></div>
                                 </div>
                                 
                                 <div class="mb-3">
-                                    <label for="card-name" class="form-label">持卡人姓名</label>
-                                    <input type="text" class="form-control" id="card-name" placeholder="如卡片上所示" required>
+                                    <label for="card-holder-name" class="form-label">持卡人姓名</label>
+                                    <input type="text" class="form-control" id="card-holder-name" placeholder="如卡片上所示" required>
                                 </div>
                             </div>
                             
@@ -102,32 +140,33 @@
                                     <label for="billing-country" class="form-label">国家</label>
                                     <select class="form-select" id="billing-country" required>
                                         <option value="">选择国家</option>
-                                        <option value="Australia" selected>Australia</option>
-                                        <option value="New Zealand">New Zealand</option>
-                                        <option value="United States">United States</option>
-                                        <option value="United Kingdom">United Kingdom</option>
-                                        <option value="China">China</option>
+                                        <option value="AU" selected>Australia</option>
+                                        <option value="NZ">New Zealand</option>
+                                        <option value="US">United States</option>
+                                        <option value="GB">United Kingdom</option>
+                                        <option value="CN">China</option>
                                     </select>
                                 </div>
                             </div>
                             
                             <div class="mt-4">
                                 <div class="form-check mb-3">
-                                    <input class="form-check-input" type="checkbox" id="save-card" checked>
+                                    <input class="form-check-input" type="checkbox" id="save-card">
                                     <label class="form-check-label" for="save-card">
                                         保存此卡信息，方便下次使用
                                     </label>
                                 </div>
                                 
                                 <div class="d-grid">
-                                    <button type="submit" class="btn btn-warning btn-lg">
+                                    <button id="submit-button" type="submit" class="btn btn-warning btn-lg">
                                         支付 ${{ total_cost|floatformat:2 }} <i class="fas fa-lock ms-2"></i>
+                                        <div id="loading-spinner"></div>
                                     </button>
                                 </div>
                                 
                                 <div class="text-center mt-3">
                                     <small class="text-muted">
-                                        <i class="fas fa-shield-alt me-2"></i> 您的支付信息受到保护
+                                        <i class="fas fa-shield-alt me-2"></i> 支付安全由Stripe提供保障
                                     </small>
                                 </div>
                             </div>
@@ -266,49 +305,114 @@
 
 {% block scripts %}
 <script>
-    // 简单的表单验证
+    // Stripe初始化
+    const stripe = Stripe('{{ stripe_public_key }}');
+    let elements;
+    let clientSecret = '{{ client_secret }}';
+    
     document.addEventListener('DOMContentLoaded', function() {
-        const form = document.getElementById('payment-form');
+        initialize();
         
-        form.addEventListener('submit', function(event) {
-            event.preventDefault();
-            
-            // 在真实环境中，这里会有完整的表单验证和Stripe集成
-            // 现在我们只是简单地提交表单
-            this.submit();
-        });
-        
-        // 格式化信用卡输入
-        const cardNumberInput = document.getElementById('card-number');
-        cardNumberInput.addEventListener('input', function(e) {
-            let value = e.target.value.replace(/\D/g, '');
-            if (value.length > 16) value = value.slice(0, 16);
-            
-            // 每4位数字加一个空格
-            const formattedValue = value.replace(/(\d{4})(?=\d)/g, '$1 ');
-            e.target.value = formattedValue;
-        });
-        
-        // 格式化有效期输入
-        const expiryInput = document.getElementById('expiry-date');
-        expiryInput.addEventListener('input', function(e) {
-            let value = e.target.value.replace(/\D/g, '');
-            if (value.length > 4) value = value.slice(0, 4);
-            
-            if (value.length > 2) {
-                value = value.slice(0, 2) + '/' + value.slice(2);
-            }
-            
-            e.target.value = value;
-        });
-        
-        // 格式化CVC输入
-        const cvcInput = document.getElementById('cvc');
-        cvcInput.addEventListener('input', function(e) {
-            let value = e.target.value.replace(/\D/g, '');
-            if (value.length > 4) value = value.slice(0, 4);
-            e.target.value = value;
-        });
+        document.querySelector("#payment-form").addEventListener("submit", handleSubmit);
     });
+    
+    // 初始化Stripe Elements
+    async function initialize() {
+        // 如果没有客户端密钥，获取一个
+        if (!clientSecret) {
+            try {
+                const response = await fetch('{% url "process_payment" temp_booking_id %}', {
+                    method: "POST",
+                    headers: { 
+                        "Content-Type": "application/json",
+                        "X-CSRFToken": document.querySelector('input[name="csrfmiddlewaretoken"]').value 
+                    },
+                    body: JSON.stringify({ action: 'create_intent' }),
+                });
+                
+                const data = await response.json();
+                clientSecret = data.client_secret;
+            } catch (e) {
+                showMessage("加载支付系统时发生错误，请稍后再试。");
+                return;
+            }
+        }
+        
+        const appearance = {
+            theme: 'stripe',
+            variables: {
+                colorPrimary: '#ffc107',
+                colorBackground: '#ffffff',
+                colorText: '#212529',
+            },
+        };
+        
+        elements = stripe.elements({ appearance, clientSecret });
+        
+        const cardElement = elements.create("card", {
+            hidePostalCode: true,
+        });
+        
+        // 挂载Stripe元素
+        cardElement.mount("#card-element");
+    }
+    
+    // 处理表单提交
+    async function handleSubmit(e) {
+        e.preventDefault();
+        
+        setLoading(true);
+        
+        const cardHolderName = document.getElementById('card-holder-name').value;
+        const billingAddress = {
+            line1: document.getElementById('billing-address').value,
+            city: document.getElementById('billing-city').value,
+            postal_code: document.getElementById('billing-zip').value,
+            country: document.getElementById('billing-country').value,
+        };
+        
+        const { error } = await stripe.confirmPayment({
+            elements,
+            confirmParams: {
+                return_url: '{% url "payment_success" 0 %}?booking_id={{ temp_booking_id }}',
+                payment_method_data: {
+                    billing_details: {
+                        name: cardHolderName,
+                        address: billingAddress,
+                    },
+                },
+            },
+        });
+        
+        if (error) {
+            showMessage(error.message);
+            setLoading(false);
+        }
+        // 成功的话会重定向到return_url
+    }
+    
+    // 显示错误消息
+    function showMessage(messageText) {
+        const messageContainer = document.querySelector("#payment-message");
+        
+        messageContainer.textContent = messageText;
+        messageContainer.style.display = "block";
+        
+        setTimeout(function () {
+            messageContainer.style.display = "none";
+            messageText.textContent = "";
+        }, 6000);
+    }
+    
+    // 设置加载状态
+    function setLoading(isLoading) {
+        if (isLoading) {
+            document.querySelector("#submit-button").disabled = true;
+            document.querySelector("#loading-spinner").style.display = "inline-block";
+        } else {
+            document.querySelector("#submit-button").disabled = false;
+            document.querySelector("#loading-spinner").style.display = "none";
+        }
+    }
 </script>
 {% endblock %}

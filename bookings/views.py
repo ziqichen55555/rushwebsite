@@ -2,11 +2,19 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.utils import timezone
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
 from datetime import datetime
 from decimal import Decimal
+import json
+import os
+import stripe
 from .models import Booking
 from cars.models import Car
 from locations.models import Location
+
+# 设置Stripe API密钥
+stripe.api_key = os.environ.get('STRIPE_SECRET_KEY')
 
 # Dictionary to store temporary bookings
 temp_bookings = {}
@@ -183,10 +191,32 @@ def payment(request, temp_booking_id):
     options_cost = temp_booking.options_cost
     total_cost = Decimal(base_cost) + Decimal(options_cost)
     
+    # 创建或获取Stripe支付意图
+    try:
+        # 为了演示，我们使用基本的支付方式，实际应用中可以使用更复杂的设置
+        payment_intent = stripe.PaymentIntent.create(
+            amount=int(total_cost * 100),  # 转换为分，Stripe需要整数金额
+            currency='aud',  # 澳元
+            metadata={
+                'temp_booking_id': temp_booking_id,
+                'customer_email': request.user.email,
+                'car_name': f"{temp_booking.car.year} {temp_booking.car.make} {temp_booking.car.model}",
+            },
+            description=f"车辆租赁: {temp_booking.car.year} {temp_booking.car.make} {temp_booking.car.model} ({temp_booking.pickup_date} - {temp_booking.return_date})",
+            receipt_email=request.user.email,
+        )
+        client_secret = payment_intent.client_secret
+    except Exception as e:
+        print(f"Stripe错误: {str(e)}")
+        messages.error(request, f"创建支付失败: {str(e)}")
+        return redirect('add_options', temp_booking_id=temp_booking_id)
+    
     context = {
         'temp_booking': temp_booking,
         'temp_booking_id': temp_booking_id,
-        'total_cost': total_cost
+        'total_cost': total_cost,
+        'stripe_public_key': os.environ.get('VITE_STRIPE_PUBLIC_KEY'),
+        'client_secret': client_secret,
     }
     
     return render(request, 'bookings/payment.html', context)
@@ -201,26 +231,80 @@ def process_payment(request, temp_booking_id):
         return redirect('home')
     
     if request.method == 'POST':
-        # This is where Stripe payment processing would occur with a real API key
-        # For now, we'll just mark the booking as confirmed and save it
-        
-        # Update the status
+        try:
+            data = json.loads(request.body)
+            action = data.get('action', None)
+            
+            # 请求仅创建支付意图，不处理支付
+            if action == 'create_intent':
+                # 计算总价格
+                base_cost = temp_booking.car.daily_rate * temp_booking.duration_days
+                options_cost = temp_booking.options_cost
+                total_cost = Decimal(base_cost) + Decimal(options_cost)
+                
+                # 创建支付意图
+                payment_intent = stripe.PaymentIntent.create(
+                    amount=int(total_cost * 100),  # 转换为分
+                    currency='aud',  # 澳元
+                    metadata={
+                        'temp_booking_id': temp_booking_id,
+                        'customer_email': request.user.email,
+                        'car_name': f"{temp_booking.car.year} {temp_booking.car.make} {temp_booking.car.model}",
+                    },
+                    description=f"车辆租赁: {temp_booking.car.year} {temp_booking.car.make} {temp_booking.car.model} ({temp_booking.pickup_date} - {temp_booking.return_date})",
+                    receipt_email=request.user.email,
+                )
+                
+                return JsonResponse({
+                    'client_secret': payment_intent.client_secret
+                })
+            
+            # Stripe网络钩子或其他操作可以在这里处理
+            else:
+                # 此处处理成功支付的逻辑
+                # 实际情况下，应该是从Stripe的webhooks接收支付确认
+                # 这里我们简化处理，假设支付已成功
+                
+                # 更新订单状态
+                temp_booking.status = 'confirmed'
+                
+                # 保存订单到数据库
+                temp_booking.save()
+                
+                # 获取新创建的订单ID
+                booking_id = temp_booking.id
+                
+                # 清理临时订单
+                if temp_booking_id in temp_bookings:
+                    del temp_bookings[temp_booking_id]
+                
+                return JsonResponse({
+                    'success': True,
+                    'booking_id': booking_id,
+                    'redirect_url': f'/bookings/payment-success/{booking_id}/'
+                })
+                
+        except Exception as e:
+            print(f"处理支付时出错: {str(e)}")
+            return JsonResponse({
+                'error': str(e)
+            }, status=400)
+            
+    # 从成功支付页面的URL参数获取booking_id
+    query_booking_id = request.GET.get('booking_id', None)
+    if query_booking_id:
+        # 确认支付已完成，更新订单状态
         temp_booking.status = 'confirmed'
-        
-        # Save the booking to the database
         temp_booking.save()
         
-        # Get the new booking ID from the database
+        # 获取新建订单ID并清理临时订单
         booking_id = temp_booking.id
-        
-        # Clean up temporary booking
         if temp_booking_id in temp_bookings:
             del temp_bookings[temp_booking_id]
-        
-        messages.success(request, "支付成功！您的预订已确认。")
+            
         return redirect('payment_success', booking_id=booking_id)
     
-    # If not a POST request, redirect back to payment page
+    # 如果不是POST请求，重定向回支付页面
     return redirect('payment', temp_booking_id=temp_booking_id)
 
 @login_required
