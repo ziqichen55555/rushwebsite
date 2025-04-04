@@ -105,6 +105,7 @@ def add_options(request, temp_booking_id):
     # Define costs for each option
     context = {
         'temp_booking': temp_booking,
+        'temp_booking_id': temp_booking_id,  # Pass the ID to template
         'base_cost': base_cost,
         'damage_waiver_cost': 14,  # $14 per day
         'extended_area_cost': 150,  # $150 flat fee
@@ -126,9 +127,15 @@ def confirm_booking(request, temp_booking_id):
     
     if request.method == 'POST':
         # Get option selections from form
-        damage_waiver = request.POST.get('damage_waiver') == 'true'
-        extended_area = request.POST.get('extended_area') == 'true'
-        satellite_navigation = request.POST.get('satellite_navigation') == 'true'
+        # Check for both 'true' (from JavaScript) and 'on' (from HTML checkbox)
+        damage_waiver_val = request.POST.get('damage_waiver', 'false')
+        damage_waiver = damage_waiver_val == 'true' or damage_waiver_val == 'on'
+        
+        extended_area_val = request.POST.get('extended_area', 'false')
+        extended_area = extended_area_val == 'true' or extended_area_val == 'on'
+        
+        satellite_navigation_val = request.POST.get('satellite_navigation', 'false')
+        satellite_navigation = satellite_navigation_val == 'true' or satellite_navigation_val == 'on'
         
         try:
             child_seats = int(request.POST.get('child_seats', 0))
@@ -139,6 +146,9 @@ def confirm_booking(request, temp_booking_id):
             additional_drivers = int(request.POST.get('additional_drivers', 0))
         except ValueError:
             additional_drivers = 0
+            
+        # Print for debugging
+        print(f"Form data: damage_waiver={damage_waiver_val}, extended_area={extended_area_val}, sat_nav={satellite_navigation_val}")
         
         # Apply options to temporary booking
         temp_booking.damage_waiver = damage_waiver
