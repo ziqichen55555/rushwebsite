@@ -1,58 +1,86 @@
 {% extends 'base.html' %}
+{% load crispy_forms_tags %}
 
 {% block title %}Cancel Booking - Rush Car Rental{% endblock %}
 
 {% block content %}
+<!-- Enhanced Breadcrumb -->
+<div class="breadcrumb-container py-2">
+    <div class="container">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb breadcrumb-custom mb-0">
+                <li class="breadcrumb-item">
+                    <a href="{% url 'home' %}" class="breadcrumb-home">
+                        <i class="fas fa-home"></i> Home
+                    </a>
+                </li>
+                <li class="breadcrumb-item">
+                    <a href="{% url 'user_bookings' %}">
+                        <i class="fas fa-list"></i> My Bookings
+                    </a>
+                </li>
+                <li class="breadcrumb-item">
+                    <a href="{% url 'booking_detail' booking.id %}">
+                        <i class="fas fa-receipt"></i> Booking #{{ booking.id }}
+                    </a>
+                </li>
+                <li class="breadcrumb-item active" aria-current="page">
+                    <i class="fas fa-times-circle"></i> Cancel Booking
+                </li>
+            </ol>
+        </nav>
+    </div>
+</div>
+
 <section class="py-5">
     <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-8">
+        <div class="row">
+            <div class="col-md-8 mx-auto">
                 <div class="card shadow">
                     <div class="card-header bg-danger text-white">
-                        <h3 class="card-title mb-0">Cancel Booking</h3>
+                        <h4 class="mb-0">Cancel Booking #{{ booking.id }}</h4>
                     </div>
                     <div class="card-body">
-                        <div class="alert alert-warning">
-                            <i class="fas fa-exclamation-triangle me-2"></i> You are about to cancel your booking. This action cannot be undone.
+                        <div class="alert alert-warning mb-4">
+                            <h5 class="alert-heading">
+                                <i class="fas fa-exclamation-triangle me-2"></i>
+                                Warning!
+                            </h5>
+                            <p>You are about to cancel your booking. Please be aware of our cancellation policy:</p>
+                            <ul>
+                                <li>Cancellations made more than 48 hours before pickup: Full refund</li>
+                                <li>Cancellations made between 24-48 hours before pickup: 50% refund</li>
+                                <li>Cancellations made less than 24 hours before pickup: No refund</li>
+                            </ul>
                         </div>
                         
-                        <div class="booking-details p-4 my-4 bg-light rounded">
-                            <h5>Booking Details</h5>
+                        <div class="booking-summary mb-4">
+                            <h5 class="border-bottom pb-2 mb-3">Booking Details</h5>
                             <div class="row">
-                                <div class="col-md-6">
-                                    <p><strong>Booking ID:</strong> #{{ booking.id }}</p>
-                                    <p><strong>Vehicle:</strong> {{ booking.car.year }} {{ booking.car.make }} {{ booking.car.model }}</p>
-                                    <p><strong>Pick-up:</strong> {{ booking.pickup_location.name }}, {{ booking.pickup_date }}</p>
+                                <div class="col-md-4">
+                                    <p><strong>Car:</strong></p>
+                                    <p>{{ booking.car.year }} {{ booking.car.make }} {{ booking.car.model }}</p>
                                 </div>
-                                <div class="col-md-6">
-                                    <p><strong>Status:</strong> {{ booking.status|title }}</p>
-                                    <p><strong>Drop-off:</strong> {{ booking.dropoff_location.name }}, {{ booking.return_date }}</p>
-                                    <p><strong>Total Cost:</strong> ${{ booking.total_cost }}</p>
+                                <div class="col-md-4">
+                                    <p><strong>Pick-up:</strong></p>
+                                    <p>{{ booking.pickup_date|date:"M d, Y" }}</p>
+                                    <p>{{ booking.pickup_location.name }}</p>
+                                </div>
+                                <div class="col-md-4">
+                                    <p><strong>Drop-off:</strong></p>
+                                    <p>{{ booking.return_date|date:"M d, Y" }}</p>
+                                    <p>{{ booking.dropoff_location.name }}</p>
                                 </div>
                             </div>
                         </div>
                         
-                        <div class="alert alert-info mb-4">
-                            <h5 class="alert-heading">Cancellation Policy</h5>
-                            <p class="mb-0">
-                                {% if booking.pickup_date|date:"U"|add:"0" > 172800|add:booking.booking_date|date:"U"|add:"0" %}
-                                    <i class="fas fa-info-circle me-2"></i> More than 48 hours before pickup: Full refund
-                                {% elif booking.pickup_date|date:"U"|add:"0" > 86400|add:booking.booking_date|date:"U"|add:"0" %}
-                                    <i class="fas fa-info-circle me-2"></i> 24-48 hours before pickup: 75% refund (${{ booking.total_cost|floatformat:2|multiply:0.75 }})
-                                {% elif booking.pickup_date|date:"U"|add:"0" > 43200|add:booking.booking_date|date:"U"|add:"0" %}
-                                    <i class="fas fa-info-circle me-2"></i> 12-24 hours before pickup: 50% refund (${{ booking.total_cost|floatformat:2|multiply:0.5 }})
-                                {% else %}
-                                    <i class="fas fa-info-circle me-2"></i> Less than 12 hours before pickup: No refund
-                                {% endif %}
-                            </p>
-                        </div>
-                        
                         <form method="post">
                             {% csrf_token %}
+                            
                             <div class="mb-3">
-                                <label for="cancel_reason" class="form-label">Reason for Cancellation (Optional)</label>
-                                <select class="form-select" id="cancel_reason" name="cancel_reason">
-                                    <option value="" selected>-- Select Reason --</option>
+                                <label for="id_cancel_reason" class="form-label">Reason for Cancellation</label>
+                                <select name="cancel_reason" id="id_cancel_reason" class="form-select">
+                                    <option value="">-- Select Reason --</option>
                                     <option value="change_of_plans">Change of Plans</option>
                                     <option value="found_better_deal">Found a Better Deal</option>
                                     <option value="no_longer_need">No Longer Need a Car</option>
@@ -61,17 +89,18 @@
                                 </select>
                             </div>
                             
-                            <div class="mb-3">
-                                <label for="comments" class="form-label">Additional Comments (Optional)</label>
-                                <textarea class="form-control" id="comments" name="comments" rows="3"></textarea>
+                            <div class="mb-4">
+                                <label for="id_comments" class="form-label">Additional Comments</label>
+                                <textarea name="comments" id="id_comments" class="form-control" rows="3"></textarea>
+                                <div class="form-text">Please provide any additional details about your cancellation.</div>
                             </div>
                             
                             <div class="d-flex justify-content-between">
                                 <a href="{% url 'booking_detail' booking.id %}" class="btn btn-outline-secondary">
-                                    <i class="fas fa-arrow-left me-2"></i> Go Back
+                                    <i class="fas fa-arrow-left me-2"></i>Back to Booking
                                 </a>
                                 <button type="submit" class="btn btn-danger">
-                                    <i class="fas fa-times-circle me-2"></i> Confirm Cancellation
+                                    <i class="fas fa-times-circle me-2"></i>Confirm Cancellation
                                 </button>
                             </div>
                         </form>
