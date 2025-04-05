@@ -137,6 +137,8 @@ class Booking(models.Model):
 
 ### ER图（概念）
 
+以下是使用传统格式展示的ER图：
+
 ```
 User(id, username, email, password, first_name, last_name)
    |
@@ -170,6 +172,138 @@ Location(id, name, address, city, state_id, postal_code, phone, email,
          | n:1
          v
 State(id, name, code)
+```
+
+### Mermaid ER图
+
+以下使用Mermaid语法描述的ER图提供了更直观的数据库关系表示：
+
+```mermaid
+erDiagram
+    AUTH_USER ||--|| ACCOUNTS_PROFILE : has
+    AUTH_USER ||--o{ BOOKINGS_BOOKING : makes
+    CARS_CARCATEGORY ||--o{ CARS_CAR : categorizes
+    CARS_CAR ||--o{ CARS_CARFEATURE : has
+    CARS_CAR ||--o{ BOOKINGS_BOOKING : booked_as
+    CARS_CAR }o--o{ LOCATIONS_LOCATION : available_at
+    LOCATIONS_STATE ||--o{ LOCATIONS_LOCATION : located_in
+    LOCATIONS_STATE ||--o{ LOCATIONS_CITYHIGHLIGHT : highlights
+    LOCATIONS_LOCATION ||--o{ BOOKINGS_BOOKING : pickup_at
+    LOCATIONS_LOCATION ||--o{ BOOKINGS_BOOKING : dropoff_at
+    
+    AUTH_USER {
+        int id PK
+        string username UK
+        string first_name
+        string last_name
+        string email
+        string password
+        boolean is_staff
+        boolean is_active
+        boolean is_superuser
+        timestamp last_login
+        timestamp date_joined
+    }
+    
+    ACCOUNTS_PROFILE {
+        int id PK
+        int user_id FK,UK
+        string phone
+        string address
+        date date_of_birth
+        string license_number
+    }
+    
+    LOCATIONS_STATE {
+        int id PK
+        string name
+        string code
+    }
+    
+    LOCATIONS_LOCATION {
+        int id PK
+        string name
+        string address
+        string city
+        int state_id FK
+        string postal_code
+        string phone
+        string email
+        boolean is_airport
+        string opening_hours
+        decimal latitude
+        decimal longitude
+    }
+    
+    CARS_CARCATEGORY {
+        int id PK
+        string name
+        text description
+    }
+    
+    CARS_CAR {
+        int id PK
+        string name
+        string make
+        string model
+        int year
+        int category_id FK
+        int seats
+        int bags
+        int doors
+        char transmission
+        boolean air_conditioning
+        string image_url
+        decimal daily_rate
+        boolean is_available
+        string comparison_provider1_name
+        decimal comparison_provider1_rate
+        string comparison_provider2_name
+        decimal comparison_provider2_rate
+    }
+    
+    CARS_CARFEATURE {
+        int id PK
+        int car_id FK
+        string feature
+    }
+    
+    BOOKINGS_BOOKINGOPTION {
+        int id PK
+        string name
+        text description
+        decimal daily_rate
+        decimal flat_fee
+        string icon_class
+        boolean is_quantity_option
+    }
+    
+    BOOKINGS_BOOKING {
+        int id PK
+        int user_id FK
+        int car_id FK
+        int pickup_location_id FK
+        int dropoff_location_id FK
+        date pickup_date
+        date return_date
+        timestamp booking_date
+        string status
+        decimal total_cost
+        int driver_age
+        boolean damage_waiver
+        boolean extended_area
+        boolean satellite_navigation
+        int child_seats
+        int additional_drivers
+    }
+    
+    LOCATIONS_CITYHIGHLIGHT {
+        int id PK
+        string city
+        int state_id FK
+        text description
+        string image_url
+    }
 ```
 
 ### 主要数据模型
