@@ -14,7 +14,19 @@
     <link rel="stylesheet" href="/static/css/styles.css">
     {% block extra_css %}{% endblock %}
 </head>
+    {% if not IS_PRODUCTION %}
+    <div class="environment-banner {{ ENVIRONMENT_CLASS }}">
+        {{ ENVIRONMENT_DISPLAY }} Environment
+    </div>
+    {% endif %}
+
 <body>
+    {% if not IS_PRODUCTION %}
+    <div class="environment-banner {{ ENVIRONMENT_CLASS }}">
+        {{ ENVIRONMENT_DISPLAY }} Environment
+    </div>
+    {% endif %}
+    
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container">

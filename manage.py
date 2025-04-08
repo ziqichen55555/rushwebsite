@@ -2,6 +2,10 @@
 """Django's command-line utility for administrative tasks."""
 import os
 import sys
+from dotenv import load_dotenv
+
+# 加载环境变量，确保在Django加载配置前执行
+load_dotenv()
 
 
 def main():
