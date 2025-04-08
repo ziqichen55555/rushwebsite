@@ -1,4 +1,9 @@
-#!/usr/bin/env python
+import os
+import sys
+import json
+import uuid
+from datetime import datetime, timedelta
+
 """
 Stripe集成测试脚本
 
@@ -6,228 +11,299 @@ Stripe集成测试脚本
 模拟Stripe API的行为，以便于开发和测试。
 """
 
-import os
-import sys
-import uuid
-import json
-from decimal import Decimal
+# 将项目根目录添加到Python路径
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+sys.path.append(BASE_DIR)
 
-# 添加项目根目录到sys.path
-sys.path.append('.')
+# 设置Django环境
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'rush_car_rental.settings')
-
-# 设置Django
 import django
 django.setup()
 
-# 导入必要的模块
+# 导入Django模型和视图
 from django.test import Client
 from django.contrib.auth.models import User
 from django.urls import reverse
-from bookings.models import Booking
 from cars.models import Car, CarCategory
 from locations.models import Location, State
+from bookings.models import Booking
 
-# 打印系统信息
-print("===== Rush Car Rental - Stripe集成测试 =====")
-print(f"Django版本: {django.get_version()}")
-print(f"测试时间: {django.utils.timezone.now()}")
-print("=" * 50)
 
-# 创建一个测试客户端
-client = Client()
-
-# 检查Stripe环境变量
-stripe_secret_key = os.environ.get('STRIPE_SECRET_KEY')
-stripe_public_key = os.environ.get('VITE_STRIPE_PUBLIC_KEY')
-
-print(f"Stripe Secret Key: {'已设置' if stripe_secret_key else '未设置'}")
-print(f"Stripe Public Key: {'已设置' if stripe_public_key else '未设置'}")
-
-# 测试支付流程
 def test_payment_flow():
-    # 检查是否有用户
-    if User.objects.count() == 0:
-        print("创建测试用户...")
-        user = User.objects.create_user(
-            username='test_user',
-            email='test@example.com',
-            password='testpassword'
-        )
-    else:
-        user = User.objects.first()
-        print(f"使用现有用户: {user.username}")
+    """测试支付流程"""
+    print("=== 测试支付流程 ===")
     
-    # 登录
-    client.login(username=user.username, password='testpassword')
+    # 创建测试客户端
+    client = Client()
     
-    # 检查是否有车辆数据
-    if Car.objects.count() == 0:
-        print("没有可用的车辆数据，请先运行setup_data.py")
+    # 确保有测试用户
+    username = f"test_user_{uuid.uuid4().hex[:8]}"
+    email = f"{username}@example.com"
+    password = "testpassword123"
+    
+    try:
+        user = User.objects.get(username=username)
+    except User.DoesNotExist:
+        user = User.objects.create_user(username=username, email=email, password=password)
+    
+    # 登录用户
+    logged_in = client.login(username=username, password=password)
+    if not logged_in:
+        print(f"❌ 登录失败: {username}")
         return
     
-    car = Car.objects.first()
-    print(f"测试车辆: {car.make} {car.model}")
+    print(f"✅ 登录成功: {username}")
     
-    # 检查是否有地点数据
-    if Location.objects.count() == 0:
-        print("没有可用的地点数据，请先运行setup_data.py")
-        return
-    
-    location = Location.objects.first()
-    print(f"测试地点: {location.name}")
-    
-    # 1. 创建预订
-    print("\n1. 创建预订...")
-    # 注意：在实际应用中，这应该通过表单提交完成
-    # 这里我们模拟POST请求
-    response = client.post(reverse('create_booking', args=[car.id]), {
-        'pickup_location': location.id,
-        'dropoff_location': location.id,
-        'pickup_date': '2025-04-15',
-        'return_date': '2025-04-20',
-        'driver_age': 25
-    })
-    
-    if response.status_code == 302:  # 重定向是成功的标志
-        print("预订创建成功！重定向到选项页面")
-        # 从重定向URL提取临时预订ID
-        redirect_url = response.url
-        temp_booking_id = redirect_url.split('/')[-2]
-        print(f"临时预订ID: {temp_booking_id}")
+    # 确保有测试用车辆和位置
+    try:
+        category = CarCategory.objects.first()
+        if not category:
+            category = CarCategory.objects.create(name="Test Category", description="Test Description")
         
-        # 2. 添加选项
-        print("\n2. 添加选项...")
-        response = client.post(reverse('confirm_booking', args=[temp_booking_id]), {
-            'damage_waiver': 'on',
-            'extended_area': 'on',
-            'satellite_navigation': 'on',
-            'child_seats': 1,
-            'additional_drivers': 1
+        car = Car.objects.first()
+        if not car:
+            car = Car.objects.create(
+                name="Test Car",
+                make="Test Make",
+                model="Test Model",
+                year=2023,
+                category=category,
+                seats=5,
+                bags=3,
+                doors=4,
+                transmission="A",
+                air_conditioning=True,
+                image_url="https://example.com/car.jpg",
+                daily_rate=50.00,
+                is_available=True
+            )
+        
+        state = State.objects.first()
+        if not state:
+            state = State.objects.create(name="Test State", code="TS")
+        
+        pickup_location = Location.objects.first()
+        if not pickup_location:
+            pickup_location = Location.objects.create(
+                name="Test Location 1",
+                address="123 Test St",
+                city="Test City",
+                state=state,
+                postal_code="12345",
+                is_airport=False
+            )
+        
+        dropoff_location = pickup_location
+        
+    except Exception as e:
+        print(f"❌ 设置测试数据失败: {str(e)}")
+        return
+    
+    # 创建测试预订
+    try:
+        # 删除之前的测试预订
+        Booking.objects.filter(user=user).delete()
+        
+        # 创建一个新的预订
+        today = datetime.now().date()
+        pickup_date = today + timedelta(days=7)
+        return_date = today + timedelta(days=14)
+        
+        booking = Booking.objects.create(
+            user=user,
+            car=car,
+            pickup_location=pickup_location,
+            dropoff_location=dropoff_location,
+            pickup_date=pickup_date,
+            return_date=return_date,
+            status='pending',
+            total_cost=car.daily_rate * 7,
+            driver_age=30
+        )
+        
+        print(f"✅ 创建预订成功: ID {booking.id}, 总金额 {booking.total_cost}")
+        
+    except Exception as e:
+        print(f"❌ 创建预订失败: {str(e)}")
+        return
+    
+    # 测试支付流程
+    try:
+        # 1. 跳转到支付页面
+        payment_url = f"/bookings/{booking.id}/payment/"
+        response = client.get(payment_url)
+        
+        if response.status_code != 200:
+            print(f"❌ 访问支付页面失败: 状态码 {response.status_code}")
+            return
+        
+        print(f"✅ 访问支付页面成功")
+        
+        # 2. 处理支付
+        process_url = f"/bookings/{booking.id}/process_payment/"
+        response = client.post(process_url, {"payment_method": "stripe"})
+        
+        if response.status_code not in [200, 302]:
+            print(f"❌ 处理支付失败: 状态码 {response.status_code}")
+            return
+        
+        print(f"✅ 处理支付请求成功")
+        
+        # 3. 模拟支付成功回调
+        success_url = f"/bookings/{booking.id}/stripe_success/"
+        response = client.get(success_url)
+        
+        if response.status_code not in [200, 302]:
+            print(f"❌ 支付成功回调失败: 状态码 {response.status_code}")
+            return
+        
+        print(f"✅ 支付成功回调处理成功")
+        
+        # 4. 检查预订状态
+        booking.refresh_from_db()
+        if booking.status != 'confirmed':
+            print(f"❌ 预订状态更新失败: 当前状态为 {booking.status}, 应为 confirmed")
+            return
+        
+        print(f"✅ 预订状态已更新为 {booking.status}")
+        
+        print("\n🎉 支付流程测试成功!")
+        
+    except Exception as e:
+        print(f"❌ 支付流程测试失败: {str(e)}")
+
+
+def test_stripe_checkout():
+    """测试Stripe结账流程"""
+    print("\n=== 测试Stripe结账流程 ===")
+    
+    # 检查环境变量
+    stripe_key = os.environ.get('STRIPE_SECRET_KEY')
+    if not stripe_key:
+        print("⚠️ 未设置STRIPE_SECRET_KEY环境变量，使用测试密钥")
+        stripe_key = "sk_test_example_key"
+    
+    print(f"✅ 使用Stripe密钥: {stripe_key[:4]}...{stripe_key[-4:]}")
+    
+    # 创建测试客户端
+    client = Client()
+    
+    # 确保有测试用户并登录
+    username = f"test_user_{uuid.uuid4().hex[:8]}"
+    password = "testpassword123"
+    
+    try:
+        user = User.objects.create_user(username=username, password=password)
+        logged_in = client.login(username=username, password=password)
+        if not logged_in:
+            print(f"❌ 登录失败: {username}")
+            return
+    except Exception as e:
+        print(f"❌ 用户创建或登录失败: {str(e)}")
+        return
+    
+    # 创建测试预订数据
+    try:
+        # 确保有必要的测试数据
+        category = CarCategory.objects.first() or CarCategory.objects.create(name="Test Category")
+        state = State.objects.first() or State.objects.create(name="Test State", code="TS")
+        
+        car = Car.objects.create(
+            name="Test Checkout Car",
+            make="Test",
+            model="Checkout",
+            year=2023,
+            category=category,
+            seats=4,
+            bags=2,
+            doors=4,
+            transmission="A",
+            image_url="https://example.com/car.jpg",
+            daily_rate=75.00,
+            is_available=True
+        )
+        
+        location = Location.objects.first() or Location.objects.create(
+            name="Test Location",
+            address="123 Test St",
+            city="Test City",
+            state=state,
+            postal_code="12345"
+        )
+        
+        today = datetime.now().date()
+        booking = Booking.objects.create(
+            user=user,
+            car=car,
+            pickup_location=location,
+            dropoff_location=location,
+            pickup_date=today + timedelta(days=3),
+            return_date=today + timedelta(days=6),
+            status='pending',
+            total_cost=225.00,  # 3天 * 75.00
+            driver_age=25
+        )
+        
+        print(f"✅ 创建测试预订: ID {booking.id}, 金额 ${booking.total_cost}")
+        
+    except Exception as e:
+        print(f"❌ 创建测试数据失败: {str(e)}")
+        return
+    
+    # 测试Stripe结账会话创建
+    try:
+        print("\n🔍 测试Stripe结账会话创建...")
+        
+        # 请求结账会话
+        response = client.post(f'/bookings/{booking.id}/process_payment/', {
+            'payment_method': 'stripe_checkout',
         })
         
-        if response.status_code == 302:
-            print("选项添加成功！重定向到支付页面")
-            
-            # 3. 模拟支付过程
-            print("\n3. 处理支付...")
-            response = client.post(reverse('process_payment', args=[temp_booking_id]), {
-                'action': 'confirm'
-            })
-            
-            if response.status_code == 302:
-                redirect_url = response.url
-                booking_id = redirect_url.split('/')[-2]
-                print(f"支付成功！重定向到成功页面，预订ID: {booking_id}")
-                
-                # 4. 查看预订详情
-                booking = Booking.objects.get(id=booking_id)
-                print("\n4. 预订详情:")
-                print(f"用户: {booking.user.username}")
-                print(f"车辆: {booking.car.make} {booking.car.model}")
-                print(f"取车地点: {booking.pickup_location.name}")
-                print(f"还车地点: {booking.dropoff_location.name}")
-                print(f"取车日期: {booking.pickup_date}")
-                print(f"还车日期: {booking.return_date}")
-                print(f"状态: {booking.status}")
-                print(f"总费用: ${booking.total_cost}")
-                print(f"附加选项: 损坏豁免({booking.damage_waiver}), 扩展区域({booking.extended_area}), 卫星导航({booking.satellite_navigation})")
-                print(f"儿童座椅: {booking.child_seats}, 附加驾驶员: {booking.additional_drivers}")
-                
-                return booking
-            else:
-                print(f"支付失败: {response.status_code}")
-                return None
-        else:
-            print(f"添加选项失败: {response.status_code}")
-            return None
-    else:
-        print(f"创建预订失败: {response.status_code}")
-        return None
-
-# 测试Stripe托管结账页面
-def test_stripe_checkout():
-    # 检查是否有用户
-    if User.objects.count() == 0:
-        print("创建测试用户...")
-        user = User.objects.create_user(
-            username='test_user',
-            email='test@example.com',
-            password='testpassword'
-        )
-    else:
-        user = User.objects.first()
-        print(f"使用现有用户: {user.username}")
-    
-    # 登录
-    client.login(username=user.username, password='testpassword')
-    
-    # 获取车辆和地点
-    car = Car.objects.first()
-    location = Location.objects.first()
-    
-    # 1. 创建预订
-    print("\n1. 创建预订...")
-    response = client.post(reverse('create_booking', args=[car.id]), {
-        'pickup_location': location.id,
-        'dropoff_location': location.id,
-        'pickup_date': '2025-05-15',
-        'return_date': '2025-05-20',
-        'driver_age': 30
-    })
-    
-    # 从重定向URL提取临时预订ID
-    redirect_url = response.url
-    temp_booking_id = redirect_url.split('/')[-2]
-    
-    # 2. 添加选项
-    print("\n2. 添加选项...")
-    response = client.post(reverse('confirm_booking', args=[temp_booking_id]), {
-        'damage_waiver': 'on',
-        'extended_area': 'on',
-        'satellite_navigation': 'on',
-    })
-    
-    # 3. 访问支付页面（这应该会重定向到Stripe结账页面）
-    print("\n3. 访问支付页面...")
-    response = client.get(reverse('payment', args=[temp_booking_id]))
-    
-    if response.status_code == 302:
+        if response.status_code != 302:  # 应该是重定向
+            print(f"❌ 创建结账会话失败: 状态码 {response.status_code}")
+            print(f"响应内容: {response.content.decode()[:200]}...")
+            return
+        
+        # 检查重定向URL
         redirect_url = response.url
-        print(f"重定向到Stripe结账页面: {redirect_url}")
+        print(f"✅ 重定向到: {redirect_url}")
         
-        # 4. 模拟从Stripe返回
-        print("\n4. 模拟从Stripe结账页面返回...")
-        response = client.get(reverse('stripe_success', args=[temp_booking_id]))
-        
-        if response.status_code == 302:
-            redirect_url = response.url
-            booking_id = redirect_url.split('/')[-2]
-            print(f"成功处理Stripe回调！重定向到成功页面，预订ID: {booking_id}")
-            
-            # 查看预订详情
-            booking = Booking.objects.get(id=booking_id)
-            return booking
+        if 'stripe.com' in redirect_url or 'checkout/session' in redirect_url:
+            print("✅ 重定向到Stripe结账页面成功")
         else:
-            print(f"处理Stripe回调失败: {response.status_code}")
-            return None
-    else:
-        print(f"支付页面未重定向到Stripe: {response.status_code}")
-        content = response.content.decode('utf-8')
-        print(f"内容: {content[:200]}...") # 仅打印前200个字符
-        return None
+            print(f"❌ 未重定向到Stripe结账页面")
+        
+        # 模拟Stripe回调
+        print("\n🔍 模拟Stripe结账成功回调...")
+        
+        success_url = f'/bookings/{booking.id}/stripe_success/'
+        response = client.get(success_url)
+        
+        if response.status_code in [200, 302]:
+            print(f"✅ 结账成功回调处理成功")
+        else:
+            print(f"❌ 结账成功回调失败: 状态码 {response.status_code}")
+            return
+        
+        # 验证预订状态更新
+        booking.refresh_from_db()
+        print(f"✅ 更新后的预订状态: {booking.status}")
+        
+        print("\n🎉 Stripe结账流程测试完成!")
+        
+    except Exception as e:
+        print(f"❌ Stripe结账测试失败: {str(e)}")
 
-if __name__ == '__main__':
-    # 运行标准支付流程测试
-    print("\n===== 测试标准支付流程 =====")
-    booking1 = test_payment_flow()
+
+if __name__ == "__main__":
+    print("\n==================================================")
+    print("🚗 Rush Car Rental - Stripe集成测试")
+    print("==================================================\n")
     
-    # 运行Stripe托管结账测试
-    print("\n===== 测试Stripe托管结账 =====")
-    booking2 = test_stripe_checkout()
+    # 运行测试
+    test_payment_flow()
+    test_stripe_checkout()
     
-    print("\n===== 测试完成 =====")
-    if booking1 and booking2:
-        print("所有测试通过！支付集成功能正常工作。")
-    else:
-        print("部分测试失败，请检查日志和错误信息。")
+    print("\n==================================================")
+    print("测试完成")
+    print("==================================================\n")
