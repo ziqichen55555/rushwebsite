@@ -7,7 +7,6 @@ urlpatterns = [
     path('confirm/<str:temp_booking_id>/', views.confirm_booking, name='confirm_booking'),
     path('payment/<str:temp_booking_id>/', views.payment, name='payment'),
     path('process-payment/<str:temp_booking_id>/', views.process_payment, name='process_payment'),
-    path('stripe-success/<str:temp_booking_id>/', views.stripe_success, name='stripe_success'),
     path('payment-success/<int:booking_id>/', views.payment_success, name='payment_success'),
     path('success/<int:booking_id>/', views.booking_success, name='booking_success'),
     path('detail/<int:booking_id>/', views.booking_detail, name='booking_detail'),
