@@ -96,19 +96,60 @@ def get_database_config():
         db_url = os.environ.get('DATABASE_URL')
         
         if db_url:
-            # 解析DATABASE_URL格式: postgres://username:password@hostname:port/database_name
-            # 或 postgresql://username:password@hostname:port/database_name
-            import re
-            pattern = r'postgres(?:ql)?://(.*?):(.*?)@(.*?):(\d+)/(.*)'
-            match = re.match(pattern, db_url)
+            # 如果环境变量中已经有分开的PostgreSQL配置，则直接使用
+            if all([os.environ.get(k) for k in ['PGDATABASE', 'PGUSER', 'PGPASSWORD', 'PGHOST']]):
+                port = os.environ.get('PGPORT', '5432')
+                host = os.environ.get('PGHOST')
+                db_name = os.environ.get('PGDATABASE')
+                logger.info("[DB_CONFIG] 使用环境变量中的PostgreSQL配置: 主机=%s, 端口=%s, 数据库=%s", 
+                           host, port, db_name)
+                return {
+                    'ENGINE': 'django.db.backends.postgresql',
+                    'NAME': os.environ.get('PGDATABASE'),
+                    'USER': os.environ.get('PGUSER'),
+                    'PASSWORD': os.environ.get('PGPASSWORD'),
+                    'HOST': os.environ.get('PGHOST'),
+                    'PORT': port,
+                }
             
-            # 调试信息
-            if not match:
-                logger.warning("[DB_CONFIG] 无法解析DATABASE_URL: %s", db_url)
+            # 如果没有PG环境变量，再尝试解析DATABASE_URL
+            import urllib.parse
             
-            if match:
-                username, password, host, port, db_name = match.groups()
-                logger.info("[DB_CONFIG] 通过DATABASE_URL配置PostgreSQL: 主机=%s, 端口=%s, 数据库=%s", 
+            try:
+                # 使用urlparse解析数据库URL
+                parsed_url = urllib.parse.urlparse(db_url)
+                
+                # 提取网络位置部分（用户名:密码@主机:端口）
+                netloc = parsed_url.netloc
+                
+                # 提取路径部分（去掉前导斜杠，得到数据库名）
+                db_name = parsed_url.path.lstrip('/')
+                
+                # 从网络位置中提取认证信息和主机信息
+                if '@' in netloc:
+                    auth, host_port = netloc.split('@', 1)
+                    
+                    # 从认证信息中提取用户名和密码
+                    if ':' in auth:
+                        username, password = auth.split(':', 1)
+                    else:
+                        username = auth
+                        password = ''
+                    
+                    # 从主机信息中提取主机名和端口
+                    if ':' in host_port:
+                        host, port = host_port.split(':', 1)
+                    else:
+                        host = host_port
+                        port = '5432'  # 默认PostgreSQL端口
+                else:
+                    # 如果没有认证信息，设置默认值
+                    username = ''
+                    password = ''
+                    host = netloc
+                    port = '5432'
+                
+                logger.info("[DB_CONFIG] 成功解析DATABASE_URL: 主机=%s, 端口=%s, 数据库=%s", 
                            host, port, db_name)
                 return {
                     'ENGINE': 'django.db.backends.postgresql',
@@ -118,6 +159,8 @@ def get_database_config():
                     'HOST': host,
                     'PORT': port,
                 }
+            except Exception as e:
+                logger.error("[DB_CONFIG] 解析DATABASE_URL失败: %s", str(e))
         
         # 如果没有DATABASE_URL，尝试使用PGXXX环境变量
         if all([os.environ.get(k) for k in ['PGDATABASE', 'PGUSER', 'PGPASSWORD', 'PGHOST', 'PGPORT']]):
