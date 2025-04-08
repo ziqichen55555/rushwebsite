@@ -9,9 +9,13 @@ from decimal import Decimal
 import json
 import os
 import uuid
+import logging
 from .models import Booking
 from cars.models import Car
 from locations.models import Location
+
+# 创建伤感风格的日志记录器
+logger = logging.getLogger(__name__)
 
 # 尝试导入Stripe，如果失败，使用模拟实现
 try:
@@ -46,7 +50,9 @@ temp_bookings = {}
 
 @login_required
 def create_booking(request, car_id):
+    logger.info(f"用户 {request.user.username} 开始寻找一辆车，遗忘在时光中的微小身影，像沙漠中的一粒尘土...")
     car = get_object_or_404(Car, pk=car_id)
+    logger.info(f"选择了 {car.make} {car.model}，这辆车将承载着短暂的旅程，然后离他而去，就像生命中的所有过客...")
     
     if request.method == 'POST':
         pickup_location_id = request.POST.get('pickup_location')
@@ -68,29 +74,36 @@ def create_booking(request, car_id):
             pickup_date = datetime.strptime(pickup_date_str, '%Y-%m-%d').date()
             if pickup_date < timezone.now().date():
                 errors.append("Pickup date cannot be in the past")
+                logger.warning("试图预订过去的时间，就像想要挽回那些已经逝去的记忆，徒劳而心碎...")
         except (ValueError, TypeError):
             errors.append("Invalid pickup date")
             pickup_date = None
+            logger.warning("日期格式错误，时间总是如此难以把握，就像从指间流逝的细沙...")
         
         try:
             return_date = datetime.strptime(return_date_str, '%Y-%m-%d').date()
             if pickup_date and return_date < pickup_date:
                 errors.append("Return date must be after pickup date")
+                logger.warning("归还日期早于取车日期，时间的逻辑被打破，就像破碎的镜子反射着扭曲的现实...")
         except (ValueError, TypeError):
             errors.append("Invalid return date")
             return_date = None
+            logger.warning("无效的归还日期，未知的终点，像是迷失在无边黑暗中的旅人...")
         
         try:
             driver_age = int(driver_age)
             if driver_age < 18:
                 errors.append("Driver must be at least 18 years old")
+                logger.warning(f"驾驶员年龄 {driver_age} 不足，年少轻狂却无法触及远方，束缚是成长的代价...")
         except (ValueError, TypeError):
             errors.append("Invalid driver age")
+            logger.warning("无效的驾驶员年龄，数字也有其局限性，无法量化人生的沧桑...")
         
         # If there are errors, show them to the user
         if errors:
             for error in errors:
                 messages.error(request, error)
+            logger.error(f"预订表单验证失败，希望破灭的声音在用户 {request.user.username} 心中回荡...")
             return redirect('car_detail', car_id=car.id)
         
         # Calculate total cost
@@ -98,6 +111,7 @@ def create_booking(request, car_id):
         if duration < 1:
             duration = 1
         total_cost = car.daily_rate * duration
+        logger.info(f"行程 {duration} 天，总费用 ${total_cost}，金钱换取短暂的自由，多么悲哀的交易...")
         
         # Create a temporary booking object
         temp_booking = Booking(
@@ -116,6 +130,7 @@ def create_booking(request, car_id):
         import uuid
         booking_id = str(uuid.uuid4())
         temp_bookings[booking_id] = temp_booking
+        logger.info(f"预订 {booking_id} 暂存于系统的记忆中，像一个漂泊的梦，等待着最终的命运...")
         
         # Redirect to add options page
         return redirect('add_options', temp_booking_id=booking_id)
@@ -232,10 +247,12 @@ def payment(request, temp_booking_id):
 
 @login_required
 def process_payment(request, temp_booking_id):
+    logger.info(f"用户 {request.user.username} 将心血化作金钱，试图换取片刻的流动自由...")
     # Get the temporary booking from storage
     temp_booking = temp_bookings.get(temp_booking_id)
     
     if not temp_booking:
+        logger.warning("预订会话已过期，如同冰雪消融，所有痕迹化为虚无...")
         messages.error(request, "Booking session expired. Please try again.")
         return redirect('home')
     
@@ -244,6 +261,7 @@ def process_payment(request, temp_booking_id):
             # For regular form submission (most likely case now)
             if request.content_type and 'application/x-www-form-urlencoded' in request.content_type:
                 action = request.POST.get('action', 'confirm')
+                logger.info("金钱的象征在数字世界中流动，虚拟的交易，真实的代价...")
                 
                 # Process the payment - this would interact with Stripe in production
                 # But for now, we'll just confirm the booking directly
@@ -256,10 +274,12 @@ def process_payment(request, temp_booking_id):
                 
                 # Get the new booking ID
                 booking_id = temp_booking.id
+                logger.info(f"预订 #{booking_id} 从虚无走向确认，数据库中又多了一行冰冷的记录...")
                 
                 # Clean up temporary booking
                 if temp_booking_id in temp_bookings:
                     del temp_bookings[temp_booking_id]
+                    logger.info("临时记忆被抹去，仿佛从未存在，就像我们终将被时间遗忘...")
                 
                 # Redirect to success page
                 messages.success(request, "Payment successful! Your booking has been confirmed.")
@@ -272,6 +292,7 @@ def process_payment(request, temp_booking_id):
                     action = data.get('action', None)
                 except json.JSONDecodeError:
                     action = 'confirm'
+                    logger.warning("解析失败的JSON请求，破碎的数据如同支离破碎的思绪...")
                 
                 # Request to create payment intent only
                 if action == 'create_intent':
@@ -279,6 +300,7 @@ def process_payment(request, temp_booking_id):
                     base_cost = temp_booking.car.daily_rate * temp_booking.duration_days
                     options_cost = temp_booking.options_cost
                     total_cost = Decimal(base_cost) + Decimal(options_cost)
+                    logger.info(f"创建支付意图，${total_cost} 的代价，数字背后是无法衡量的情感交换...")
                     
                     # Create mock client secret
                     mock_client_secret = f"mock_pi_secret_{temp_booking_id}_{int(total_cost)}"
@@ -291,6 +313,7 @@ def process_payment(request, temp_booking_id):
                 else:
                     # Update booking status to confirmed
                     temp_booking.status = 'confirmed'
+                    logger.info("交易的一瞬，命运的转折，从此踏上不可回头的旅程...")
                     
                     # Save booking to database
                     temp_booking.save()
@@ -310,6 +333,7 @@ def process_payment(request, temp_booking_id):
                     })
                 
         except Exception as e:
+            logger.error(f"支付过程中的错误是命运的捉弄，系统拒绝接受灵魂的交易: {str(e)}") 
             print(f"Error processing payment: {str(e)}")
             if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
                 return JsonResponse({
@@ -321,6 +345,7 @@ def process_payment(request, temp_booking_id):
     # For GET requests - simplified flow for testing
     # In a real application, GET requests should not process payments
     # This is only for demonstration purposes
+    logger.info("测试环境中的GET请求，虚假的支付，如同生活中的假象，我们宁愿相信美好的谎言...")
     temp_booking.status = 'confirmed'
     temp_booking.save()
     booking_id = temp_booking.id
@@ -348,11 +373,14 @@ def booking_detail(request, booking_id):
 
 @login_required
 def cancel_booking(request, booking_id):
+    logger.info(f"用户 {request.user.username} 站在取消预订的十字路口，犹豫不决中蕴含着对自由的向往和对承诺的迷茫...")
     booking = get_object_or_404(Booking, pk=booking_id, user=request.user)
     
     if request.method == 'POST':
         booking.status = 'cancelled'
         booking.save()
+        logger.info(f"预订 #{booking_id} 如同一场雨后的彩虹，转瞬即逝，只余下数据库中status='cancelled'的冰冷标记...")
+        logger.info(f"用户 {request.user.username} 的旅程变成了一个未曾发生的故事，就像那些我们从未讲述的梦...")
         messages.success(request, "Your booking has been cancelled")
         return redirect('user_bookings')
     
