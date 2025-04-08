@@ -58,8 +58,9 @@ def should_use_postgres() -> bool:
         return False
     
     # 开发环境可以通过环境变量控制
-    use_postgres = os.environ.get('USE_POSTGRES', 'false').lower()
-    result = use_postgres in ('true', 'yes', '1')
+    use_postgres = os.environ.get('USE_POSTGRES', 'false')
+    # 判断值是否为True的各种可能形式
+    result = use_postgres.lower() in ('true', 'yes', '1', 't', 'y')
     if result:
         logger.info("[DB_CONFIG] 开发环境根据配置使用PostgreSQL数据库")
     else:
@@ -132,7 +133,43 @@ def get_database_config():
         logger.warning("[DB_CONFIG] 生产环境未找到PostgreSQL配置，将回退使用SQLite")
         return default_db
     
-    # 开发环境使用本地PostgreSQL
+    # 开发环境优先使用环境变量中的PostgreSQL配置
+    # 首先检查是否存在Replit设置的PG环境变量
+    if all([os.environ.get(k) for k in ['PGDATABASE', 'PGUSER', 'PGPASSWORD', 'PGHOST', 'PGPORT']]):
+        logger.info("[DB_CONFIG] 开发环境使用Replit提供的PostgreSQL: 主机=%s, 端口=%s, 数据库=%s", 
+                   os.environ.get('PGHOST'), os.environ.get('PGPORT'), 
+                   os.environ.get('PGDATABASE'))
+        return {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': os.environ.get('PGDATABASE'),
+            'USER': os.environ.get('PGUSER'),
+            'PASSWORD': os.environ.get('PGPASSWORD'),
+            'HOST': os.environ.get('PGHOST'),
+            'PORT': os.environ.get('PGPORT'),
+        }
+    
+    # 其次使用DATABASE_URL环境变量
+    db_url = os.environ.get('DATABASE_URL')
+    if db_url:
+        # 解析DATABASE_URL格式: postgres://username:password@hostname:port/database_name
+        import re
+        pattern = r'postgres://(.*?):(.*?)@(.*?):(\d+)/(.*)'
+        match = re.match(pattern, db_url)
+        
+        if match:
+            username, password, host, port, db_name = match.groups()
+            logger.info("[DB_CONFIG] 开发环境通过DATABASE_URL配置PostgreSQL: 主机=%s, 端口=%s, 数据库=%s", 
+                      host, port, db_name)
+            return {
+                'ENGINE': 'django.db.backends.postgresql',
+                'NAME': db_name,
+                'USER': username,
+                'PASSWORD': password,
+                'HOST': host,
+                'PORT': port,
+            }
+    
+    # 最后使用本地开发配置
     host = os.environ.get('DEV_DB_HOST', 'localhost')
     db_name = os.environ.get('DEV_DB_NAME', 'rush_car_rental')
     logger.info("[DB_CONFIG] 开发环境使用本地PostgreSQL: 主机=%s, 数据库=%s", host, db_name)

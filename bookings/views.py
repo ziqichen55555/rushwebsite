@@ -17,7 +17,7 @@ from locations.models import Location
 # 创建伤感风格的日志记录器
 logger = logging.getLogger(__name__)
 
-# 创建一个模拟的Stripe类，用于测试
+# 备份模拟的Stripe类，用于测试环境
 class MockStripe:
     # 模拟PaymentIntent API
     class PaymentIntent:
