@@ -73,32 +73,36 @@ LOGGING = {
             'format': '{levelname} {asctime} {module} {process:d} {thread:d} {message}',
             'style': '{',
         },
+        'structured': {
+            'format': '{levelname} {asctime} {module} {message}',
+            'style': '{',
+        },
     },
     'handlers': {
         'console': {
             'class': 'logging.StreamHandler',
-            'formatter': 'verbose',
+            'formatter': 'structured',
         },
         'file': {
             'class': 'logging.handlers.RotatingFileHandler',
-            'filename': '/var/log/rush_car_rental/app.log',
+            'filename': os.path.join(LOG_DIR, 'app.log'),
             'maxBytes': 1024 * 1024 * 10,  # 10 MB
-            'backupCount': 10,
+            'backupCount': 5,
             'formatter': 'verbose',
         },
     },
     'root': {
-        'handlers': ['console', 'file'],
+        'handlers': ['console'],  # 移除file处理器，避免权限问题
         'level': 'WARNING',
     },
     'loggers': {
         'django': {
-            'handlers': ['console', 'file'],
+            'handlers': ['console'],  # 移除file处理器，避免权限问题
             'level': 'WARNING',
             'propagate': False,
         },
         'rush_car_rental': {
-            'handlers': ['console', 'file'],
+            'handlers': ['console'],  # 移除file处理器，避免权限问题
             'level': 'INFO',
             'propagate': False,
         },
