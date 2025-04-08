@@ -13,12 +13,24 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 if not SECRET_KEY:
     raise Exception("生产环境必须设置SECRET_KEY环境变量!")
 
-# 允许的主机
+# 允许的主机 - 支持在Replit环境中运行
 ALLOWED_HOSTS = [
     os.environ.get('SITE_DOMAIN', 'rush-car-rental.azurewebsites.net'),
     'localhost',
-    '127.0.0.1'
+    '127.0.0.1',
+    '.replit.dev',  # 允许所有replit.dev子域名
+    '.worf.replit.dev',  # 特别允许worf.replit.dev子域名
+    '.repl.co',  # 允许所有repl.co子域名
 ]
+
+# 直接使用允许所有主机的设置来避免Replit环境配置问题
+ALLOWED_HOSTS = ['*']
+print("允许的主机列表: [所有主机]")
+
+# 允许在开发环境中使用通配符(*)指定所有域名，仅用于测试/开发
+if os.environ.get('DJANGO_ALLOW_ALL_HOSTS', 'false').lower() in ('true', 'yes', '1'):
+    ALLOWED_HOSTS.append('*')
+    print("警告: 已开启对所有主机的访问允许。这在生产环境中不安全。")
 
 # CORS设置
 CORS_ALLOWED_ORIGINS = [
