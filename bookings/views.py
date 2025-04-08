@@ -258,24 +258,25 @@ def add_drivers(request, temp_booking_id):
                         has_primary = True
                     drivers_data.append(driver_data)
             
-            # 确保至少有一个主驾驶员
+            # 确保至少有一个驾驶员
             if not drivers_data:
-                messages.error(request, "At least one driver is required.")
+                messages.error(request, "Driver information is required.")
                 formset = DriverFormSet(prefix='form')
-                formset[0].initial = {'is_primary': True}  # 第一个驾驶员默认为主驾驶员
-            elif not has_primary:
-                messages.error(request, "At least one primary driver is required.")
+                formset[0].initial = {'is_primary': True, 'country_of_residence': 'Australia'}  # 驾驶员默认为主驾驶员
             else:
+                # 确保驾驶员是主驾驶员
+                drivers_data[0]['is_primary'] = True
+                
                 # 将驾驶员数据存储到临时变量
                 temp_booking.temp_drivers_data = drivers_data
-                logger.info(f"为预订 {temp_booking_id} 添加了 {len(drivers_data)} 个驾驶员信息")
+                logger.info(f"为预订 {temp_booking_id} 添加了驾驶员信息")
                 
                 # 跳转到下一步：添加选项
                 return redirect('add_options', temp_booking_id=temp_booking_id)
     else:
-        # 初始化表单集
+        # 初始化表单集 - 只有一个驾驶员表单
         formset = DriverFormSet(prefix='form')
-        formset[0].initial = {'is_primary': True}  # 第一个驾驶员默认为主驾驶员
+        formset[0].initial = {'is_primary': True, 'country_of_residence': 'Australia'}  # 驾驶员默认为主驾驶员，默认国家为澳大利亚
     
     # 构建上下文
     context = {
