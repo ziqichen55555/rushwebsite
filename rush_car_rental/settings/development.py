@@ -31,6 +31,10 @@ LOGGING = {
             'format': '{levelname} {message}',
             'style': '{',
         },
+        'sentimental': {
+            'format': '💔 {asctime} {message}',
+            'style': '{',
+        }
     },
     'handlers': {
         'console': {
@@ -42,6 +46,11 @@ LOGGING = {
             'filename': BASE_DIR / 'logs' / 'debug.log',
             'formatter': 'verbose',
         },
+        'emotions': {
+            'class': 'logging.FileHandler',
+            'filename': BASE_DIR / 'logs' / 'emotional.log',
+            'formatter': 'sentimental',
+        }
     },
     'root': {
         'handlers': ['console', 'file'],
@@ -57,6 +66,26 @@ LOGGING = {
             'handlers': ['console', 'file'],
             'level': 'DEBUG',
             'propagate': True,
+        },
+        'accounts': {
+            'handlers': ['console', 'emotions'],
+            'level': 'INFO',
+            'propagate': False,
+        },
+        'bookings': {
+            'handlers': ['console', 'emotions'],
+            'level': 'INFO',
+            'propagate': False,
+        },
+        'cars': {
+            'handlers': ['console', 'emotions'],
+            'level': 'INFO',
+            'propagate': False,
+        },
+        'locations': {
+            'handlers': ['console', 'emotions'],
+            'level': 'INFO',
+            'propagate': False,
         },
     },
 }
