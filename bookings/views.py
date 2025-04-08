@@ -17,44 +17,17 @@ from locations.models import Location
 # 创建伤感风格的日志记录器
 logger = logging.getLogger(__name__)
 
-# 尝试导入Stripe，如果失败，使用模拟实现
-try:
-    import stripe
-    # 设置Stripe API密钥
-    stripe.api_key = os.environ.get('STRIPE_SECRET_KEY')
+# 导入Stripe模块
+import stripe
+# 设置Stripe API密钥
+stripe_key = os.environ.get('STRIPE_SECRET_KEY')
+if stripe_key:
+    stripe.api_key = stripe_key
     STRIPE_AVAILABLE = True
-    print(f"Stripe 功能已启用，使用密钥: {os.environ.get('STRIPE_SECRET_KEY')[:5]}...")
-except (ImportError, Exception) as e:
-    print(f"Stripe功能不可用: {str(e)}")
+    print(f"Stripe 功能已启用，使用密钥: {stripe_key[:5]}...")
+else:
+    print("Stripe功能不可用: 未设置STRIPE_SECRET_KEY环境变量")
     STRIPE_AVAILABLE = False
-    
-    # 创建一个模拟的Stripe类，只用于测试
-    class MockStripe:
-        class PaymentIntent:
-            @staticmethod
-            def create(**kwargs):
-                # 返回一个带有client_secret的模拟对象
-                return type('obj', (object,), {
-                    'client_secret': f"mock_pi_secret_{uuid.uuid4()}_{kwargs.get('amount', 0)}",
-                    'id': f"pi_{uuid.uuid4()}",
-                    'amount': kwargs.get('amount', 0),
-                    'currency': kwargs.get('currency', 'usd'),
-                    'status': 'succeeded'
-                })
-                
-        class Checkout:
-            class Session:
-                @staticmethod
-                def create(**kwargs):
-                    # 返回一个带有id和url的模拟对象
-                    return type('obj', (object,), {
-                        'id': f"cs_{uuid.uuid4()}",
-                        'url': f"/mock-stripe-checkout/{uuid.uuid4()}",
-                    })
-    
-    # 如果Stripe不可用，使用模拟实现
-    if not STRIPE_AVAILABLE:
-        stripe = MockStripe
 
 # Dictionary to store temporary bookings
 temp_bookings = {}
