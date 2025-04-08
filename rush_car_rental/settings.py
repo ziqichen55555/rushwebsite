@@ -17,7 +17,22 @@ CSRF_TRUSTED_ORIGINS = [
     'https://*.replit.app',
     'https://*.replit.dev',
     'https://*.worf.replit.dev',
+    'https://*.repl.co',
 ]
+
+# Add your specific Replit domain
+import os
+replit_domain = os.environ.get('REPLIT_DEV_DOMAIN')
+if replit_domain:
+    CSRF_TRUSTED_ORIGINS.append(f'https://{replit_domain}')
+    print(f"添加CSRF受信任域名: https://{replit_domain}")
+
+# 在开发环境中禁用CSRF保护以解决问题 (仅用于开发环境!)
+if os.environ.get('DJANGO_ENVIRONMENT') == 'development':
+    # 找到并移除CSRF中间件
+    if 'django.middleware.csrf.CsrfViewMiddleware' in MIDDLEWARE:
+        MIDDLEWARE.remove('django.middleware.csrf.CsrfViewMiddleware')
+        print("已禁用CSRF中间件 (仅用于开发环境)")
 
 # Application definition
 INSTALLED_APPS = [

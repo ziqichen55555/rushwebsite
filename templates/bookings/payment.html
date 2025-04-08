@@ -48,6 +48,30 @@
         text-decoration: line-through;
         color: #dc3545;
     }
+    
+    /* Stripe Elements 样式 */
+    .stripe-element {
+        padding: 10px 12px;
+        border: 1px solid #ced4da;
+        border-radius: 0.5rem;
+        background-color: white;
+        box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05);
+    }
+    
+    .stripe-element--focus {
+        box-shadow: 0 0 0 0.25rem rgba(255, 193, 7, 0.25);
+        border-color: #ffc107;
+    }
+    
+    .stripe-element--invalid {
+        border-color: #dc3545;
+    }
+    
+    #card-element-errors {
+        color: #dc3545;
+        font-size: 0.875rem;
+        margin-top: 0.25rem;
+    }
 </style>
 {% endblock %}
 
@@ -151,34 +175,48 @@
                         
                         <!-- Credit Card Information -->
                         <div id="credit-card-form">
-                            <div class="mb-3">
-                                <label for="card_holder" class="form-label">Card Holder Name</label>
-                                <input type="text" class="form-control" id="card_holder" name="card_holder" placeholder="John Doe" required>
-                            </div>
-                            
-                            <div class="mb-3">
-                                <label for="card_number" class="form-label">Card Number</label>
-                                <div class="input-group">
-                                    <input type="text" class="form-control" id="card_number" name="card_number" placeholder="1234 5678 9012 3456" maxlength="19" required>
-                                    <span class="input-group-text bg-white">
-                                        <i class="fas fa-credit-card"></i>
-                                    </span>
+                            <!-- Stripe Elements 将在这里插入 -->
+                            <div id="stripe-elements-container" {% if not stripe_public_key or stripe_public_key == "pk_test_mock" %}style="display: none;"{% endif %}>
+                                <div class="mb-3">
+                                    <label for="card-element" class="form-label">Credit Card Information</label>
+                                    <div id="card-element" class="stripe-element">
+                                        <!-- Stripe Card Element 会被插入到这里 -->
+                                    </div>
+                                    <div id="card-element-errors" role="alert"></div>
                                 </div>
                             </div>
                             
-                            <div class="row">
-                                <div class="col-md-6 mb-3">
-                                    <label for="expiry_date" class="form-label">Expiry Date</label>
-                                    <input type="text" class="form-control" id="expiry_date" name="expiry_date" placeholder="MM/YY" maxlength="5" required>
+                            <!-- 模拟表单 (仅在没有有效 Stripe 密钥时显示) -->
+                            <div id="mock-card-form" {% if stripe_public_key and stripe_public_key != "pk_test_mock" %}style="display: none;"{% endif %}>
+                                <div class="mb-3">
+                                    <label for="card_holder" class="form-label">Card Holder Name</label>
+                                    <input type="text" class="form-control" id="card_holder" name="card_holder" placeholder="John Doe" required>
                                 </div>
                                 
-                                <div class="col-md-6 mb-3">
-                                    <label for="cvv" class="form-label">CVV</label>
+                                <div class="mb-3">
+                                    <label for="card_number" class="form-label">Card Number</label>
                                     <div class="input-group">
-                                        <input type="text" class="form-control" id="cvv" name="cvv" placeholder="123" maxlength="4" required>
-                                        <span class="input-group-text bg-white" data-bs-toggle="tooltip" data-bs-placement="top" title="3 or 4 digit security code on the back of your card">
-                                            <i class="fas fa-question-circle"></i>
+                                        <input type="text" class="form-control" id="card_number" name="card_number" placeholder="1234 5678 9012 3456" maxlength="19" required>
+                                        <span class="input-group-text bg-white">
+                                            <i class="fas fa-credit-card"></i>
                                         </span>
+                                    </div>
+                                </div>
+                                
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label for="expiry_date" class="form-label">Expiry Date</label>
+                                        <input type="text" class="form-control" id="expiry_date" name="expiry_date" placeholder="MM/YY" maxlength="5" required>
+                                    </div>
+                                    
+                                    <div class="col-md-6 mb-3">
+                                        <label for="cvv" class="form-label">CVV</label>
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" id="cvv" name="cvv" placeholder="123" maxlength="4" required>
+                                            <span class="input-group-text bg-white" data-bs-toggle="tooltip" data-bs-placement="top" title="3 or 4 digit security code on the back of your card">
+                                                <i class="fas fa-question-circle"></i>
+                                            </span>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -307,40 +345,53 @@
                     {% if temp_booking.additional_drivers > 0 %}
                     <div class="d-flex justify-content-between mb-2">
                         <span>Additional Drivers ({{ temp_booking.additional_drivers }})</span>
-                        <span>${{ temp_booking.additional_drivers|multiply:10 }} per driver</span>
+                        <span>${{ temp_booking.additional_drivers|multiply:10 }} x {{ temp_booking.duration_days }} days</span>
                     </div>
                     {% endif %}
                     
                     <hr>
                     
-                    <div class="d-flex justify-content-between mb-2">
-                        <span class="h5">Total</span>
-                        <span class="h5">${{ temp_booking.total_cost }}</span>
-                    </div>
-                    
                     <!-- Price Comparison -->
                     {% if temp_booking.car.comparison_provider1_rate or temp_booking.car.comparison_provider2_rate %}
-                    <div class="price-comparison mt-3 bg-light p-2 rounded">
-                        <h6 class="mb-2">Compare Our Price</h6>
-                        {% if temp_booking.car.comparison_provider1_rate %}
-                        <div class="d-flex justify-content-between mb-1">
-                            <span>{{ temp_booking.car.comparison_provider1_name }}</span>
+                    <div class="price-comparison mb-3">
+                        <h6>Compare Our Prices</h6>
+                        
+                        {% if temp_booking.car.comparison_provider1_name and temp_booking.car.comparison_provider1_rate %}
+                        <div class="d-flex justify-content-between align-items-center mb-1">
+                            <span>{{ temp_booking.car.comparison_provider1_name }}:</span>
                             <span class="competitor-price">${{ temp_booking.car.comparison_provider1_rate|multiply:temp_booking.duration_days }}</span>
                         </div>
                         {% endif %}
                         
-                        {% if temp_booking.car.comparison_provider2_rate %}
-                        <div class="d-flex justify-content-between">
-                            <span>{{ temp_booking.car.comparison_provider2_name }}</span>
+                        {% if temp_booking.car.comparison_provider2_name and temp_booking.car.comparison_provider2_rate %}
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span>{{ temp_booking.car.comparison_provider2_name }}:</span>
                             <span class="competitor-price">${{ temp_booking.car.comparison_provider2_rate|multiply:temp_booking.duration_days }}</span>
                         </div>
                         {% endif %}
                         
-                        <div class="mt-2 small text-success fw-bold">
-                            <i class="fas fa-check-circle"></i> Save up to ${{ temp_booking.car.comparison_provider1_rate|multiply:temp_booking.duration_days|subtract:temp_booking.total_cost }} with Rush Car Rental!
+                        <div class="alert alert-success mt-2 mb-0 py-2">
+                            <small class="mb-0"><i class="fas fa-check-circle me-1"></i> You're getting the best price with Rush Car Rental!</small>
                         </div>
                     </div>
                     {% endif %}
+                    
+                    <!-- Total Cost -->
+                    <div class="d-flex justify-content-between align-items-center mt-3">
+                        <h5 class="mb-0">Total Cost</h5>
+                        <h5 class="mb-0">${{ total_cost }}</h5>
+                    </div>
+                    
+                    <!-- Secure Checkout Badge -->
+                    <div class="text-center mt-4">
+                        <span class="d-block text-muted small mb-2">SECURED & ENCRYPTED CHECKOUT</span>
+                        <i class="fas fa-lock text-success me-1"></i>
+                        <i class="fab fa-cc-visa mx-1"></i>
+                        <i class="fab fa-cc-mastercard mx-1"></i>
+                        <i class="fab fa-cc-amex mx-1"></i>
+                        <i class="fab fa-cc-discover mx-1"></i>
+                        <i class="fab fa-cc-paypal ms-1"></i>
+                    </div>
                 </div>
             </div>
         </div>
@@ -349,9 +400,79 @@
 {% endblock %}
 
 {% block extra_js %}
+<script src="https://js.stripe.com/v3/"></script>
 <script>
     document.addEventListener("DOMContentLoaded", function() {
-        const paymentForm = document.getElementById("payment-form");
+        const stripePublicKey = "{{ stripe_public_key }}";
+        const clientSecret = "{{ client_secret }}";
+        
+        // 初始化 Stripe（如果有可用的密钥）
+        if (stripePublicKey && stripePublicKey !== "pk_test_mock") {
+            try {
+                console.log("初始化 Stripe...");
+                const stripe = Stripe(stripePublicKey);
+                const elements = stripe.elements();
+                
+                // 创建 Card Element 并挂载到 DOM
+                const cardElement = elements.create('card');
+                cardElement.mount('#card-element');
+                
+                // 处理验证错误
+                cardElement.on('change', function(event) {
+                    const displayError = document.getElementById('card-element-errors');
+                    if (event.error) {
+                        displayError.textContent = event.error.message;
+                    } else {
+                        displayError.textContent = '';
+                    }
+                });
+                
+                // 处理表单提交
+                const form = document.getElementById('payment-form');
+                form.addEventListener('submit', function(event) {
+                    event.preventDefault();
+                    
+                    // 禁用提交按钮避免重复提交
+                    document.getElementById('submit-button').disabled = true;
+                    
+                    if (clientSecret) {
+                        // 确认支付
+                        stripe.confirmCardPayment(clientSecret, {
+                            payment_method: {
+                                card: cardElement,
+                                billing_details: {
+                                    name: document.getElementById('card_holder').value,
+                                    address: {
+                                        country: document.getElementById('billing_country').value,
+                                        postal_code: document.getElementById('billing_zip').value
+                                    }
+                                }
+                            }
+                        }).then(function(result) {
+                            if (result.error) {
+                                // 显示错误
+                                const errorElement = document.getElementById('card-element-errors');
+                                errorElement.textContent = result.error.message;
+                                document.getElementById('submit-button').disabled = false;
+                            } else {
+                                // 支付成功，提交表单
+                                form.submit();
+                            }
+                        });
+                    } else {
+                        // 没有客户端密钥，使用标准表单提交
+                        form.submit();
+                    }
+                });
+            } catch (e) {
+                console.error("Stripe 初始化失败:", e);
+                // 显示模拟表单作为后备
+                document.getElementById('stripe-elements-container').style.display = 'none';
+                document.getElementById('mock-card-form').style.display = 'block';
+            }
+        } else {
+            console.log("使用模拟 Stripe 集成");
+        }
         
         // Format card number with spaces
         const cardNumberInput = document.querySelector("input[name='card_number']");
@@ -370,12 +491,21 @@
         if (expiryInput) {
             expiryInput.addEventListener("input", function(e) {
                 let value = e.target.value.replace(/\D/g, "");
-                if (value.length > 2) {
-                    value = value.substring(0, 2) + "/" + value.substring(2, 4);
+                if (value.length > 0) {
+                    if (value.length <= 2) {
+                        e.target.value = value;
+                    } else {
+                        e.target.value = value.slice(0, 2) + "/" + value.slice(2, 4);
+                    }
                 }
-                e.target.value = value;
             });
         }
+        
+        // Initialize tooltips
+        const tooltips = document.querySelectorAll('[data-bs-toggle="tooltip"]');
+        tooltips.forEach(tooltip => {
+            new bootstrap.Tooltip(tooltip);
+        });
     });
 </script>
 {% endblock %}

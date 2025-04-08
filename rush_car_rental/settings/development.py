@@ -10,6 +10,15 @@ DEBUG = True
 # 允许的主机
 ALLOWED_HOSTS = ['*']
 
+# 安全设置 - 在Replit环境中允许跨域访问
+CSRF_TRUSTED_ORIGINS = [
+    'https://*.replit.dev',
+    'https://*.replit.app',
+    'https://*.repl.co',
+    'https://*.worf.replit.dev',
+]
+CORS_ALLOW_ALL_ORIGINS = True
+
 # 开发环境数据库设置
 DATABASES = {
     'default': get_database_config()
