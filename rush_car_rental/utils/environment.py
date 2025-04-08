@@ -43,18 +43,35 @@ def is_production() -> bool:
 def should_use_postgres() -> bool:
     """
     是否应该使用PostgreSQL数据库
+    根据环境决定:
+    - 开发环境: 使用SQLite (除非USE_POSTGRES=True)
+    - 测试环境: 使用SQLite
+    - 生产环境: 始终使用PostgreSQL
     """
     # 生产环境始终使用PostgreSQL
     if is_production():
         return True
     
-    # 开发环境和测试环境可以通过环境变量控制
+    # 测试环境使用SQLite
+    if is_testing():
+        logger.info("[DB_CONFIG] 测试环境使用SQLite数据库")
+        return False
+    
+    # 开发环境可以通过环境变量控制
     use_postgres = os.environ.get('USE_POSTGRES', 'false').lower()
-    return use_postgres in ('true', 'yes', '1')
+    result = use_postgres in ('true', 'yes', '1')
+    if result:
+        logger.info("[DB_CONFIG] 开发环境根据配置使用PostgreSQL数据库")
+    else:
+        logger.info("[DB_CONFIG] 开发环境根据配置使用SQLite数据库")
+    return result
 
 def get_database_config():
     """
-    根据当前环境返回数据库配置
+    根据当前环境返回数据库配置:
+    - 开发环境: 使用SQLite (除非USE_POSTGRES=True)
+    - 测试环境: 使用SQLite
+    - 生产环境: 使用Replit提供的PostgreSQL (通过DATABASE_URL)
     """
     from pathlib import Path
     
@@ -72,26 +89,13 @@ def get_database_config():
         logger.info("[DB_CONFIG] 使用SQLite数据库: %s", str(BASE_DIR / 'db.sqlite3'))
         return default_db
 
-    # 生产环境使用Azure Cosmos DB (通过PostgreSQL接口)
+    # 生产环境使用Replit PostgreSQL
     if is_production():
-        logger.info("[DB_CONFIG] 生产环境使用Azure Cosmos DB")
-        # 确保DATABASE_URL环境变量已设置
+        logger.info("[DB_CONFIG] 生产环境使用PostgreSQL数据库")
+        # 优先使用DATABASE_URL环境变量
         db_url = os.environ.get('DATABASE_URL')
-        if not db_url:
-            logger.warning("[DB_CONFIG] 未设置DATABASE_URL环境变量，尝试使用单独的配置参数")
-            # 如果未设置DATABASE_URL，尝试使用其他环境变量
-            return {
-                'ENGINE': 'django.db.backends.postgresql',
-                'NAME': os.environ.get('COSMOS_DB_NAME', ''),
-                'USER': os.environ.get('COSMOS_DB_USER', ''),
-                'PASSWORD': os.environ.get('COSMOS_DB_PASSWORD', ''),
-                'HOST': os.environ.get('COSMOS_DB_HOST', ''),
-                'PORT': os.environ.get('COSMOS_DB_PORT', '5432'),
-                'OPTIONS': {
-                    'sslmode': 'require'
-                }
-            }
-        else:
+        
+        if db_url:
             # 解析DATABASE_URL格式: postgres://username:password@hostname:port/database_name
             import re
             pattern = r'postgres://(.*?):(.*?)@(.*?):(\d+)/(.*)'
@@ -99,7 +103,7 @@ def get_database_config():
             
             if match:
                 username, password, host, port, db_name = match.groups()
-                logger.info("[DB_CONFIG] 已连接到Azure Cosmos DB: 主机=%s, 端口=%s, 数据库=%s", 
+                logger.info("[DB_CONFIG] 通过DATABASE_URL配置PostgreSQL: 主机=%s, 端口=%s, 数据库=%s", 
                            host, port, db_name)
                 return {
                     'ENGINE': 'django.db.backends.postgresql',
@@ -108,15 +112,30 @@ def get_database_config():
                     'PASSWORD': password,
                     'HOST': host,
                     'PORT': port,
-                    'OPTIONS': {
-                        'sslmode': 'require'
-                    }
                 }
+        
+        # 如果没有DATABASE_URL，尝试使用PGXXX环境变量
+        if all([os.environ.get(k) for k in ['PGDATABASE', 'PGUSER', 'PGPASSWORD', 'PGHOST', 'PGPORT']]):
+            logger.info("[DB_CONFIG] 通过PG环境变量配置PostgreSQL: 主机=%s, 端口=%s, 数据库=%s", 
+                       os.environ.get('PGHOST'), os.environ.get('PGPORT'), 
+                       os.environ.get('PGDATABASE'))
+            return {
+                'ENGINE': 'django.db.backends.postgresql',
+                'NAME': os.environ.get('PGDATABASE'),
+                'USER': os.environ.get('PGUSER'),
+                'PASSWORD': os.environ.get('PGPASSWORD'),
+                'HOST': os.environ.get('PGHOST'),
+                'PORT': os.environ.get('PGPORT'),
+            }
+        
+        # 如果以上都没有，记录警告并使用SQLite
+        logger.warning("[DB_CONFIG] 生产环境未找到PostgreSQL配置，将回退使用SQLite")
+        return default_db
     
-    # 开发和测试环境使用本地PostgreSQL
+    # 开发环境使用本地PostgreSQL
     host = os.environ.get('DEV_DB_HOST', 'localhost')
     db_name = os.environ.get('DEV_DB_NAME', 'rush_car_rental')
-    logger.info("[DB_CONFIG] 使用本地PostgreSQL: 主机=%s, 数据库=%s", host, db_name)
+    logger.info("[DB_CONFIG] 开发环境使用本地PostgreSQL: 主机=%s, 数据库=%s", host, db_name)
     return {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': os.environ.get('DEV_DB_NAME', 'rush_car_rental'),
