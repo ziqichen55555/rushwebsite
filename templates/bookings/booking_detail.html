@@ -104,6 +104,54 @@
                             </div>
                         </div>
                         
+                        <!-- Driver Information -->
+                        <h5 class="border-bottom pb-2 mb-3 mt-4">Driver Information</h5>
+                        {% if booking.drivers.all %}
+                        <div class="mb-4">
+                            <div class="accordion" id="driversAccordion">
+                                {% for driver in booking.drivers.all %}
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header" id="heading{{ driver.id }}">
+                                        <button class="accordion-button {% if not forloop.first %}collapsed{% endif %}" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{ driver.id }}" aria-expanded="{% if forloop.first %}true{% else %}false{% endif %}" aria-controls="collapse{{ driver.id }}">
+                                            {{ driver.get_full_name }} {% if driver.is_primary %}<span class="badge bg-warning text-dark ms-2">Primary Driver</span>{% endif %}
+                                        </button>
+                                    </h2>
+                                    <div id="collapse{{ driver.id }}" class="accordion-collapse collapse {% if forloop.first %}show{% endif %}" aria-labelledby="heading{{ driver.id }}" data-bs-parent="#driversAccordion">
+                                        <div class="accordion-body">
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <p><strong>Email:</strong> {{ driver.email }}</p>
+                                                    <p><strong>Date of Birth:</strong> {{ driver.date_of_birth|date:"F d, Y" }}</p>
+                                                    <p><strong>Mobile:</strong> {{ driver.mobile }}</p>
+                                                    <p><strong>Phone:</strong> {{ driver.phone|default:"Not provided" }}</p>
+                                                    <p><strong>Address:</strong> {{ driver.address }}</p>
+                                                    <p><strong>City:</strong> {{ driver.city }}</p>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <p><strong>License Number:</strong> {{ driver.license_number }}</p>
+                                                    <p><strong>License Issued In:</strong> {{ driver.license_issued_in }}</p>
+                                                    <p><strong>License Expiry:</strong> 
+                                                        {% if driver.license_is_lifetime %}
+                                                            Lifetime
+                                                        {% else %}
+                                                            {{ driver.license_expiry_date|date:"F d, Y" }}
+                                                        {% endif %}
+                                                    </p>
+                                                    <p><strong>State/Province:</strong> {{ driver.state }}</p>
+                                                    <p><strong>Postcode:</strong> {{ driver.postcode }}</p>
+                                                    <p><strong>Country:</strong> {{ driver.country_of_residence }}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        {% else %}
+                        <p class="text-muted mb-4">No driver information available.</p>
+                        {% endif %}
+                        
                         <!-- Selected Options -->
                         <h5 class="border-bottom pb-2 mb-3 mt-4">Selected Options</h5>
                         {% if booking.damage_waiver or booking.extended_area or booking.satellite_navigation or booking.child_seats > 0 or booking.additional_drivers > 0 %}
