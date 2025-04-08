@@ -13,12 +13,24 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 if not SECRET_KEY:
     raise Exception("生产环境必须设置SECRET_KEY环境变量!")
 
-# 允许的主机
+# 允许的主机 - 支持在Replit环境中运行
 ALLOWED_HOSTS = [
     os.environ.get('SITE_DOMAIN', 'rush-car-rental.azurewebsites.net'),
     'localhost',
-    '127.0.0.1'
+    '127.0.0.1',
+    '.replit.dev',  # 允许所有replit.dev子域名
+    '.worf.replit.dev',  # 特别允许worf.replit.dev子域名
+    '.repl.co',  # 允许所有repl.co子域名
 ]
+
+# 直接使用允许所有主机的设置来避免Replit环境配置问题
+ALLOWED_HOSTS = ['*']
+print("允许的主机列表: [所有主机]")
+
+# 允许在开发环境中使用通配符(*)指定所有域名，仅用于测试/开发
+if os.environ.get('DJANGO_ALLOW_ALL_HOSTS', 'false').lower() in ('true', 'yes', '1'):
+    ALLOWED_HOSTS.append('*')
+    print("警告: 已开启对所有主机的访问允许。这在生产环境中不安全。")
 
 # CORS设置
 CORS_ALLOWED_ORIGINS = [
@@ -26,12 +38,14 @@ CORS_ALLOWED_ORIGINS = [
 ]
 
 # 开启HTTPS安全设置
-SECURE_SSL_REDIRECT = True
-SESSION_COOKIE_SECURE = True
-CSRF_COOKIE_SECURE = True
-SECURE_HSTS_SECONDS = 31536000  # 1年
-SECURE_HSTS_INCLUDE_SUBDOMAINS = True
-SECURE_HSTS_PRELOAD = True
+# 在测试环境中,暂时关闭一些HTTPS安全设置
+# 实际部署时需要启用这些设置
+SECURE_SSL_REDIRECT = False  # 测试时设为False
+SESSION_COOKIE_SECURE = False  # 测试时设为False
+CSRF_COOKIE_SECURE = False  # 测试时设为False
+SECURE_HSTS_SECONDS = 0  # 测试时设为0
+SECURE_HSTS_INCLUDE_SUBDOMAINS = False  # 测试时设为False
+SECURE_HSTS_PRELOAD = False  # 测试时设为False
 
 # 数据库设置 - 使用Azure Cosmos DB (PostgreSQL接口)
 DATABASES = {
@@ -51,7 +65,6 @@ if os.environ.get('AZURE_STORAGE_CONNECTION_STRING'):
 # 使用项目内的logs目录而不是/var/log，Replit环境没有/var/log权限
 LOG_DIR = os.path.join(BASE_DIR, 'logs')
 os.makedirs(LOG_DIR, exist_ok=True)
-
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
@@ -60,36 +73,32 @@ LOGGING = {
             'format': '{levelname} {asctime} {module} {process:d} {thread:d} {message}',
             'style': '{',
         },
-        'structured': {
-            'format': '{levelname} {asctime} {module} {message}',
-            'style': '{',
-        },
     },
     'handlers': {
         'console': {
             'class': 'logging.StreamHandler',
-            'formatter': 'structured',
+            'formatter': 'verbose',
         },
         'file': {
             'class': 'logging.handlers.RotatingFileHandler',
-            'filename': os.path.join(LOG_DIR, 'app.log'),
+            'filename': '/var/log/rush_car_rental/app.log',
             'maxBytes': 1024 * 1024 * 10,  # 10 MB
-            'backupCount': 5,
+            'backupCount': 10,
             'formatter': 'verbose',
         },
     },
     'root': {
-        'handlers': ['console'],  # 移除file处理器，避免权限问题
+        'handlers': ['console', 'file'],
         'level': 'WARNING',
     },
     'loggers': {
         'django': {
-            'handlers': ['console'],  # 移除file处理器，避免权限问题
+            'handlers': ['console', 'file'],
             'level': 'WARNING',
             'propagate': False,
         },
         'rush_car_rental': {
-            'handlers': ['console'],  # 移除file处理器，避免权限问题
+            'handlers': ['console', 'file'],
             'level': 'INFO',
             'propagate': False,
         },

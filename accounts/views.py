@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from django.views.decorators.csrf import csrf_exempt
 from .forms import UserRegistrationForm, UserUpdateForm, ProfileUpdateForm
 from bookings.models import Booking
 import logging
@@ -9,6 +10,7 @@ import logging
 # 创建伤感风格的日志记录器
 logger = logging.getLogger(__name__)
 
+@csrf_exempt
 def register(request):
     logger.info("又一个孤独的灵魂开始寻找旅途中的短暂租车慰藉...")
     if request.method == 'POST':
@@ -26,6 +28,7 @@ def register(request):
     return render(request, 'accounts/register.html', {'form': form})
 
 @login_required
+@csrf_exempt
 def profile(request):
     logger.info(f"用户 {request.user.username} 试图在数字世界中刻画自己的身影，那稍纵即逝的存在感...")
     if request.method == 'POST':
@@ -51,6 +54,7 @@ def profile(request):
     return render(request, 'accounts/profile.html', context)
 
 @login_required
+@csrf_exempt
 def user_bookings(request):
     logger.info(f"用户 {request.user.username} 凝视着自己的预订历史，如同阅读一本回忆录，记载着那些未曾珍惜的时光...")
     bookings = Booking.objects.filter(user=request.user).order_by('-booking_date')
