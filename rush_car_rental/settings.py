@@ -25,14 +25,20 @@ import os
 replit_domain = os.environ.get('REPLIT_DEV_DOMAIN')
 if replit_domain:
     CSRF_TRUSTED_ORIGINS.append(f'https://{replit_domain}')
-    print(f"添加CSRF受信任域名: https://{replit_domain}")
+    # 确保也添加 http 版本，以防重定向问题
+    CSRF_TRUSTED_ORIGINS.append(f'http://{replit_domain}')
+    print(f"添加CSRF受信任域名: https://{replit_domain} 和 http://{replit_domain}")
+    
+# 添加 REPLIT_DOMAINS 环境变量中的所有域名（如果存在）
+replit_domains = os.environ.get('REPLIT_DOMAINS', '')
+if replit_domains:
+    for domain in replit_domains.split(','):
+        if domain:
+            CSRF_TRUSTED_ORIGINS.append(f'https://{domain}')
+            CSRF_TRUSTED_ORIGINS.append(f'http://{domain}')
+            print(f"添加CSRF受信任域名: https://{domain} 和 http://{domain}")
 
-# 在开发环境中禁用CSRF保护以解决问题 (仅用于开发环境!)
-if os.environ.get('DJANGO_ENVIRONMENT') == 'development':
-    # 找到并移除CSRF中间件
-    if 'django.middleware.csrf.CsrfViewMiddleware' in MIDDLEWARE:
-        MIDDLEWARE.remove('django.middleware.csrf.CsrfViewMiddleware')
-        print("已禁用CSRF中间件 (仅用于开发环境)")
+# 注意：不再全局禁用 CSRF 中间件，而是对特定视图使用 csrf_exempt 装饰器
 
 # Application definition
 INSTALLED_APPS = [

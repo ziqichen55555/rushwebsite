@@ -279,6 +279,7 @@ def confirm_booking(request, temp_booking_id):
     return redirect('add_options', temp_booking_id=temp_booking_id)
 
 @login_required
+@csrf_exempt  # 添加CSRF豁免，简化支付过程
 def payment(request, temp_booking_id):
     # Get the temporary booking from storage
     temp_booking = temp_bookings.get(temp_booking_id)
@@ -549,6 +550,7 @@ def stripe_success(request, temp_booking_id):
         return redirect('home')
 
 @login_required
+@csrf_exempt  # 添加CSRF豁免，简化支付成功页面处理
 def payment_success(request, booking_id):
     booking = get_object_or_404(Booking, pk=booking_id, user=request.user)
     return render(request, 'bookings/payment_success.html', {'booking': booking})
