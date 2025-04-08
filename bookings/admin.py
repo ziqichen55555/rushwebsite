@@ -1,6 +1,5 @@
 from django.contrib import admin
-from .models import Booking, BookingOption
-from .models_driver import Driver
+from .models import Booking, BookingOption, Driver
 
 class BookingAdmin(admin.ModelAdmin):
     list_display = ('user', 'car', 'pickup_location', 'dropoff_location', 'pickup_date', 'return_date', 'status', 'total_cost')
