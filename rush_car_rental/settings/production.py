@@ -25,6 +25,15 @@ CORS_ALLOWED_ORIGINS = [
     f"https://{host}" for host in ALLOWED_HOSTS
 ]
 
+# CSRF 设置
+CSRF_TRUSTED_ORIGINS = [
+    'https://*.replit.dev',
+    'https://*.replit.app', 
+    'https://*.replit.com',
+    'https://*.worf.replit.dev',
+    f"https://{host}" for host in ALLOWED_HOSTS if not host in ['localhost', '127.0.0.1']
+]
+
 # 开启HTTPS安全设置
 # 在测试环境中,暂时关闭一些HTTPS安全设置
 # 实际部署时需要启用这些设置
