@@ -242,57 +242,46 @@ def payment(request, temp_booking_id):
     options_cost = temp_booking.options_cost
     total_cost = Decimal(base_cost) + Decimal(options_cost)
     
-    # 优先使用Stripe托管结账页面
+    # 使用Stripe Elements进行客户端支付
     if STRIPE_AVAILABLE and os.environ.get('STRIPE_SECRET_KEY'):
         try:
-            # 创建Stripe Checkout会话
-            logger.info(f"为用户 {request.user.username} 创建Stripe结账会话，总金额: ${total_cost}")
+            logger.info(f"为用户 {request.user.username} 创建Stripe支付意图，总金额: ${total_cost}")
             
-            # 获取域名
-            domain_url = request.build_absolute_uri('/').rstrip('/')
-            
-            # 创建一个结账会话
-            checkout_session = stripe.checkout.Session.create(
+            # 创建一个支付意图
+            payment_intent = stripe.PaymentIntent.create(
+                amount=int(total_cost * 100),  # Stripe需要以分为单位
+                currency='usd',
                 payment_method_types=['card'],
-                line_items=[{
-                    'price_data': {
-                        'currency': 'usd',
-                        'product_data': {
-                            'name': f"Car Rental: {temp_booking.car.make} {temp_booking.car.model}",
-                            'description': f"From {temp_booking.pickup_date} to {temp_booking.return_date} ({temp_booking.duration_days} days)",
-                            'images': [temp_booking.car.image_url],
-                        },
-                        'unit_amount': int(total_cost * 100),  # Stripe需要以分为单位
-                    },
-                    'quantity': 1,
-                }],
-                mode='payment',
-                success_url=f"{domain_url}/bookings/stripe-success/{temp_booking_id}/",
-                cancel_url=f"{domain_url}/bookings/payment/{temp_booking_id}/",
                 metadata={
                     'temp_booking_id': temp_booking_id,
-                    'user_id': request.user.id,
+                    'user_id': str(request.user.id),
+                    'car': f"{temp_booking.car.make} {temp_booking.car.model}",
+                    'pickup_date': str(temp_booking.pickup_date),
+                    'return_date': str(temp_booking.return_date),
                 }
             )
             
-            # 重定向到Stripe结账页面
-            return redirect(checkout_session.url)
+            # 设置客户端密钥以便前端使用
+            client_secret = payment_intent.client_secret
+            logger.info(f"成功创建支付意图: {payment_intent.id}")
             
         except Exception as e:
-            logger.error(f"创建Stripe会话失败: {str(e)}")
+            logger.error(f"创建Stripe支付意图失败: {str(e)}")
             # 如果Stripe API调用失败，回退到标准支付页面
             messages.warning(request, "Payment processing service is temporarily unavailable. Please use our standard checkout.")
-    
-    # 如果Stripe不可用，使用标准支付页面
-    # 模拟的客户端密钥
-    mock_client_secret = f"mock_pi_secret_{temp_booking_id}_{int(total_cost)}"
+            # 模拟的客户端密钥
+            client_secret = f"mock_pi_secret_{temp_booking_id}_{int(total_cost)}"
+    else:
+        # 如果Stripe不可用，使用标准支付页面
+        # 模拟的客户端密钥
+        client_secret = f"mock_pi_secret_{temp_booking_id}_{int(total_cost)}"
     
     context = {
         'temp_booking': temp_booking,
         'temp_booking_id': temp_booking_id,
         'total_cost': total_cost,
         'stripe_public_key': os.environ.get('VITE_STRIPE_PUBLIC_KEY', 'pk_test_mock'),
-        'client_secret': mock_client_secret,
+        'client_secret': client_secret,
     }
     
     return render(request, 'bookings/payment.html', context)

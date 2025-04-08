@@ -97,9 +97,14 @@ def get_database_config():
         
         if db_url:
             # 解析DATABASE_URL格式: postgres://username:password@hostname:port/database_name
+            # 或 postgresql://username:password@hostname:port/database_name
             import re
-            pattern = r'postgres://(.*?):(.*?)@(.*?):(\d+)/(.*)'
+            pattern = r'postgres(?:ql)?://(.*?):(.*?)@(.*?):(\d+)/(.*)'
             match = re.match(pattern, db_url)
+            
+            # 调试信息
+            if not match:
+                logger.warning("[DB_CONFIG] 无法解析DATABASE_URL: %s", db_url)
             
             if match:
                 username, password, host, port, db_name = match.groups()
