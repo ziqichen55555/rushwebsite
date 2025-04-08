@@ -235,7 +235,11 @@ def add_drivers(request, temp_booking_id):
     from .models_driver import Driver
     
     # 计算基本费用
-    base_cost = temp_booking.car.daily_rate * temp_booking.duration_days()
+    # 这里我们直接计算基本费用，而不是调用函数
+    duration = (temp_booking.return_date - temp_booking.pickup_date).days
+    if duration < 1:
+        duration = 1
+    base_cost = temp_booking.car.daily_rate * duration
     
     # 处理表单提交
     if request.method == 'POST':
@@ -294,7 +298,10 @@ def add_options(request, temp_booking_id):
         return redirect('home')
     
     # Calculate base cost
-    base_cost = temp_booking.car.daily_rate * temp_booking.duration_days
+    duration = (temp_booking.return_date - temp_booking.pickup_date).days
+    if duration < 1:
+        duration = 1
+    base_cost = temp_booking.car.daily_rate * duration
     
     # Define costs for each option
     context = {
@@ -352,7 +359,10 @@ def confirm_booking(request, temp_booking_id):
         temp_booking.additional_drivers = additional_drivers
         
         # Update total cost with options
-        base_cost = temp_booking.car.daily_rate * temp_booking.duration_days
+        duration = (temp_booking.return_date - temp_booking.pickup_date).days
+        if duration < 1:
+            duration = 1
+        base_cost = temp_booking.car.daily_rate * duration
         options_cost = temp_booking.options_cost
         total_cost = Decimal(base_cost) + Decimal(options_cost)
         temp_booking.total_cost = total_cost
@@ -374,7 +384,10 @@ def payment(request, temp_booking_id):
         return redirect('home')
     
     # Calculate total cost (base + options)
-    base_cost = temp_booking.car.daily_rate * temp_booking.duration_days
+    duration = (temp_booking.return_date - temp_booking.pickup_date).days
+    if duration < 1:
+        duration = 1
+    base_cost = temp_booking.car.daily_rate * duration
     options_cost = temp_booking.options_cost
     total_cost = Decimal(base_cost) + Decimal(options_cost)
     
@@ -395,7 +408,7 @@ def payment(request, temp_booking_id):
                         'currency': 'usd',
                         'product_data': {
                             'name': f"Car Rental: {temp_booking.car.make} {temp_booking.car.model}",
-                            'description': f"From {temp_booking.pickup_date} to {temp_booking.return_date} ({temp_booking.duration_days} days)",
+                            'description': f"From {temp_booking.pickup_date} to {temp_booking.return_date} ({duration} days)",
                             'images': [temp_booking.car.image_url],
                         },
                         'unit_amount': int(total_cost * 100),  # Stripe需要以分为单位
@@ -453,7 +466,10 @@ def process_payment(request, temp_booking_id):
                 logger.info("金钱的象征在数字世界中流动，虚拟的交易，真实的代价...")
                 
                 # 计算总费用
-                base_cost = temp_booking.car.daily_rate * temp_booking.duration_days
+                duration = (temp_booking.return_date - temp_booking.pickup_date).days
+                if duration < 1:
+                    duration = 1
+                base_cost = temp_booking.car.daily_rate * duration
                 options_cost = temp_booking.options_cost
                 total_cost = Decimal(base_cost) + Decimal(options_cost)
                 
@@ -537,7 +553,10 @@ def process_payment(request, temp_booking_id):
                 # Request to create payment intent only
                 if action == 'create_intent':
                     # Calculate total price
-                    base_cost = temp_booking.car.daily_rate * temp_booking.duration_days
+                    duration = (temp_booking.return_date - temp_booking.pickup_date).days
+                    if duration < 1:
+                        duration = 1
+                    base_cost = temp_booking.car.daily_rate * duration
                     options_cost = temp_booking.options_cost
                     total_cost = Decimal(base_cost) + Decimal(options_cost)
                     logger.info(f"创建支付意图，${total_cost} 的代价，数字背后是无法衡量的情感交换...")
@@ -628,7 +647,10 @@ def stripe_success(request, temp_booking_id):
     
     try:
         # 获取总成本
-        base_cost = temp_booking.car.daily_rate * temp_booking.duration_days
+        duration = (temp_booking.return_date - temp_booking.pickup_date).days
+        if duration < 1:
+            duration = 1
+        base_cost = temp_booking.car.daily_rate * duration
         options_cost = temp_booking.options_cost
         total_cost = Decimal(base_cost) + Decimal(options_cost)
         
