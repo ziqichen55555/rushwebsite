@@ -10,14 +10,6 @@ DEBUG = True
 # 允许的主机
 ALLOWED_HOSTS = ['*']
 
-# CSRF 设置
-CSRF_TRUSTED_ORIGINS = [
-    'https://*.replit.dev',
-    'https://*.replit.app',
-    'https://*.replit.com',
-    'https://*.worf.replit.dev',
-]
-
 # 开发环境数据库设置
 DATABASES = {
     'default': get_database_config()
