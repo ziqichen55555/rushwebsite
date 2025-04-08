@@ -17,22 +17,13 @@ if not SECRET_KEY:
 ALLOWED_HOSTS = [
     os.environ.get('SITE_DOMAIN', 'rush-car-rental.azurewebsites.net'),
     'localhost',
-    '127.0.0.1',
-    '.replit.dev',  # 允许所有Replit.dev子域名
-    '.replit.app',  # 允许所有Replit.app子域名
-    '.replit.com',  # 允许所有Replit.com子域名
+    '127.0.0.1'
 ]
 
 # CORS设置
-CORS_ALLOWED_ORIGINS = [f"https://{host}" for host in ALLOWED_HOSTS if not host in ['localhost', '127.0.0.1']]
-
-# CSRF 设置
-CSRF_TRUSTED_ORIGINS = [
-    'https://*.replit.dev',
-    'https://*.replit.app', 
-    'https://*.replit.com',
-    'https://*.worf.replit.dev',
-] + [f"https://{host}" for host in ALLOWED_HOSTS if not host in ['localhost', '127.0.0.1']]
+CORS_ALLOWED_ORIGINS = [
+    f"https://{host}" for host in ALLOWED_HOSTS
+]
 
 # 开启HTTPS安全设置
 # 在测试环境中,暂时关闭一些HTTPS安全设置

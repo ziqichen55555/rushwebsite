@@ -48,32 +48,6 @@
         text-decoration: line-through;
         color: #dc3545;
     }
-    
-    /* Stripe Elements Custom Styling */
-    .stripe-form {
-        width: 100%;
-        padding: 15px;
-    }
-    
-    #stripe-payment-element {
-        margin-bottom: 24px;
-    }
-    
-    #payment-element {
-        margin-bottom: 24px;
-    }
-    
-    #payment-message {
-        color: rgb(105, 115, 134);
-        font-size: 16px;
-        line-height: 20px;
-        padding-top: 12px;
-        text-align: center;
-    }
-    
-    #payment-message.hidden {
-        display: none;
-    }
 </style>
 {% endblock %}
 
@@ -131,7 +105,7 @@
                     </h5>
                 </div>
                 <div class="card-body">
-                    <form id="payment-form" class="payment-form">
+                    <form id="payment-form" class="payment-form" method="post" action="{% url 'process_payment' temp_booking_id %}">
                         {% csrf_token %}
                         
                         <!-- Payment Method Selection -->
@@ -161,7 +135,7 @@
                                     <div class="card border h-100">
                                         <div class="card-body p-3">
                                             <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="payment_method" id="paypal" value="paypal" disabled>
+                                                <input class="form-check-input" type="radio" name="payment_method" id="paypal" value="paypal">
                                                 <label class="form-check-label w-100" for="paypal">
                                                     <div class="d-flex justify-content-between align-items-center">
                                                         <span>PayPal</span>
@@ -175,12 +149,59 @@
                             </div>
                         </div>
                         
-                        <!-- Credit Card Information (Stripe Elements) -->
+                        <!-- Credit Card Information -->
                         <div id="credit-card-form">
-                            <div id="payment-element" class="mb-4">
-                                <!-- Stripe Elements Placeholder -->
+                            <div class="mb-3">
+                                <label for="card_holder" class="form-label">Card Holder Name</label>
+                                <input type="text" class="form-control" id="card_holder" name="card_holder" placeholder="John Doe" required>
                             </div>
-                            <div id="payment-message" class="hidden"></div>
+                            
+                            <div class="mb-3">
+                                <label for="card_number" class="form-label">Card Number</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" id="card_number" name="card_number" placeholder="1234 5678 9012 3456" maxlength="19" required>
+                                    <span class="input-group-text bg-white">
+                                        <i class="fas fa-credit-card"></i>
+                                    </span>
+                                </div>
+                            </div>
+                            
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="expiry_date" class="form-label">Expiry Date</label>
+                                    <input type="text" class="form-control" id="expiry_date" name="expiry_date" placeholder="MM/YY" maxlength="5" required>
+                                </div>
+                                
+                                <div class="col-md-6 mb-3">
+                                    <label for="cvv" class="form-label">CVV</label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" id="cvv" name="cvv" placeholder="123" maxlength="4" required>
+                                        <span class="input-group-text bg-white" data-bs-toggle="tooltip" data-bs-placement="top" title="3 or 4 digit security code on the back of your card">
+                                            <i class="fas fa-question-circle"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Billing Address -->
+                        <h5 class="mt-4 mb-3">Billing Address</h5>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="billing_country" class="form-label">Country</label>
+                                <select class="form-select" id="billing_country" name="billing_country" required>
+                                    <option value="">Select Country</option>
+                                    <option value="US" selected>United States</option>
+                                    <option value="CA">Canada</option>
+                                    <option value="AU">Australia</option>
+                                    <option value="UK">United Kingdom</option>
+                                </select>
+                            </div>
+                            
+                            <div class="col-md-6 mb-3">
+                                <label for="billing_zip" class="form-label">Zip/Postal Code</label>
+                                <input type="text" class="form-control" id="billing_zip" name="billing_zip" required>
+                            </div>
                         </div>
                         
                         <!-- Terms Acceptance -->
@@ -192,10 +213,7 @@
                         </div>
                         
                         <div class="d-grid gap-2">
-                            <button id="submit-button" class="btn btn-warning btn-lg" type="submit">
-                                <span id="button-text">Pay Now (${{'%0.2f'|format:total_cost}})</span>
-                                <span id="spinner" class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span>
-                            </button>
+                            <button id="submit-button" class="btn btn-warning btn-lg" type="submit">Confirm Payment</button>
                         </div>
                     </form>
                 </div>
@@ -289,36 +307,38 @@
                     {% if temp_booking.additional_drivers > 0 %}
                     <div class="d-flex justify-content-between mb-2">
                         <span>Additional Drivers ({{ temp_booking.additional_drivers }})</span>
-                        <span>${{ temp_booking.additional_drivers|multiply:10 }} x {{ temp_booking.duration_days }} days</span>
+                        <span>${{ temp_booking.additional_drivers|multiply:10 }} per driver</span>
                     </div>
                     {% endif %}
                     
                     <hr>
-                    <div class="d-flex justify-content-between align-items-center mb-0">
-                        <h5 class="mb-0">Total</h5>
-                        <h5 class="mb-0 text-primary">${{ total_cost }}</h5>
+                    
+                    <div class="d-flex justify-content-between mb-2">
+                        <span class="h5">Total</span>
+                        <span class="h5">${{ temp_booking.total_cost }}</span>
                     </div>
                     
                     <!-- Price Comparison -->
-                    {% if temp_booking.car.comparison_provider1_rate %}
-                    <div class="mt-3 price-comparison">
-                        <p class="mb-1">
-                            <i class="fas fa-tags text-success me-1"></i> Save up to 
-                            <strong class="text-success">
-                                ${{ temp_booking.car.comparison_provider1_rate|subtract:temp_booking.car.daily_rate|multiply:temp_booking.duration_days }}
-                            </strong> 
-                            compared to other providers
-                        </p>
-                        <div class="d-flex justify-content-between">
+                    {% if temp_booking.car.comparison_provider1_rate or temp_booking.car.comparison_provider2_rate %}
+                    <div class="price-comparison mt-3 bg-light p-2 rounded">
+                        <h6 class="mb-2">Compare Our Price</h6>
+                        {% if temp_booking.car.comparison_provider1_rate %}
+                        <div class="d-flex justify-content-between mb-1">
                             <span>{{ temp_booking.car.comparison_provider1_name }}</span>
                             <span class="competitor-price">${{ temp_booking.car.comparison_provider1_rate|multiply:temp_booking.duration_days }}</span>
                         </div>
+                        {% endif %}
+                        
                         {% if temp_booking.car.comparison_provider2_rate %}
                         <div class="d-flex justify-content-between">
                             <span>{{ temp_booking.car.comparison_provider2_name }}</span>
                             <span class="competitor-price">${{ temp_booking.car.comparison_provider2_rate|multiply:temp_booking.duration_days }}</span>
                         </div>
                         {% endif %}
+                        
+                        <div class="mt-2 small text-success fw-bold">
+                            <i class="fas fa-check-circle"></i> Save up to ${{ temp_booking.car.comparison_provider1_rate|multiply:temp_booking.duration_days|subtract:temp_booking.total_cost }} with Rush Car Rental!
+                        </div>
                     </div>
                     {% endif %}
                 </div>
@@ -329,82 +349,32 @@
 {% endblock %}
 
 {% block extra_js %}
-<!-- Stripe JS -->
-<script src="https://js.stripe.com/v3/"></script>
 <script>
     document.addEventListener("DOMContentLoaded", function() {
-        // Initialize Stripe
-        const stripe = Stripe('{{ stripe_public_key }}');
+        const paymentForm = document.getElementById("payment-form");
         
-        // Create the payment form elements
-        const paymentForm = document.getElementById('payment-form');
-        const options = {
-            clientSecret: '{{ client_secret }}',
-            appearance: {
-                theme: 'stripe',
-                variables: {
-                    colorPrimary: '#ffc107',
-                    colorBackground: '#ffffff',
-                    colorText: '#212529',
-                    colorDanger: '#dc3545',
-                    fontFamily: 'system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
-                    borderRadius: '0.5rem',
-                    fontLineHeight: '1.5',
-                },
-            },
-        };
-        
-        // Create and mount the Payment Element
-        const elements = stripe.elements(options);
-        const paymentElement = elements.create('payment');
-        paymentElement.mount('#payment-element');
-        
-        // Handle form submission
-        paymentForm.addEventListener('submit', async function(event) {
-            event.preventDefault();
-            
-            // Check if terms are accepted
-            if (!document.getElementById('terms_accepted').checked) {
-                const messageElement = document.getElementById('payment-message');
-                messageElement.textContent = 'You must accept the rental conditions and refund policy.';
-                messageElement.classList.remove('hidden');
-                return;
-            }
-            
-            // Disable the submit button and show spinner during processing
-            setLoading(true);
-            
-            const {error} = await stripe.confirmPayment({
-                elements,
-                confirmParams: {
-                    return_url: '{{ request.build_absolute_uri }}stripe-success/{{ temp_booking_id }}/',
-                },
+        // Format card number with spaces
+        const cardNumberInput = document.querySelector("input[name='card_number']");
+        if (cardNumberInput) {
+            cardNumberInput.addEventListener("input", function(e) {
+                let value = e.target.value.replace(/\s+/g, "");
+                if (value.length > 0) {
+                    value = value.match(new RegExp('.{1,4}', 'g')).join(" ");
+                }
+                e.target.value = value;
             });
-            
-            if (error) {
-                // Show error to customer
-                const messageElement = document.getElementById('payment-message');
-                messageElement.textContent = error.message;
-                messageElement.classList.remove('hidden');
-                setLoading(false);
-            }
-            // Otherwise, the page will be redirected to the return_url
-        });
+        }
         
-        function setLoading(isLoading) {
-            const button = document.getElementById('submit-button');
-            const spinner = document.getElementById('spinner');
-            const buttonText = document.getElementById('button-text');
-            
-            if (isLoading) {
-                button.disabled = true;
-                spinner.classList.remove('d-none');
-                buttonText.classList.add('d-none');
-            } else {
-                button.disabled = false;
-                spinner.classList.add('d-none');
-                buttonText.classList.remove('d-none');
-            }
+        // Format expiry date with slash
+        const expiryInput = document.querySelector("input[name='expiry_date']");
+        if (expiryInput) {
+            expiryInput.addEventListener("input", function(e) {
+                let value = e.target.value.replace(/\D/g, "");
+                if (value.length > 2) {
+                    value = value.substring(0, 2) + "/" + value.substring(2, 4);
+                }
+                e.target.value = value;
+            });
         }
     });
 </script>
