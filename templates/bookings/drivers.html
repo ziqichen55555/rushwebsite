@@ -165,7 +165,7 @@
                     </div>
                     <div class="card-body">
                         <div class="alert alert-info">
-                            <i class="fas fa-info-circle me-2"></i> Please provide information for all drivers. At least one primary driver is required.
+                            <i class="fas fa-info-circle me-2"></i> Please provide information for the driver.
                         </div>
                         
                         <form method="post" class="needs-validation" novalidate>
@@ -177,15 +177,12 @@
                                 {% for form in formset %}
                                 <div class="driver-form mb-4 p-3 border rounded {% if forloop.first %}primary-driver{% endif %}">
                                     <h5 class="border-bottom pb-2 mb-3">
-                                        Driver #{{ forloop.counter }}
+                                        Driver Information
                                         {% if forloop.first %}
                                         <span class="badge bg-warning text-dark ms-2">Primary Driver</span>
                                         {% endif %}
                                         
                                         {% if not forloop.first %}
-                                        <button type="button" class="btn btn-sm btn-outline-danger float-end remove-driver-btn">
-                                            <i class="fas fa-times"></i> Remove
-                                        </button>
                                         {% endif %}
                                     </h5>
                                     
@@ -404,9 +401,6 @@
                             </div>
                             
                             <div class="mb-4">
-                                <button type="button" id="add-driver-btn" class="btn btn-outline-secondary">
-                                    <i class="fas fa-plus me-1"></i> Add Another Driver
-                                </button>
                             </div>
                             
                             <hr>
@@ -442,116 +436,3 @@
 }
 </style>
 
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    const addButton = document.getElementById('add-driver-btn');
-    const driverFormset = document.getElementById('driver-formset');
-    const formCount = document.getElementById('id_form-TOTAL_FORMS');
-    let driverForms = document.querySelectorAll('.driver-form');
-    
-    // Setup hide/show expiry date based on lifetime checkbox
-    function setupLifetimeToggle() {
-        document.querySelectorAll('[id$="-license_is_lifetime"]').forEach(checkbox => {
-            const expiryDateField = document.getElementById(checkbox.id.replace('license_is_lifetime', 'license_expiry_date'));
-            const expiryDateLabel = expiryDateField.closest('.mb-3').querySelector('label');
-            
-            // Initial state
-            if (checkbox.checked) {
-                expiryDateField.setAttribute('disabled', 'disabled');
-                expiryDateLabel.classList.add('text-muted');
-            }
-            
-            // Change handler
-            checkbox.addEventListener('change', function() {
-                if (this.checked) {
-                    expiryDateField.setAttribute('disabled', 'disabled');
-                    expiryDateLabel.classList.add('text-muted');
-                } else {
-                    expiryDateField.removeAttribute('disabled');
-                    expiryDateLabel.classList.remove('text-muted');
-                }
-            });
-        });
-    }
-    
-    // Setup primary driver radio button behavior
-    function setupPrimaryDrivers() {
-        const primaryCheckboxes = document.querySelectorAll('[id$="-is_primary"]');
-        
-        primaryCheckboxes.forEach(checkbox => {
-            if (!checkbox.closest('.d-none')) {
-                checkbox.addEventListener('change', function() {
-                    if (this.checked) {
-                        primaryCheckboxes.forEach(cb => {
-                            if (cb !== this && !cb.closest('.d-none')) {
-                                cb.checked = false;
-                            }
-                        });
-                    }
-                });
-            }
-        });
-    }
-    
-    // Setup remove driver buttons
-    function setupRemoveButtons() {
-        document.querySelectorAll('.remove-driver-btn').forEach(button => {
-            button.addEventListener('click', function() {
-                const driverForm = this.closest('.driver-form');
-                const deleteCheckbox = driverForm.querySelector('[id$="-DELETE"]');
-                
-                if (deleteCheckbox) {
-                    deleteCheckbox.checked = true;
-                }
-                
-                driverForm.style.display = 'none';
-            });
-        });
-    }
-    
-    // Add driver button click handler
-    addButton.addEventListener('click', function() {
-        const formCount = document.getElementById('id_form-TOTAL_FORMS');
-        const newForm = driverForms[0].cloneNode(true);
-        const formRegex = RegExp(`form-(\\d){1}-`,'g');
-        const newIndex = parseInt(formCount.value);
-        
-        // Update form with new indices
-        newForm.innerHTML = newForm.innerHTML.replace(formRegex, `form-${newIndex}-`);
-        newForm.classList.remove('primary-driver');
-        
-        // Clear all input values
-        newForm.querySelectorAll('input, select, textarea').forEach(input => {
-            if (input.type === 'checkbox' || input.type === 'radio') {
-                input.checked = false;
-            } else {
-                input.value = '';
-            }
-        });
-        
-        // Update title and add remove button
-        const title = newForm.querySelector('h5');
-        title.innerHTML = `Driver #${newIndex + 1} <button type="button" class="btn btn-sm btn-outline-danger float-end remove-driver-btn"><i class="fas fa-times"></i> Remove</button>`;
-        
-        // Add the form to the DOM
-        driverFormset.appendChild(newForm);
-        
-        // Increment the form count
-        formCount.value = newIndex + 1;
-        
-        // Update the forms array
-        driverForms = document.querySelectorAll('.driver-form');
-        
-        // Setup all the event handlers for the new form
-        setupLifetimeToggle();
-        setupPrimaryDrivers();
-        setupRemoveButtons();
-    });
-    
-    // Initialize all handlers
-    setupLifetimeToggle();
-    setupPrimaryDrivers();
-    setupRemoveButtons();
-});
-</script>
-{% endblock %}
