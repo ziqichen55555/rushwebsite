@@ -41,6 +41,38 @@ class DriverForm(forms.ModelForm):
     """
     Form for adding driver information
     """
+    # 添加国家选项，设置默认为澳大利亚
+    COUNTRY_CHOICES = [
+        ('Australia', 'Australia'),
+        ('New Zealand', 'New Zealand'),
+        ('United States', 'United States'),
+        ('United Kingdom', 'United Kingdom'),
+        ('China', 'China'),
+        ('Japan', 'Japan'),
+        ('Singapore', 'Singapore'),
+        ('Malaysia', 'Malaysia'),
+        ('Indonesia', 'Indonesia'),
+        ('Thailand', 'Thailand'),
+        ('Vietnam', 'Vietnam'),
+        ('South Korea', 'South Korea'),
+        ('India', 'India'),
+        ('Germany', 'Germany'),
+        ('France', 'France'),
+        ('Italy', 'Italy'),
+        ('Spain', 'Spain'),
+        ('Canada', 'Canada'),
+        ('Brazil', 'Brazil'),
+        ('South Africa', 'South Africa'),
+        ('Other', 'Other'),
+    ]
+    
+    # 覆盖国家字段，使用选择列表
+    country_of_residence = forms.ChoiceField(
+        choices=COUNTRY_CHOICES,
+        initial='Australia',
+        widget=forms.Select(attrs={'class': 'form-select'})
+    )
+    
     class Meta:
         model = Driver
         fields = [
@@ -56,7 +88,6 @@ class DriverForm(forms.ModelForm):
             'phone': forms.TextInput(attrs={'placeholder': 'Optional'}),
             'fax': forms.TextInput(attrs={'placeholder': 'Optional'}),
             'occupation': forms.Select(attrs={'class': 'form-select'}),
-            'country_of_residence': forms.Select(attrs={'class': 'form-select'}),
             'mailing_list': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
             'is_primary': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
         }
