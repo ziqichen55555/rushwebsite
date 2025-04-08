@@ -343,10 +343,13 @@
                             {% endif %}
                         </div>
                         
-                        <!-- Total Cost -->
-                        <div class="total-cost border-top pt-3">
-                            <div class="d-flex justify-content-between">
+                        <!-- Total -->
+                        <div class="d-flex justify-content-between mt-3 border-top pt-3">
+                            <div>
                                 <h6 class="mb-0">Total</h6>
+                                <small class="text-muted">Includes all taxes and fees</small>
+                            </div>
+                            <div>
                                 <h5 class="mb-0 fw-bold">${{ total_cost|floatformat:2 }}</h5>
                             </div>
                         </div>
@@ -362,32 +365,11 @@
     <div class="modal-overlay"></div>
     <div class="modal-container">
         <div class="modal-header">
-            <h4 class="modal-title">Confirm Your Payment</h4>
+            <h4 class="modal-title">Secure Payment</h4>
         </div>
-                            <tr>
-                                <th style="width: 40%;">Vehicle:</th>
-                                <td>{{ temp_booking.car.year }} {{ temp_booking.car.make }} {{ temp_booking.car.model }}</td>
-                            </tr>
-                            <tr>
-                                <th>Pick-up:</th>
-                                <td>{{ temp_booking.pickup_location.name }}, {{ temp_booking.pickup_date|date:"M d, Y" }}</td>
-                            </tr>
-                            <tr>
-                                <th>Drop-off:</th>
-                                <td>{{ temp_booking.dropoff_location.name }}, {{ temp_booking.return_date|date:"M d, Y" }}</td>
-                            </tr>
-                            <tr>
-                                <th>Duration:</th>
-                                <td>{{ temp_booking.duration_days }} day(s)</td>
-                            </tr>
-                            <tr>
-                                <th>Total Amount:</th>
-                                <td><strong>${{ total_cost|floatformat:2 }}</strong></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
+        <div class="modal-body">
+            <p class="mb-3">You're about to make a payment of <strong>${{ total_cost|floatformat:2 }}</strong></p>
+            <p class="mb-0">Click 'Confirm Payment' to complete your booking securely.</p>
         </div>
         <div class="modal-footer">
             <button type="button" id="cancel-payment" class="btn btn-outline-secondary">Cancel</button>
@@ -399,65 +381,30 @@
 
 {% block extra_js %}
 <script>
-    document.addEventListener("DOMContentLoaded", function() {
-        const form = document.getElementById("payment-form");
-        const submitButton = document.querySelector("#submit-button");
-        const loadingSpinner = document.querySelector("#loading-spinner");
-        const messageContainer = document.querySelector("#payment-message");
-        const modal = document.getElementById("payment-confirm-modal");
-        const confirmPaymentBtn = document.getElementById("confirm-payment");
-        const cancelPaymentBtn = document.getElementById("cancel-payment");
+    document.addEventListener('DOMContentLoaded', function() {
+        // Basic form elements
+        const form = document.getElementById('payment-form');
+        const submitButton = document.getElementById('submit-button');
+        const loadingSpinner = document.getElementById('loading-spinner');
         
-        // Format card number with spaces
-        const cardNumberInput = document.querySelector("input[name='card_number']");
-        if (cardNumberInput) {
-            cardNumberInput.addEventListener("input", function(e) {
-                let value = e.target.value.replace(/\s+/g, "");
-                if (value.length > 0) {
-                    value = value.match(new RegExp('.{1,4}', 'g')).join(" ");
-                }
-                e.target.value = value;
-            });
+        // Modal elements
+        const modal = document.getElementById('payment-confirm-modal');
+        const confirmPaymentBtn = document.getElementById('confirm-payment');
+        const cancelPaymentBtn = document.getElementById('cancel-payment');
+        
+        // Fake Stripe Element for demo
+        const cardElement = document.getElementById('card-element');
+        if (cardElement) {
+            cardElement.innerHTML = '<div style="padding: 10px;"><i class="far fa-credit-card me-2"></i>Demo Card Element (4242 4242 4242 4242)</div>';
         }
         
-        // Format expiry date with slash
-        const expiryInput = document.querySelector("input[name='expiry_date']");
-        if (expiryInput) {
-            expiryInput.addEventListener("input", function(e) {
-                let value = e.target.value.replace(/\D/g, "");
-                if (value.length > 2) {
-                    value = value.substring(0, 2) + "/" + value.substring(2, 4);
-                }
-                e.target.value = value;
-            });
-        }
-        
-        // Show payment modal
-        submitButton.addEventListener("click", function(e) {
-            e.preventDefault();
-            
-            // Simple form validation
-            const cardHolderName = document.getElementById("card-holder-name").value;
-            const billingAddress = document.getElementById("billing-address").value;
-            const billingCity = document.getElementById("billing-city").value;
-            const billingZip = document.getElementById("billing-zip").value;
-            const billingCountry = document.getElementById("billing-country").value;
-            const cardNumber = document.querySelector("input[name='card_number']").value;
-            const expiryDate = document.querySelector("input[name='expiry_date']").value;
-            const cvc = document.querySelector("input[name='cvc']").value;
-            
-            if (!cardHolderName || !billingAddress || !billingCity || !billingZip || !billingCountry || !cardNumber || !expiryDate || !cvc) {
-                messageContainer.textContent = "Please fill in all required fields.";
-                messageContainer.style.display = "block";
-                return;
-            }
-            
-            // Show modal
+        // Open payment confirmation when Pay button is clicked
+        submitButton.addEventListener('click', function() {
             modal.style.display = "block";
         });
         
-        // Close modal when cancel button is clicked
-        cancelPaymentBtn.addEventListener("click", function() {
+        // Close modal when Cancel button is clicked
+        cancelPaymentBtn.addEventListener('click', function() {
             modal.style.display = "none";
         });
         
