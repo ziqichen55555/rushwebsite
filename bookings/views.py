@@ -214,11 +214,75 @@ def create_booking(request, car_id):
         temp_bookings[booking_id] = temp_booking
         logger.info(f"预订 {booking_id} 暂存于系统的记忆中，像一个漂泊的梦，等待着最终的命运...")
         
-        # Redirect to add options page
-        return redirect('add_options', temp_booking_id=booking_id)
+        # Redirect to add drivers page
+        return redirect('add_drivers', temp_booking_id=booking_id)
     
     # If GET request, redirect back to car detail
     return redirect('car_detail', car_id=car.id)
+
+@login_required
+def add_drivers(request, temp_booking_id):
+    """添加驾驶员信息页面"""
+    # 从临时存储获取预订
+    temp_booking = temp_bookings.get(temp_booking_id)
+    
+    if not temp_booking:
+        messages.error(request, "Booking session expired. Please try again.")
+        return redirect('home')
+    
+    # 导入必要的模块
+    from .forms import DriverFormSet
+    from .models_driver import Driver
+    
+    # 计算基本费用
+    base_cost = temp_booking.car.daily_rate * temp_booking.duration_days()
+    
+    # 处理表单提交
+    if request.method == 'POST':
+        formset = DriverFormSet(request.POST, prefix='form')
+        
+        if formset.is_valid():
+            # 临时存储驾驶员信息
+            drivers_data = []
+            has_primary = False
+            
+            # 处理表单集中的每个表单
+            for form in formset:
+                if form.cleaned_data and not form.cleaned_data.get('DELETE', False):
+                    driver_data = form.cleaned_data
+                    if driver_data.get('is_primary'):
+                        has_primary = True
+                    drivers_data.append(driver_data)
+            
+            # 确保至少有一个主驾驶员
+            if not drivers_data:
+                messages.error(request, "At least one driver is required.")
+                formset = DriverFormSet(prefix='form')
+                formset[0].initial = {'is_primary': True}  # 第一个驾驶员默认为主驾驶员
+            elif not has_primary:
+                messages.error(request, "At least one primary driver is required.")
+            else:
+                # 将驾驶员数据存储到临时变量
+                temp_booking.temp_drivers_data = drivers_data
+                logger.info(f"为预订 {temp_booking_id} 添加了 {len(drivers_data)} 个驾驶员信息")
+                
+                # 跳转到下一步：添加选项
+                return redirect('add_options', temp_booking_id=temp_booking_id)
+    else:
+        # 初始化表单集
+        formset = DriverFormSet(prefix='form')
+        formset[0].initial = {'is_primary': True}  # 第一个驾驶员默认为主驾驶员
+    
+    # 构建上下文
+    context = {
+        'temp_booking': temp_booking,
+        'temp_booking_id': temp_booking_id,
+        'formset': formset,
+        'base_cost': base_cost,
+        'car_selection_url': f'/cars/detail/{temp_booking.car.id}/',
+    }
+    
+    return render(request, 'bookings/drivers.html', context)
 
 @login_required
 def add_options(request, temp_booking_id):
@@ -419,6 +483,39 @@ def process_payment(request, temp_booking_id):
                 booking_id = temp_booking.id
                 logger.info(f"预订 #{booking_id} 从虚无走向确认，数据库中又多了一行冰冷的记录...")
                 
+                # Save driver information
+                from .models_driver import Driver
+                if hasattr(temp_booking, 'temp_drivers_data') and temp_booking.temp_drivers_data:
+                    logger.info(f"处理 {len(temp_booking.temp_drivers_data)} 位驾驶员信息...")
+                    for driver_data in temp_booking.temp_drivers_data:
+                        driver = Driver(
+                            booking=temp_booking,
+                            first_name=driver_data.get('first_name', ''),
+                            last_name=driver_data.get('last_name', ''),
+                            email=driver_data.get('email', ''),
+                            date_of_birth=driver_data.get('date_of_birth'),
+                            license_number=driver_data.get('license_number', ''),
+                            license_issued_in=driver_data.get('license_issued_in', ''),
+                            license_expiry_date=driver_data.get('license_expiry_date'),
+                            license_is_lifetime=driver_data.get('license_is_lifetime', False),
+                            address=driver_data.get('address', ''),
+                            local_address=driver_data.get('local_address', ''),
+                            city=driver_data.get('city', ''),
+                            state=driver_data.get('state', ''),
+                            postcode=driver_data.get('postcode', ''),
+                            country_of_residence=driver_data.get('country_of_residence', 'Australia'),
+                            phone=driver_data.get('phone', ''),
+                            mobile=driver_data.get('mobile', ''),
+                            fax=driver_data.get('fax', ''),
+                            occupation=driver_data.get('occupation', ''),
+                            mailing_list=driver_data.get('mailing_list', False),
+                            is_primary=driver_data.get('is_primary', False)
+                        )
+                        driver.save()
+                        logger.info(f"已保存驾驶员 {driver.get_full_name()} 的信息")
+                else:
+                    logger.warning("没有找到驾驶员信息，只有虚无的旅途，却没有生命的温度...")
+                
                 # Clean up temporary booking
                 if temp_booking_id in temp_bookings:
                     del temp_bookings[temp_booking_id]
@@ -575,6 +672,39 @@ def stripe_success(request, temp_booking_id):
         # 获取新预订ID
         booking_id = temp_booking.id
         logger.info(f"预订 #{booking_id} 通过Stripe支付完成，从虚无走向确认...")
+        
+        # Save driver information
+        from .models_driver import Driver
+        if hasattr(temp_booking, 'temp_drivers_data') and temp_booking.temp_drivers_data:
+            logger.info(f"处理 {len(temp_booking.temp_drivers_data)} 位驾驶员信息...")
+            for driver_data in temp_booking.temp_drivers_data:
+                driver = Driver(
+                    booking=temp_booking,
+                    first_name=driver_data.get('first_name', ''),
+                    last_name=driver_data.get('last_name', ''),
+                    email=driver_data.get('email', ''),
+                    date_of_birth=driver_data.get('date_of_birth'),
+                    license_number=driver_data.get('license_number', ''),
+                    license_issued_in=driver_data.get('license_issued_in', ''),
+                    license_expiry_date=driver_data.get('license_expiry_date'),
+                    license_is_lifetime=driver_data.get('license_is_lifetime', False),
+                    address=driver_data.get('address', ''),
+                    local_address=driver_data.get('local_address', ''),
+                    city=driver_data.get('city', ''),
+                    state=driver_data.get('state', ''),
+                    postcode=driver_data.get('postcode', ''),
+                    country_of_residence=driver_data.get('country_of_residence', 'Australia'),
+                    phone=driver_data.get('phone', ''),
+                    mobile=driver_data.get('mobile', ''),
+                    fax=driver_data.get('fax', ''),
+                    occupation=driver_data.get('occupation', ''),
+                    mailing_list=driver_data.get('mailing_list', False),
+                    is_primary=driver_data.get('is_primary', False)
+                )
+                driver.save()
+                logger.info(f"已保存驾驶员 {driver.get_full_name()} 的信息")
+        else:
+            logger.warning("没有找到驾驶员信息，只有虚无的旅途，却没有生命的温度...")
         
         # 清理临时预订
         if temp_booking_id in temp_bookings:

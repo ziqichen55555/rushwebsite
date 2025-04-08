@@ -1,0 +1,557 @@
+{% extends 'base.html' %}
+
+{% block title %}Add Driver Information - Rush Car Rental{% endblock %}
+
+{% block content %}
+<!-- Enhanced Breadcrumb -->
+<div class="breadcrumb-container py-2">
+    <div class="container">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb breadcrumb-custom mb-0">
+                <li class="breadcrumb-item">
+                    <a href="{% url 'home' %}" class="breadcrumb-home">
+                        <i class="fas fa-home"></i> Home
+                    </a>
+                </li>
+                <li class="breadcrumb-item active" aria-current="page">
+                    <i class="fas fa-id-card"></i> Driver Information
+                </li>
+            </ol>
+        </nav>
+    </div>
+</div>
+
+<section class="py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4">
+                <!-- Booking Progress -->
+                <div class="card shadow mb-4">
+                    <div class="card-header bg-warning text-dark">
+                        <h5 class="mb-0">Booking Progress</h5>
+                    </div>
+                    <div class="card-body p-0">
+                        <div class="list-group list-group-flush">
+                            <div class="list-group-item d-flex align-items-center">
+                                <div class="me-3">
+                                    <span class="bg-success progress-circle">
+                                        <i class="fas fa-check"></i>
+                                    </span>
+                                </div>
+                                <div>
+                                    <h6 class="mb-0">Car Selection</h6>
+                                    <small class="text-muted">{{ temp_booking.car.year }} {{ temp_booking.car.make }} {{ temp_booking.car.model }}</small>
+                                </div>
+                            </div>
+                            <div class="list-group-item d-flex align-items-center">
+                                <div class="me-3">
+                                    <span class="bg-success progress-circle">
+                                        <i class="fas fa-check"></i>
+                                    </span>
+                                </div>
+                                <div>
+                                    <h6 class="mb-0">Pickup & Return Details</h6>
+                                    <small class="text-muted">{{ temp_booking.pickup_date|date:"M d, Y" }} to {{ temp_booking.return_date|date:"M d, Y" }}</small>
+                                </div>
+                            </div>
+                            <div class="list-group-item d-flex align-items-center bg-light">
+                                <div class="me-3">
+                                    <span class="bg-warning progress-circle">
+                                        <i class="fas fa-id-card"></i>
+                                    </span>
+                                </div>
+                                <div>
+                                    <h6 class="mb-0">Driver Information</h6>
+                                    <small class="text-muted">Add driver details</small>
+                                </div>
+                            </div>
+                            <div class="list-group-item d-flex align-items-center text-muted">
+                                <div class="me-3">
+                                    <span class="bg-secondary progress-circle">
+                                        <i class="fas fa-cog"></i>
+                                    </span>
+                                </div>
+                                <div>
+                                    <h6 class="mb-0">Options & Extras</h6>
+                                    <small>Customize your rental</small>
+                                </div>
+                            </div>
+                            <div class="list-group-item d-flex align-items-center text-muted">
+                                <div class="me-3">
+                                    <span class="bg-secondary progress-circle">
+                                        <i class="fas fa-credit-card"></i>
+                                    </span>
+                                </div>
+                                <div>
+                                    <h6 class="mb-0">Payment</h6>
+                                    <small>Secure checkout</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Car Summary -->
+                <div class="card shadow mb-4">
+                    <div class="card-header bg-dark text-white">
+                        <h5 class="mb-0">Your Selection</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="text-center mb-3">
+                            <img src="{{ temp_booking.car.image_url }}" class="img-fluid rounded" style="max-height: 150px;" alt="{{ temp_booking.car.make }} {{ temp_booking.car.model }}">
+                        </div>
+                        
+                        <h5 class="card-title">{{ temp_booking.car.year }} {{ temp_booking.car.make }} {{ temp_booking.car.model }}</h5>
+                        <p class="text-muted mb-3">{{ temp_booking.car.category.name }}</p>
+                        
+                        <div class="d-flex mb-2">
+                            <div class="me-3">
+                                <small class="d-block text-muted">Passengers</small>
+                                <span><i class="fas fa-user me-1"></i> {{ temp_booking.car.seats }}</span>
+                            </div>
+                            <div class="me-3">
+                                <small class="d-block text-muted">Luggage</small>
+                                <span><i class="fas fa-suitcase me-1"></i> {{ temp_booking.car.bags }}</span>
+                            </div>
+                            <div>
+                                <small class="d-block text-muted">Transmission</small>
+                                <span>
+                                    {% if temp_booking.car.transmission == 'A' %}
+                                    <i class="fas fa-cog me-1"></i> Automatic
+                                    {% else %}
+                                    <i class="fas fa-cog me-1"></i> Manual
+                                    {% endif %}
+                                </span>
+                            </div>
+                        </div>
+                        
+                        <hr>
+                        
+                        <div class="mb-2">
+                            <strong>Pickup:</strong> {{ temp_booking.pickup_location.name }}
+                            <div class="text-muted">{{ temp_booking.pickup_date|date:"F d, Y" }}</div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <strong>Return:</strong> {{ temp_booking.dropoff_location.name }}
+                            <div class="text-muted">{{ temp_booking.return_date|date:"F d, Y" }}</div>
+                        </div>
+                        
+                        <div class="d-flex justify-content-between">
+                            <span>Daily Rate:</span>
+                            <span class="fw-bold">${{ temp_booking.car.daily_rate }}</span>
+                        </div>
+                        <div class="d-flex justify-content-between">
+                            <span>Duration:</span>
+                            <span>{{ temp_booking.duration_days }} days</span>
+                        </div>
+                        <div class="d-flex justify-content-between pt-2 mt-2 border-top">
+                            <span>Base Total:</span>
+                            <span class="text-warning fw-bold">${{ base_cost }}</span>
+                        </div>
+                    </div>
+                    <div class="card-footer bg-light">
+                        <a href="{{ car_selection_url }}" class="btn btn-sm btn-outline-secondary w-100">
+                            <i class="fas fa-edit me-1"></i> Change Selection
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-lg-8">
+                <div class="card shadow">
+                    <div class="card-header bg-warning text-dark">
+                        <h4 class="mb-0">Driver Information</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="alert alert-info">
+                            <i class="fas fa-info-circle me-2"></i> Please provide information for all drivers. At least one primary driver is required.
+                        </div>
+                        
+                        <form method="post" class="needs-validation" novalidate>
+                            {% csrf_token %}
+                            
+                            <div id="driver-formset">
+                                {{ formset.management_form }}
+                                
+                                {% for form in formset %}
+                                <div class="driver-form mb-4 p-3 border rounded {% if forloop.first %}primary-driver{% endif %}">
+                                    <h5 class="border-bottom pb-2 mb-3">
+                                        Driver #{{ forloop.counter }}
+                                        {% if forloop.first %}
+                                        <span class="badge bg-warning text-dark ms-2">Primary Driver</span>
+                                        {% endif %}
+                                        
+                                        {% if not forloop.first %}
+                                        <button type="button" class="btn btn-sm btn-outline-danger float-end remove-driver-btn">
+                                            <i class="fas fa-times"></i> Remove
+                                        </button>
+                                        {% endif %}
+                                    </h5>
+                                    
+                                    {% if form.non_field_errors %}
+                                    <div class="alert alert-danger">
+                                        {{ form.non_field_errors }}
+                                    </div>
+                                    {% endif %}
+                                    
+                                    <!-- Hidden DELETE field for formset -->
+                                    {% for hidden in form.hidden_fields %}
+                                    {{ hidden }}
+                                    {% endfor %}
+                                    
+                                    <div class="row">
+                                        <div class="col-md-6 mb-3">
+                                            <label for="{{ form.first_name.id_for_label }}" class="form-label">First Name <span class="text-danger">*</span></label>
+                                            {{ form.first_name }}
+                                            {% if form.first_name.errors %}
+                                            <div class="invalid-feedback d-block">
+                                                {{ form.first_name.errors }}
+                                            </div>
+                                            {% endif %}
+                                        </div>
+                                        <div class="col-md-6 mb-3">
+                                            <label for="{{ form.last_name.id_for_label }}" class="form-label">Last Name <span class="text-danger">*</span></label>
+                                            {{ form.last_name }}
+                                            {% if form.last_name.errors %}
+                                            <div class="invalid-feedback d-block">
+                                                {{ form.last_name.errors }}
+                                            </div>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="row">
+                                        <div class="col-md-6 mb-3">
+                                            <label for="{{ form.email.id_for_label }}" class="form-label">Email <span class="text-danger">*</span></label>
+                                            {{ form.email }}
+                                            {% if form.email.errors %}
+                                            <div class="invalid-feedback d-block">
+                                                {{ form.email.errors }}
+                                            </div>
+                                            {% endif %}
+                                        </div>
+                                        <div class="col-md-6 mb-3">
+                                            <label for="{{ form.date_of_birth.id_for_label }}" class="form-label">Date of Birth <span class="text-danger">*</span></label>
+                                            {{ form.date_of_birth }}
+                                            {% if form.date_of_birth.errors %}
+                                            <div class="invalid-feedback d-block">
+                                                {{ form.date_of_birth.errors }}
+                                            </div>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                    
+                                    <h6 class="mt-3 mb-3">License Information</h6>
+                                    <div class="row">
+                                        <div class="col-md-6 mb-3">
+                                            <label for="{{ form.license_number.id_for_label }}" class="form-label">License Number <span class="text-danger">*</span></label>
+                                            {{ form.license_number }}
+                                            {% if form.license_number.errors %}
+                                            <div class="invalid-feedback d-block">
+                                                {{ form.license_number.errors }}
+                                            </div>
+                                            {% endif %}
+                                        </div>
+                                        <div class="col-md-6 mb-3">
+                                            <label for="{{ form.license_issued_in.id_for_label }}" class="form-label">Issued In <span class="text-danger">*</span></label>
+                                            {{ form.license_issued_in }}
+                                            {% if form.license_issued_in.errors %}
+                                            <div class="invalid-feedback d-block">
+                                                {{ form.license_issued_in.errors }}
+                                            </div>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="row">
+                                        <div class="col-md-6 mb-3">
+                                            <label for="{{ form.license_expiry_date.id_for_label }}" class="form-label">Expiry Date</label>
+                                            {{ form.license_expiry_date }}
+                                            {% if form.license_expiry_date.errors %}
+                                            <div class="invalid-feedback d-block">
+                                                {{ form.license_expiry_date.errors }}
+                                            </div>
+                                            {% endif %}
+                                        </div>
+                                        <div class="col-md-6 mb-3">
+                                            <div class="form-check mt-4">
+                                                {{ form.license_is_lifetime }}
+                                                <label class="form-check-label" for="{{ form.license_is_lifetime.id_for_label }}">
+                                                    Lifetime License
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <h6 class="mt-3 mb-3">Contact Information</h6>
+                                    <div class="row">
+                                        <div class="col-md-6 mb-3">
+                                            <label for="{{ form.mobile.id_for_label }}" class="form-label">Mobile <span class="text-danger">*</span></label>
+                                            {{ form.mobile }}
+                                            {% if form.mobile.errors %}
+                                            <div class="invalid-feedback d-block">
+                                                {{ form.mobile.errors }}
+                                            </div>
+                                            {% endif %}
+                                        </div>
+                                        <div class="col-md-6 mb-3">
+                                            <label for="{{ form.phone.id_for_label }}" class="form-label">Phone</label>
+                                            {{ form.phone }}
+                                            {% if form.phone.errors %}
+                                            <div class="invalid-feedback d-block">
+                                                {{ form.phone.errors }}
+                                            </div>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                    
+                                    <h6 class="mt-3 mb-3">Address</h6>
+                                    <div class="mb-3">
+                                        <label for="{{ form.address.id_for_label }}" class="form-label">Address <span class="text-danger">*</span></label>
+                                        {{ form.address }}
+                                        {% if form.address.errors %}
+                                        <div class="invalid-feedback d-block">
+                                            {{ form.address.errors }}
+                                        </div>
+                                        {% endif %}
+                                    </div>
+                                    
+                                    <div class="mb-3">
+                                        <label for="{{ form.local_address.id_for_label }}" class="form-label">Local Address (if different)</label>
+                                        {{ form.local_address }}
+                                        {% if form.local_address.errors %}
+                                        <div class="invalid-feedback d-block">
+                                            {{ form.local_address.errors }}
+                                        </div>
+                                        {% endif %}
+                                    </div>
+                                    
+                                    <div class="row">
+                                        <div class="col-md-4 mb-3">
+                                            <label for="{{ form.city.id_for_label }}" class="form-label">City <span class="text-danger">*</span></label>
+                                            {{ form.city }}
+                                            {% if form.city.errors %}
+                                            <div class="invalid-feedback d-block">
+                                                {{ form.city.errors }}
+                                            </div>
+                                            {% endif %}
+                                        </div>
+                                        <div class="col-md-4 mb-3">
+                                            <label for="{{ form.state.id_for_label }}" class="form-label">State <span class="text-danger">*</span></label>
+                                            {{ form.state }}
+                                            {% if form.state.errors %}
+                                            <div class="invalid-feedback d-block">
+                                                {{ form.state.errors }}
+                                            </div>
+                                            {% endif %}
+                                        </div>
+                                        <div class="col-md-4 mb-3">
+                                            <label for="{{ form.postcode.id_for_label }}" class="form-label">Postcode <span class="text-danger">*</span></label>
+                                            {{ form.postcode }}
+                                            {% if form.postcode.errors %}
+                                            <div class="invalid-feedback d-block">
+                                                {{ form.postcode.errors }}
+                                            </div>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="mb-3">
+                                        <label for="{{ form.country_of_residence.id_for_label }}" class="form-label">Country <span class="text-danger">*</span></label>
+                                        {{ form.country_of_residence }}
+                                        {% if form.country_of_residence.errors %}
+                                        <div class="invalid-feedback d-block">
+                                            {{ form.country_of_residence.errors }}
+                                        </div>
+                                        {% endif %}
+                                    </div>
+                                    
+                                    <div class="row mt-3">
+                                        <div class="col-md-6 mb-3">
+                                            <label for="{{ form.occupation.id_for_label }}" class="form-label">Occupation</label>
+                                            {{ form.occupation }}
+                                            {% if form.occupation.errors %}
+                                            <div class="invalid-feedback d-block">
+                                                {{ form.occupation.errors }}
+                                            </div>
+                                            {% endif %}
+                                        </div>
+                                        <div class="col-md-6 mb-3">
+                                            <div class="form-check mt-4">
+                                                {{ form.mailing_list }}
+                                                <label class="form-check-label" for="{{ form.mailing_list.id_for_label }}">
+                                                    Subscribe to mailing list
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    {% if not forloop.first %}
+                                    <div class="form-check mb-3">
+                                        {{ form.is_primary }}
+                                        <label class="form-check-label" for="{{ form.is_primary.id_for_label }}">
+                                            <strong>This is the primary driver</strong>
+                                        </label>
+                                    </div>
+                                    {% else %}
+                                    <div class="d-none">
+                                        {{ form.is_primary }}
+                                    </div>
+                                    {% endif %}
+                                </div>
+                                {% endfor %}
+                            </div>
+                            
+                            <div class="mb-4">
+                                <button type="button" id="add-driver-btn" class="btn btn-outline-secondary">
+                                    <i class="fas fa-plus me-1"></i> Add Another Driver
+                                </button>
+                            </div>
+                            
+                            <hr>
+                            
+                            <div class="d-flex justify-content-between mt-4">
+                                <a href="{{ car_selection_url }}" class="btn btn-outline-secondary">
+                                    <i class="fas fa-arrow-left me-1"></i> Back
+                                </a>
+                                <button type="submit" class="btn btn-warning">
+                                    Continue <i class="fas fa-arrow-right ms-1"></i>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+.progress-circle {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+}
+.driver-form.primary-driver {
+    border-color: #ffc107 !important;
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const addButton = document.getElementById('add-driver-btn');
+    const driverFormset = document.getElementById('driver-formset');
+    const formCount = document.getElementById('id_form-TOTAL_FORMS');
+    let driverForms = document.querySelectorAll('.driver-form');
+    
+    // Setup hide/show expiry date based on lifetime checkbox
+    function setupLifetimeToggle() {
+        document.querySelectorAll('[id$="-license_is_lifetime"]').forEach(checkbox => {
+            const expiryDateField = document.getElementById(checkbox.id.replace('license_is_lifetime', 'license_expiry_date'));
+            const expiryDateLabel = expiryDateField.closest('.mb-3').querySelector('label');
+            
+            // Initial state
+            if (checkbox.checked) {
+                expiryDateField.setAttribute('disabled', 'disabled');
+                expiryDateLabel.classList.add('text-muted');
+            }
+            
+            // Change handler
+            checkbox.addEventListener('change', function() {
+                if (this.checked) {
+                    expiryDateField.setAttribute('disabled', 'disabled');
+                    expiryDateLabel.classList.add('text-muted');
+                } else {
+                    expiryDateField.removeAttribute('disabled');
+                    expiryDateLabel.classList.remove('text-muted');
+                }
+            });
+        });
+    }
+    
+    // Setup primary driver radio button behavior
+    function setupPrimaryDrivers() {
+        const primaryCheckboxes = document.querySelectorAll('[id$="-is_primary"]');
+        
+        primaryCheckboxes.forEach(checkbox => {
+            if (!checkbox.closest('.d-none')) {
+                checkbox.addEventListener('change', function() {
+                    if (this.checked) {
+                        primaryCheckboxes.forEach(cb => {
+                            if (cb !== this && !cb.closest('.d-none')) {
+                                cb.checked = false;
+                            }
+                        });
+                    }
+                });
+            }
+        });
+    }
+    
+    // Setup remove driver buttons
+    function setupRemoveButtons() {
+        document.querySelectorAll('.remove-driver-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                const driverForm = this.closest('.driver-form');
+                const deleteCheckbox = driverForm.querySelector('[id$="-DELETE"]');
+                
+                if (deleteCheckbox) {
+                    deleteCheckbox.checked = true;
+                }
+                
+                driverForm.style.display = 'none';
+            });
+        });
+    }
+    
+    // Add driver button click handler
+    addButton.addEventListener('click', function() {
+        const formCount = document.getElementById('id_form-TOTAL_FORMS');
+        const newForm = driverForms[0].cloneNode(true);
+        const formRegex = RegExp(`form-(\\d){1}-`,'g');
+        const newIndex = parseInt(formCount.value);
+        
+        // Update form with new indices
+        newForm.innerHTML = newForm.innerHTML.replace(formRegex, `form-${newIndex}-`);
+        newForm.classList.remove('primary-driver');
+        
+        // Clear all input values
+        newForm.querySelectorAll('input, select, textarea').forEach(input => {
+            if (input.type === 'checkbox' || input.type === 'radio') {
+                input.checked = false;
+            } else {
+                input.value = '';
+            }
+        });
+        
+        // Update title and add remove button
+        const title = newForm.querySelector('h5');
+        title.innerHTML = `Driver #${newIndex + 1} <button type="button" class="btn btn-sm btn-outline-danger float-end remove-driver-btn"><i class="fas fa-times"></i> Remove</button>`;
+        
+        // Add the form to the DOM
+        driverFormset.appendChild(newForm);
+        
+        // Increment the form count
+        formCount.value = newIndex + 1;
+        
+        // Update the forms array
+        driverForms = document.querySelectorAll('.driver-form');
+        
+        // Setup all the event handlers for the new form
+        setupLifetimeToggle();
+        setupPrimaryDrivers();
+        setupRemoveButtons();
+    });
+    
+    // Initialize all handlers
+    setupLifetimeToggle();
+    setupPrimaryDrivers();
+    setupRemoveButtons();
+});
+</script>
+{% endblock %}
