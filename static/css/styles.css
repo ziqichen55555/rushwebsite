@@ -581,3 +581,17 @@ footer a:hover {
     font-size: 0.9rem;
     color: var(--rush-yellow);
 }
+
+/* 环境横幅样式 */
+.environment-banner {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 5px;
+    color: white;
+    text-align: center;
+    font-weight: bold;
+    z-index: 1050;
+    font-size: 12px;
+}
