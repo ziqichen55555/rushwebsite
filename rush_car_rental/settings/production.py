@@ -26,12 +26,14 @@ CORS_ALLOWED_ORIGINS = [
 ]
 
 # 开启HTTPS安全设置
-SECURE_SSL_REDIRECT = True
-SESSION_COOKIE_SECURE = True
-CSRF_COOKIE_SECURE = True
-SECURE_HSTS_SECONDS = 31536000  # 1年
-SECURE_HSTS_INCLUDE_SUBDOMAINS = True
-SECURE_HSTS_PRELOAD = True
+# 在测试环境中,暂时关闭一些HTTPS安全设置
+# 实际部署时需要启用这些设置
+SECURE_SSL_REDIRECT = False  # 测试时设为False
+SESSION_COOKIE_SECURE = False  # 测试时设为False
+CSRF_COOKIE_SECURE = False  # 测试时设为False
+SECURE_HSTS_SECONDS = 0  # 测试时设为0
+SECURE_HSTS_INCLUDE_SUBDOMAINS = False  # 测试时设为False
+SECURE_HSTS_PRELOAD = False  # 测试时设为False
 
 # 数据库设置 - 使用Azure Cosmos DB (PostgreSQL接口)
 DATABASES = {
@@ -56,32 +58,29 @@ LOGGING = {
             'format': '{levelname} {asctime} {module} {process:d} {thread:d} {message}',
             'style': '{',
         },
+        'structured': {
+            'format': '{levelname} {asctime} {module} {message}',
+            'style': '{',
+        },
     },
     'handlers': {
         'console': {
             'class': 'logging.StreamHandler',
-            'formatter': 'verbose',
-        },
-        'file': {
-            'class': 'logging.handlers.RotatingFileHandler',
-            'filename': '/var/log/rush_car_rental/app.log',
-            'maxBytes': 1024 * 1024 * 10,  # 10 MB
-            'backupCount': 10,
-            'formatter': 'verbose',
+            'formatter': 'structured',
         },
     },
     'root': {
-        'handlers': ['console', 'file'],
+        'handlers': ['console'],
         'level': 'WARNING',
     },
     'loggers': {
         'django': {
-            'handlers': ['console', 'file'],
+            'handlers': ['console'],
             'level': 'WARNING',
             'propagate': False,
         },
         'rush_car_rental': {
-            'handlers': ['console', 'file'],
+            'handlers': ['console'],
             'level': 'INFO',
             'propagate': False,
         },
