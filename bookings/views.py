@@ -232,7 +232,7 @@ def add_drivers(request, temp_booking_id):
     
     # 导入必要的模块
     from .forms import DriverFormSet
-    from .models_driver import Driver
+    from .models import Driver
     
     # 计算基本费用
     # 这里我们直接计算基本费用，而不是调用函数
@@ -501,7 +501,7 @@ def process_payment(request, temp_booking_id):
                 logger.info(f"预订 #{booking_id} 从虚无走向确认，数据库中又多了一行冰冷的记录...")
                 
                 # Save driver information
-                from .models_driver import Driver
+                from .models import Driver
                 if hasattr(temp_booking, 'temp_drivers_data') and temp_booking.temp_drivers_data:
                     logger.info(f"处理 {len(temp_booking.temp_drivers_data)} 位驾驶员信息...")
                     for driver_data in temp_booking.temp_drivers_data:
@@ -697,7 +697,7 @@ def stripe_success(request, temp_booking_id):
         logger.info(f"预订 #{booking_id} 通过Stripe支付完成，从虚无走向确认...")
         
         # Save driver information
-        from .models_driver import Driver
+        from .models import Driver
         if hasattr(temp_booking, 'temp_drivers_data') and temp_booking.temp_drivers_data:
             logger.info(f"处理 {len(temp_booking.temp_drivers_data)} 位驾驶员信息...")
             for driver_data in temp_booking.temp_drivers_data:

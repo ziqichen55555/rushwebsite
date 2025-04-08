@@ -1,7 +1,6 @@
 from django import forms
 from django.forms import formset_factory, modelformset_factory
-from .models import Booking
-from .models_driver import Driver
+from .models import Booking, Driver
 import datetime
 
 class BookingForm(forms.ModelForm):
