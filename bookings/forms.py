@@ -129,4 +129,4 @@ class CancellationForm(forms.Form):
     comments = forms.CharField(widget=forms.Textarea(attrs={'rows': 3}), required=False)
 
 # 创建驾驶员表单集，默认只需要一个驾驶员信息
-DriverFormSet = formset_factory(DriverForm, extra=0, can_delete=False, min_num=1, max_num=1, validate_min=True, validate_max=True)
+DriverFormSet = formset_factory(DriverForm, extra=1, can_delete=False, max_num=1, validate_max=True)
