@@ -241,42 +241,125 @@ def add_drivers(request, temp_booking_id):
         duration = 1
     base_cost = temp_booking.car.daily_rate * duration
     
+    # 获取用户现有的驾驶员信息
+    user_drivers = []
+    if hasattr(request.user, 'profile'):
+        user_drivers = list(request.user.profile.drivers.all())
+    
+    # 跟踪是否使用了已有的驾驶员信息
+    using_existing_driver = False
+    selected_driver_id = None
+    
     # 处理表单提交
     if request.method == 'POST':
-        formset = DriverFormSet(request.POST, prefix='form')
-        
-        if formset.is_valid():
-            # 临时存储驾驶员信息
-            drivers_data = []
-            has_primary = False
-            
-            # 处理表单集中的每个表单
-            for form in formset:
-                if form.cleaned_data and not form.cleaned_data.get('DELETE', False):
-                    driver_data = form.cleaned_data
-                    if driver_data.get('is_primary'):
-                        has_primary = True
-                    drivers_data.append(driver_data)
-            
-            # 确保至少有一个驾驶员
-            if not drivers_data:
-                messages.error(request, "Driver information is required.")
-                formset = DriverFormSet(prefix='form')
-                formset[0].initial = {'is_primary': True, 'country_of_residence': 'Australia'}  # 驾驶员默认为主驾驶员
-            else:
-                # 确保驾驶员是主驾驶员
-                drivers_data[0]['is_primary'] = True
+        # 检查是否使用了现有驾驶员
+        if 'use_existing_driver' in request.POST and request.POST['use_existing_driver']:
+            try:
+                selected_driver_id = int(request.POST['use_existing_driver'])
+                selected_driver = Driver.objects.get(id=selected_driver_id)
                 
-                # 将驾驶员数据存储到临时变量
-                temp_booking.temp_drivers_data = drivers_data
-                logger.info(f"为预订 {temp_booking_id} 添加了驾驶员信息")
+                # 确保驾驶员属于当前用户
+                if selected_driver in user_drivers:
+                    # 创建一个临时驾驶员数据字典
+                    driver_data = {
+                        'first_name': selected_driver.first_name,
+                        'last_name': selected_driver.last_name,
+                        'email': selected_driver.email,
+                        'date_of_birth': selected_driver.date_of_birth,
+                        'license_number': selected_driver.license_number,
+                        'license_issued_in': selected_driver.license_issued_in,
+                        'license_expiry_date': selected_driver.license_expiry_date,
+                        'license_is_lifetime': selected_driver.license_is_lifetime,
+                        'address': selected_driver.address,
+                        'local_address': selected_driver.local_address,
+                        'city': selected_driver.city,
+                        'state': selected_driver.state,
+                        'postcode': selected_driver.postcode,
+                        'country_of_residence': selected_driver.country_of_residence,
+                        'phone': selected_driver.phone,
+                        'mobile': selected_driver.mobile,
+                        'fax': selected_driver.fax,
+                        'occupation': selected_driver.occupation,
+                        'mailing_list': selected_driver.mailing_list,
+                        'is_primary': True  # 主驾驶员始终为True
+                    }
+                    
+                    # 存储驾驶员数据
+                    temp_booking.temp_drivers_data = [driver_data]
+                    temp_booking.existing_driver_id = selected_driver_id  # 保存已有驾驶员ID以便后续使用
+                    logger.info(f"为预订 {temp_booking_id} 使用了现有驾驶员信息: {selected_driver.get_full_name()}")
+                    using_existing_driver = True
+                    
+                    # 跳转到下一步
+                    return redirect('add_options', temp_booking_id=temp_booking_id)
+                else:
+                    messages.error(request, "Selected driver is not associated with your account.")
+            except (ValueError, Driver.DoesNotExist):
+                messages.error(request, "Invalid driver selection.")
+        else:
+            # 如果没有使用现有驾驶员，则处理表单集
+            formset = DriverFormSet(request.POST, prefix='form')
+            
+            if formset.is_valid():
+                # 临时存储驾驶员信息
+                drivers_data = []
+                has_primary = False
                 
-                # 跳转到下一步：添加选项
-                return redirect('add_options', temp_booking_id=temp_booking_id)
+                # 处理表单集中的每个表单
+                for form in formset:
+                    if form.cleaned_data and not form.cleaned_data.get('DELETE', False):
+                        driver_data = form.cleaned_data
+                        if driver_data.get('is_primary'):
+                            has_primary = True
+                        drivers_data.append(driver_data)
+                
+                # 确保至少有一个驾驶员
+                if not drivers_data:
+                    messages.error(request, "Driver information is required.")
+                    formset = DriverFormSet(prefix='form')
+                    formset[0].initial = {'is_primary': True, 'country_of_residence': 'Australia'}  # 驾驶员默认为主驾驶员
+                else:
+                    # 确保驾驶员是主驾驶员
+                    drivers_data[0]['is_primary'] = True
+                    
+                    # 将驾驶员数据存储到临时变量
+                    temp_booking.temp_drivers_data = drivers_data
+                    # 确保清除任何之前的驾驶员ID
+                    if hasattr(temp_booking, 'existing_driver_id'):
+                        delattr(temp_booking, 'existing_driver_id')
+                        
+                    logger.info(f"为预订 {temp_booking_id} 添加了驾驶员信息")
+                    
+                    # 跳转到下一步：添加选项
+                    return redirect('add_options', temp_booking_id=temp_booking_id)
     else:
         # 初始化表单集 - 只有一个驾驶员表单
         formset = DriverFormSet(prefix='form')
-        formset[0].initial = {'is_primary': True, 'country_of_residence': 'Australia'}  # 驾驶员默认为主驾驶员，默认国家为澳大利亚
+        
+        # 如果用户已登录且有个人资料，预填用户信息
+        if request.user.is_authenticated:
+            initial_data = {
+                'email': request.user.email,
+                'first_name': request.user.first_name,
+                'last_name': request.user.last_name,
+                'is_primary': True,
+                'country_of_residence': 'Australia'
+            }
+            # 如果有电话和地址，也预填这些信息
+            if hasattr(request.user, 'profile'):
+                profile = request.user.profile
+                if profile.phone:
+                    initial_data['mobile'] = profile.phone
+                if profile.address:
+                    initial_data['address'] = profile.address
+                if profile.date_of_birth:
+                    initial_data['date_of_birth'] = profile.date_of_birth
+                if profile.license_number:
+                    initial_data['license_number'] = profile.license_number
+            
+            formset[0].initial = initial_data
+        else:
+            formset[0].initial = {'is_primary': True, 'country_of_residence': 'Australia'}
     
     # 构建上下文
     context = {
@@ -285,6 +368,9 @@ def add_drivers(request, temp_booking_id):
         'formset': formset,
         'base_cost': base_cost,
         'car_selection_url': f'/cars/detail/{temp_booking.car.id}/',
+        'user_drivers': user_drivers,
+        'using_existing_driver': using_existing_driver,
+        'selected_driver_id': selected_driver_id
     }
     
     return render(request, 'bookings/drivers.html', context)
@@ -530,6 +616,16 @@ def process_payment(request, temp_booking_id):
                         )
                         driver.save()
                         logger.info(f"已保存驾驶员 {driver.get_full_name()} 的信息")
+                        
+                        # 如果用户登录且没有选择使用现有的驾驶员信息，则为其保存驾驶员信息到用户资料
+                        if request.user.is_authenticated and not hasattr(temp_booking, 'existing_driver_id'):
+                            if driver.is_primary:
+                                # 如果这是主驾驶员，首先取消用户现有的主驾驶员
+                                request.user.profile.drivers.filter(is_primary=True).update(is_primary=False)
+                            
+                            # 将驾驶员添加到用户资料
+                            request.user.profile.drivers.add(driver)
+                            logger.info(f"已将驾驶员 {driver.get_full_name()} 添加到用户 {request.user.username} 的资料")
                 else:
                     logger.warning("没有找到驾驶员信息，只有虚无的旅途，却没有生命的温度...")
                 
@@ -726,6 +822,16 @@ def stripe_success(request, temp_booking_id):
                 )
                 driver.save()
                 logger.info(f"已保存驾驶员 {driver.get_full_name()} 的信息")
+                
+                # 如果用户登录且没有选择使用现有的驾驶员信息，则为其保存驾驶员信息到用户资料
+                if request.user.is_authenticated and not hasattr(temp_booking, 'existing_driver_id'):
+                    if driver.is_primary:
+                        # 如果这是主驾驶员，首先取消用户现有的主驾驶员
+                        request.user.profile.drivers.filter(is_primary=True).update(is_primary=False)
+                    
+                    # 将驾驶员添加到用户资料
+                    request.user.profile.drivers.add(driver)
+                    logger.info(f"已将驾驶员 {driver.get_full_name()} 添加到用户 {request.user.username} 的资料")
         else:
             logger.warning("没有找到驾驶员信息，只有虚无的旅途，却没有生命的温度...")
         
