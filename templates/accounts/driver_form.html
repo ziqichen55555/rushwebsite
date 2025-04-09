@@ -1,0 +1,307 @@
+{% extends 'base.html' %}
+{% load widget_tweaks %}
+
+{% block title %}{{ title }} - Rush Car Rental{% endblock %}
+
+{% block content %}
+<!-- Enhanced Breadcrumb -->
+<div class="breadcrumb-container py-2">
+    <div class="container">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb breadcrumb-custom mb-0">
+                <li class="breadcrumb-item">
+                    <a href="{% url 'home' %}" class="breadcrumb-home">
+                        <i class="fas fa-home"></i> Home
+                    </a>
+                </li>
+                <li class="breadcrumb-item">
+                    <a href="{% url 'profile' %}" class="breadcrumb-link">
+                        <i class="fas fa-user"></i> Your Profile
+                    </a>
+                </li>
+                <li class="breadcrumb-item active" aria-current="page">
+                    <i class="fas fa-id-card"></i> {{ title }}
+                </li>
+            </ol>
+        </nav>
+    </div>
+</div>
+
+<section class="py-5">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="card shadow">
+                    <div class="card-header bg-warning text-dark">
+                        <h4 class="mb-0">{{ title }}</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="alert alert-info">
+                            <i class="fas fa-info-circle me-2"></i> 
+                            Driver information saved here will be available during the booking process.
+                        </div>
+                        
+                        <form method="post" class="needs-validation" novalidate>
+                            {% csrf_token %}
+                            
+                            {% if form.non_field_errors %}
+                            <div class="alert alert-danger">
+                                {{ form.non_field_errors }}
+                            </div>
+                            {% endif %}
+                            
+                            <h5 class="border-bottom pb-2 mb-3">Personal Information</h5>
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="{{ form.first_name.id_for_label }}" class="form-label">First Name <span class="text-danger">*</span></label>
+                                    {{ form.first_name|add_class:"form-control" }}
+                                    {% if form.first_name.errors %}
+                                    <div class="invalid-feedback d-block">
+                                        {{ form.first_name.errors }}
+                                    </div>
+                                    {% endif %}
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="{{ form.last_name.id_for_label }}" class="form-label">Last Name <span class="text-danger">*</span></label>
+                                    {{ form.last_name|add_class:"form-control" }}
+                                    {% if form.last_name.errors %}
+                                    <div class="invalid-feedback d-block">
+                                        {{ form.last_name.errors }}
+                                    </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="{{ form.email.id_for_label }}" class="form-label">Email <span class="text-danger">*</span></label>
+                                    {{ form.email|add_class:"form-control" }}
+                                    {% if form.email.errors %}
+                                    <div class="invalid-feedback d-block">
+                                        {{ form.email.errors }}
+                                    </div>
+                                    {% endif %}
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="{{ form.date_of_birth.id_for_label }}" class="form-label">Date of Birth <span class="text-danger">*</span></label>
+                                    {{ form.date_of_birth|add_class:"form-control" }}
+                                    {% if form.date_of_birth.errors %}
+                                    <div class="invalid-feedback d-block">
+                                        {{ form.date_of_birth.errors }}
+                                    </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            
+                            <h5 class="border-bottom pb-2 mb-3 mt-4">License Information</h5>
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="{{ form.license_number.id_for_label }}" class="form-label">License Number <span class="text-danger">*</span></label>
+                                    {{ form.license_number|add_class:"form-control" }}
+                                    {% if form.license_number.errors %}
+                                    <div class="invalid-feedback d-block">
+                                        {{ form.license_number.errors }}
+                                    </div>
+                                    {% endif %}
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="{{ form.license_issued_in.id_for_label }}" class="form-label">Issued In <span class="text-danger">*</span></label>
+                                    {{ form.license_issued_in|add_class:"form-control" }}
+                                    {% if form.license_issued_in.errors %}
+                                    <div class="invalid-feedback d-block">
+                                        {{ form.license_issued_in.errors }}
+                                    </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <label for="{{ form.license_expiry_date.id_for_label }}" class="form-label">Expiry Date</label>
+                                    {{ form.license_expiry_date|add_class:"form-control" }}
+                                    {% if form.license_expiry_date.errors %}
+                                    <div class="invalid-feedback d-block">
+                                        {{ form.license_expiry_date.errors }}
+                                    </div>
+                                    {% endif %}
+                                </div>
+                                <div class="col-md-6 align-self-end">
+                                    <div class="form-check mt-2">
+                                        {{ form.license_is_lifetime|add_class:"form-check-input" }}
+                                        <label class="form-check-label" for="{{ form.license_is_lifetime.id_for_label }}">
+                                            Lifetime License
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <h5 class="border-bottom pb-2 mb-3 mt-4">Contact Information</h5>
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="{{ form.address.id_for_label }}" class="form-label">Address <span class="text-danger">*</span></label>
+                                    {{ form.address|add_class:"form-control" }}
+                                    {% if form.address.errors %}
+                                    <div class="invalid-feedback d-block">
+                                        {{ form.address.errors }}
+                                    </div>
+                                    {% endif %}
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="{{ form.local_address.id_for_label }}" class="form-label">Local Address</label>
+                                    {{ form.local_address|add_class:"form-control" }}
+                                    {% if form.local_address.errors %}
+                                    <div class="invalid-feedback d-block">
+                                        {{ form.local_address.errors }}
+                                    </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            
+                            <div class="row">
+                                <div class="col-md-4 mb-3">
+                                    <label for="{{ form.city.id_for_label }}" class="form-label">City <span class="text-danger">*</span></label>
+                                    {{ form.city|add_class:"form-control" }}
+                                    {% if form.city.errors %}
+                                    <div class="invalid-feedback d-block">
+                                        {{ form.city.errors }}
+                                    </div>
+                                    {% endif %}
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <label for="{{ form.state.id_for_label }}" class="form-label">State <span class="text-danger">*</span></label>
+                                    {{ form.state|add_class:"form-control" }}
+                                    {% if form.state.errors %}
+                                    <div class="invalid-feedback d-block">
+                                        {{ form.state.errors }}
+                                    </div>
+                                    {% endif %}
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <label for="{{ form.postcode.id_for_label }}" class="form-label">Postcode <span class="text-danger">*</span></label>
+                                    {{ form.postcode|add_class:"form-control" }}
+                                    {% if form.postcode.errors %}
+                                    <div class="invalid-feedback d-block">
+                                        {{ form.postcode.errors }}
+                                    </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="{{ form.country_of_residence.id_for_label }}" class="form-label">Country <span class="text-danger">*</span></label>
+                                    {{ form.country_of_residence|add_class:"form-control" }}
+                                    {% if form.country_of_residence.errors %}
+                                    <div class="invalid-feedback d-block">
+                                        {{ form.country_of_residence.errors }}
+                                    </div>
+                                    {% endif %}
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="{{ form.occupation.id_for_label }}" class="form-label">Occupation</label>
+                                    {{ form.occupation|add_class:"form-control" }}
+                                    {% if form.occupation.errors %}
+                                    <div class="invalid-feedback d-block">
+                                        {{ form.occupation.errors }}
+                                    </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            
+                            <div class="row">
+                                <div class="col-md-4 mb-3">
+                                    <label for="{{ form.mobile.id_for_label }}" class="form-label">Mobile <span class="text-danger">*</span></label>
+                                    {{ form.mobile|add_class:"form-control" }}
+                                    {% if form.mobile.errors %}
+                                    <div class="invalid-feedback d-block">
+                                        {{ form.mobile.errors }}
+                                    </div>
+                                    {% endif %}
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <label for="{{ form.phone.id_for_label }}" class="form-label">Phone</label>
+                                    {{ form.phone|add_class:"form-control" }}
+                                    {% if form.phone.errors %}
+                                    <div class="invalid-feedback d-block">
+                                        {{ form.phone.errors }}
+                                    </div>
+                                    {% endif %}
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <label for="{{ form.fax.id_for_label }}" class="form-label">Fax</label>
+                                    {{ form.fax|add_class:"form-control" }}
+                                    {% if form.fax.errors %}
+                                    <div class="invalid-feedback d-block">
+                                        {{ form.fax.errors }}
+                                    </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            
+                            <h5 class="border-bottom pb-2 mb-3 mt-4">Preferences</h5>
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <div class="form-check">
+                                        {{ form.mailing_list|add_class:"form-check-input" }}
+                                        <label class="form-check-label" for="{{ form.mailing_list.id_for_label }}">
+                                            Subscribe to mailing list
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-check">
+                                        {{ form.is_primary|add_class:"form-check-input" }}
+                                        <label class="form-check-label" for="{{ form.is_primary.id_for_label }}">
+                                            Set as primary driver
+                                        </label>
+                                        {% if form.is_primary.help_text %}
+                                        <div class="form-text">{{ form.is_primary.help_text }}</div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="d-flex justify-content-between mt-4">
+                                <a href="{% url 'profile' %}" class="btn btn-secondary">
+                                    <i class="fas fa-arrow-left me-1"></i> Back to Profile
+                                </a>
+                                <button type="submit" class="btn btn-warning">
+                                    <i class="fas fa-save me-1"></i> Save Driver Information
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Add Bootstrap's form-control class to all form inputs (except checkboxes)
+    document.querySelectorAll('input:not([type="checkbox"]), select, textarea').forEach(function(element) {
+        element.classList.add('form-control');
+    });
+    
+    // Handle expiry date disable/enable based on lifetime checkbox
+    const lifetimeCheckbox = document.getElementById('{{ form.license_is_lifetime.id_for_label }}');
+    const expiryDateField = document.getElementById('{{ form.license_expiry_date.id_for_label }}');
+    
+    function updateExpiryDateField() {
+        expiryDateField.disabled = lifetimeCheckbox.checked;
+        if (lifetimeCheckbox.checked) {
+            expiryDateField.value = '';
+        }
+    }
+    
+    // Initial state
+    updateExpiryDateField();
+    
+    // Add event listener for changes
+    lifetimeCheckbox.addEventListener('change', updateExpiryDateField);
+});
+</script>
+{% endblock %}

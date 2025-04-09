@@ -168,6 +168,59 @@
                             <i class="fas fa-info-circle me-2"></i> Please provide information for the driver.
                         </div>
                         
+                        {% if user_drivers %}
+                        <!-- 显示已保存的驾驶员选项 -->
+                        <div class="mb-4">
+                            <h5 class="border-bottom pb-2 mb-3">Your Saved Driver Information</h5>
+                            
+                            <form method="post" class="mb-4">
+                                {% csrf_token %}
+                                <div class="row">
+                                    {% for driver in user_drivers %}
+                                    <div class="col-md-6 mb-3">
+                                        <div class="card h-100 {% if driver.is_primary %}border-warning{% endif %}">
+                                            <div class="card-header bg-light">
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="radio" name="use_existing_driver" 
+                                                        id="driver-{{ driver.id }}" value="{{ driver.id }}"
+                                                        {% if driver.is_primary %}checked{% endif %}>
+                                                    <label class="form-check-label" for="driver-{{ driver.id }}">
+                                                        <strong>{{ driver.get_full_name }}</strong>
+                                                        {% if driver.is_primary %}
+                                                        <span class="badge bg-warning text-dark ms-2">Primary</span>
+                                                        {% endif %}
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="card-body">
+                                                <p class="mb-1"><small><strong>License:</strong> {{ driver.license_number }}</small></p>
+                                                <p class="mb-1"><small><strong>Mobile:</strong> {{ driver.mobile }}</small></p>
+                                                <p class="mb-1"><small><strong>Email:</strong> {{ driver.email }}</small></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {% endfor %}
+                                </div>
+                                
+                                <div class="d-grid gap-2">
+                                    <button type="submit" class="btn btn-primary">
+                                        <i class="fas fa-user-check me-1"></i> Use Selected Driver
+                                    </button>
+                                </div>
+                            </form>
+                            
+                            <div class="text-center mb-4">
+                                <p>- OR -</p>
+                                <button class="btn btn-outline-secondary btn-sm" type="button" 
+                                        onclick="document.getElementById('new-driver-form').style.display = 'block'; this.style.display = 'none';">
+                                    <i class="fas fa-plus me-1"></i> Add New Driver
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div id="new-driver-form" {% if user_drivers %}style="display: none;"{% endif %}>
+                        {% endif %}
+                        
                         <form method="post" class="needs-validation" novalidate>
                             {% csrf_token %}
                             
@@ -177,7 +230,7 @@
                                 {% for form in formset %}
                                 <div class="driver-form mb-4 p-3 border rounded {% if forloop.first %}primary-driver{% endif %}">
                                     <h5 class="border-bottom pb-2 mb-3">
-                                        Driver Information
+                                        {% if user_drivers %}New Driver Information{% else %}Driver Information{% endif %}
                                         {% if forloop.first %}
                                         <span class="badge bg-warning text-dark ms-2">Primary Driver</span>
                                         {% endif %}
@@ -410,6 +463,10 @@
                                 </button>
                             </div>
                         </form>
+                        
+                        {% if user_drivers %}
+                        </div>
+                        {% endif %}
                     </div>
                 </div>
             </div>
@@ -417,6 +474,38 @@
     </div>
 </section>
 
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // 添加Bootstrap样式到所有表单元素
+    document.querySelectorAll('input:not([type="checkbox"]), select, textarea').forEach(function(element) {
+        element.classList.add('form-control');
+    });
+    
+    // 处理终身驾照复选框
+    const lifetimeCheckboxes = document.querySelectorAll('input[id$="license_is_lifetime"]');
+    
+    lifetimeCheckboxes.forEach(function(checkbox) {
+        const formRow = checkbox.closest('.row');
+        const expiryDateInput = formRow.querySelector('input[id$="license_expiry_date"]');
+        
+        function updateExpiryField() {
+            if (expiryDateInput) {
+                expiryDateInput.disabled = checkbox.checked;
+                if (checkbox.checked) {
+                    expiryDateInput.value = '';
+                }
+            }
+        }
+        
+        // 初始状态
+        updateExpiryField();
+        
+        // 添加事件监听器
+        checkbox.addEventListener('change', updateExpiryField);
+    });
+});
+</script>
 <style>
 .progress-circle {
     width: 32px;
@@ -431,36 +520,4 @@
     border-color: #ffc107 !important;
 }
 </style>
-
-<script>
-document.addEventListener("DOMContentLoaded", function() {
-    // 设置生命验证切换
-    function setupLifetimeToggle() {
-        document.querySelectorAll("[id$=\"-license_is_lifetime\"]").forEach(checkbox => {
-            const expiryDateField = document.getElementById(checkbox.id.replace("license_is_lifetime", "license_expiry_date"));
-            const expiryDateLabel = expiryDateField.closest(".mb-3").querySelector("label");
-            
-            // 初始状态
-            if (checkbox.checked) {
-                expiryDateField.setAttribute("disabled", "disabled");
-                expiryDateLabel.classList.add("text-muted");
-            }
-            
-            // 变更处理
-            checkbox.addEventListener("change", function() {
-                if (this.checked) {
-                    expiryDateField.setAttribute("disabled", "disabled");
-                    expiryDateLabel.classList.add("text-muted");
-                } else {
-                    expiryDateField.removeAttribute("disabled");
-                    expiryDateLabel.classList.remove("text-muted");
-                }
-            });
-        });
-    }
-    
-    // 初始化表单
-    setupLifetimeToggle();
-});
-</script>
 {% endblock %}
