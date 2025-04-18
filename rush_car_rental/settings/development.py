@@ -10,10 +10,37 @@ DEBUG = True
 # 允许的主机
 ALLOWED_HOSTS = ['*']
 
-# 开发环境数据库设置
+# 安全设置 - 在Replit环境中允许跨域访问
+CSRF_TRUSTED_ORIGINS = [
+    'https://*.replit.dev',
+    'https://*.replit.app',
+    'https://*.repl.co',
+    'https://*.worf.replit.dev',
+]
+CORS_ALLOW_ALL_ORIGINS = True
+
+# 开发环境数据库设置 - 使用Replit提供的PostgreSQL
+import os
+
 DATABASES = {
-    'default': get_database_config()
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': os.environ.get('PGDATABASE'),
+        'USER': os.environ.get('PGUSER'),
+        'PASSWORD': os.environ.get('PGPASSWORD'),
+        'HOST': os.environ.get('PGHOST'),
+        'PORT': os.environ.get('PGPORT'),
+    }
 }
+
+# 仅作为备用方案 - 如果PostgreSQL连接失败则使用SQLite
+if not all([os.environ.get(k) for k in ['PGDATABASE', 'PGUSER', 'PGPASSWORD', 'PGHOST', 'PGPORT']]):
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
+    }
 
 # 开发环境邮件设置 - 输出到控制台
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'

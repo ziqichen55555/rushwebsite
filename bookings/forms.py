@@ -1,5 +1,6 @@
 from django import forms
-from .models import Booking
+from django.forms import formset_factory, modelformset_factory
+from .models import Booking, Driver
 import datetime
 
 class BookingForm(forms.ModelForm):
@@ -35,6 +36,82 @@ class BookingForm(forms.ModelForm):
         
         return cleaned_data
 
+class DriverForm(forms.ModelForm):
+    """
+    Form for adding driver information
+    """
+    # 添加国家选项，设置默认为澳大利亚
+    COUNTRY_CHOICES = [
+        ('Australia', 'Australia'),
+        ('New Zealand', 'New Zealand'),
+        ('United States', 'United States'),
+        ('United Kingdom', 'United Kingdom'),
+        ('China', 'China'),
+        ('Japan', 'Japan'),
+        ('Singapore', 'Singapore'),
+        ('Malaysia', 'Malaysia'),
+        ('Indonesia', 'Indonesia'),
+        ('Thailand', 'Thailand'),
+        ('Vietnam', 'Vietnam'),
+        ('South Korea', 'South Korea'),
+        ('India', 'India'),
+        ('Germany', 'Germany'),
+        ('France', 'France'),
+        ('Italy', 'Italy'),
+        ('Spain', 'Spain'),
+        ('Canada', 'Canada'),
+        ('Brazil', 'Brazil'),
+        ('South Africa', 'South Africa'),
+        ('Other', 'Other'),
+    ]
+    
+    # 覆盖国家字段，使用选择列表
+    country_of_residence = forms.ChoiceField(
+        choices=COUNTRY_CHOICES,
+        initial='Australia',
+        widget=forms.Select(attrs={'class': 'form-select'})
+    )
+    
+    class Meta:
+        model = Driver
+        fields = [
+            'first_name', 'last_name', 'email', 'date_of_birth',
+            'license_number', 'license_issued_in', 'license_expiry_date', 'license_is_lifetime',
+            'address', 'local_address', 'city', 'state', 'postcode', 'country_of_residence',
+            'phone', 'mobile', 'fax', 'occupation', 'mailing_list', 'is_primary'
+        ]
+        widgets = {
+            'date_of_birth': forms.DateInput(attrs={'type': 'date'}),
+            'license_expiry_date': forms.DateInput(attrs={'type': 'date'}),
+            'local_address': forms.TextInput(attrs={'placeholder': 'Optional'}),
+            'phone': forms.TextInput(attrs={'placeholder': 'Optional'}),
+            'fax': forms.TextInput(attrs={'placeholder': 'Optional'}),
+            'occupation': forms.Select(attrs={'class': 'form-select'}),
+            'mailing_list': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
+            'is_primary': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
+        }
+    
+    def clean_date_of_birth(self):
+        date_of_birth = self.cleaned_data.get('date_of_birth')
+        if date_of_birth:
+            today = datetime.date.today()
+            age = today.year - date_of_birth.year - ((today.month, today.day) < (date_of_birth.month, date_of_birth.day))
+            if age < 18:
+                raise forms.ValidationError("Driver must be at least 18 years old")
+            if age > 99:
+                raise forms.ValidationError("Driver age cannot exceed 99 years")
+        return date_of_birth
+    
+    def clean_license_expiry_date(self):
+        expiry_date = self.cleaned_data.get('license_expiry_date')
+        is_lifetime = self.cleaned_data.get('license_is_lifetime')
+        
+        if not is_lifetime and expiry_date:
+            if expiry_date < datetime.date.today():
+                raise forms.ValidationError("License has expired")
+        
+        return expiry_date
+
 class CancellationForm(forms.Form):
     """
     Form for cancelling a booking
@@ -50,3 +127,6 @@ class CancellationForm(forms.Form):
     
     cancel_reason = forms.ChoiceField(choices=REASONS, required=False)
     comments = forms.CharField(widget=forms.Textarea(attrs={'rows': 3}), required=False)
+
+# 创建驾驶员表单集，默认只需要一个驾驶员信息
+DriverFormSet = formset_factory(DriverForm, extra=1, can_delete=False, max_num=1, validate_max=True)

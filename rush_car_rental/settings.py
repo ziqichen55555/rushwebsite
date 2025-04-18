@@ -1,5 +1,9 @@
 import os
 from pathlib import Path
+from dotenv import load_dotenv
+
+# 加载环境变量
+load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -17,7 +21,28 @@ CSRF_TRUSTED_ORIGINS = [
     'https://*.replit.app',
     'https://*.replit.dev',
     'https://*.worf.replit.dev',
+    'https://*.repl.co',
 ]
+
+# Add your specific Replit domain
+import os
+replit_domain = os.environ.get('REPLIT_DEV_DOMAIN')
+if replit_domain:
+    CSRF_TRUSTED_ORIGINS.append(f'https://{replit_domain}')
+    # 确保也添加 http 版本，以防重定向问题
+    CSRF_TRUSTED_ORIGINS.append(f'http://{replit_domain}')
+    print(f"添加CSRF受信任域名: https://{replit_domain} 和 http://{replit_domain}")
+    
+# 添加 REPLIT_DOMAINS 环境变量中的所有域名（如果存在）
+replit_domains = os.environ.get('REPLIT_DOMAINS', '')
+if replit_domains:
+    for domain in replit_domains.split(','):
+        if domain:
+            CSRF_TRUSTED_ORIGINS.append(f'https://{domain}')
+            CSRF_TRUSTED_ORIGINS.append(f'http://{domain}')
+            print(f"添加CSRF受信任域名: https://{domain} 和 http://{domain}")
+
+# 注意：不再全局禁用 CSRF 中间件，而是对特定视图使用 csrf_exempt 装饰器
 
 # Application definition
 INSTALLED_APPS = [
@@ -38,6 +63,7 @@ INSTALLED_APPS = [
     'bookings.apps.BookingsConfig',
     'locations.apps.LocationsConfig',
     'pages.apps.PagesConfig',
+    'dev.apps.DevConfig',
 ]
 
 MIDDLEWARE = [
@@ -73,13 +99,25 @@ WSGI_APPLICATION = 'rush_car_rental.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-# Default SQLite configuration
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+# 使用 dj_database_url 解析数据库 URL
+import dj_database_url
+
+DATABASE_URL = os.environ.get('DATABASE_URL')
+
+if DATABASE_URL:
+    DATABASES = {
+        'default': dj_database_url.parse(DATABASE_URL)
     }
-}
+    print(f"使用 dj_database_url 解析的数据库配置: {DATABASE_URL}")
+else:
+    # 回退到 SQLite
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
+    }
+    print("使用默认 SQLite 数据库配置")
 
 # Password validation
 AUTH_PASSWORD_VALIDATORS = [
@@ -117,3 +155,99 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
 LOGIN_URL = '/accounts/login/'
+
+# Logging configurations
+LOGS_DIR = BASE_DIR / 'logs'
+if not os.path.exists(LOGS_DIR):
+    os.makedirs(LOGS_DIR)
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'verbose': {
+            'format': '[{levelname}] {asctime} {module} {process:d} {thread:d} {message}',
+            'style': '{',
+        },
+        'simple': {
+            'format': '[{levelname}] {asctime} {message}',
+            'style': '{',
+        },
+    },
+    'filters': {
+        'require_debug_true': {
+            '()': 'django.utils.log.RequireDebugTrue',
+        },
+    },
+    'handlers': {
+        'console': {
+            'level': 'INFO',
+            'filters': ['require_debug_true'],
+            'class': 'logging.StreamHandler',
+            'formatter': 'simple',
+        },
+        'file': {
+            'level': 'INFO',
+            'class': 'logging.FileHandler',
+            'filename': LOGS_DIR / 'django.log',
+            'formatter': 'verbose',
+        },
+        'file_error': {
+            'level': 'ERROR',
+            'class': 'logging.FileHandler',
+            'filename': LOGS_DIR / 'django_error.log',
+            'formatter': 'verbose',
+        },
+        'mail_admins': {
+            'level': 'ERROR',
+            'class': 'django.utils.log.AdminEmailHandler',
+            'formatter': 'verbose',
+        },
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['console', 'file'],
+            'level': 'INFO',
+            'propagate': True,
+        },
+        'django.request': {
+            'handlers': ['file_error', 'mail_admins'],
+            'level': 'ERROR',
+            'propagate': False,
+        },
+        'bookings': {
+            'handlers': ['console', 'file'],
+            'level': 'INFO',
+            'propagate': True,
+        },
+        'accounts': {
+            'handlers': ['console', 'file'],
+            'level': 'INFO',
+            'propagate': True,
+        },
+        'cars': {
+            'handlers': ['console', 'file'],
+            'level': 'INFO',
+            'propagate': True,
+        },
+        'locations': {
+            'handlers': ['console', 'file'],
+            'level': 'INFO',
+            'propagate': True,
+        },
+        'pages': {
+            'handlers': ['console', 'file'],
+            'level': 'INFO',
+            'propagate': True,
+        },
+        'dev': {
+            'handlers': ['console', 'file'],
+            'level': 'DEBUG',
+            'propagate': True,
+        },
+    },
+}
+
+# Stripe API settings
+STRIPE_SECRET_KEY = os.environ.get('STRIPE_SECRET_KEY', '')
+STRIPE_PUBLIC_KEY = os.environ.get('VITE_STRIPE_PUBLIC_KEY', '')
