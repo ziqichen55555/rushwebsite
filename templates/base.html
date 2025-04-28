@@ -28,10 +28,10 @@
     {% endif %}
     
     <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <nav class="navbar navbar-expand-lg yellow-navbar">
         <div class="container">
             <a class="navbar-brand" href="{% url 'home' %}">
-                <span class="text-warning fw-bold">Rush</span> Car Rental
+                <span class="text-warning fw-bold">Rush</span> <span class="text-dark">Car Rental</span>
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
@@ -103,24 +103,24 @@
     </main>
     
     <!-- Footer -->
-    <footer class="bg-dark text-white py-4 mt-5">
+    <footer class="yellow-footer py-4 mt-5">
         <div class="container">
             <div class="row">
                 <div class="col-md-4">
-                    <h5 class="text-warning">Rush Car Rental</h5>
+                    <h5 class="text-dark fw-bold">Rush Car Rental</h5>
                     <p>Always better car rental experience. Find the perfect car for your next adventure.</p>
                 </div>
                 <div class="col-md-4">
-                    <h5 class="text-warning">Quick Links</h5>
+                    <h5 class="text-dark fw-bold">Quick Links</h5>
                     <ul class="list-unstyled">
-                        <li><a href="{% url 'home' %}" class="text-white">Home</a></li>
-                        <li><a href="{% url 'car_list' %}" class="text-white">Cars</a></li>
-                        <li><a href="{% url 'location_list' %}" class="text-white">Locations</a></li>
-                        <li><a href="{% url 'rental_conditions' %}" class="text-white">Rental Conditions</a></li>
+                        <li><a href="{% url 'home' %}">Home</a></li>
+                        <li><a href="{% url 'car_list' %}">Cars</a></li>
+                        <li><a href="{% url 'location_list' %}">Locations</a></li>
+                        <li><a href="{% url 'rental_conditions' %}">Rental Conditions</a></li>
                     </ul>
                 </div>
                 <div class="col-md-4">
-                    <h5 class="text-warning">Contact Us</h5>
+                    <h5 class="text-dark fw-bold">Contact Us</h5>
                     <address>
                         <i class="fas fa-map-marker-alt me-2"></i> 123 Rush Drive, Melbourne, VIC<br>
                         <i class="fas fa-phone me-2"></i> (03) 1234 5678<br>
