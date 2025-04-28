@@ -90,3 +90,17 @@ INFO 2025-04-28 05:09:57,839 environment [ENV] 当前运行环境: development
 INFO 2025-04-28 05:09:57,839 environment [ENV] 当前运行环境: development
 INFO 2025-04-28 05:10:03,503 basehttp "GET / HTTP/1.1" 200 40841
 INFO 2025-04-28 05:10:08,912 basehttp "GET / HTTP/1.1" 200 40841
+INFO 2025-04-28 06:12:01,004 autoreload Watching for file changes with StatReloader
+INFO 2025-04-28 06:12:01,708 _util message='Request to Stripe api' method=get url=https://api.stripe.com/v1/account
+INFO 2025-04-28 06:12:01,933 _util message='Stripe API response' path=https://api.stripe.com/v1/account response_code=401
+INFO 2025-04-28 06:12:01,934 _util error_code=None error_message='Invalid API Key provided: sk_test' error_param=None error_type=invalid_request_error message='Stripe v1 API error received'
+INFO 2025-04-28 06:12:02,245 environment [ENV] 当前运行环境: development
+INFO 2025-04-28 06:12:02,245 environment [ENV] 当前运行环境: development
+INFO 2025-04-28 06:12:04,956 basehttp "GET / HTTP/1.1" 200 49656
+INFO 2025-04-28 06:17:10,655 autoreload Watching for file changes with StatReloader
+INFO 2025-04-28 06:17:11,357 _util message='Request to Stripe api' method=get url=https://api.stripe.com/v1/account
+INFO 2025-04-28 06:17:11,443 _util message='Stripe API response' path=https://api.stripe.com/v1/account response_code=401
+INFO 2025-04-28 06:17:11,443 _util error_code=None error_message='Invalid API Key provided: sk_test' error_param=None error_type=invalid_request_error message='Stripe v1 API error received'
+INFO 2025-04-28 06:17:12,281 environment [ENV] 当前运行环境: development
+INFO 2025-04-28 06:17:12,281 environment [ENV] 当前运行环境: development
+INFO 2025-04-28 06:17:14,614 basehttp "GET / HTTP/1.1" 200 49673
