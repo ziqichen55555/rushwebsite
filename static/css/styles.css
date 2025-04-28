@@ -610,6 +610,40 @@ body {
     color: var(--rush-yellow);
 }
 
+/* Testimonial Styles */
+.testimonial-card {
+    transition: transform 0.3s, box-shadow 0.3s;
+    border-radius: 15px;
+    overflow: hidden;
+}
+
+.testimonial-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 20px rgba(0, 0, 0, 0.1);
+}
+
+.testimonial-image {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+}
+
+.testimonial-placeholder {
+    width: 60px;
+    height: 60px;
+    font-size: 1.5rem;
+}
+
+.testimonial-content {
+    font-style: italic;
+    color: #555;
+    line-height: 1.6;
+}
+
+.testimonial-rating {
+    font-size: 0.9rem;
+}
+
 /* 环境横幅样式 */
 .environment-banner {
     position: fixed;
