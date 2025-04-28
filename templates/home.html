@@ -84,32 +84,77 @@
 {% include 'components/city_recommendations.html' %}
 
 <!-- How It Works Section -->
-<section class="py-5">
+<section class="py-5 how-it-works-section">
     <div class="container">
         <h2 class="text-center mb-5">How It Works</h2>
-        <div class="row">
-            <div class="col-md-4 text-center">
-                <div class="step-circle mx-auto mb-3 d-flex justify-content-center align-items-center">
-                    <span class="display-5 text-warning">1</span>
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="how-it-works-card h-100">
+                    <div class="step-number-container">
+                        <div class="step-circle d-flex justify-content-center align-items-center">
+                            <span class="fw-bold">1</span>
+                        </div>
+                    </div>
+                    <div class="card border-0 shadow-sm h-100">
+                        <div class="card-body text-center">
+                            <div class="step-icon mb-3">
+                                <i class="fas fa-search fa-2x text-warning"></i>
+                            </div>
+                            <h4 class="step-title">Search</h4>
+                            <p class="step-description">Enter your location, dates, and age to find available cars that match your needs.</p>
+                            <div class="step-action mt-3">
+                                <a href="#" class="btn btn-sm btn-outline-warning">Find Cars</a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <h4>Search</h4>
-                <p>Enter your location, dates, and age to find available cars.</p>
             </div>
-            <div class="col-md-4 text-center">
-                <div class="step-circle mx-auto mb-3 d-flex justify-content-center align-items-center">
-                    <span class="display-5 text-warning">2</span>
+            <div class="col-md-4">
+                <div class="how-it-works-card h-100">
+                    <div class="step-number-container">
+                        <div class="step-circle d-flex justify-content-center align-items-center">
+                            <span class="fw-bold">2</span>
+                        </div>
+                    </div>
+                    <div class="card border-0 shadow-sm h-100">
+                        <div class="card-body text-center">
+                            <div class="step-icon mb-3">
+                                <i class="fas fa-calendar-check fa-2x text-warning"></i>
+                            </div>
+                            <h4 class="step-title">Book</h4>
+                            <p class="step-description">Choose your perfect car and complete the booking process with our secure payment system.</p>
+                            <div class="step-action mt-3">
+                                <a href="#" class="btn btn-sm btn-outline-warning">Learn More</a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <h4>Book</h4>
-                <p>Choose your perfect car and complete the booking process.</p>
             </div>
-            <div class="col-md-4 text-center">
-                <div class="step-circle mx-auto mb-3 d-flex justify-content-center align-items-center">
-                    <span class="display-5 text-warning">3</span>
+            <div class="col-md-4">
+                <div class="how-it-works-card h-100">
+                    <div class="step-number-container">
+                        <div class="step-circle d-flex justify-content-center align-items-center">
+                            <span class="fw-bold">3</span>
+                        </div>
+                    </div>
+                    <div class="card border-0 shadow-sm h-100">
+                        <div class="card-body text-center">
+                            <div class="step-icon mb-3">
+                                <i class="fas fa-car fa-2x text-warning"></i>
+                            </div>
+                            <h4 class="step-title">Drive</h4>
+                            <p class="step-description">Pick up your car and enjoy your journey with Rush Car Rental's quality vehicles.</p>
+                            <div class="step-action mt-3">
+                                <a href="#" class="btn btn-sm btn-outline-warning">View Details</a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <h4>Drive</h4>
-                <p>Pick up your car and enjoy your journey with Rush Car Rental.</p>
             </div>
         </div>
     </div>
 </section>
+
+<!-- Testimonials Section -->
+{% include 'components/testimonials.html' %}
 {% endblock %}

@@ -1,0 +1,88 @@
+{% if testimonials %}
+<section class="py-5 bg-light testimonials-section">
+    <div class="container">
+        <h2 class="text-center mb-5">What Our Customers Say</h2>
+        
+        <div class="swiper testimonialSwiper">
+            <div class="swiper-wrapper pb-5">
+                {% for testimonial in testimonials %}
+                <div class="swiper-slide">
+                    <div class="card h-100 border-0 shadow-sm testimonial-card mx-2">
+                        <div class="card-body">
+                            <div class="d-flex align-items-center mb-3">
+                                {% if testimonial.image %}
+                                <img src="{{ testimonial.image }}" alt="{{ testimonial.name }}" class="testimonial-image rounded-circle me-3">
+                                {% else %}
+                                <div class="testimonial-placeholder rounded-circle bg-warning text-dark d-flex justify-content-center align-items-center me-3">
+                                    <span class="fw-bold">{{ testimonial.name|slice:":1" }}</span>
+                                </div>
+                                {% endif %}
+                                <div>
+                                    <h5 class="card-title mb-0">{{ testimonial.name }}</h5>
+                                    {% if testimonial.role %}
+                                    <small class="text-muted">{{ testimonial.role }}</small>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="testimonial-rating mb-3">
+                                {% for i in "12345" %}
+                                    {% if forloop.counter <= testimonial.rating %}
+                                    <i class="fas fa-star text-warning"></i>
+                                    {% else %}
+                                    <i class="far fa-star text-warning"></i>
+                                    {% endif %}
+                                {% endfor %}
+                            </div>
+                            <p class="card-text testimonial-content">
+                                <i class="fas fa-quote-left text-warning me-2 opacity-50"></i>
+                                {{ testimonial.content }}
+                                <i class="fas fa-quote-right text-warning ms-2 opacity-50"></i>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            <div class="swiper-pagination"></div>
+            <div class="swiper-button-next"></div>
+            <div class="swiper-button-prev"></div>
+        </div>
+    </div>
+</section>
+
+<!-- Initialize testimonial swiper -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    new Swiper('.testimonialSwiper', {
+        slidesPerView: 1,
+        spaceBetween: 20,
+        grabCursor: true,
+        loop: true,
+        loopFillGroupWithBlank: true,
+        pagination: {
+            el: '.swiper-pagination',
+            clickable: true,
+        },
+        navigation: {
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev',
+        },
+        autoplay: {
+            delay: 4000,
+            disableOnInteraction: false,
+        },
+        breakpoints: {
+            640: {
+                slidesPerView: 1,
+            },
+            768: {
+                slidesPerView: 2,
+            },
+            1024: {
+                slidesPerView: 3,
+            },
+        }
+    });
+});
+</script>
+{% endif %}
