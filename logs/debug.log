@@ -1,0 +1,67 @@
+INFO 2025-04-22 03:19:17,745 autoreload Watching for file changes with StatReloader
+INFO 2025-04-22 03:49:25,351 autoreload Watching for file changes with StatReloader
+INFO 2025-04-28 03:54:19,291 autoreload Watching for file changes with StatReloader
+INFO 2025-04-28 03:57:58,364 autoreload Watching for file changes with StatReloader
+INFO 2025-04-28 03:57:58,402 environment [ENV] 当前运行环境: development
+INFO 2025-04-28 03:57:58,402 environment [ENV] 当前运行环境: development
+INFO 2025-04-28 03:58:06,947 basehttp "GET / HTTP/1.1" 200 32335
+INFO 2025-04-28 03:58:07,007 basehttp "GET /static/css/styles.css HTTP/1.1" 200 10923
+INFO 2025-04-28 03:58:07,190 basehttp "GET /static/js/scripts.js HTTP/1.1" 200 10773
+INFO 2025-04-28 03:58:10,099 basehttp "GET / HTTP/1.1" 200 32335
+INFO 2025-04-28 03:58:13,627 basehttp "GET / HTTP/1.1" 200 32335
+INFO 2025-04-28 03:58:14,598 basehttp "GET / HTTP/1.1" 200 32335
+WARNING 2025-04-28 03:58:17,562 log Not Found: /favicon.ico
+WARNING 2025-04-28 03:58:17,563 basehttp "GET /favicon.ico HTTP/1.1" 404 3816
+INFO 2025-04-28 03:58:58,361 autoreload Watching for file changes with StatReloader
+INFO 2025-04-28 03:58:58,400 environment [ENV] 当前运行环境: development
+INFO 2025-04-28 03:58:58,400 environment [ENV] 当前运行环境: development
+INFO 2025-04-28 03:59:04,263 basehttp "GET / HTTP/1.1" 200 36117
+INFO 2025-04-28 03:59:25,956 basehttp "GET / HTTP/1.1" 200 36117
+INFO 2025-04-28 04:07:56,376 autoreload Watching for file changes with StatReloader
+INFO 2025-04-28 04:07:56,421 environment [ENV] 当前运行环境: development
+INFO 2025-04-28 04:07:56,421 environment [ENV] 当前运行环境: development
+INFO 2025-04-28 04:08:02,690 basehttp "GET / HTTP/1.1" 200 36214
+INFO 2025-04-28 04:09:35,938 basehttp "GET / HTTP/1.1" 200 36232
+INFO 2025-04-28 04:15:08,433 autoreload Watching for file changes with StatReloader
+INFO 2025-04-28 04:15:08,477 environment [ENV] 当前运行环境: development
+INFO 2025-04-28 04:15:08,477 environment [ENV] 当前运行环境: development
+INFO 2025-04-28 04:15:12,297 basehttp "GET / HTTP/1.1" 200 36382
+INFO 2025-04-28 04:15:21,262 basehttp "GET / HTTP/1.1" 200 36382
+INFO 2025-04-28 04:15:28,485 basehttp "GET / HTTP/1.1" 200 36382
+INFO 2025-04-28 04:16:31,024 autoreload Watching for file changes with StatReloader
+INFO 2025-04-28 04:16:31,067 environment [ENV] 当前运行环境: development
+INFO 2025-04-28 04:16:31,067 environment [ENV] 当前运行环境: development
+INFO 2025-04-28 04:16:33,901 basehttp "GET / HTTP/1.1" 200 36550
+INFO 2025-04-28 04:16:37,299 basehttp "GET / HTTP/1.1" 200 36550
+INFO 2025-04-28 04:16:38,333 basehttp "GET / HTTP/1.1" 200 36550
+INFO 2025-04-28 04:18:05,587 autoreload Watching for file changes with StatReloader
+INFO 2025-04-28 04:18:05,630 environment [ENV] 当前运行环境: development
+INFO 2025-04-28 04:18:05,630 environment [ENV] 当前运行环境: development
+INFO 2025-04-28 04:18:08,628 basehttp "GET / HTTP/1.1" 200 36551
+INFO 2025-04-28 04:20:16,863 autoreload Watching for file changes with StatReloader
+INFO 2025-04-28 04:20:16,908 environment [ENV] 当前运行环境: development
+INFO 2025-04-28 04:20:16,908 environment [ENV] 当前运行环境: development
+INFO 2025-04-28 04:20:19,387 basehttp "GET / HTTP/1.1" 200 36970
+INFO 2025-04-28 04:21:42,750 autoreload Watching for file changes with StatReloader
+INFO 2025-04-28 04:21:42,794 environment [ENV] 当前运行环境: development
+INFO 2025-04-28 04:21:42,794 environment [ENV] 当前运行环境: development
+INFO 2025-04-28 04:21:45,063 basehttp "GET / HTTP/1.1" 200 37737
+INFO 2025-04-28 04:21:47,753 basehttp "GET / HTTP/1.1" 200 37737
+INFO 2025-04-28 04:22:52,607 autoreload Watching for file changes with StatReloader
+INFO 2025-04-28 04:22:52,649 environment [ENV] 当前运行环境: development
+INFO 2025-04-28 04:22:52,649 environment [ENV] 当前运行环境: development
+INFO 2025-04-28 04:22:56,724 basehttp "GET / HTTP/1.1" 200 37648
+INFO 2025-04-28 04:25:07,733 basehttp "GET / HTTP/1.1" 200 38098
+INFO 2025-04-28 04:25:16,753 basehttp "GET / HTTP/1.1" 200 38098
+INFO 2025-04-28 04:25:39,676 autoreload Watching for file changes with StatReloader
+INFO 2025-04-28 04:25:39,719 environment [ENV] 当前运行环境: development
+INFO 2025-04-28 04:25:39,719 environment [ENV] 当前运行环境: development
+INFO 2025-04-28 04:25:41,917 basehttp "GET / HTTP/1.1" 200 38098
+INFO 2025-04-28 04:29:07,760 basehttp "GET / HTTP/1.1" 200 39232
+INFO 2025-04-28 04:31:41,207 basehttp "GET / HTTP/1.1" 200 39369
+INFO 2025-04-28 04:32:15,290 basehttp "GET / HTTP/1.1" 200 39380
+INFO 2025-04-28 04:33:39,297 basehttp "GET / HTTP/1.1" 200 39401
+INFO 2025-04-28 04:33:55,322 basehttp "GET / HTTP/1.1" 200 39401
+INFO 2025-04-28 04:33:57,882 basehttp "GET / HTTP/1.1" 200 39401
+INFO 2025-04-28 04:33:59,149 basehttp "GET / HTTP/1.1" 200 39401
+INFO 2025-04-28 04:34:04,371 basehttp "GET / HTTP/1.1" 200 39410
