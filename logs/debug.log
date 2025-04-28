@@ -65,3 +65,7 @@ INFO 2025-04-28 04:33:55,322 basehttp "GET / HTTP/1.1" 200 39401
 INFO 2025-04-28 04:33:57,882 basehttp "GET / HTTP/1.1" 200 39401
 INFO 2025-04-28 04:33:59,149 basehttp "GET / HTTP/1.1" 200 39401
 INFO 2025-04-28 04:34:04,371 basehttp "GET / HTTP/1.1" 200 39410
+INFO 2025-04-28 04:46:07,054 autoreload Watching for file changes with StatReloader
+INFO 2025-04-28 04:46:07,103 environment [ENV] 当前运行环境: development
+INFO 2025-04-28 04:46:07,103 environment [ENV] 当前运行环境: development
+INFO 2025-04-28 04:46:11,558 basehttp "GET / HTTP/1.1" 200 40030
