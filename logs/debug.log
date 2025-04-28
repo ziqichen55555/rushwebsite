@@ -69,3 +69,24 @@ INFO 2025-04-28 04:46:07,054 autoreload Watching for file changes with StatReloa
 INFO 2025-04-28 04:46:07,103 environment [ENV] 当前运行环境: development
 INFO 2025-04-28 04:46:07,103 environment [ENV] 当前运行环境: development
 INFO 2025-04-28 04:46:11,558 basehttp "GET / HTTP/1.1" 200 40030
+INFO 2025-04-28 05:00:56,252 autoreload Watching for file changes with StatReloader
+INFO 2025-04-28 05:00:56,297 environment [ENV] 当前运行环境: development
+INFO 2025-04-28 05:00:56,297 environment [ENV] 当前运行环境: development
+INFO 2025-04-28 05:00:58,666 basehttp "GET / HTTP/1.1" 200 40833
+INFO 2025-04-28 05:01:06,823 basehttp "GET / HTTP/1.1" 200 40844
+INFO 2025-04-28 05:01:22,488 basehttp "GET / HTTP/1.1" 200 40840
+INFO 2025-04-28 05:01:25,284 basehttp "GET / HTTP/1.1" 200 40840
+INFO 2025-04-28 05:01:27,683 basehttp "GET / HTTP/1.1" 200 40840
+INFO 2025-04-28 05:01:31,268 basehttp "GET / HTTP/1.1" 200 40840
+INFO 2025-04-28 05:01:36,484 basehttp "GET / HTTP/1.1" 200 40840
+INFO 2025-04-28 05:02:39,437 basehttp "GET / HTTP/1.1" 200 40840
+INFO 2025-04-28 05:05:12,866 autoreload Watching for file changes with StatReloader
+INFO 2025-04-28 05:05:12,913 environment [ENV] 当前运行环境: development
+INFO 2025-04-28 05:05:12,913 environment [ENV] 当前运行环境: development
+INFO 2025-04-28 05:05:16,112 basehttp "GET / HTTP/1.1" 200 41416
+INFO 2025-04-28 05:05:31,223 basehttp "GET / HTTP/1.1" 200 41416
+INFO 2025-04-28 05:09:57,795 autoreload Watching for file changes with StatReloader
+INFO 2025-04-28 05:09:57,839 environment [ENV] 当前运行环境: development
+INFO 2025-04-28 05:09:57,839 environment [ENV] 当前运行环境: development
+INFO 2025-04-28 05:10:03,503 basehttp "GET / HTTP/1.1" 200 40841
+INFO 2025-04-28 05:10:08,912 basehttp "GET / HTTP/1.1" 200 40841
