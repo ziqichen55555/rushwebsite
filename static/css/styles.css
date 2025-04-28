@@ -344,15 +344,62 @@ body {
     text-decoration: line-through;
 }
 
-/* Step Circles */
+/* How It Works Section */
+.how-it-works-section {
+    position: relative;
+    background-color: #f9f9f9;
+}
+
+.how-it-works-card {
+    position: relative;
+    padding-top: 30px;
+    transition: transform 0.3s ease;
+}
+
+.how-it-works-card:hover {
+    transform: translateY(-10px);
+}
+
+.step-number-container {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+}
+
 .step-circle {
-    width: 50px;
-    height: 50px;
+    width: 60px;
+    height: 60px;
     border-radius: 50%;
     background-color: var(--rush-yellow);
     color: var(--rush-dark);
     font-weight: bold;
-    font-size: 1.5rem;
+    font-size: 1.8rem;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    border: 3px solid white;
+}
+
+.step-title {
+    color: var(--rush-dark);
+    font-weight: 600;
+    margin-bottom: 1rem;
+}
+
+.step-description {
+    color: #6c757d;
+    line-height: 1.6;
+}
+
+.step-action .btn-outline-warning {
+    border-width: 2px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.step-action .btn-outline-warning:hover {
+    background-color: var(--rush-yellow);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 /* Location Page */
@@ -611,10 +658,23 @@ body {
 }
 
 /* Testimonial Styles */
+.testimonials-section {
+    overflow: hidden;
+    position: relative;
+    padding-bottom: 60px;
+}
+
+.testimonialSwiper {
+    padding-bottom: 40px;
+    padding-top: 10px;
+}
+
 .testimonial-card {
     transition: transform 0.3s, box-shadow 0.3s;
     border-radius: 15px;
     overflow: hidden;
+    height: 100%;
+    margin: 15px 5px;
 }
 
 .testimonial-card:hover {
@@ -638,10 +698,36 @@ body {
     font-style: italic;
     color: #555;
     line-height: 1.6;
+    margin-bottom: 0;
 }
 
 .testimonial-rating {
     font-size: 0.9rem;
+}
+
+.swiper-button-next,
+.swiper-button-prev {
+    color: var(--rush-yellow) !important;
+    background-color: white;
+    width: 40px !important;
+    height: 40px !important;
+    border-radius: 50%;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.swiper-button-next:after,
+.swiper-button-prev:after {
+    font-size: 1.2rem !important;
+    font-weight: bold;
+}
+
+.swiper-pagination-bullet {
+    background: var(--rush-yellow) !important;
+    opacity: 0.5;
+}
+
+.swiper-pagination-bullet-active {
+    opacity: 1;
 }
 
 /* 环境横幅样式 */
