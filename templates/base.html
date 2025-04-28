@@ -14,20 +14,25 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css" />
     <!-- Custom CSS -->
     <link rel="stylesheet" href="/static/css/styles.css">
+    <style>
+        .main-navbar {
+            background-color: rgba(255, 209, 0, 0.9);
+        }
+    </style>
     {% block extra_css %}{% endblock %}
 </head>
-    {% if not IS_PRODUCTION %}
+    <!-- {% if not IS_PRODUCTION %}
     <div class="environment-banner {{ ENVIRONMENT_CLASS }}">
         {{ ENVIRONMENT_DISPLAY }} Environment
     </div>
-    {% endif %}
+    {% endif %} -->
 
 <body>
-    {% if not IS_PRODUCTION %}
+    <!-- {% if not IS_PRODUCTION %}
     <div class="environment-banner {{ ENVIRONMENT_CLASS }}">
         {{ ENVIRONMENT_DISPLAY }} Environment
     </div>
-    {% endif %}
+    {% endif %} -->
     
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg main-navbar">
