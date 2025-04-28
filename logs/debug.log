@@ -104,3 +104,4 @@ INFO 2025-04-28 06:17:11,443 _util error_code=None error_message='Invalid API Ke
 INFO 2025-04-28 06:17:12,281 environment [ENV] 当前运行环境: development
 INFO 2025-04-28 06:17:12,281 environment [ENV] 当前运行环境: development
 INFO 2025-04-28 06:17:14,614 basehttp "GET / HTTP/1.1" 200 49673
+INFO 2025-04-28 06:17:38,007 autoreload /home/runner/workspace/rush_car_rental/settings/development.py changed, reloading.
