@@ -105,3 +105,6 @@ INFO 2025-04-28 06:17:12,281 environment [ENV] 当前运行环境: development
 INFO 2025-04-28 06:17:12,281 environment [ENV] 当前运行环境: development
 INFO 2025-04-28 06:17:14,614 basehttp "GET / HTTP/1.1" 200 49673
 INFO 2025-04-28 06:17:38,007 autoreload /home/runner/workspace/rush_car_rental/settings/development.py changed, reloading.
+INFO 2025-04-28 06:20:50,900 autoreload Watching for file changes with StatReloader
+INFO 2025-04-28 06:20:50,961 environment [ENV] 当前运行环境: development
+INFO 2025-04-28 06:20:50,961 environment [ENV] 当前运行环境: development

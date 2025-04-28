@@ -25,9 +25,7 @@ from rush_car_rental.utils.environment import get_database_config
 
 DATABASES = {
     'default': get_database_config()
-}_DIR / 'db.sqlite3',
-        }
-    }
+}
 
 # 开发环境邮件设置 - 输出到控制台
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
