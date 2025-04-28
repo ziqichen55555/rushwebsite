@@ -21,24 +21,11 @@ CORS_ALLOW_ALL_ORIGINS = True
 
 # 开发环境数据库设置 - 使用Replit提供的PostgreSQL
 import os
+from rush_car_rental.utils.environment import get_database_config
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.environ.get('PGDATABASE'),
-        'USER': os.environ.get('PGUSER'),
-        'PASSWORD': os.environ.get('PGPASSWORD'),
-        'HOST': os.environ.get('PGHOST'),
-        'PORT': os.environ.get('PGPORT'),
-    }
-}
-
-# 仅作为备用方案 - 如果PostgreSQL连接失败则使用SQLite
-if not all([os.environ.get(k) for k in ['PGDATABASE', 'PGUSER', 'PGPASSWORD', 'PGHOST', 'PGPORT']]):
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': BASE_DIR / 'db.sqlite3',
+    'default': get_database_config()
+}_DIR / 'db.sqlite3',
         }
     }
 
