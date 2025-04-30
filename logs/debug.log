@@ -970,3 +970,9 @@ INFO 2025-04-30 16:30:00,141 environment [ENV] 当前运行环境: development
 INFO 2025-04-30 16:30:01,428 basehttp "GET / HTTP/1.1" 200 34615
 INFO 2025-04-30 16:30:01,458 basehttp "GET /static/css/styles.css HTTP/1.1" 200 15816
 INFO 2025-04-30 16:30:01,567 basehttp "GET /static/js/scripts.js HTTP/1.1" 200 10773
+INFO 2025-04-30 16:31:08,386 basehttp "GET / HTTP/1.1" 200 41026
+INFO 2025-04-30 16:31:08,647 basehttp "GET /static/images/car-placeholder.jpg HTTP/1.1" 200 56241
+INFO 2025-04-30 16:31:12,420 basehttp "GET / HTTP/1.1" 200 41054
+INFO 2025-04-30 16:31:13,017 basehttp "GET / HTTP/1.1" 200 41032
+INFO 2025-04-30 16:31:14,040 basehttp "GET /static/css/styles.css HTTP/1.1" 304 0
+INFO 2025-04-30 16:31:14,104 basehttp "GET /static/images/car-placeholder.jpg HTTP/1.1" 200 56241
