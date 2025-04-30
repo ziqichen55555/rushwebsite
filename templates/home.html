@@ -6,23 +6,31 @@
 <!-- Hero Section -->
 {% include 'components/hero_section.html' %}
 
-<!-- Featured Cars Section -->
+<!-- Featured Vehicles Section -->
 <section class="py-5">
     <div class="container">
-        <h2 class="text-center mb-4">Our Featured Cars</h2>
+        <h2 class="text-center mb-4">Our Featured Vehicles</h2>
         <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
-            {% for car in featured_cars %}
-                <div class="col">
-                    {% include 'components/car_card.html' with car=car %}
-                </div>
-            {% empty %}
+            {% if featured_vehicles %}
+                {% for vehicle in featured_vehicles %}
+                    <div class="col">
+                        {% include 'components/vehicle_card.html' with vehicle=vehicle %}
+                    </div>
+                {% endfor %}
+            {% elif featured_cars %}
+                {% for car in featured_cars %}
+                    <div class="col">
+                        {% include 'components/car_card.html' with car=car %}
+                    </div>
+                {% endfor %}
+            {% else %}
                 <div class="col-12 text-center">
-                    <p>No featured cars available at the moment.</p>
+                    <p>No featured vehicles available at the moment.</p>
                 </div>
-            {% endfor %}
+            {% endif %}
         </div>
         <div class="text-center mt-4">
-            <a href="{% url 'car_list' %}" class="btn btn-warning btn-lg">View All Cars</a>
+            <a href="{% url 'car_list' %}" class="btn btn-warning btn-lg">View All Vehicles</a>
         </div>
     </div>
 </section>
