@@ -1173,3 +1173,6 @@ INFO 2025-04-30 16:42:53,274 _util error_code=None error_message='Invalid API Ke
 INFO 2025-04-30 16:42:53,561 environment [ENV] 当前运行环境: development
 INFO 2025-04-30 16:42:53,561 environment [ENV] 当前运行环境: development
 INFO 2025-04-30 16:42:54,250 basehttp "GET / HTTP/1.1" 200 41048
+INFO 2025-04-30 16:43:14,317 basehttp "GET /cars/ HTTP/1.1" 200 22154
+INFO 2025-04-30 16:43:16,787 basehttp "GET /cars/ HTTP/1.1" 200 22154
+INFO 2025-04-30 16:43:17,372 basehttp "GET /cars/ HTTP/1.1" 200 22154
