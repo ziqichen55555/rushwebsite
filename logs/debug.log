@@ -1139,3 +1139,37 @@ INFO 2025-04-30 16:40:12,918 _util error_code=None error_message='Invalid API Ke
 INFO 2025-04-30 16:40:13,198 environment [ENV] 当前运行环境: development
 INFO 2025-04-30 16:40:13,198 environment [ENV] 当前运行环境: development
 INFO 2025-04-30 16:40:14,011 basehttp "GET / HTTP/1.1" 200 41045
+INFO 2025-04-30 16:42:02,166 autoreload /home/runner/workspace/cars/models.py changed, reloading.
+INFO 2025-04-30 16:42:02,918 autoreload Watching for file changes with StatReloader
+INFO 2025-04-30 16:42:03,590 _util message='Request to Stripe api' method=get url=https://api.stripe.com/v1/account
+INFO 2025-04-30 16:42:03,676 _util message='Stripe API response' path=https://api.stripe.com/v1/account response_code=401
+INFO 2025-04-30 16:42:03,676 _util error_code=None error_message='Invalid API Key provided: sk_test' error_param=None error_type=invalid_request_error message='Stripe v1 API error received'
+INFO 2025-04-30 16:42:06,609 environment [ENV] 当前运行环境: development
+INFO 2025-04-30 16:42:06,609 environment [ENV] 当前运行环境: development
+INFO 2025-04-30 16:42:14,052 autoreload /home/runner/workspace/cars/models.py changed, reloading.
+INFO 2025-04-30 16:42:15,070 autoreload Watching for file changes with StatReloader
+INFO 2025-04-30 16:42:15,996 _util message='Request to Stripe api' method=get url=https://api.stripe.com/v1/account
+INFO 2025-04-30 16:42:16,079 _util message='Stripe API response' path=https://api.stripe.com/v1/account response_code=401
+INFO 2025-04-30 16:42:16,079 _util error_code=None error_message='Invalid API Key provided: sk_test' error_param=None error_type=invalid_request_error message='Stripe v1 API error received'
+INFO 2025-04-30 16:42:18,396 environment [ENV] 当前运行环境: development
+INFO 2025-04-30 16:42:18,396 environment [ENV] 当前运行环境: development
+INFO 2025-04-30 16:42:24,707 autoreload Watching for file changes with StatReloader
+INFO 2025-04-30 16:42:25,632 _util message='Request to Stripe api' method=get url=https://api.stripe.com/v1/account
+INFO 2025-04-30 16:42:25,717 _util message='Stripe API response' path=https://api.stripe.com/v1/account response_code=401
+INFO 2025-04-30 16:42:25,718 _util error_code=None error_message='Invalid API Key provided: sk_test' error_param=None error_type=invalid_request_error message='Stripe v1 API error received'
+INFO 2025-04-30 16:42:28,046 environment [ENV] 当前运行环境: development
+INFO 2025-04-30 16:42:28,046 environment [ENV] 当前运行环境: development
+INFO 2025-04-30 16:42:44,265 autoreload /home/runner/workspace/cars/models.py changed, reloading.
+INFO 2025-04-30 16:42:45,221 autoreload Watching for file changes with StatReloader
+INFO 2025-04-30 16:42:46,028 _util message='Request to Stripe api' method=get url=https://api.stripe.com/v1/account
+INFO 2025-04-30 16:42:46,115 _util message='Stripe API response' path=https://api.stripe.com/v1/account response_code=401
+INFO 2025-04-30 16:42:46,116 _util error_code=None error_message='Invalid API Key provided: sk_test' error_param=None error_type=invalid_request_error message='Stripe v1 API error received'
+INFO 2025-04-30 16:42:46,398 environment [ENV] 当前运行环境: development
+INFO 2025-04-30 16:42:46,398 environment [ENV] 当前运行环境: development
+INFO 2025-04-30 16:42:52,524 autoreload Watching for file changes with StatReloader
+INFO 2025-04-30 16:42:53,199 _util message='Request to Stripe api' method=get url=https://api.stripe.com/v1/account
+INFO 2025-04-30 16:42:53,273 _util message='Stripe API response' path=https://api.stripe.com/v1/account response_code=401
+INFO 2025-04-30 16:42:53,274 _util error_code=None error_message='Invalid API Key provided: sk_test' error_param=None error_type=invalid_request_error message='Stripe v1 API error received'
+INFO 2025-04-30 16:42:53,561 environment [ENV] 当前运行环境: development
+INFO 2025-04-30 16:42:53,561 environment [ENV] 当前运行环境: development
+INFO 2025-04-30 16:42:54,250 basehttp "GET / HTTP/1.1" 200 41048

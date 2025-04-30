@@ -87,6 +87,29 @@ class VehicleCategory(AuditModelMixin):
         if self.image_upload and self.image_upload.image:
             return self.image_upload.image.url
         return '/static/images/car-placeholder.jpg'
+        
+    # Compatibility methods to match Car model interface
+    @property
+    def make(self):
+        """Return a make value for compatibility with Car model"""
+        parts = self.vehicle_category.split()
+        return parts[0] if parts else ""
+        
+    @property
+    def model(self):
+        """Return a model value for compatibility with Car model"""
+        parts = self.vehicle_category.split()
+        return " ".join(parts[1:]) if len(parts) > 1 else self.vehicle_category
+    
+    @property
+    def seats(self):
+        """Return seats for compatibility with Car model"""
+        return self.num_adults + self.num_children
+        
+    @property
+    def bags(self):
+        """Return bags for compatibility with Car model"""
+        return self.num_large_case + self.num_small_case
     
     class Meta:
         verbose_name_plural = 'Vehicle Categories'
@@ -145,6 +168,22 @@ class Car(models.Model):
     
     def get_display_name(self):
         return f"{self.make} {self.model}"
+        
+    def get_image_url(self):
+        """
+        Return the image URL for this car
+        Added for compatibility with VehicleCategory model
+        """
+        return self.image_url
+        
+    def get_region_display(self):
+        """
+        Return a default region display for compatibility with VehicleCategory model
+        """
+        # Return the first location name if available, otherwise a default
+        if self.locations.exists():
+            return self.locations.first().name
+        return "General"
 
 class CarFeature(models.Model):
     car = models.ForeignKey(Car, on_delete=models.CASCADE, related_name='features')
