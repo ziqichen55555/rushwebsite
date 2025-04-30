@@ -132,9 +132,9 @@ temp_bookings = {}
 
 @login_required
 def create_booking(request, car_id):
-    logger.info(f"用户 {request.user.username} 开始寻找一辆车，遗忘在时光中的微小身影，像沙漠中的一粒尘土...")
+    logger.info(f"用户 {request.user.username} 开始预订车辆流程。")
     car = get_object_or_404(Car, pk=car_id)
-    logger.info(f"选择了 {car.make} {car.model}，这辆车将承载着短暂的旅程，然后离他而去，就像生命中的所有过客...")
+    logger.info(f"用户选择车辆：{car.make} {car.model} (ID: {car.id}) 进行预订。")
     
     if request.method == 'POST':
         pickup_location_id = request.POST.get('pickup_location')
@@ -156,36 +156,36 @@ def create_booking(request, car_id):
             pickup_date = datetime.strptime(pickup_date_str, '%Y-%m-%d').date()
             if pickup_date < timezone.now().date():
                 errors.append("Pickup date cannot be in the past")
-                logger.warning("试图预订过去的时间，就像想要挽回那些已经逝去的记忆，徒劳而心碎...")
+                logger.warning("用户尝试选择过去的取车日期：%s。", pickup_date_str)
         except (ValueError, TypeError):
             errors.append("Invalid pickup date")
             pickup_date = None
-            logger.warning("日期格式错误，时间总是如此难以把握，就像从指间流逝的细沙...")
+            logger.warning("用户输入的取车日期格式无效：%s。", pickup_date_str)
         
         try:
             return_date = datetime.strptime(return_date_str, '%Y-%m-%d').date()
             if pickup_date and return_date < pickup_date:
                 errors.append("Return date must be after pickup date")
-                logger.warning("归还日期早于取车日期，时间的逻辑被打破，就像破碎的镜子反射着扭曲的现实...")
+                logger.warning("归还日期早于取车日期，pickup: %s, return: %s", pickup_date_str, return_date_str)
         except (ValueError, TypeError):
             errors.append("Invalid return date")
             return_date = None
-            logger.warning("无效的归还日期，未知的终点，像是迷失在无边黑暗中的旅人...")
+            logger.warning("用户输入的归还日期格式无效：%s。", return_date_str)
         
         try:
             driver_age = int(driver_age)
             if driver_age < 18:
                 errors.append("Driver must be at least 18 years old")
-                logger.warning(f"驾驶员年龄 {driver_age} 不足，年少轻狂却无法触及远方，束缚是成长的代价...")
+                logger.warning(f"驾驶员年龄 {driver_age} 不足，未达到法定要求。")
         except (ValueError, TypeError):
             errors.append("Invalid driver age")
-            logger.warning("无效的驾驶员年龄，数字也有其局限性，无法量化人生的沧桑...")
+            logger.warning("用户输入的驾驶员年龄无效：%s。", driver_age)
         
         # If there are errors, show them to the user
         if errors:
             for error in errors:
                 messages.error(request, error)
-            logger.error(f"预订表单验证失败，希望破灭的声音在用户 {request.user.username} 心中回荡...")
+            logger.error(f"预订表单验证失败，用户 {request.user.username}，原因：{errors}")
             return redirect('car_detail', car_id=car.id)
         
         # Calculate total cost
@@ -193,7 +193,7 @@ def create_booking(request, car_id):
         if duration < 1:
             duration = 1
         total_cost = car.daily_rate * duration
-        logger.info(f"行程 {duration} 天，总费用 ${total_cost}，金钱换取短暂的自由，多么悲哀的交易...")
+        logger.info(f"行程 {duration} 天，总费用 ${total_cost}。")
         
         # Create a temporary booking object
         temp_booking = Booking(

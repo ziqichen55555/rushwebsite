@@ -122,6 +122,7 @@ INFO 2025-04-29 07:46:59,849 environment [ENV] 当前运行环境: development
 INFO 2025-04-29 07:46:59,849 environment [ENV] 当前运行环境: development
 INFO 2025-04-29 07:47:05,158 basehttp "GET / HTTP/1.1" 200 41184
 INFO 2025-04-29 07:47:05,440 basehttp "GET /static/css/styles.css HTTP/1.1" 200 15816
+<<<<<<< HEAD
 =======
 INFO 2025-04-28 10:21:06,168 autoreload Watching for file changes with StatReloader
 INFO 2025-04-28 10:21:07,644 _util message='Request to Stripe api' method=get url=https://api.stripe.com/v1/account
@@ -149,3 +150,52 @@ INFO 2025-04-29 08:35:18,399 basehttp "GET /static/css/styles.css HTTP/1.1" 200 
 INFO 2025-04-29 08:35:18,464 basehttp "GET /static/js/scripts.js HTTP/1.1" 200 10773
 INFO 2025-04-29 08:35:20,298 basehttp "GET / HTTP/1.1" 200 49689
 >>>>>>> 154f309 (Generate technical documentation detailing the vehicle display and booking)
+=======
+INFO 2025-04-30 03:46:43,145 autoreload Watching for file changes with StatReloader
+INFO 2025-04-30 03:46:43,199 environment [ENV] 当前运行环境: development
+INFO 2025-04-30 03:46:43,199 environment [ENV] 当前运行环境: development
+INFO 2025-04-30 03:46:50,091 basehttp "GET / HTTP/1.1" 200 41184
+INFO 2025-04-30 03:46:50,340 basehttp "GET /static/css/styles.css HTTP/1.1" 200 15816
+INFO 2025-04-30 03:47:03,702 basehttp "GET / HTTP/1.1" 200 41184
+INFO 2025-04-30 03:47:03,756 basehttp "GET /static/css/styles.css HTTP/1.1" 304 0
+INFO 2025-04-30 03:47:51,085 basehttp "GET / HTTP/1.1" 200 41184
+INFO 2025-04-30 03:47:51,185 basehttp "GET /static/css/styles.css HTTP/1.1" 304 0
+INFO 2025-04-30 03:49:30,659 basehttp "GET / HTTP/1.1" 200 41184
+INFO 2025-04-30 03:49:30,800 basehttp "GET /static/css/styles.css HTTP/1.1" 304 0
+INFO 2025-04-30 03:49:35,259 basehttp "GET / HTTP/1.1" 200 41184
+INFO 2025-04-30 03:49:40,621 basehttp "GET / HTTP/1.1" 200 41211
+INFO 2025-04-30 03:58:14,359 basehttp "GET / HTTP/1.1" 200 41211
+INFO 2025-04-30 03:58:14,481 basehttp "GET /static/css/styles.css HTTP/1.1" 304 0
+INFO 2025-04-30 03:58:19,658 basehttp "GET /accounts/login/ HTTP/1.1" 200 8445
+INFO 2025-04-30 03:58:22,057 basehttp "POST /accounts/login/ HTTP/1.1" 200 8445
+INFO 2025-04-30 03:58:25,347 basehttp "POST /accounts/login/ HTTP/1.1" 200 8445
+INFO 2025-04-30 03:58:26,740 basehttp "POST /accounts/login/ HTTP/1.1" 200 8445
+INFO 2025-04-30 03:58:30,749 basehttp "POST /accounts/login/ HTTP/1.1" 200 8445
+INFO 2025-04-30 03:58:37,028 basehttp "POST /accounts/login/ HTTP/1.1" 200 8445
+INFO 2025-04-30 03:58:38,373 basehttp "POST /accounts/login/ HTTP/1.1" 200 8445
+INFO 2025-04-30 04:02:24,885 autoreload Watching for file changes with StatReloader
+INFO 2025-04-30 04:02:24,940 environment [ENV] 当前运行环境: development
+INFO 2025-04-30 04:02:24,940 environment [ENV] 当前运行环境: development
+INFO 2025-04-30 04:02:32,075 basehttp "GET / HTTP/1.1" 200 41211
+INFO 2025-04-30 04:02:32,377 basehttp "GET /static/css/styles.css HTTP/1.1" 200 16040
+INFO 2025-04-30 04:04:53,788 basehttp "GET / HTTP/1.1" 200 41211
+INFO 2025-04-30 04:04:53,930 basehttp "GET /static/css/styles.css HTTP/1.1" 200 16043
+INFO 2025-04-30 04:05:11,551 basehttp "GET / HTTP/1.1" 200 41211
+INFO 2025-04-30 04:05:11,635 basehttp "GET /static/css/styles.css HTTP/1.1" 200 16049
+INFO 2025-04-30 04:05:28,277 basehttp "GET / HTTP/1.1" 200 41211
+INFO 2025-04-30 04:05:28,483 basehttp "GET /static/css/styles.css HTTP/1.1" 304 0
+INFO 2025-04-30 04:05:30,492 basehttp "GET / HTTP/1.1" 200 41211
+INFO 2025-04-30 04:05:30,659 basehttp "GET /static/css/styles.css HTTP/1.1" 304 0
+INFO 2025-04-30 04:05:35,737 basehttp "GET / HTTP/1.1" 200 41211
+INFO 2025-04-30 04:05:36,084 basehttp "GET /static/css/styles.css HTTP/1.1" 200 16049
+INFO 2025-04-30 04:06:10,656 basehttp "GET / HTTP/1.1" 200 41211
+INFO 2025-04-30 04:06:10,802 basehttp "GET /static/css/styles.css HTTP/1.1" 304 0
+INFO 2025-04-30 04:06:16,622 basehttp "GET / HTTP/1.1" 200 41211
+INFO 2025-04-30 04:06:16,679 basehttp "GET /static/css/styles.css HTTP/1.1" 200 16049
+INFO 2025-04-30 04:06:18,244 basehttp "GET / HTTP/1.1" 200 41211
+INFO 2025-04-30 04:06:18,323 basehttp "GET /static/css/styles.css HTTP/1.1" 304 0
+INFO 2025-04-30 04:07:49,234 basehttp "GET / HTTP/1.1" 200 41211
+INFO 2025-04-30 04:07:49,324 basehttp "GET /static/css/styles.css HTTP/1.1" 200 16272
+INFO 2025-04-30 04:08:20,527 basehttp "GET / HTTP/1.1" 200 41211
+INFO 2025-04-30 04:08:20,594 basehttp "GET /static/css/styles.css HTTP/1.1" 200 16268
+>>>>>>> 2df9261 (update hero page)
