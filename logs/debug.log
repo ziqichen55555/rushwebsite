@@ -976,3 +976,166 @@ INFO 2025-04-30 16:31:12,420 basehttp "GET / HTTP/1.1" 200 41054
 INFO 2025-04-30 16:31:13,017 basehttp "GET / HTTP/1.1" 200 41032
 INFO 2025-04-30 16:31:14,040 basehttp "GET /static/css/styles.css HTTP/1.1" 304 0
 INFO 2025-04-30 16:31:14,104 basehttp "GET /static/images/car-placeholder.jpg HTTP/1.1" 200 56241
+INFO 2025-04-30 16:31:15,175 basehttp "GET /static/js/scripts.js HTTP/1.1" 304 0
+ERROR 2025-04-30 16:36:47,328 log Internal Server Error: /cars/
+Traceback (most recent call last):
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/cars/views.py", line 74, in car_list
+    return render(request, 'cars/car_list.html', {
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/django/shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/django/template/loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/django/template/backends/django.py", line 107, in render
+    return self.template.render(context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/django/template/base.py", line 171, in render
+    return self._render(context)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/django/template/base.py", line 163, in _render
+    return self.nodelist.render(context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/django/template/base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/django/template/base.py", line 1016, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/django/template/base.py", line 977, in render_annotated
+    return self.render(context)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/django/template/loader_tags.py", line 159, in render
+    return compiled_parent._render(context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/django/template/base.py", line 163, in _render
+    return self.nodelist.render(context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/django/template/base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/django/template/base.py", line 1016, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/django/template/base.py", line 977, in render_annotated
+    return self.render(context)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/django/template/loader_tags.py", line 65, in render
+    result = block.nodelist.render(context)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/django/template/base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/django/template/base.py", line 1016, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/django/template/base.py", line 977, in render_annotated
+    return self.render(context)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/django/template/defaulttags.py", line 327, in render
+    return nodelist.render(context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/django/template/base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/django/template/base.py", line 1016, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/django/template/base.py", line 977, in render_annotated
+    return self.render(context)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/django/template/defaulttags.py", line 243, in render
+    nodelist.append(node.render_annotated(context))
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/django/template/base.py", line 977, in render_annotated
+    return self.render(context)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/django/template/loader_tags.py", line 210, in render
+    return template.render(context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/django/template/base.py", line 173, in render
+    return self._render(context)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/django/template/base.py", line 163, in _render
+    return self.nodelist.render(context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/django/template/base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/django/template/base.py", line 1016, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/django/template/base.py", line 977, in render_annotated
+    return self.render(context)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/django/template/defaulttags.py", line 327, in render
+    return nodelist.render(context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/django/template/base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/django/template/base.py", line 1016, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/django/template/base.py", line 977, in render_annotated
+    return self.render(context)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/django/template/defaulttags.py", line 480, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/django/urls/base.py", line 98, in reverse
+    resolved_url = resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/django/urls/resolvers.py", line 831, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'create_booking' with no arguments not found. 1 pattern(s) tried: ['bookings/create/(?P<car_id>[0-9]+)/\\Z']
+ERROR 2025-04-30 16:36:47,334 basehttp "GET /cars/?pickup_location=Sydney%2C+NSW&pickup_date=Fri+04+Apr&pickup_time=11%3A00+AM&return_date=Sat+05+Apr&return_time=11%3A00+AM&pickup_time=11%3A00+AM&return_time=11%3A00+AM HTTP/1.1" 500 332244
+INFO 2025-04-30 16:38:26,517 autoreload /home/runner/workspace/bookings/views.py changed, reloading.
+INFO 2025-04-30 16:38:27,533 autoreload Watching for file changes with StatReloader
+INFO 2025-04-30 16:38:28,472 _util message='Request to Stripe api' method=get url=https://api.stripe.com/v1/account
+INFO 2025-04-30 16:38:28,565 _util message='Stripe API response' path=https://api.stripe.com/v1/account response_code=401
+INFO 2025-04-30 16:38:28,567 _util error_code=None error_message='Invalid API Key provided: sk_test' error_param=None error_type=invalid_request_error message='Stripe v1 API error received'
+INFO 2025-04-30 16:38:30,485 environment [ENV] 当前运行环境: development
+INFO 2025-04-30 16:38:30,485 environment [ENV] 当前运行环境: development
+INFO 2025-04-30 16:38:46,056 autoreload /home/runner/workspace/bookings/views.py changed, reloading.
+INFO 2025-04-30 16:38:46,733 autoreload Watching for file changes with StatReloader
+INFO 2025-04-30 16:38:47,389 _util message='Request to Stripe api' method=get url=https://api.stripe.com/v1/account
+INFO 2025-04-30 16:38:47,463 _util message='Stripe API response' path=https://api.stripe.com/v1/account response_code=401
+INFO 2025-04-30 16:38:47,464 _util error_code=None error_message='Invalid API Key provided: sk_test' error_param=None error_type=invalid_request_error message='Stripe v1 API error received'
+INFO 2025-04-30 16:38:47,768 environment [ENV] 当前运行环境: development
+INFO 2025-04-30 16:38:47,768 environment [ENV] 当前运行环境: development
+INFO 2025-04-30 16:39:14,918 autoreload /home/runner/workspace/bookings/views.py changed, reloading.
+INFO 2025-04-30 16:39:15,657 autoreload Watching for file changes with StatReloader
+INFO 2025-04-30 16:39:16,334 _util message='Request to Stripe api' method=get url=https://api.stripe.com/v1/account
+INFO 2025-04-30 16:39:16,406 _util message='Stripe API response' path=https://api.stripe.com/v1/account response_code=401
+INFO 2025-04-30 16:39:16,407 _util error_code=None error_message='Invalid API Key provided: sk_test' error_param=None error_type=invalid_request_error message='Stripe v1 API error received'
+INFO 2025-04-30 16:39:16,681 environment [ENV] 当前运行环境: development
+INFO 2025-04-30 16:39:16,681 environment [ENV] 当前运行环境: development
+INFO 2025-04-30 16:39:32,767 autoreload /home/runner/workspace/bookings/views.py changed, reloading.
+INFO 2025-04-30 16:39:33,683 autoreload Watching for file changes with StatReloader
+INFO 2025-04-30 16:39:34,452 _util message='Request to Stripe api' method=get url=https://api.stripe.com/v1/account
+INFO 2025-04-30 16:39:34,540 _util message='Stripe API response' path=https://api.stripe.com/v1/account response_code=401
+INFO 2025-04-30 16:39:34,540 _util error_code=None error_message='Invalid API Key provided: sk_test' error_param=None error_type=invalid_request_error message='Stripe v1 API error received'
+INFO 2025-04-30 16:39:34,853 environment [ENV] 当前运行环境: development
+INFO 2025-04-30 16:39:34,853 environment [ENV] 当前运行环境: development
+INFO 2025-04-30 16:39:47,908 autoreload /home/runner/workspace/bookings/views.py changed, reloading.
+INFO 2025-04-30 16:39:48,674 autoreload Watching for file changes with StatReloader
+INFO 2025-04-30 16:39:49,620 _util message='Request to Stripe api' method=get url=https://api.stripe.com/v1/account
+INFO 2025-04-30 16:39:49,721 _util message='Stripe API response' path=https://api.stripe.com/v1/account response_code=401
+INFO 2025-04-30 16:39:49,722 _util error_code=None error_message='Invalid API Key provided: sk_test' error_param=None error_type=invalid_request_error message='Stripe v1 API error received'
+INFO 2025-04-30 16:39:49,989 environment [ENV] 当前运行环境: development
+INFO 2025-04-30 16:39:49,989 environment [ENV] 当前运行环境: development
+INFO 2025-04-30 16:40:12,200 autoreload Watching for file changes with StatReloader
+INFO 2025-04-30 16:40:12,845 _util message='Request to Stripe api' method=get url=https://api.stripe.com/v1/account
+INFO 2025-04-30 16:40:12,918 _util message='Stripe API response' path=https://api.stripe.com/v1/account response_code=401
+INFO 2025-04-30 16:40:12,918 _util error_code=None error_message='Invalid API Key provided: sk_test' error_param=None error_type=invalid_request_error message='Stripe v1 API error received'
+INFO 2025-04-30 16:40:13,198 environment [ENV] 当前运行环境: development
+INFO 2025-04-30 16:40:13,198 environment [ENV] 当前运行环境: development
+INFO 2025-04-30 16:40:14,011 basehttp "GET / HTTP/1.1" 200 41045

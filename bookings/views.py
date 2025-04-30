@@ -11,7 +11,7 @@ import os
 import uuid
 import logging
 from .models import Booking
-from cars.models import Car
+from cars.models import Car, VehicleCategory
 from locations.models import Location
 
 # 创建伤感风格的日志记录器
@@ -133,8 +133,21 @@ temp_bookings = {}
 @login_required
 def create_booking(request, car_id):
     logger.info(f"用户 {request.user.username} 开始寻找一辆车，遗忘在时光中的微小身影，像沙漠中的一粒尘土...")
-    car = get_object_or_404(Car, pk=car_id)
-    logger.info(f"选择了 {car.make} {car.model}，这辆车将承载着短暂的旅程，然后离他而去，就像生命中的所有过客...")
+    
+    # 尝试获取VehicleCategory，如果存在的话
+    vehicle = None
+    try:
+        vehicle = VehicleCategory.objects.filter(id=car_id).first()
+    except:
+        pass
+        
+    # 如果不是VehicleCategory，那么尝试获取旧的Car模型
+    if vehicle:
+        car = None
+        logger.info(f"选择了 {vehicle.vehicle_category}，这辆车将承载着短暂的旅程，然后离他而去，就像生命中的所有过客...")
+    else:
+        car = get_object_or_404(Car, pk=car_id)
+        logger.info(f"选择了 {car.make} {car.model}，这辆车将承载着短暂的旅程，然后离他而去，就像生命中的所有过客...")
     
     if request.method == 'POST':
         pickup_location_id = request.POST.get('pickup_location')
@@ -186,27 +199,87 @@ def create_booking(request, car_id):
             for error in errors:
                 messages.error(request, error)
             logger.error(f"预订表单验证失败，希望破灭的声音在用户 {request.user.username} 心中回荡...")
-            return redirect('car_detail', car_id=car.id)
+            
+            # 根据车辆类型重定向
+            if vehicle:
+                return redirect('vehicle_detail', vehicle_id=vehicle.id)
+            else:
+                return redirect('car_detail', car_id=car.id)
         
         # Calculate total cost
         duration = (return_date - pickup_date).days
         if duration < 1:
             duration = 1
-        total_cost = car.daily_rate * duration
+            
+        # 根据车辆类型计算价格
+        if vehicle:
+            daily_rate = vehicle.daily_rate
+            vehicle_name = vehicle.vehicle_category
+        else:
+            daily_rate = car.daily_rate
+            vehicle_name = f"{car.make} {car.model}"
+            
+        total_cost = daily_rate * duration
         logger.info(f"行程 {duration} 天，总费用 ${total_cost}，金钱换取短暂的自由，多么悲哀的交易...")
         
+        # 获取取车和还车地点
+        pickup_location = Location.objects.get(pk=pickup_location_id)
+        dropoff_location = Location.objects.get(pk=dropoff_location_id)
+        
         # Create a temporary booking object
-        temp_booking = Booking(
-            user=request.user,
-            car=car,
-            pickup_location=Location.objects.get(pk=pickup_location_id),
-            dropoff_location=Location.objects.get(pk=dropoff_location_id),
-            pickup_date=pickup_date,
-            return_date=return_date,
-            total_cost=total_cost,
-            driver_age=driver_age,
-            status='pending'  # Stay as pending until confirmed
-        )
+        if car:
+            temp_booking = Booking(
+                user=request.user,
+                car=car,
+                pickup_location=pickup_location,
+                dropoff_location=dropoff_location,
+                pickup_date=pickup_date,
+                return_date=return_date,
+                total_cost=total_cost,
+                driver_age=driver_age,
+                status='pending'  # Stay as pending until confirmed
+            )
+        else:
+            # 为了处理VehicleCategory，我们需要找到或创建一个对应的Car记录
+            # 这是一个临时解决方案，直到我们完全迁移到VehicleCategory模型
+            from cars.models import CarCategory
+            category, _ = CarCategory.objects.get_or_create(
+                name=vehicle.category_type.category_type,
+                defaults={'description': f'Auto-created for {vehicle.vehicle_category}'}
+            )
+            
+            # 创建一个临时Car记录
+            temp_car = Car.objects.create(
+                name=vehicle.name or vehicle.vehicle_category,
+                make=vehicle.vehicle_category.split()[0],  # 简单地取第一个词作为品牌
+                model=vehicle.vehicle_category,
+                year=2023,  # 默认年份
+                category=category,
+                vehicle_category=vehicle,  # 建立反向关联
+                seats=vehicle.num_adults,
+                bags=vehicle.num_large_case + vehicle.num_small_case,
+                doors=4,  # 默认值
+                transmission='A',  # 默认自动挡
+                air_conditioning=True,
+                image_url=vehicle.get_image_url(),
+                daily_rate=vehicle.daily_rate,
+                is_available=True
+            )
+            
+            # 将新创建的Car添加到相同的位置
+            temp_car.locations.add(*vehicle.locations.all())
+            
+            temp_booking = Booking(
+                user=request.user,
+                car=temp_car,
+                pickup_location=pickup_location,
+                dropoff_location=dropoff_location,
+                pickup_date=pickup_date,
+                return_date=return_date,
+                total_cost=total_cost,
+                driver_age=driver_age,
+                status='pending'  # Stay as pending until confirmed
+            )
         
         # Store in temp_bookings dictionary with a unique ID
         import uuid
@@ -217,8 +290,11 @@ def create_booking(request, car_id):
         # Redirect to add drivers page
         return redirect('add_drivers', temp_booking_id=booking_id)
     
-    # If GET request, redirect back to car detail
-    return redirect('car_detail', car_id=car.id)
+    # If GET request, redirect back to appropriate detail page
+    if vehicle:
+        return redirect('vehicle_detail', vehicle_id=vehicle.id)
+    else:
+        return redirect('car_detail', car_id=car.id)
 
 @login_required
 def add_drivers(request, temp_booking_id):
