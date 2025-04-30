@@ -53,7 +53,7 @@
     <a href="{% url 'vehicle_detail' vehicle.id %}{% if search_params.pickup_location %}?pickup_location={{ search_params.pickup_location }}{% if search_params.dropoff_location %}&dropoff_location={{ search_params.dropoff_location }}{% endif %}{% if search_params.pickup_date %}&pickup_date={{ search_params.pickup_date }}{% endif %}{% if search_params.return_date %}&return_date={{ search_params.return_date }}{% endif %}{% if search_params.age %}&age={{ search_params.age }}{% endif %}{% endif %}" class="btn btn-outline-warning flex-grow-1 me-2">查看详情</a>
     
     {% if search_params.pickup_location and search_params.pickup_date and search_params.return_date %}
-    <a href="{% url 'create_booking' %}?vehicle_id={{ vehicle.id }}&pickup_location={{ search_params.pickup_location }}{% if search_params.dropoff_location %}&dropoff_location={{ search_params.dropoff_location }}{% endif %}&pickup_date={{ search_params.pickup_date }}&return_date={{ search_params.return_date }}{% if search_params.age %}&age={{ search_params.age }}{% endif %}" class="btn btn-warning flex-grow-1">立即预订</a>
+    <a href="{% url 'create_booking' vehicle.id %}" class="btn btn-warning flex-grow-1">立即预订</a>
     {% endif %}
   </div>
 </div>
