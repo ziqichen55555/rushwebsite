@@ -954,3 +954,4 @@ INFO 2025-04-30 10:52:11,925 environment [ENV] 当前运行环境: development
 INFO 2025-04-30 10:52:13,034 basehttp "GET / HTTP/1.1" 200 50048
 INFO 2025-04-30 10:52:13,070 basehttp "GET /static/css/styles.css HTTP/1.1" 200 15816
 INFO 2025-04-30 10:52:13,079 basehttp "GET /static/js/scripts.js HTTP/1.1" 200 10773
+INFO 2025-04-30 10:53:30,649 basehttp "GET / HTTP/1.1" 200 50090
