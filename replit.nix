@@ -1,5 +1,6 @@
 {pkgs}: {
   deps = [
+    pkgs.imagemagick
     pkgs.vim
     pkgs.postgresql
     pkgs.zlib
