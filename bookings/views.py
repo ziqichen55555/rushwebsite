@@ -132,7 +132,7 @@ temp_bookings = {}
 
 @login_required
 def create_booking(request, car_id):
-    logger.info(f"用户 {request.user.username} 开始寻找一辆车，遗忘在时光中的微小身影，像沙漠中的一粒尘土...")
+    logger.info(f"用户 {request.user.username} .")
     
     # 尝试获取VehicleCategory，如果存在的话
     vehicle = None

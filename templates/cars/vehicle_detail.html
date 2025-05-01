@@ -199,8 +199,8 @@
                             {% endif %}
                         </div>
                         
-                        <form method="get" action="{% url 'create_booking' %}">
-                            <input type="hidden" name="vehicle_id" value="{{ vehicle.id }}">
+                        <form method="get" action="{% url 'create_booking' vehicle.id %}">
+                            <!-- 现在直接在URL中传递vehicle.id，不需要隐藏字段 -->
                             
                             <div class="mb-3">
                                 <label for="pickup_location" class="form-label">Pickup Location</label>
