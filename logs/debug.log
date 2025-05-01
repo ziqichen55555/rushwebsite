@@ -3529,3 +3529,7 @@ LINE 1: ...."longitude" FROM "locations_location" INNER JOIN "app_vehic...
 ERROR 2025-05-01 05:57:08,656 basehttp "GET /cars/vehicle/3/ HTTP/1.1" 500 287256
 INFO 2025-05-01 06:01:05,970 basehttp "GET / HTTP/1.1" 200 35803
 INFO 2025-05-01 06:01:08,654 basehttp "GET /cars/vehicle/3/ HTTP/1.1" 200 19350
+INFO 2025-05-01 06:03:37,385 basehttp "GET /cars/ HTTP/1.1" 200 20204
+INFO 2025-05-01 06:03:46,392 basehttp "GET /cars/vehicle/1/ HTTP/1.1" 200 18935
+INFO 2025-05-01 06:04:00,154 basehttp "GET /cars/vehicle/4/ HTTP/1.1" 200 19830
+INFO 2025-05-01 06:04:08,187 basehttp "GET /cars/vehicle/1/ HTTP/1.1" 200 18935
