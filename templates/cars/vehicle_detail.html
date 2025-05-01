@@ -207,7 +207,7 @@
                                 <select name="pickup_location" id="pickup_location" class="form-select" required>
                                     <option value="">-- Select Location --</option>
                                     {% for location in vehicle.locations.all %}
-                                    <option value="{{ location.id }}" {% if search_params.pickup_location == location.id|stringformat:'i' %}selected{% endif %}>{{ location.name }}</option>
+                                    <option value="{{ location.id }}" {% if search_params.pickup_location == location.id|stringformat:'i' %}selected{% endif %}>{{ location.location_name }}</option>
                                     {% endfor %}
                                 </select>
                             </div>
@@ -217,7 +217,7 @@
                                 <select name="dropoff_location" id="dropoff_location" class="form-select" required>
                                     <option value="">-- Select Location --</option>
                                     {% for location in vehicle.locations.all %}
-                                    <option value="{{ location.id }}" {% if search_params.dropoff_location == location.id|stringformat:'i' %}selected{% else %}{% if search_params.pickup_location == location.id|stringformat:'i' %}selected{% endif %}{% endif %}>{{ location.name }}</option>
+                                    <option value="{{ location.id }}" {% if search_params.dropoff_location == location.id|stringformat:'i' %}selected{% else %}{% if search_params.pickup_location == location.id|stringformat:'i' %}selected{% endif %}{% endif %}>{{ location.location_name }}</option>
                                     {% endfor %}
                                 </select>
                             </div>
