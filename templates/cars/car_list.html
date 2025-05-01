@@ -41,14 +41,26 @@
                         <h5 class="mb-0">Filter Options</h5>
                     </div>
                     <div class="card-body">
-                        <h6 class="border-bottom pb-2 mb-3">Car Categories</h6>
+                        <h6 class="border-bottom pb-2 mb-3">Vehicle Categories</h6>
                         <div class="list-group mb-4">
-                            <a href="{% url 'car_list' %}" class="list-group-item list-group-item-action {% if not search_params.category %}active{% endif %}">
+                            <a href="{% url 'car_list' %}" class="list-group-item list-group-item-action {% if not search_params.category_type %}active{% endif %}">
                                 All Categories
                             </a>
-                            {% for category in categories %}
-                            <a href="{% url 'car_list' %}?category={{ category.name }}" class="list-group-item list-group-item-action {% if search_params.category == category.name %}active{% endif %}">
-                                {{ category.name }}
+                            {% for category_type in category_types %}
+                            <a href="{% url 'car_list' %}?category_type={{ category_type.id }}" class="list-group-item list-group-item-action {% if search_params.category_type == category_type.id|stringformat:'i' %}active{% endif %}">
+                                {{ category_type.category_type }}
+                            </a>
+                            {% endfor %}
+                        </div>
+                        
+                        <h6 class="border-bottom pb-2 mb-3">Regions</h6>
+                        <div class="list-group mb-4">
+                            <a href="{% url 'car_list' %}{% if search_params.category_type %}?category_type={{ search_params.category_type }}{% endif %}" class="list-group-item list-group-item-action {% if not search_params.region %}active{% endif %}">
+                                All Regions
+                            </a>
+                            {% for region_choice in region_choices %}
+                            <a href="{% url 'car_list' %}?region={{ region_choice.0 }}{% if search_params.category_type %}&category_type={{ search_params.category_type }}{% endif %}" class="list-group-item list-group-item-action {% if search_params.region == region_choice.0 %}active{% endif %}">
+                                {{ region_choice.1 }}
                             </a>
                             {% endfor %}
                         </div>
@@ -79,13 +91,13 @@
                 </div>
             </div>
             
-            <!-- Car list -->
+            <!-- Vehicle list -->
             <div class="col-lg-9">
-                {% if cars %}
+                {% if vehicles %}
                 <div class="row row-cols-1 row-cols-md-2 g-4">
-                    {% for car in cars %}
+                    {% for vehicle in vehicles %}
                     <div class="col">
-                        {% include 'components/car_card.html' with car=car %}
+                        {% include 'components/vehicle_card.html' with vehicle=vehicle %}
                     </div>
                     {% endfor %}
                 </div>
@@ -93,8 +105,8 @@
                 <div class="card shadow-sm">
                     <div class="card-body text-center py-5">
                         <i class="fas fa-car-side fa-4x text-muted mb-3"></i>
-                        <h3>No cars found</h3>
-                        <p class="text-muted">Try adjusting your search criteria to find available cars.</p>
+                        <h3>No vehicles found</h3>
+                        <p class="text-muted">Try adjusting your search criteria to find available vehicles.</p>
                         <a href="{% url 'car_list' %}" class="btn btn-warning">Clear Filters</a>
                     </div>
                 </div>

@@ -1,0 +1,59 @@
+<div class="card h-100 vehicle-card">
+  <img src="{{ vehicle.get_image_url }}" class="card-img-top" alt="{{ vehicle.name|default:vehicle.vehicle_category }}">
+  
+  <div class="card-body">
+    <div class="d-flex justify-content-between align-items-start mb-2">
+      <h5 class="card-title mb-0">{{ vehicle.name|default:vehicle.vehicle_category }}</h5>
+      <span class="badge bg-secondary">{{ vehicle.get_region_display }}</span>
+    </div>
+    
+    <div class="vehicle-features mb-3">
+      <!-- 显示能容纳的人数 -->
+      <span class="feature-item me-2"><i class="fas fa-users"></i> {{ vehicle.num_adults }} Adults</span>
+      {% if vehicle.num_children > 0 %}
+      <span class="feature-item me-2"><i class="fas fa-child"></i> {{ vehicle.num_children }} Children</span>
+      {% endif %}
+      
+      <!-- 显示行李容量 -->
+      {% if vehicle.num_large_case > 0 %}
+      <span class="feature-item me-2"><i class="fas fa-suitcase"></i> {{ vehicle.num_large_case }} Large</span>
+      {% endif %}
+      {% if vehicle.num_small_case > 0 %}
+      <span class="feature-item"><i class="fas fa-suitcase-rolling"></i> {{ vehicle.num_small_case }} Small</span>
+      {% endif %}
+    </div>
+    
+    <p class="card-text small mb-3">{{ vehicle.friendly_description|default:""|truncatechars:100 }}</p>
+    
+    <!-- 价格比较 -->
+    {% if vehicle.comparison_provider1_rate or vehicle.comparison_provider2_rate %}
+    <div class="price-comparison mb-2">
+      {% if vehicle.comparison_provider1_name and vehicle.comparison_provider1_rate %}
+      <div class="d-flex justify-content-between small mb-1">
+        <span>{{ vehicle.comparison_provider1_name }}:</span>
+        <span class="competitor-price">¥{{ vehicle.comparison_provider1_rate }}/day</span>
+      </div>
+      {% endif %}
+      {% if vehicle.comparison_provider2_name and vehicle.comparison_provider2_rate %}
+      <div class="d-flex justify-content-between small mb-1">
+        <span>{{ vehicle.comparison_provider2_name }}:</span>
+        <span class="competitor-price">¥{{ vehicle.comparison_provider2_rate }}/day</span>
+      </div>
+      {% endif %}
+    </div>
+    {% endif %}
+    
+    <div class="price-tag">
+      <div class="price-label">每日租金</div>
+      <div class="price">¥{{ vehicle.daily_rate }}</div>
+    </div>
+  </div>
+  
+  <div class="card-footer bg-white border-top-0 d-flex justify-content-between">
+    <a href="{% url 'vehicle_detail' vehicle.id %}{% if search_params.pickup_location %}?pickup_location={{ search_params.pickup_location }}{% if search_params.dropoff_location %}&dropoff_location={{ search_params.dropoff_location }}{% endif %}{% if search_params.pickup_date %}&pickup_date={{ search_params.pickup_date }}{% endif %}{% if search_params.return_date %}&return_date={{ search_params.return_date }}{% endif %}{% if search_params.age %}&age={{ search_params.age }}{% endif %}{% endif %}" class="btn btn-outline-warning flex-grow-1 me-2">查看详情</a>
+    
+    {% if search_params.pickup_location and search_params.pickup_date and search_params.return_date %}
+    <a href="{% url 'create_booking' vehicle.id %}" class="btn btn-warning flex-grow-1">立即预订</a>
+    {% endif %}
+  </div>
+</div>
