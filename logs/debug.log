@@ -514,3 +514,154 @@ INFO 2025-05-16 15:23:43,397 basehttp "GET / HTTP/1.1" 200 37674
 WARNING 2025-05-16 15:25:27,132 base Session data corrupted
 INFO 2025-05-16 15:25:28,812 basehttp "GET / HTTP/1.1" 200 37632
 INFO 2025-05-16 15:25:28,973 basehttp "GET /static/images/logo.png HTTP/1.1" 304 0
+INFO 2025-05-16 15:41:03,738 autoreload Watching for file changes with StatReloader
+INFO 2025-05-16 15:41:06,376 environment [ENV] 当前运行环境: development
+INFO 2025-05-16 15:41:06,376 environment [ENV] 当前运行环境: development
+INFO 2025-05-16 15:41:19,946 basehttp "GET / HTTP/1.1" 200 37632
+INFO 2025-05-16 15:41:20,082 basehttp "GET /static/images/logo.png HTTP/1.1" 200 2687817
+INFO 2025-05-16 15:45:46,908 basehttp "GET /cars/ HTTP/1.1" 200 23279
+INFO 2025-05-16 15:45:53,768 basehttp "GET / HTTP/1.1" 200 38980
+INFO 2025-05-16 15:45:53,838 basehttp "GET /static/images/logo.png HTTP/1.1" 304 0
+INFO 2025-05-16 15:51:29,547 basehttp "GET / HTTP/1.1" 200 38932
+INFO 2025-05-16 15:51:29,684 basehttp "GET /static/images/logo.png HTTP/1.1" 304 0
+INFO 2025-05-16 15:51:38,459 basehttp "GET /cars/ HTTP/1.1" 200 23279
+INFO 2025-05-16 15:51:46,986 basehttp "GET / HTTP/1.1" 200 38963
+INFO 2025-05-16 15:53:56,468 basehttp "GET / HTTP/1.1" 200 38947
+INFO 2025-05-16 15:53:56,556 basehttp "GET /static/images/logo.png HTTP/1.1" 304 0
+WARNING 2025-05-16 15:54:46,530 base Session data corrupted
+INFO 2025-05-16 15:54:48,238 basehttp "GET / HTTP/1.1" 200 38947
+INFO 2025-05-16 15:54:48,469 basehttp "GET /static/css/styles.css HTTP/1.1" 200 16268
+INFO 2025-05-16 15:54:48,469 basehttp "GET /static/js/scripts.js HTTP/1.1" 200 10773
+INFO 2025-05-16 15:54:48,471 basehttp "GET /static/images/car-placeholder.jpg HTTP/1.1" 200 56241
+INFO 2025-05-16 15:54:48,481 basehttp "GET /static/images/logo.png HTTP/1.1" 200 2687817
+WARNING 2025-05-16 15:54:51,477 log Not Found: /favicon.ico
+WARNING 2025-05-16 15:54:51,478 basehttp "GET /favicon.ico HTTP/1.1" 404 4688
+WARNING 2025-05-16 15:56:23,649 base Session data corrupted
+INFO 2025-05-16 15:56:25,311 basehttp "GET / HTTP/1.1" 200 38950
+INFO 2025-05-16 15:56:25,358 basehttp "GET /static/images/logo.png HTTP/1.1" 304 0
+WARNING 2025-05-16 15:57:02,240 base Session data corrupted
+INFO 2025-05-16 15:57:03,827 basehttp "GET / HTTP/1.1" 200 35299
+WARNING 2025-05-16 15:57:31,548 base Session data corrupted
+INFO 2025-05-16 15:57:32,105 basehttp "GET /cars/?pickup_location=Brisbane HTTP/1.1" 200 17236
+WARNING 2025-05-16 16:00:16,077 base Session data corrupted
+INFO 2025-05-16 16:00:17,698 basehttp "GET / HTTP/1.1" 200 35330
+INFO 2025-05-16 16:00:17,789 basehttp "GET /static/images/logo.png HTTP/1.1" 304 0
+WARNING 2025-05-16 16:00:39,613 base Session data corrupted
+INFO 2025-05-16 16:00:40,156 basehttp "GET /cars/?pickup_location=Brisbane HTTP/1.1" 200 17245
+WARNING 2025-05-16 16:03:20,070 base Session data corrupted
+INFO 2025-05-16 16:03:21,695 basehttp "GET / HTTP/1.1" 200 31813
+INFO 2025-05-16 16:03:21,767 basehttp "GET /static/images/logo.png HTTP/1.1" 304 0
+WARNING 2025-05-16 16:03:52,645 base Session data corrupted
+INFO 2025-05-16 16:03:54,355 basehttp "GET / HTTP/1.1" 200 31777
+WARNING 2025-05-16 16:07:43,017 base Session data corrupted
+INFO 2025-05-16 16:07:44,604 basehttp "GET / HTTP/1.1" 200 31766
+INFO 2025-05-16 16:07:44,690 basehttp "GET /static/images/logo.png HTTP/1.1" 304 0
+WARNING 2025-05-16 16:08:25,186 base Session data corrupted
+INFO 2025-05-16 16:08:26,815 basehttp "GET / HTTP/1.1" 200 31766
+INFO 2025-05-16 16:11:34,209 basehttp "GET / HTTP/1.1" 200 31953
+INFO 2025-05-16 16:11:34,270 basehttp "GET /static/images/logo.png HTTP/1.1" 304 0
+INFO 2025-05-16 16:12:05,167 basehttp "GET /cars/ HTTP/1.1" 200 17426
+INFO 2025-05-16 16:12:52,243 basehttp "GET / HTTP/1.1" 200 31878
+INFO 2025-05-16 16:14:15,840 basehttp "GET /rental-conditions/ HTTP/1.1" 200 12518
+INFO 2025-05-16 16:14:28,270 basehttp "GET / HTTP/1.1" 200 31900
+WARNING 2025-05-16 16:24:05,662 base Session data corrupted
+INFO 2025-05-16 16:24:07,301 basehttp "GET / HTTP/1.1" 200 34304
+INFO 2025-05-16 16:24:07,443 basehttp "GET /static/images/logo.png HTTP/1.1" 304 0
+WARNING 2025-05-16 16:25:31,189 base Session data corrupted
+ERROR 2025-05-16 16:25:31,214 log Internal Server Error: /
+Traceback (most recent call last):
+  File "/Users/li/anaconda3/lib/python3.11/site-packages/django/db/backends/base/base.py", line 279, in ensure_connection
+    self.connect()
+  File "/Users/li/anaconda3/lib/python3.11/site-packages/django/utils/asyncio.py", line 26, in inner
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/li/anaconda3/lib/python3.11/site-packages/django/db/backends/base/base.py", line 256, in connect
+    self.connection = self.get_new_connection(conn_params)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/li/anaconda3/lib/python3.11/site-packages/django/utils/asyncio.py", line 26, in inner
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/li/anaconda3/lib/python3.11/site-packages/django/db/backends/postgresql/base.py", line 332, in get_new_connection
+    connection = self.Database.connect(**conn_params)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/li/anaconda3/lib/python3.11/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+psycopg2.OperationalError: connection to server at "ep-cold-cherry-a4g2g059.us-east-1.aws.neon.tech" (2600:1f18:240c:544d:621b:957c:81:5e5b), port 5432 failed: ERROR:  You've exceeded the rate limit. Please wait a moment and try again.
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/li/anaconda3/lib/python3.11/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/li/anaconda3/lib/python3.11/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/li/go/src/github.com/RushRental/pages/views.py", line 15, in home
+    if featured_vehicles.count() < 4:
+       ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/li/anaconda3/lib/python3.11/site-packages/django/db/models/query.py", line 604, in count
+    return self.query.get_count(using=self.db)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/li/anaconda3/lib/python3.11/site-packages/django/db/models/sql/query.py", line 644, in get_count
+    return obj.get_aggregation(using, {"__count": Count("*")})["__count"]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/li/anaconda3/lib/python3.11/site-packages/django/db/models/sql/query.py", line 626, in get_aggregation
+    result = compiler.execute_sql(SINGLE)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/li/anaconda3/lib/python3.11/site-packages/django/db/models/sql/compiler.py", line 1620, in execute_sql
+    cursor = self.connection.cursor()
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/li/anaconda3/lib/python3.11/site-packages/django/utils/asyncio.py", line 26, in inner
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/li/anaconda3/lib/python3.11/site-packages/django/db/backends/base/base.py", line 320, in cursor
+    return self._cursor()
+           ^^^^^^^^^^^^^^
+  File "/Users/li/anaconda3/lib/python3.11/site-packages/django/db/backends/base/base.py", line 296, in _cursor
+    self.ensure_connection()
+  File "/Users/li/anaconda3/lib/python3.11/site-packages/django/utils/asyncio.py", line 26, in inner
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/li/anaconda3/lib/python3.11/site-packages/django/db/backends/base/base.py", line 278, in ensure_connection
+    with self.wrap_database_errors:
+  File "/Users/li/anaconda3/lib/python3.11/site-packages/django/db/utils.py", line 91, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "/Users/li/anaconda3/lib/python3.11/site-packages/django/db/backends/base/base.py", line 279, in ensure_connection
+    self.connect()
+  File "/Users/li/anaconda3/lib/python3.11/site-packages/django/utils/asyncio.py", line 26, in inner
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/li/anaconda3/lib/python3.11/site-packages/django/db/backends/base/base.py", line 256, in connect
+    self.connection = self.get_new_connection(conn_params)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/li/anaconda3/lib/python3.11/site-packages/django/utils/asyncio.py", line 26, in inner
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/li/anaconda3/lib/python3.11/site-packages/django/db/backends/postgresql/base.py", line 332, in get_new_connection
+    connection = self.Database.connect(**conn_params)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/li/anaconda3/lib/python3.11/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+django.db.utils.OperationalError: connection to server at "ep-cold-cherry-a4g2g059.us-east-1.aws.neon.tech" (2600:1f18:240c:544d:621b:957c:81:5e5b), port 5432 failed: ERROR:  You've exceeded the rate limit. Please wait a moment and try again.
+
+ERROR 2025-05-16 16:25:31,254 basehttp "GET / HTTP/1.1" 500 174096
+WARNING 2025-05-16 16:25:59,930 base Session data corrupted
+INFO 2025-05-16 16:26:01,637 basehttp "GET / HTTP/1.1" 200 41291
+WARNING 2025-05-16 16:26:15,652 base Session data corrupted
+INFO 2025-05-16 16:26:17,278 basehttp "GET / HTTP/1.1" 200 41251
+WARNING 2025-05-16 16:31:50,751 base Session data corrupted
+INFO 2025-05-16 16:31:52,548 basehttp "GET / HTTP/1.1" 200 42482
+INFO 2025-05-16 16:31:53,140 basehttp "GET /static/images/logo.png HTTP/1.1" 304 0
+WARNING 2025-05-16 16:32:30,442 base Session data corrupted
+INFO 2025-05-16 16:32:32,187 basehttp "GET / HTTP/1.1" 200 43683
+WARNING 2025-05-16 16:36:04,569 base Session data corrupted
+INFO 2025-05-16 16:36:06,207 basehttp "GET / HTTP/1.1" 200 45890
+WARNING 2025-05-16 16:36:16,969 base Session data corrupted
+INFO 2025-05-16 16:36:18,628 basehttp "GET / HTTP/1.1" 200 45909
+WARNING 2025-05-16 16:37:38,075 base Session data corrupted
+INFO 2025-05-16 16:37:39,704 basehttp "GET / HTTP/1.1" 200 45995
+INFO 2025-05-16 16:37:39,790 basehttp "GET /static/images/logo.png HTTP/1.1" 304 0

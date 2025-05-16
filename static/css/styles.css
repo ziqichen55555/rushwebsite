@@ -99,6 +99,10 @@ body {
 
 /* Hero Section */
 .hero-section {
+    max-width: 1200px;      /* 你可以根据实际需要调整宽度 */
+    margin: 32px auto 0 auto; /* 顶部留白，两侧自动居中 */
+    border-radius: 16px;    /* 可选：让卡片有圆角 */
+    overflow: hidden;       /* 防止圆角溢出 */
     position: relative;
     /* background: url('https://images.unsplash.com/photo-1503376780353-7e6692767b70?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80') no-repeat center center; */
 
