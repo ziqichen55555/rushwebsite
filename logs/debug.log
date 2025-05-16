@@ -474,3 +474,43 @@ INFO 2025-05-07 04:34:42,091 basehttp "GET /static/images/promotion.jpg HTTP/1.1
 INFO 2025-05-07 04:34:42,112 basehttp "GET /static/js/scripts.js HTTP/1.1" 304 0
 INFO 2025-05-07 04:36:32,383 basehttp "GET / HTTP/1.1" 200 42196
 INFO 2025-05-07 04:36:32,438 basehttp "GET /static/images/promotion.jpg HTTP/1.1" 304 0
+INFO 2025-05-16 15:14:54,731 autoreload Watching for file changes with StatReloader
+INFO 2025-05-16 15:14:58,152 environment [ENV] 当前运行环境: development
+INFO 2025-05-16 15:14:58,152 environment [ENV] 当前运行环境: development
+WARNING 2025-05-16 15:15:12,694 base Session data corrupted
+INFO 2025-05-16 15:15:14,356 basehttp "GET / HTTP/1.1" 200 38212
+WARNING 2025-05-16 15:15:16,772 base Session data corrupted
+INFO 2025-05-16 15:15:18,379 basehttp "GET / HTTP/1.1" 200 38260
+INFO 2025-05-16 15:15:18,598 basehttp "GET /static/css/styles.css HTTP/1.1" 200 16268
+INFO 2025-05-16 15:15:18,599 basehttp "GET /static/images/promotion.jpg HTTP/1.1" 200 36879
+INFO 2025-05-16 15:15:18,606 basehttp "GET /static/images/car-placeholder.jpg HTTP/1.1" 200 56241
+INFO 2025-05-16 15:15:18,608 basehttp "GET /static/images/logo.png HTTP/1.1" 200 2687817
+INFO 2025-05-16 15:15:18,613 basehttp "GET /static/js/scripts.js HTTP/1.1" 200 10773
+WARNING 2025-05-16 15:16:53,443 base Session data corrupted
+INFO 2025-05-16 15:16:55,079 basehttp "GET / HTTP/1.1" 200 38267
+INFO 2025-05-16 15:16:55,138 basehttp "GET /static/images/logo.png HTTP/1.1" 304 0
+WARNING 2025-05-16 15:18:19,437 base Session data corrupted
+INFO 2025-05-16 15:18:21,254 basehttp "GET / HTTP/1.1" 200 38513
+INFO 2025-05-16 15:18:21,332 basehttp "GET /static/images/logo.png HTTP/1.1" 304 0
+INFO 2025-05-16 15:18:21,348 basehttp "GET /static/images/promotion.jpg HTTP/1.1" 304 0
+WARNING 2025-05-16 15:19:27,806 base Session data corrupted
+INFO 2025-05-16 15:19:29,503 basehttp "GET / HTTP/1.1" 200 37658
+INFO 2025-05-16 15:19:29,599 basehttp "GET /static/images/logo.png HTTP/1.1" 304 0
+WARNING 2025-05-16 15:20:53,106 base Session data corrupted
+INFO 2025-05-16 15:20:54,754 basehttp "GET / HTTP/1.1" 200 37623
+INFO 2025-05-16 15:20:54,863 basehttp "GET /static/images/logo.png HTTP/1.1" 304 0
+WARNING 2025-05-16 15:21:04,199 base Session data corrupted
+INFO 2025-05-16 15:21:05,923 basehttp "GET / HTTP/1.1" 200 37660
+WARNING 2025-05-16 15:21:18,624 base Session data corrupted
+INFO 2025-05-16 15:21:20,270 basehttp "GET / HTTP/1.1" 200 37623
+WARNING 2025-05-16 15:22:18,033 base Session data corrupted
+INFO 2025-05-16 15:22:19,687 basehttp "GET / HTTP/1.1" 200 37669
+INFO 2025-05-16 15:22:19,765 basehttp "GET /static/images/logo.png HTTP/1.1" 304 0
+WARNING 2025-05-16 15:23:26,626 base Session data corrupted
+INFO 2025-05-16 15:23:28,274 basehttp "GET / HTTP/1.1" 200 37618
+INFO 2025-05-16 15:23:28,389 basehttp "GET /static/images/logo.png HTTP/1.1" 304 0
+WARNING 2025-05-16 15:23:41,558 base Session data corrupted
+INFO 2025-05-16 15:23:43,397 basehttp "GET / HTTP/1.1" 200 37674
+WARNING 2025-05-16 15:25:27,132 base Session data corrupted
+INFO 2025-05-16 15:25:28,812 basehttp "GET / HTTP/1.1" 200 37632
+INFO 2025-05-16 15:25:28,973 basehttp "GET /static/images/logo.png HTTP/1.1" 304 0
