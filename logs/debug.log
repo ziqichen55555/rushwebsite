@@ -683,3 +683,7 @@ INFO 2025-05-17 09:09:23,624 basehttp "GET / HTTP/1.1" 200 41401
 INFO 2025-05-17 09:09:23,956 basehttp "GET /static/images/logo.png HTTP/1.1" 200 2687817
 INFO 2025-05-17 09:10:08,409 basehttp "GET /locations/ HTTP/1.1" 200 10872
 INFO 2025-05-17 09:10:17,427 basehttp "GET / HTTP/1.1" 200 41390
+INFO 2025-05-17 09:23:32,054 autoreload Watching for file changes with StatReloader
+INFO 2025-05-17 09:23:34,740 environment [ENV] 当前运行环境: development
+INFO 2025-05-17 09:23:34,740 environment [ENV] 当前运行环境: development
+INFO 2025-05-17 09:23:43,271 basehttp "GET / HTTP/1.1" 200 41153
