@@ -676,3 +676,10 @@ INFO 2025-05-17 08:49:58,103 environment [ENV] 当前运行环境: development
 INFO 2025-05-17 08:50:00,648 basehttp "GET / HTTP/1.1" 200 41223
 INFO 2025-05-17 08:50:01,479 basehttp "GET /static/css/styles.css HTTP/1.1" 200 16527
 INFO 2025-05-17 08:50:01,825 basehttp "GET /static/images/logo.png HTTP/1.1" 200 2687817
+INFO 2025-05-17 09:06:44,326 autoreload Watching for file changes with StatReloader
+INFO 2025-05-17 09:06:47,756 environment [ENV] 当前运行环境: development
+INFO 2025-05-17 09:06:47,756 environment [ENV] 当前运行环境: development
+INFO 2025-05-17 09:09:23,624 basehttp "GET / HTTP/1.1" 200 41401
+INFO 2025-05-17 09:09:23,956 basehttp "GET /static/images/logo.png HTTP/1.1" 200 2687817
+INFO 2025-05-17 09:10:08,409 basehttp "GET /locations/ HTTP/1.1" 200 10872
+INFO 2025-05-17 09:10:17,427 basehttp "GET / HTTP/1.1" 200 41390
