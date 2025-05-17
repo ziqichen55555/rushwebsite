@@ -667,3 +667,12 @@ INFO 2025-05-16 16:37:39,704 basehttp "GET / HTTP/1.1" 200 45995
 INFO 2025-05-16 16:37:39,790 basehttp "GET /static/images/logo.png HTTP/1.1" 304 0
 INFO 2025-05-16 16:40:32,352 autoreload Watching for file changes with StatReloader
 INFO 2025-05-16 16:42:54,914 autoreload Watching for file changes with StatReloader
+INFO 2025-05-17 08:49:54,943 autoreload Watching for file changes with StatReloader
+INFO 2025-05-17 08:49:56,771 _util message='Request to Stripe api' method=get url=https://api.stripe.com/v1/account
+INFO 2025-05-17 08:49:57,085 _util message='Stripe API response' path=https://api.stripe.com/v1/account response_code=401
+INFO 2025-05-17 08:49:57,085 _util error_code=None error_message='Invalid API Key provided: sk_test' error_param=None error_type=invalid_request_error message='Stripe v1 API error received'
+INFO 2025-05-17 08:49:58,103 environment [ENV] 当前运行环境: development
+INFO 2025-05-17 08:49:58,103 environment [ENV] 当前运行环境: development
+INFO 2025-05-17 08:50:00,648 basehttp "GET / HTTP/1.1" 200 41223
+INFO 2025-05-17 08:50:01,479 basehttp "GET /static/css/styles.css HTTP/1.1" 200 16527
+INFO 2025-05-17 08:50:01,825 basehttp "GET /static/images/logo.png HTTP/1.1" 200 2687817

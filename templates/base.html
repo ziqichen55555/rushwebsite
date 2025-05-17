@@ -1,71 +1,127 @@
-<!DOCTYPE html>
+<!doctype html>
 {% load static %}
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <meta name="referrer" content="same-origin">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <meta name="referrer" content="same-origin" />
     <title>{% block title %}Rush Car Rental{% endblock %}</title>
     <!-- Bootstrap 5 CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
     <!-- Font Awesome for icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
     <!-- Swiper CSS for Carousels -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css"
+    />
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="/static/css/styles.css">
+    <link rel="stylesheet" href="/static/css/styles.css" />
     <style>
-        .main-navbar {
-            background-color: #E8FE04;
-        }
+      .main-navbar {
+        background-color: #e8fe04;
+      }
     </style>
     {% block extra_css %}{% endblock %}
-</head>
+  </head>
+  <!-- {% if not IS_PRODUCTION %}
+    <div class="environment-banner {{ ENVIRONMENT_CLASS }}">
+        {{ ENVIRONMENT_DISPLAY }} Environment
+    </div>
+    {% endif %} -->
+
+  <body>
     <!-- {% if not IS_PRODUCTION %}
     <div class="environment-banner {{ ENVIRONMENT_CLASS }}">
         {{ ENVIRONMENT_DISPLAY }} Environment
     </div>
     {% endif %} -->
 
-<body>
-    <!-- {% if not IS_PRODUCTION %}
-    <div class="environment-banner {{ ENVIRONMENT_CLASS }}">
-        {{ ENVIRONMENT_DISPLAY }} Environment
-    </div>
-    {% endif %} -->
-    
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg main-navbar">
-        <div class="container">
-            <a class="navbar-brand" href="{% url 'home' %}">
-                <img src="{% static 'images/logo.png' %}" alt="Rush Logo" style="height:48px;vertical-align:middle;">
-                <!-- <span class="fw-bold align-middle">Rush</span> <span class="text-dark align-middle">Car Rental</span> -->
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="mainMenuDropdown" role="button" data-bs-toggle="dropdown">
-                            <i class="fas fa-bars me-1"></i> Menu
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="{% url 'home' %}"><i class="fas fa-home me-2"></i>Home</a></li>
-                            <!-- <li><a class="dropdown-item" href="{% url 'car_list' %}"><i class="fas fa-car me-2"></i>Cars</a></li> -->
-                            <li><a class="dropdown-item" href="{% url 'location_list' %}"><i class="fas fa-map-marker-alt me-2"></i>Locations</a></li>
-                            <li><hr class="dropdown-divider"></li>
-                            <li><h6 class="dropdown-header">Information</h6></li>
-                            <li><a class="dropdown-item" href="{% url 'rental_conditions' %}">Rental Conditions</a></li>
-                            <li><a class="dropdown-item" href="{% url 'refund_policy' %}">Refund Policy</a></li>
-                            <li><a class="dropdown-item" href="{% url 'pickup_guidelines' %}">Car Pickup Guidelines</a></li>
-                            <li><a class="dropdown-item" href="{% url 'return_guidelines' %}">Car Return Guidelines</a></li>
-                            <li><a class="dropdown-item" href="{% url 'complaint' %}">File a Complaint</a></li>
-                            <li><a class="dropdown-item" href="{% url 'about_us' %}">About Us</a></li>
-                        </ul>
-                    </li>
-                    <!-- {% if user.is_authenticated %}
+      <div class="container">
+        <a class="navbar-brand" href="{% url 'home' %}">
+          <img
+            src="{% static 'images/logo.png' %}"
+            alt="Rush Logo"
+            style="height: 48px; vertical-align: middle"
+          />
+          <!-- <span class="fw-bold align-middle">Rush</span> <span class="text-dark align-middle">Car Rental</span> -->
+        </a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item dropdown">
+              <a
+                class="nav-link dropdown-toggle"
+                href="#"
+                id="mainMenuDropdown"
+                role="button"
+                data-bs-toggle="dropdown"
+              >
+                <i class="fas fa-bars me-1"></i> Menu
+              </a>
+              <ul class="dropdown-menu">
+                <li>
+                  <a class="dropdown-item" href="{% url 'home' %}"
+                    ><i class="fas fa-home me-2"></i>Home</a
+                  >
+                </li>
+                <!-- <li><a class="dropdown-item" href="{% url 'car_list' %}"><i class="fas fa-car me-2"></i>Cars</a></li> -->
+                <li>
+                  <a class="dropdown-item" href="{% url 'location_list' %}"
+                    ><i class="fas fa-map-marker-alt me-2"></i>Locations</a
+                  >
+                </li>
+                <li><hr class="dropdown-divider" /></li>
+                <li><h6 class="dropdown-header">Information</h6></li>
+                <li>
+                  <a class="dropdown-item" href="{% url 'rental_conditions' %}"
+                    >Rental Conditions</a
+                  >
+                </li>
+                <li>
+                  <a class="dropdown-item" href="{% url 'refund_policy' %}"
+                    >Refund Policy</a
+                  >
+                </li>
+                <li>
+                  <a class="dropdown-item" href="{% url 'pickup_guidelines' %}"
+                    >Car Pickup Guidelines</a
+                  >
+                </li>
+                <li>
+                  <a class="dropdown-item" href="{% url 'return_guidelines' %}"
+                    >Car Return Guidelines</a
+                  >
+                </li>
+                <li>
+                  <a class="dropdown-item" href="{% url 'complaint' %}"
+                    >File a Complaint</a
+                  >
+                </li>
+                <li>
+                  <a class="dropdown-item" href="{% url 'about_us' %}"
+                    >About Us</a
+                  >
+                </li>
+              </ul>
+            </li>
+            <!-- {% if user.is_authenticated %}
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown">
                             <i class="fas fa-user-circle me-1"></i> {{ user.username }}
@@ -88,203 +144,80 @@
                         </ul>
                     </li>
                     {% endif %} -->
-                </ul>
-            </div>
+          </ul>
         </div>
+      </div>
     </nav>
-    
+
     <!-- Messages -->
     {% if messages %}
     <div class="container mt-3">
-        {% for message in messages %}
-        <div class="alert alert-{{ message.tags }} alert-dismissible fade show">
-            {{ message }}
-            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-        </div>
-        {% endfor %}
+      {% for message in messages %}
+      <div class="alert alert-{{ message.tags }} alert-dismissible fade show">
+        {{ message }}
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="alert"
+        ></button>
+      </div>
+      {% endfor %}
     </div>
     {% endif %}
-    
-    <!-- Main content -->
-    <main>
-        {% block content %}{% endblock %}
-    </main>
 
-    <!-- Featured Cars Section -->
-    <section class="featured-cars py-5 bg-light">
-      <div class="container">
-        <h2 class="text-center mb-4">Featured Cars</h2>
-        <div class="row justify-content-center">
-          <!-- Car Card 1 -->
-          <div class="col-md-4 mb-4">
-            <div class="card h-100 shadow-sm">
-              <img src="https://rushcarrental.com.au/wp-content/uploads/2024/07/a38316971efca38e258e0c1be255412.jpg" class="card-img-top" alt="Tesla Model 3">
-              <div class="card-body">
-                <h3 class="card-title">
-                  <a href="#" class="text-dark text-decoration-none">Tesla Model 3</a>
-                </h3>
-                <h6 class="text-muted mb-2">SUV</h6>
-                <ul class="list-inline mb-2">
-                  <li class="list-inline-item"><i class="fas fa-user"></i> 5 Seats</li>
-                  <li class="list-inline-item"><i class="fas fa-briefcase"></i> 2-3 Bags</li>
-                  <li class="list-inline-item"><i class="fas fa-check-circle"></i> Automatic</li>
-                </ul>
-                <div class="mt-3">
-                  <span class="fw-bold fs-5 text-primary">From $210</span>
-                  <span class="text-muted">/ day</span>
-                </div>
-              </div>
-            </div>
-          </div>
-          <!-- Car Card 2 -->
-          <div class="col-md-4 mb-4">
-            <div class="card h-100 shadow-sm">
-              <img src="https://rushcarrental.com.au/wp-content/uploads/2024/07/8644a246f9e3b9e3cf84c2af226d1ee.jpg" class="card-img-top" alt="Nissan X-Trail">
-              <div class="card-body">
-                <h3 class="card-title">
-                  <a href="#" class="text-dark text-decoration-none">Nissan X-Trail</a>
-                </h3>
-                <h6 class="text-muted mb-2">SUV</h6>
-                <ul class="list-inline mb-2">
-                  <li class="list-inline-item"><i class="fas fa-user"></i> 5 Seats</li>
-                  <li class="list-inline-item"><i class="fas fa-briefcase"></i> 2-3 Bags</li>
-                  <li class="list-inline-item"><i class="fas fa-check-circle"></i> Automatic</li>
-                </ul>
-                <div class="mt-3">
-                  <span class="fw-bold fs-5 text-primary">From $120</span>
-                  <span class="text-muted">/ day</span>
-                </div>
-              </div>
-            </div>
-          </div>
-          <!-- Car Card 3 -->
-          <div class="col-md-4 mb-4">
-            <div class="card h-100 shadow-sm">
-              <img src="https://rushcarrental.com.au/wp-content/uploads/2024/07/7c0eacb155470ce6236d5aa36f27e0b.jpg" class="card-img-top" alt="Kia 8 seater MPV">
-              <div class="card-body">
-                <h3 class="card-title">
-                  <a href="#" class="text-dark text-decoration-none">Kia 8 seater MPV</a>
-                </h3>
-                <h6 class="text-muted mb-2">MPV</h6>
-                <ul class="list-inline mb-2">
-                  <li class="list-inline-item"><i class="fas fa-user"></i> 8 Seats</li>
-                  <li class="list-inline-item"><i class="fas fa-briefcase"></i> 3-4 Bags</li>
-                  <li class="list-inline-item"><i class="fas fa-check-circle"></i> Automatic</li>
-                </ul>
-                <div class="mt-3">
-                  <span class="fw-bold fs-5 text-primary">From $130</span>
-                  <span class="text-muted">/ day</span>
-                </div>
-              </div>
-            </div>
-          </div>
-          <!-- Car Card 4 -->
-          <div class="col-md-4 mb-4">
-            <div class="card h-100 shadow-sm">
-              <img src="https://rushcarrental.com.au/wp-content/uploads/2024/05/斯巴鲁森林人.png" class="card-img-top" alt="Subaru Forester">
-              <div class="card-body">
-                <h3 class="card-title">
-                  <a href="#" class="text-dark text-decoration-none">Subaru Forester</a>
-                </h3>
-                <h6 class="text-muted mb-2">SUV</h6>
-                <ul class="list-inline mb-2">
-                  <li class="list-inline-item"><i class="fas fa-user"></i> 5 Seats</li>
-                  <li class="list-inline-item"><i class="fas fa-briefcase"></i> 2-3 Bags</li>
-                  <li class="list-inline-item"><i class="fas fa-check-circle"></i> Automatic</li>
-                </ul>
-                <div class="mt-3">
-                  <span class="fw-bold fs-5 text-primary">From $110</span>
-                  <span class="text-muted">/ day</span>
-                </div>
-              </div>
-            </div>
-          </div>
-          <!-- Car Card 5: Mercedes Benz C250 Travel Edition -->
-          <div class="col-md-4 mb-4">
-            <div class="card h-100 shadow-sm">
-              <img src="https://rushcarrental.com.au/wp-content/uploads/2024/07/18bf14972639e47c5b9621880572ea4.jpg" class="card-img-top" alt="Mercedes Benz C250 Travel Edition">
-              <div class="card-body">
-                <h3 class="card-title">
-                  <a href="https://rushcarrental.com.au/cars/mercedes-benz-c-class/" class="text-dark text-decoration-none">Mercedes Benz C250 Travel Edition</a>
-                </h3>
-                <h6 class="text-muted mb-2">Comfort car</h6>
-                <ul class="list-inline mb-2">
-                  <li class="list-inline-item"><i class="fas fa-user"></i> 5 Seats</li>
-                  <li class="list-inline-item"><i class="fas fa-briefcase"></i> 2-3 Bags</li>
-                  <li class="list-inline-item"><i class="fas fa-check-circle"></i> Automatic</li>
-                </ul>
-                <div class="mt-3">
-                  <span class="fw-bold fs-5 text-primary">From $295</span>
-                  <span class="text-muted">/ day</span>
-                </div>
-              </div>
-            </div>
-          </div>
-          <!-- Car Card 6: MAZDA MX5 -->
-          <div class="col-md-4 mb-4">
-            <div class="card h-100 shadow-sm">
-              <img src="https://rushcarrental.com.au/wp-content/uploads/2024/07/3989.jpg" class="card-img-top" alt="MAZDA MX5">
-              <div class="card-body">
-                <h3 class="card-title">
-                  <a href="https://rushcarrental.com.au/cars/3989/" class="text-dark text-decoration-none">MAZDA MX5</a>
-                </h3>
-                <h6 class="text-muted mb-2">Sports Car</h6>
-                <ul class="list-inline mb-2">
-                  <li class="list-inline-item"><i class="fas fa-user"></i> 2 Seats</li>
-                  <li class="list-inline-item"><i class="fas fa-briefcase"></i> 2 Bags</li>
-                  <li class="list-inline-item"><i class="fas fa-check-circle"></i> Automatic</li>
-                </ul>
-                <div class="mt-3">
-                  <span class="fw-bold fs-5 text-primary">From $?</span>
-                  <span class="text-muted">/ day</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-    
+    <!-- Main content -->
+    <main>{% block content %}{% endblock %}</main>
+
     <!-- Footer -->
     <footer class="dark-footer py-4 mt-5">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-4 mb-4">
-                    <h5 class="text-white">Rush Car Rental</h5>
-                    <p class="text-light">Always better car rental experience. Find the perfect car for your next adventure.</p>
-                    <div class="social-icons">
-                        <a href="#" title="Facebook"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#" title="Twitter"><i class="fab fa-twitter"></i></a>
-                        <a href="#" title="Instagram"><i class="fab fa-instagram"></i></a>
-                        <a href="#" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
-                    </div>
-                </div>
-                <div class="col-md-4 mb-4">
-                    <h5 class="text-white">Quick Links</h5>
-                    <ul class="list-unstyled footer-links">
-                        <li><a href="{% url 'home' %}">Home</a></li>
-                        <li><a href="{% url 'location_list' %}">Locations</a></li>
-                        <li><a href="{% url 'rental_conditions' %}">Rental Conditions</a></li>
-                        <li><a href="{% url 'about_us' %}">About Us</a></li>
-                    </ul>
-                </div>
-                <div class="col-md-4 mb-4">
-                    <h5 class="text-white">Contact Us</h5>
-                    <address class="text-light">
-                        <i class="fas fa-map-marker-alt"></i> 123 Rush Drive, Melbourne, VIC<br>
-                        <i class="fas fa-phone"></i> (03) 1234 5678<br>
-                        <i class="fas fa-envelope"></i> info@rushcarrental.com<br>
-                        <i class="fas fa-clock"></i> Mon-Fri: 8am-6pm, Sat-Sun: 9am-5pm
-                    </address>
-                </div>
+      <div class="container">
+        <div class="row">
+          <div class="col-md-4 mb-4">
+            <h5 class="text-white">Rush Car Rental</h5>
+            <p class="text-light">
+              Always better car rental experience. Find the perfect car for your
+              next adventure.
+            </p>
+            <div class="social-icons">
+              <a href="#" title="Facebook"><i class="fab fa-facebook-f"></i></a>
+              <a href="#" title="Twitter"><i class="fab fa-twitter"></i></a>
+              <a href="#" title="Instagram"><i class="fab fa-instagram"></i></a>
+              <a href="#" title="LinkedIn"
+                ><i class="fab fa-linkedin-in"></i
+              ></a>
             </div>
-            <hr class="footer-divider">
-            <div class="text-center">
-                <p class="text-light mb-0">&copy; {% now "Y" %} Rush Car Rental. All rights reserved.</p>
-            </div>
+          </div>
+          <div class="col-md-4 mb-4">
+            <h5 class="text-white">Quick Links</h5>
+            <ul class="list-unstyled footer-links">
+              <li><a href="{% url 'home' %}">Home</a></li>
+              <li><a href="{% url 'location_list' %}">Locations</a></li>
+              <li>
+                <a href="{% url 'rental_conditions' %}">Rental Conditions</a>
+              </li>
+              <li><a href="{% url 'about_us' %}">About Us</a></li>
+            </ul>
+          </div>
+          <div class="col-md-4 mb-4">
+            <h5 class="text-white">Contact Us</h5>
+            <address class="text-light">
+              <i class="fas fa-map-marker-alt"></i> 123 Rush Drive, Melbourne,
+              VIC<br />
+              <i class="fas fa-phone"></i> (03) 1234 5678<br />
+              <i class="fas fa-envelope"></i> info@rushcarrental.com<br />
+              <i class="fas fa-clock"></i> Mon-Fri: 8am-6pm, Sat-Sun: 9am-5pm
+            </address>
+          </div>
         </div>
+        <hr class="footer-divider" />
+        <div class="text-center">
+          <p class="text-light mb-0">
+            &copy; {% now "Y" %} Rush Car Rental. All rights reserved.
+          </p>
+        </div>
+      </div>
     </footer>
-    
+
     <!-- Bootstrap JS Bundle with Popper -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
     <!-- Swiper JS for Carousels -->
@@ -292,5 +225,5 @@
     <!-- Custom JS -->
     <script src="/static/js/scripts.js"></script>
     {% block extra_js %}{% endblock %}
-</body>
+  </body>
 </html>
