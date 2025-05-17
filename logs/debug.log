@@ -665,3 +665,5 @@ INFO 2025-05-16 16:36:18,628 basehttp "GET / HTTP/1.1" 200 45909
 WARNING 2025-05-16 16:37:38,075 base Session data corrupted
 INFO 2025-05-16 16:37:39,704 basehttp "GET / HTTP/1.1" 200 45995
 INFO 2025-05-16 16:37:39,790 basehttp "GET /static/images/logo.png HTTP/1.1" 304 0
+INFO 2025-05-16 16:40:32,352 autoreload Watching for file changes with StatReloader
+INFO 2025-05-16 16:42:54,914 autoreload Watching for file changes with StatReloader
