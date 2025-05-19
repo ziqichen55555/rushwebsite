@@ -687,6 +687,7 @@ INFO 2025-05-17 09:23:32,054 autoreload Watching for file changes with StatReloa
 INFO 2025-05-17 09:23:34,740 environment [ENV] 当前运行环境: development
 INFO 2025-05-17 09:23:34,740 environment [ENV] 当前运行环境: development
 INFO 2025-05-17 09:23:43,271 basehttp "GET / HTTP/1.1" 200 41153
+<<<<<<< HEAD
 INFO 2025-05-20 02:37:27,487 autoreload Watching for file changes with StatReloader
 INFO 2025-05-20 02:37:28,638 _util message='Request to Stripe api' method=get url=https://api.stripe.com/v1/account
 INFO 2025-05-20 02:37:28,844 _util message='Stripe API response' path=https://api.stripe.com/v1/account response_code=401
@@ -777,3 +778,12 @@ INFO 2025-05-20 03:19:35,392 basehttp "GET /complaint/ HTTP/1.1" 200 17723
 WARNING 2025-05-20 03:20:35,415 base Session data corrupted
 INFO 2025-05-20 03:20:36,898 basehttp "GET / HTTP/1.1" 200 42334
 INFO 2025-05-20 03:20:36,996 basehttp "GET /static/images/whatsapp.png HTTP/1.1" 304 0
+=======
+INFO 2025-05-19 03:53:54,798 autoreload Watching for file changes with StatReloader
+INFO 2025-05-19 03:53:58,227 environment [ENV] 当前运行环境: development
+INFO 2025-05-19 03:53:58,227 environment [ENV] 当前运行环境: development
+WARNING 2025-05-19 03:56:04,904 base Session data corrupted
+INFO 2025-05-19 03:56:06,338 basehttp "GET / HTTP/1.1" 200 41003
+INFO 2025-05-19 03:56:06,591 basehttp "GET /static/css/styles.css HTTP/1.1" 200 16527
+INFO 2025-05-19 03:56:06,610 basehttp "GET /static/images/logo.png HTTP/1.1" 200 2687817
+>>>>>>> 4426620 (fix jump link)
