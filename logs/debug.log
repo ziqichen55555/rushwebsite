@@ -687,3 +687,93 @@ INFO 2025-05-17 09:23:32,054 autoreload Watching for file changes with StatReloa
 INFO 2025-05-17 09:23:34,740 environment [ENV] 当前运行环境: development
 INFO 2025-05-17 09:23:34,740 environment [ENV] 当前运行环境: development
 INFO 2025-05-17 09:23:43,271 basehttp "GET / HTTP/1.1" 200 41153
+INFO 2025-05-20 02:37:27,487 autoreload Watching for file changes with StatReloader
+INFO 2025-05-20 02:37:28,638 _util message='Request to Stripe api' method=get url=https://api.stripe.com/v1/account
+INFO 2025-05-20 02:37:28,844 _util message='Stripe API response' path=https://api.stripe.com/v1/account response_code=401
+INFO 2025-05-20 02:37:28,844 _util error_code=None error_message='Invalid API Key provided: sk_test_***********_key' error_param=None error_type=invalid_request_error message='Stripe v1 API error received'
+INFO 2025-05-20 02:37:33,792 environment [ENV] 当前运行环境: development
+INFO 2025-05-20 02:37:33,792 environment [ENV] 当前运行环境: development
+INFO 2025-05-20 02:37:43,895 autoreload Watching for file changes with StatReloader
+INFO 2025-05-20 02:37:44,236 _util message='Request to Stripe api' method=get url=https://api.stripe.com/v1/account
+INFO 2025-05-20 02:37:44,419 _util message='Stripe API response' path=https://api.stripe.com/v1/account response_code=401
+INFO 2025-05-20 02:37:44,420 _util error_code=None error_message='Invalid API Key provided: sk_test_***********_key' error_param=None error_type=invalid_request_error message='Stripe v1 API error received'
+INFO 2025-05-20 02:37:47,378 environment [ENV] 当前运行环境: development
+INFO 2025-05-20 02:37:47,378 environment [ENV] 当前运行环境: development
+WARNING 2025-05-20 02:38:02,114 base Session data corrupted
+INFO 2025-05-20 02:38:03,613 basehttp "GET / HTTP/1.1" 200 41147
+INFO 2025-05-20 02:38:03,675 basehttp "GET /static/css/styles.css HTTP/1.1" 200 16527
+INFO 2025-05-20 02:38:03,681 basehttp "GET /static/images/logo.png HTTP/1.1" 200 2687817
+INFO 2025-05-20 02:38:03,690 basehttp "GET /static/js/scripts.js HTTP/1.1" 200 10773
+WARNING 2025-05-20 02:38:06,337 log Not Found: /favicon.ico
+WARNING 2025-05-20 02:38:06,338 basehttp "GET /favicon.ico HTTP/1.1" 404 4688
+WARNING 2025-05-20 02:39:10,092 base Session data corrupted
+INFO 2025-05-20 02:39:10,093 basehttp "GET /locations/ HTTP/1.1" 200 10557
+INFO 2025-05-20 02:39:10,169 basehttp "GET /static/css/styles.css HTTP/1.1" 304 0
+INFO 2025-05-20 02:39:10,171 basehttp "GET /static/images/logo.png HTTP/1.1" 304 0
+INFO 2025-05-20 02:39:10,174 basehttp "GET /static/js/scripts.js HTTP/1.1" 304 0
+WARNING 2025-05-20 02:39:33,456 base Session data corrupted
+INFO 2025-05-20 02:39:33,459 basehttp "GET /about-us/ HTTP/1.1" 200 15235
+WARNING 2025-05-20 02:39:38,477 base Session data corrupted
+INFO 2025-05-20 02:39:39,074 basehttp "GET /cars/ HTTP/1.1" 200 18101
+WARNING 2025-05-20 02:40:06,737 base Session data corrupted
+INFO 2025-05-20 02:40:07,355 basehttp - Broken pipe from ('127.0.0.1', 56281)
+WARNING 2025-05-20 02:40:11,683 base Session data corrupted
+INFO 2025-05-20 02:40:12,265 basehttp "GET /cars/ HTTP/1.1" 200 18101
+WARNING 2025-05-20 02:40:24,453 base Session data corrupted
+INFO 2025-05-20 02:40:24,454 basehttp "GET /about-us/ HTTP/1.1" 200 15230
+INFO 2025-05-20 02:40:24,513 basehttp "GET /static/css/styles.css HTTP/1.1" 304 0
+INFO 2025-05-20 02:40:24,516 basehttp "GET /static/images/logo.png HTTP/1.1" 304 0
+INFO 2025-05-20 02:40:24,520 basehttp "GET /static/js/scripts.js HTTP/1.1" 304 0
+WARNING 2025-05-20 02:40:28,753 base Session data corrupted
+INFO 2025-05-20 02:40:30,294 basehttp "GET / HTTP/1.1" 200 41169
+WARNING 2025-05-20 02:46:50,848 base Session data corrupted
+INFO 2025-05-20 02:46:52,282 basehttp "GET / HTTP/1.1" 200 41717
+INFO 2025-05-20 02:46:52,367 basehttp "GET /static/css/styles.css HTTP/1.1" 304 0
+INFO 2025-05-20 02:46:52,372 basehttp "GET /static/images/logo.png HTTP/1.1" 304 0
+INFO 2025-05-20 02:46:52,391 basehttp "GET /static/js/scripts.js HTTP/1.1" 304 0
+WARNING 2025-05-20 02:47:43,860 base Session data corrupted
+INFO 2025-05-20 02:47:45,488 basehttp "GET / HTTP/1.1" 200 41717
+WARNING 2025-05-20 02:50:41,129 base Session data corrupted
+INFO 2025-05-20 02:50:42,588 basehttp "GET / HTTP/1.1" 200 41749
+INFO 2025-05-20 02:50:42,802 basehttp "GET /static/css/styles.css HTTP/1.1" 304 0
+INFO 2025-05-20 02:50:42,806 basehttp "GET /static/images/logo.png HTTP/1.1" 304 0
+INFO 2025-05-20 02:50:42,868 basehttp "GET /static/js/scripts.js HTTP/1.1" 304 0
+WARNING 2025-05-20 02:55:58,031 base Session data corrupted
+INFO 2025-05-20 02:55:59,594 basehttp "GET / HTTP/1.1" 200 41824
+INFO 2025-05-20 02:55:59,645 basehttp "GET /static/css/styles.css HTTP/1.1" 304 0
+INFO 2025-05-20 02:55:59,647 basehttp "GET /static/images/logo.png HTTP/1.1" 304 0
+INFO 2025-05-20 02:55:59,664 basehttp "GET /static/images/Xiaohongshu.svg HTTP/1.1" 200 5290
+INFO 2025-05-20 02:55:59,668 basehttp "GET /static/js/scripts.js HTTP/1.1" 304 0
+WARNING 2025-05-20 02:56:21,086 base Session data corrupted
+INFO 2025-05-20 02:56:22,695 basehttp "GET / HTTP/1.1" 200 41826
+INFO 2025-05-20 02:56:22,792 basehttp "GET /static/images/Xiaohongshu.svg HTTP/1.1" 304 0
+WARNING 2025-05-20 03:00:54,524 base Session data corrupted
+INFO 2025-05-20 03:00:56,353 basehttp "GET / HTTP/1.1" 200 42210
+INFO 2025-05-20 03:00:56,395 basehttp "GET /static/css/styles.css HTTP/1.1" 304 0
+INFO 2025-05-20 03:00:56,396 basehttp "GET /static/images/logo.png HTTP/1.1" 304 0
+INFO 2025-05-20 03:00:56,412 basehttp "GET /static/images/Xiaohongshu.svg HTTP/1.1" 304 0
+INFO 2025-05-20 03:00:56,416 basehttp "GET /static/js/scripts.js HTTP/1.1" 304 0
+WARNING 2025-05-20 03:12:20,720 base Session data corrupted
+INFO 2025-05-20 03:12:22,349 basehttp "GET / HTTP/1.1" 200 42236
+INFO 2025-05-20 03:12:22,558 basehttp "GET /static/css/styles.css HTTP/1.1" 304 0
+INFO 2025-05-20 03:12:22,566 basehttp "GET /static/images/logo.png HTTP/1.1" 304 0
+INFO 2025-05-20 03:12:22,624 basehttp "GET /static/images/Xiaohongshu.svg HTTP/1.1" 304 0
+INFO 2025-05-20 03:12:22,642 basehttp "GET /static/js/scripts.js HTTP/1.1" 304 0
+WARNING 2025-05-20 03:18:20,358 base Session data corrupted
+INFO 2025-05-20 03:18:21,817 basehttp "GET / HTTP/1.1" 200 42297
+INFO 2025-05-20 03:18:21,871 basehttp "GET /static/css/styles.css HTTP/1.1" 304 0
+INFO 2025-05-20 03:18:21,873 basehttp "GET /static/images/logo.png HTTP/1.1" 304 0
+INFO 2025-05-20 03:18:21,890 basehttp "GET /static/images/Xiaohongshu.svg HTTP/1.1" 304 0
+INFO 2025-05-20 03:18:21,892 basehttp "GET /static/images/whatsapp.png HTTP/1.1" 200 32787
+INFO 2025-05-20 03:18:21,895 basehttp "GET /static/js/scripts.js HTTP/1.1" 304 0
+WARNING 2025-05-20 03:18:46,213 base Session data corrupted
+INFO 2025-05-20 03:18:47,686 basehttp "GET / HTTP/1.1" 200 42334
+INFO 2025-05-20 03:18:47,775 basehttp "GET /static/images/whatsapp.png HTTP/1.1" 304 0
+WARNING 2025-05-20 03:19:23,404 base Session data corrupted
+INFO 2025-05-20 03:19:24,943 basehttp "GET / HTTP/1.1" 200 42334
+INFO 2025-05-20 03:19:25,034 basehttp "GET /static/images/whatsapp.png HTTP/1.1" 304 0
+WARNING 2025-05-20 03:19:35,389 base Session data corrupted
+INFO 2025-05-20 03:19:35,392 basehttp "GET /complaint/ HTTP/1.1" 200 17723
+WARNING 2025-05-20 03:20:35,415 base Session data corrupted
+INFO 2025-05-20 03:20:36,898 basehttp "GET / HTTP/1.1" 200 42334
+INFO 2025-05-20 03:20:36,996 basehttp "GET /static/images/whatsapp.png HTTP/1.1" 304 0
