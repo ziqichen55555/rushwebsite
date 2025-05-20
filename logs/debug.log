@@ -787,3 +787,34 @@ INFO 2025-05-19 03:56:06,338 basehttp "GET / HTTP/1.1" 200 41003
 INFO 2025-05-19 03:56:06,591 basehttp "GET /static/css/styles.css HTTP/1.1" 200 16527
 INFO 2025-05-19 03:56:06,610 basehttp "GET /static/images/logo.png HTTP/1.1" 200 2687817
 >>>>>>> 4426620 (fix jump link)
+INFO 2025-05-20 06:16:34,994 autoreload Watching for file changes with StatReloader
+INFO 2025-05-20 06:16:38,301 environment [ENV] 当前运行环境: development
+INFO 2025-05-20 06:16:38,301 environment [ENV] 当前运行环境: development
+WARNING 2025-05-20 06:17:48,719 base Session data corrupted
+INFO 2025-05-20 06:17:50,115 basehttp "GET / HTTP/1.1" 200 42164
+WARNING 2025-05-20 06:17:52,578 base Session data corrupted
+INFO 2025-05-20 06:17:53,944 basehttp "GET / HTTP/1.1" 200 42201
+INFO 2025-05-20 06:17:54,025 basehttp "GET /static/css/styles.css HTTP/1.1" 200 16527
+INFO 2025-05-20 06:17:54,186 basehttp "GET /static/images/logo.png HTTP/1.1" 200 2687817
+INFO 2025-05-20 06:17:54,191 basehttp "GET /static/images/Xiaohongshu.svg HTTP/1.1" 200 5290
+INFO 2025-05-20 06:17:54,195 basehttp "GET /static/images/whatsapp.png HTTP/1.1" 200 32787
+WARNING 2025-05-20 06:18:01,752 log Not Found: /favicon.ico
+WARNING 2025-05-20 06:18:01,752 basehttp "GET /favicon.ico HTTP/1.1" 404 4688
+WARNING 2025-05-20 06:19:30,051 base Session data corrupted
+INFO 2025-05-20 06:19:31,467 basehttp "GET / HTTP/1.1" 200 42859
+INFO 2025-05-20 06:19:31,498 basehttp "GET /static/images/Xiaohongshu.svg HTTP/1.1" 304 0
+INFO 2025-05-20 06:19:31,583 basehttp "GET /static/images/whatsapp.png HTTP/1.1" 304 0
+WARNING 2025-05-20 06:20:32,296 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-05-20 06:20:32,298 basehttp "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 4799
+WARNING 2025-05-20 06:21:39,027 base Session data corrupted
+INFO 2025-05-20 06:21:40,380 basehttp "GET / HTTP/1.1" 200 42855
+WARNING 2025-05-20 06:21:40,467 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-05-20 06:21:40,468 basehttp "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 4799
+INFO 2025-05-20 06:21:40,629 basehttp "GET /static/images/Xiaohongshu.svg HTTP/1.1" 304 0
+INFO 2025-05-20 06:21:40,630 basehttp "GET /static/images/whatsapp.png HTTP/1.1" 304 0
+WARNING 2025-05-20 06:27:35,091 base Session data corrupted
+INFO 2025-05-20 06:27:36,454 basehttp "GET / HTTP/1.1" 200 42901
+INFO 2025-05-20 06:27:36,533 basehttp "GET /static/images/Xiaohongshu.svg HTTP/1.1" 304 0
+WARNING 2025-05-20 06:27:36,550 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-05-20 06:27:36,551 basehttp "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 4799
+INFO 2025-05-20 06:27:36,711 basehttp "GET /static/images/whatsapp.png HTTP/1.1" 304 0
