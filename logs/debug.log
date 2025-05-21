@@ -837,3 +837,19 @@ INFO 2025-05-21 06:25:48,926 basehttp "GET / HTTP/1.1" 200 45327
 WARNING 2025-05-21 06:25:57,191 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
 WARNING 2025-05-21 06:25:57,192 basehttp "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 4799
 INFO 2025-05-21 06:33:17,657 basehttp "GET / HTTP/1.1" 200 45321
+INFO 2025-05-21 08:39:59,376 autoreload Watching for file changes with StatReloader
+INFO 2025-05-21 08:40:02,878 environment [ENV] 当前运行环境: development
+INFO 2025-05-21 08:40:02,878 environment [ENV] 当前运行环境: development
+WARNING 2025-05-21 08:40:12,311 base Session data corrupted
+INFO 2025-05-21 08:40:13,860 basehttp "GET / HTTP/1.1" 200 45252
+INFO 2025-05-21 08:40:13,917 basehttp "GET /static/css/styles.css HTTP/1.1" 304 0
+INFO 2025-05-21 08:40:13,931 basehttp "GET /static/images/logo.png HTTP/1.1" 200 2687817
+INFO 2025-05-21 08:40:14,090 basehttp "GET /static/js/scripts.js HTTP/1.1" 304 0
+INFO 2025-05-21 08:40:14,093 basehttp "GET /static/images/pics/ns.jpg HTTP/1.1" 200 280738
+INFO 2025-05-21 08:40:14,097 basehttp "GET /static/images/Xiaohongshu.svg HTTP/1.1" 200 5290
+INFO 2025-05-21 08:40:14,098 basehttp "GET /static/images/whatsapp.png HTTP/1.1" 200 32787
+WARNING 2025-05-21 08:40:16,613 log Not Found: /favicon.ico
+WARNING 2025-05-21 08:40:16,614 basehttp "GET /favicon.ico HTTP/1.1" 404 4688
+WARNING 2025-05-21 08:40:31,161 base Session data corrupted
+INFO 2025-05-21 08:40:32,490 basehttp "GET / HTTP/1.1" 200 45237
+INFO 2025-05-21 08:40:32,529 basehttp "GET /static/images/pics/ns.jpg HTTP/1.1" 304 0
