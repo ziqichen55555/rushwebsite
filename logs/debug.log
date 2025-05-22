@@ -853,3 +853,29 @@ WARNING 2025-05-21 08:40:16,614 basehttp "GET /favicon.ico HTTP/1.1" 404 4688
 WARNING 2025-05-21 08:40:31,161 base Session data corrupted
 INFO 2025-05-21 08:40:32,490 basehttp "GET / HTTP/1.1" 200 45237
 INFO 2025-05-21 08:40:32,529 basehttp "GET /static/images/pics/ns.jpg HTTP/1.1" 304 0
+INFO 2025-05-22 01:43:53,364 autoreload Watching for file changes with StatReloader
+INFO 2025-05-22 01:43:56,807 environment [ENV] 当前运行环境: development
+INFO 2025-05-22 01:43:56,807 environment [ENV] 当前运行环境: development
+WARNING 2025-05-22 02:04:17,702 base Session data corrupted
+INFO 2025-05-22 02:04:19,098 basehttp "GET / HTTP/1.1" 200 44942
+WARNING 2025-05-22 02:04:19,337 basehttp "GET /static/images/pics/tes.jpg HTTP/1.1" 404 1871
+INFO 2025-05-22 02:04:19,337 basehttp "GET /static/images/logo.png HTTP/1.1" 304 0
+WARNING 2025-05-22 02:04:19,338 basehttp "GET /static/images/pics/sub.jpg HTTP/1.1" 404 1871
+INFO 2025-05-22 02:04:19,341 basehttp "GET /static/images/pics/ns.jpg HTTP/1.1" 304 0
+INFO 2025-05-22 02:04:19,342 basehttp "GET /static/css/styles.css HTTP/1.1" 304 0
+INFO 2025-05-22 02:04:19,350 basehttp "GET /static/images/Xiaohongshu.svg HTTP/1.1" 304 0
+INFO 2025-05-22 02:04:19,357 basehttp "GET /static/images/whatsapp.png HTTP/1.1" 304 0
+WARNING 2025-05-22 02:04:19,362 basehttp "GET /static/images/pics/benz.jpg HTTP/1.1" 404 1874
+INFO 2025-05-22 02:04:19,367 basehttp "GET /static/images/pics/mx.jpg HTTP/1.1" 200 152255
+INFO 2025-05-22 02:04:19,367 basehttp "GET /static/images/pics/kin.jpg HTTP/1.1" 200 245550
+WARNING 2025-05-22 02:04:33,029 basehttp "GET /static/images/pics/tes.jpg HTTP/1.1" 404 1871
+WARNING 2025-05-22 02:04:33,264 basehttp "GET /static/images/pics/sub.jpg HTTP/1.1" 404 1871
+WARNING 2025-05-22 02:04:37,592 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-05-22 02:04:37,593 basehttp "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 4799
+WARNING 2025-05-22 02:05:40,031 base Session data corrupted
+INFO 2025-05-22 02:05:41,445 basehttp "GET / HTTP/1.1" 200 44969
+INFO 2025-05-22 02:05:41,722 basehttp "GET /static/images/pics/ts.jpg HTTP/1.1" 200 217782
+INFO 2025-05-22 02:05:41,762 basehttp "GET /static/images/pics/sb.jpg HTTP/1.1" 200 175798
+INFO 2025-05-22 02:05:41,776 basehttp "GET /static/images/pics/bz.jpg HTTP/1.1" 200 213481
+WARNING 2025-05-22 02:06:31,025 base Session data corrupted
+INFO 2025-05-22 02:06:32,409 basehttp "GET / HTTP/1.1" 200 44975
