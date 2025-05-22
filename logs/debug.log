@@ -914,3 +914,25 @@ INFO 2025-05-22 05:39:48,168 basehttp "GET /static/images/Xiaohongshu.svg HTTP/1
 INFO 2025-05-22 05:39:48,168 basehttp "GET /static/images/pics/mx.jpg HTTP/1.1" 200 152255
 INFO 2025-05-22 05:39:48,169 basehttp "GET /static/images/whatsapp.png HTTP/1.1" 200 32787
 INFO 2025-05-22 05:39:48,172 basehttp "GET /static/images/pics/bz.jpg HTTP/1.1" 200 213481
+INFO 2025-05-22 05:41:08,252 autoreload /home/runner/workspace/pages/views.py changed, reloading.
+INFO 2025-05-22 05:41:09,173 autoreload Watching for file changes with StatReloader
+INFO 2025-05-22 05:41:10,037 _util message='Request to Stripe api' method=get url=https://api.stripe.com/v1/account
+INFO 2025-05-22 05:41:10,124 _util message='Stripe API response' path=https://api.stripe.com/v1/account response_code=401
+INFO 2025-05-22 05:41:10,125 _util error_code=None error_message='Invalid API Key provided: sk_test' error_param=None error_type=invalid_request_error message='Stripe v1 API error received'
+INFO 2025-05-22 05:41:10,430 environment [ENV] 当前运行环境: development
+INFO 2025-05-22 05:41:10,430 environment [ENV] 当前运行环境: development
+INFO 2025-05-22 05:41:12,910 basehttp "GET / HTTP/1.1" 200 44964
+INFO 2025-05-22 05:41:14,101 basehttp "GET /static/images/pics/ts.jpg HTTP/1.1" 304 0
+INFO 2025-05-22 05:41:14,167 basehttp "GET /static/images/pics/ns.jpg HTTP/1.1" 304 0
+INFO 2025-05-22 05:41:14,394 basehttp "GET /static/images/pics/kin.jpg HTTP/1.1" 304 0
+INFO 2025-05-22 05:41:14,455 basehttp "GET /static/images/pics/sb.jpg HTTP/1.1" 304 0
+INFO 2025-05-22 05:41:14,751 basehttp "GET /static/images/pics/bz.jpg HTTP/1.1" 304 0
+INFO 2025-05-22 05:41:14,984 basehttp "GET /static/images/pics/mx.jpg HTTP/1.1" 304 0
+INFO 2025-05-22 05:41:32,369 autoreload Watching for file changes with StatReloader
+INFO 2025-05-22 05:41:32,980 _util message='Request to Stripe api' method=get url=https://api.stripe.com/v1/account
+INFO 2025-05-22 05:41:33,067 _util message='Stripe API response' path=https://api.stripe.com/v1/account response_code=401
+INFO 2025-05-22 05:41:33,068 _util error_code=None error_message='Invalid API Key provided: sk_test' error_param=None error_type=invalid_request_error message='Stripe v1 API error received'
+INFO 2025-05-22 05:41:33,384 environment [ENV] 当前运行环境: development
+INFO 2025-05-22 05:41:33,384 environment [ENV] 当前运行环境: development
+INFO 2025-05-22 05:41:33,952 basehttp "GET / HTTP/1.1" 200 45190
+INFO 2025-05-22 05:41:35,560 basehttp "GET / HTTP/1.1" 200 45150

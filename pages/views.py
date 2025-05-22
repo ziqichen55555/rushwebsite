@@ -69,13 +69,13 @@ def subscription(request):
             vehicle_type__name__icontains=vehicle_type
         )
     
-    # 创建示例订阅车辆数据（模拟数据）
+    # 创建示例订阅车辆数据（使用已有图片）
     subscription_cars = [
         {
             'make': 'Hyundai',
             'model': 'Venue',
             'type': 'PETROL',
-            'image_url': '/static/images/subscription/hyundai-venue.jpg',
+            'image_url': '/static/images/car-placeholder.jpg',
             'price_per_week': 230,
             'is_available': True,
             'is_great_value': True
@@ -84,7 +84,7 @@ def subscription(request):
             'make': 'Nissan',
             'model': 'X-Trail',
             'type': 'PETROL',
-            'image_url': '/static/images/subscription/nissan-xtrail.jpg',
+            'image_url': '/static/images/car-placeholder.jpg',
             'price_per_week': 260,
             'is_available': True,
             'is_great_value': False
@@ -93,7 +93,7 @@ def subscription(request):
             'make': 'Toyota',
             'model': 'Yaris Cross Hybrid',
             'type': 'HYBRID',
-            'image_url': '/static/images/subscription/toyota-yaris.jpg',
+            'image_url': '/static/images/car-placeholder.jpg',
             'price_per_week': 279,
             'is_available': True,
             'is_great_value': False
@@ -102,7 +102,7 @@ def subscription(request):
             'make': 'Suzuki',
             'model': 'Swift',
             'type': 'PETROL',
-            'image_url': '/static/images/subscription/suzuki-swift.jpg',
+            'image_url': '/static/images/car-placeholder.jpg',
             'price_per_week': 280,
             'is_available': True,
             'is_great_value': False
@@ -111,7 +111,7 @@ def subscription(request):
             'make': 'Smart',
             'model': '#1',
             'type': 'ELECTRIC',
-            'image_url': '/static/images/subscription/smart-1.jpg',
+            'image_url': '/static/images/car-placeholder.jpg',
             'price_per_week': 289,
             'is_available': True,
             'is_great_value': True
@@ -120,7 +120,7 @@ def subscription(request):
             'make': 'Smart',
             'model': '#3',
             'type': 'ELECTRIC',
-            'image_url': '/static/images/subscription/smart-3.jpg',
+            'image_url': '/static/images/car-placeholder.jpg',
             'price_per_week': 299,
             'is_available': True,
             'is_great_value': True
