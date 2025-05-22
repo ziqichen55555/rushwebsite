@@ -1000,3 +1000,9 @@ INFO 2025-05-22 06:03:05,690 basehttp "GET /static/images/icons/fees.svg HTTP/1.
 INFO 2025-05-22 06:03:05,851 basehttp "GET /static/images/icons/mileage.svg HTTP/1.1" 304 0
 INFO 2025-05-22 06:03:05,927 basehttp "GET /static/images/icons/commitment.svg HTTP/1.1" 304 0
 WARNING 2025-05-22 06:03:06,084 basehttp "GET /static/images/subscription-hero.jpg HTTP/1.1" 404 1953
+INFO 2025-05-22 06:04:17,759 basehttp "GET /subscription/?type=HYBRID HTTP/1.1" 200 33837
+INFO 2025-05-22 06:04:17,994 basehttp "GET /subscription/?type=ELECTRIC HTTP/1.1" 200 35089
+WARNING 2025-05-22 06:04:20,287 basehttp "GET /static/images/subscription-hero.jpg HTTP/1.1" 404 1953
+INFO 2025-05-22 06:04:51,069 basehttp "GET / HTTP/1.1" 200 45135
+INFO 2025-05-22 06:04:52,364 basehttp "GET /subscription/?type=ELECTRIC HTTP/1.1" 200 38224
+WARNING 2025-05-22 06:04:54,057 basehttp "GET /static/images/subscription-hero.jpg HTTP/1.1" 404 1953
