@@ -938,3 +938,50 @@ INFO 2025-05-22 05:41:33,952 basehttp "GET / HTTP/1.1" 200 45190
 INFO 2025-05-22 05:41:35,560 basehttp "GET / HTTP/1.1" 200 45150
 INFO 2025-05-22 05:41:50,257 basehttp "GET / HTTP/1.1" 200 45186
 INFO 2025-05-22 05:41:52,054 basehttp "GET / HTTP/1.1" 200 45155
+INFO 2025-05-22 05:54:20,934 autoreload Watching for file changes with StatReloader
+INFO 2025-05-22 05:54:22,632 _util message='Request to Stripe api' method=get url=https://api.stripe.com/v1/account
+INFO 2025-05-22 05:54:22,913 _util message='Stripe API response' path=https://api.stripe.com/v1/account response_code=401
+INFO 2025-05-22 05:54:22,914 _util error_code=None error_message='Invalid API Key provided: sk_test' error_param=None error_type=invalid_request_error message='Stripe v1 API error received'
+INFO 2025-05-22 05:54:23,477 environment [ENV] 当前运行环境: development
+INFO 2025-05-22 05:54:23,477 environment [ENV] 当前运行环境: development
+INFO 2025-05-22 05:55:16,643 basehttp "GET /subscription/ HTTP/1.1" 200 27728
+INFO 2025-05-22 05:55:17,634 basehttp "GET /static/images/car-placeholder.jpg HTTP/1.1" 200 56241
+INFO 2025-05-22 05:55:18,372 basehttp "GET /static/images/icons/car-experience.svg HTTP/1.1" 200 1349
+INFO 2025-05-22 05:55:18,643 basehttp "GET /static/images/icons/registration.svg HTTP/1.1" 200 628
+INFO 2025-05-22 05:55:18,755 basehttp "GET /static/images/icons/maintenance.svg HTTP/1.1" 200 1135
+INFO 2025-05-22 05:55:18,829 basehttp "GET /static/images/icons/insurance.svg HTTP/1.1" 200 595
+INFO 2025-05-22 05:55:18,935 basehttp "GET /static/images/icons/roadside.svg HTTP/1.1" 200 1331
+INFO 2025-05-22 05:55:19,024 basehttp "GET /static/images/icons/plans.svg HTTP/1.1" 200 446
+INFO 2025-05-22 05:55:19,099 basehttp "GET /static/images/icons/mileage.svg HTTP/1.1" 200 475
+WARNING 2025-05-22 05:55:19,166 basehttp "GET /static/images/subscription-hero.jpg HTTP/1.1" 404 1953
+INFO 2025-05-22 05:55:19,212 basehttp "GET /static/images/icons/fees.svg HTTP/1.1" 200 642
+INFO 2025-05-22 05:55:19,290 basehttp "GET /static/images/icons/commitment.svg HTTP/1.1" 200 485
+INFO 2025-05-22 05:55:23,522 basehttp "GET /subscription/?type=PETROL HTTP/1.1" 200 24200
+WARNING 2025-05-22 05:55:25,485 basehttp "GET /static/images/subscription-hero.jpg HTTP/1.1" 404 1953
+INFO 2025-05-22 05:55:46,815 basehttp "GET /subscription/?type=ELECTRIC HTTP/1.1" 200 23157
+WARNING 2025-05-22 05:55:48,813 basehttp "GET /static/images/subscription-hero.jpg HTTP/1.1" 404 1953
+INFO 2025-05-22 05:55:55,299 basehttp "GET /subscription/ HTTP/1.1" 200 27728
+WARNING 2025-05-22 05:55:57,315 basehttp "GET /static/images/subscription-hero.jpg HTTP/1.1" 404 1953
+INFO 2025-05-22 05:58:33,992 basehttp "GET / HTTP/1.1" 200 45170
+INFO 2025-05-22 05:58:34,017 basehttp "GET /static/css/styles.css HTTP/1.1" 200 16527
+INFO 2025-05-22 05:58:34,024 basehttp "GET /static/images/pics/ts.jpg HTTP/1.1" 200 217782
+INFO 2025-05-22 05:58:34,031 basehttp "GET /static/images/pics/sb.jpg HTTP/1.1" 200 175798
+INFO 2025-05-22 05:58:34,036 basehttp "GET /static/images/pics/ns.jpg HTTP/1.1" 200 280738
+INFO 2025-05-22 05:58:34,037 basehttp "GET /static/js/scripts.js HTTP/1.1" 200 10773
+INFO 2025-05-22 05:58:34,038 basehttp "GET /static/images/pics/kin.jpg HTTP/1.1" 200 245550
+INFO 2025-05-22 05:58:34,043 basehttp "GET /static/images/logo.png HTTP/1.1" 200 2687817
+INFO 2025-05-22 05:58:34,045 basehttp "GET /static/images/pics/bz.jpg HTTP/1.1" 200 213481
+INFO 2025-05-22 05:58:34,045 basehttp "GET /static/images/pics/mx.jpg HTTP/1.1" 200 152255
+INFO 2025-05-22 05:58:34,049 basehttp "GET /static/images/Xiaohongshu.svg HTTP/1.1" 200 5290
+INFO 2025-05-22 05:58:34,054 basehttp "GET /static/images/whatsapp.png HTTP/1.1" 200 32787
+INFO 2025-05-22 05:58:34,421 basehttp "GET /subscription/ HTTP/1.1" 200 35468
+INFO 2025-05-22 05:58:35,217 basehttp "GET /static/images/icons/car-experience.svg HTTP/1.1" 304 0
+INFO 2025-05-22 05:58:35,567 basehttp "GET /static/images/icons/registration.svg HTTP/1.1" 304 0
+INFO 2025-05-22 05:58:35,834 basehttp "GET /static/images/icons/maintenance.svg HTTP/1.1" 304 0
+INFO 2025-05-22 05:58:36,323 basehttp "GET /static/images/icons/roadside.svg HTTP/1.1" 304 0
+INFO 2025-05-22 05:58:36,351 basehttp "GET /static/images/icons/insurance.svg HTTP/1.1" 304 0
+INFO 2025-05-22 05:58:36,424 basehttp "GET /static/images/icons/plans.svg HTTP/1.1" 304 0
+WARNING 2025-05-22 05:58:36,597 basehttp "GET /static/images/subscription-hero.jpg HTTP/1.1" 404 1953
+INFO 2025-05-22 05:58:36,681 basehttp "GET /static/images/icons/mileage.svg HTTP/1.1" 304 0
+INFO 2025-05-22 05:58:36,742 basehttp "GET /static/images/icons/fees.svg HTTP/1.1" 304 0
+INFO 2025-05-22 05:58:36,919 basehttp "GET /static/images/icons/commitment.svg HTTP/1.1" 304 0
