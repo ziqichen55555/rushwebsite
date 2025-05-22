@@ -879,3 +879,38 @@ INFO 2025-05-22 02:05:41,762 basehttp "GET /static/images/pics/sb.jpg HTTP/1.1" 
 INFO 2025-05-22 02:05:41,776 basehttp "GET /static/images/pics/bz.jpg HTTP/1.1" 200 213481
 WARNING 2025-05-22 02:06:31,025 base Session data corrupted
 INFO 2025-05-22 02:06:32,409 basehttp "GET / HTTP/1.1" 200 44975
+INFO 2025-05-22 02:34:26,748 autoreload Watching for file changes with StatReloader
+INFO 2025-05-22 02:34:28,113 _util message='Request to Stripe api' method=get url=https://api.stripe.com/v1/account
+INFO 2025-05-22 02:34:28,368 _util message='Stripe API response' path=https://api.stripe.com/v1/account response_code=401
+INFO 2025-05-22 02:34:28,368 _util error_code=None error_message='Invalid API Key provided: sk_test' error_param=None error_type=invalid_request_error message='Stripe v1 API error received'
+INFO 2025-05-22 02:34:30,918 environment [ENV] 当前运行环境: development
+INFO 2025-05-22 02:34:30,918 environment [ENV] 当前运行环境: development
+INFO 2025-05-22 02:34:33,321 basehttp "GET / HTTP/1.1" 200 44966
+INFO 2025-05-22 02:34:34,439 basehttp "GET /static/images/logo.png HTTP/1.1" 200 2687817
+INFO 2025-05-22 02:34:34,497 basehttp "GET /static/images/pics/ts.jpg HTTP/1.1" 200 217782
+INFO 2025-05-22 02:34:35,141 basehttp "GET /static/css/styles.css HTTP/1.1" 304 0
+INFO 2025-05-22 02:34:35,804 basehttp "GET /static/images/pics/ns.jpg HTTP/1.1" 200 280738
+INFO 2025-05-22 02:34:36,044 basehttp "GET /static/images/pics/kin.jpg HTTP/1.1" 200 245550
+INFO 2025-05-22 02:34:36,318 basehttp "GET /static/images/pics/sb.jpg HTTP/1.1" 200 175798
+INFO 2025-05-22 02:34:36,405 basehttp "GET /static/images/pics/bz.jpg HTTP/1.1" 200 213481
+INFO 2025-05-22 02:34:36,585 basehttp "GET /static/images/pics/mx.jpg HTTP/1.1" 200 152255
+INFO 2025-05-22 02:34:36,871 basehttp "GET /static/images/Xiaohongshu.svg HTTP/1.1" 304 0
+INFO 2025-05-22 02:34:36,969 basehttp "GET /static/images/whatsapp.png HTTP/1.1" 304 0
+INFO 2025-05-22 05:39:43,918 autoreload Watching for file changes with StatReloader
+INFO 2025-05-22 05:39:45,520 _util message='Request to Stripe api' method=get url=https://api.stripe.com/v1/account
+INFO 2025-05-22 05:39:45,655 _util message='Stripe API response' path=https://api.stripe.com/v1/account response_code=401
+INFO 2025-05-22 05:39:45,656 _util error_code=None error_message='Invalid API Key provided: sk_test' error_param=None error_type=invalid_request_error message='Stripe v1 API error received'
+INFO 2025-05-22 05:39:46,357 environment [ENV] 当前运行环境: development
+INFO 2025-05-22 05:39:46,357 environment [ENV] 当前运行环境: development
+INFO 2025-05-22 05:39:48,005 basehttp "GET / HTTP/1.1" 200 44975
+INFO 2025-05-22 05:39:48,088 basehttp "GET /static/css/styles.css HTTP/1.1" 200 16527
+INFO 2025-05-22 05:39:48,111 basehttp "GET /static/images/pics/ts.jpg HTTP/1.1" 200 217782
+INFO 2025-05-22 05:39:48,112 basehttp "GET /static/images/pics/ns.jpg HTTP/1.1" 200 280738
+INFO 2025-05-22 05:39:48,118 basehttp "GET /static/images/pics/kin.jpg HTTP/1.1" 200 245550
+INFO 2025-05-22 05:39:48,125 basehttp "GET /static/images/pics/sb.jpg HTTP/1.1" 200 175798
+INFO 2025-05-22 05:39:48,156 basehttp "GET /static/images/logo.png HTTP/1.1" 200 2687817
+INFO 2025-05-22 05:39:48,166 basehttp "GET /static/js/scripts.js HTTP/1.1" 200 10773
+INFO 2025-05-22 05:39:48,168 basehttp "GET /static/images/Xiaohongshu.svg HTTP/1.1" 200 5290
+INFO 2025-05-22 05:39:48,168 basehttp "GET /static/images/pics/mx.jpg HTTP/1.1" 200 152255
+INFO 2025-05-22 05:39:48,169 basehttp "GET /static/images/whatsapp.png HTTP/1.1" 200 32787
+INFO 2025-05-22 05:39:48,172 basehttp "GET /static/images/pics/bz.jpg HTTP/1.1" 200 213481

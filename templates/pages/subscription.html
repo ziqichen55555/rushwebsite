@@ -1,0 +1,417 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}车辆订阅 - Rush Car Rental{% endblock %}
+
+{% block extra_css %}
+<style>
+    .subscription-header {
+        background-color: #f8f9fa;
+        padding: 60px 0 30px;
+        margin-bottom: 30px;
+    }
+    
+    .subscription-title {
+        font-size: 2.5rem;
+        font-weight: bold;
+        margin-bottom: 20px;
+    }
+    
+    .filter-btn {
+        padding: 8px 20px;
+        margin-right: 10px;
+        margin-bottom: 10px;
+        border-radius: 4px;
+        font-weight: 500;
+        transition: all 0.3s;
+    }
+    
+    .filter-btn.active {
+        background-color: #ffdd00;
+        color: #333;
+        border-color: #ffdd00;
+    }
+    
+    .filter-btn:not(.active) {
+        background-color: #fff;
+        color: #666;
+        border: 1px solid #ddd;
+    }
+    
+    .filter-btn:hover {
+        background-color: #ffdd00;
+        color: #333;
+    }
+    
+    .subscription-card {
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        transition: transform 0.3s;
+        height: 100%;
+        position: relative;
+    }
+    
+    .subscription-card:hover {
+        transform: translateY(-5px);
+    }
+    
+    .great-value-badge {
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        background-color: #ffdd00;
+        color: #333;
+        padding: 5px 10px;
+        border-radius: 4px;
+        font-weight: 500;
+        z-index: 1;
+    }
+    
+    .subscription-image {
+        height: 200px;
+        object-fit: cover;
+        width: 100%;
+    }
+    
+    .availability-badge {
+        display: inline-flex;
+        align-items: center;
+        background-color: #e8f5e9;
+        color: #2e7d32;
+        padding: 5px 10px;
+        border-radius: 4px;
+        font-size: 0.9rem;
+        margin-bottom: 15px;
+    }
+    
+    .availability-badge i {
+        margin-right: 5px;
+    }
+    
+    .vehicle-make {
+        font-weight: 500;
+        color: #666;
+        margin-bottom: 0;
+    }
+    
+    .vehicle-model {
+        font-size: 1.25rem;
+        font-weight: bold;
+        margin-bottom: 15px;
+    }
+    
+    .price-label {
+        font-size: 0.9rem;
+        color: #666;
+        margin-bottom: 0;
+    }
+    
+    .price-value {
+        font-size: 1.5rem;
+        font-weight: bold;
+        color: #333;
+    }
+    
+    .why-choose-section {
+        background-color: #f8f9fa;
+        padding: 60px 0;
+        margin: 40px 0;
+    }
+    
+    .benefit-card {
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+    }
+    
+    .benefit-icon {
+        width: 60px;
+        height: 60px;
+        margin-bottom: 15px;
+    }
+    
+    .hero-section {
+        position: relative;
+        height: 500px;
+        background-size: cover;
+        background-position: center;
+        color: #fff;
+        margin-bottom: 40px;
+    }
+    
+    .hero-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0,0,0,0.5);
+        display: flex;
+        align-items: center;
+    }
+    
+    .hero-content {
+        max-width: 600px;
+    }
+    
+    .hero-title {
+        font-size: 3rem;
+        font-weight: bold;
+        margin-bottom: 20px;
+    }
+    
+    .hero-text {
+        font-size: 1.2rem;
+        margin-bottom: 30px;
+    }
+    
+    .cta-button {
+        background-color: #ffdd00;
+        color: #333;
+        font-weight: 500;
+        padding: 10px 25px;
+        border-radius: 4px;
+        text-decoration: none;
+        display: inline-block;
+        transition: all 0.3s;
+    }
+    
+    .cta-button:hover {
+        background-color: #ffd000;
+        transform: translateY(-2px);
+    }
+    
+    .all-inclusive-section {
+        padding: 60px 0;
+        background-color: #f8f9fa;
+    }
+    
+    .all-inclusive-title {
+        font-size: 2.5rem;
+        font-weight: bold;
+        margin-bottom: 30px;
+    }
+    
+    @media (max-width: 768px) {
+        .subscription-title {
+            font-size: 2rem;
+        }
+        
+        .hero-title {
+            font-size: 2.2rem;
+        }
+        
+        .hero-section {
+            height: 400px;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- 英雄横幅部分 -->
+<section class="hero-section" style="background-image: url('{% static 'images/subscription-hero.jpg' %}');">
+    <div class="hero-overlay">
+        <div class="container">
+            <div class="hero-content">
+                <h1 class="hero-title">灵活便捷的车辆订阅服务</h1>
+                <p class="hero-text">无需长期合同，无隐藏费用，全包式车辆订阅服务让您的出行更加轻松自由。</p>
+                <a href="#subscription-cars" class="cta-button">浏览可用车辆</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- 订阅车辆部分 -->
+<section id="subscription-cars" class="py-5">
+    <div class="container">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2 class="mb-0">可订阅车辆</h2>
+            <a href="{% url 'car_list' %}" class="btn btn-outline-dark">查看所有车辆 <i class="fas fa-arrow-right ms-2"></i></a>
+        </div>
+        
+        <!-- 筛选器 -->
+        <div class="mb-4">
+            {% for option in filter_options %}
+            <a href="{% url 'subscription' %}{% if option != 'ALL' %}?type={{ option }}{% endif %}" 
+               class="filter-btn {% if vehicle_type == option %}active{% endif %}">
+                {{ option }}
+            </a>
+            {% endfor %}
+        </div>
+        
+        <!-- 车辆列表 -->
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+            {% for car in subscription_cars %}
+            {% if car.type == vehicle_type or vehicle_type == 'ALL' %}
+            <div class="col">
+                <div class="subscription-card">
+                    {% if car.is_great_value %}
+                    <div class="great-value-badge">超值选择</div>
+                    {% endif %}
+                    <img src="{{ car.image_url }}" alt="{{ car.make }} {{ car.model }}" class="subscription-image">
+                    <div class="card-body p-4">
+                        <div class="availability-badge">
+                            <i class="fas fa-check-circle"></i> 可用
+                        </div>
+                        <p class="vehicle-make">{{ car.make }}</p>
+                        <h5 class="vehicle-model">{{ car.model }}</h5>
+                        <div class="d-flex justify-content-between align-items-end">
+                            <div>
+                                <p class="price-label">起价</p>
+                                <p class="price-value">¥{{ car.price_per_week }}</p>
+                                <small class="text-muted">每周</small>
+                            </div>
+                            <a href="{% url 'subscription' %}" class="btn btn-outline-warning">了解详情</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- 为什么选择我们 -->
+<section class="why-choose-section">
+    <div class="container">
+        <div class="d-flex justify-content-between align-items-center mb-5">
+            <h2 class="mb-0">为什么选择Rush车辆订阅服务？</h2>
+            <a href="{% url 'about_us' %}" class="btn btn-link text-dark">关于我们 <i class="fas fa-arrow-right ms-1"></i></a>
+        </div>
+        
+        <div class="row row-cols-1 row-cols-md-3 g-4 mb-5">
+            <div class="col">
+                <div class="p-4 h-100">
+                    <div class="d-flex align-items-center mb-3">
+                        <i class="fas fa-star text-warning me-3 fa-2x"></i>
+                        <h5 class="mb-0">备受客户信赖</h5>
+                    </div>
+                    <p class="text-muted">
+                        凭借 4.9 星的 Google 评分，我们致力于让您的用车体验尽可能愉快。这就是为什么我们不相信隐藏费用！通过 Rush 车辆订阅，没有申请费、设置费或交换费！
+                    </p>
+                </div>
+            </div>
+            
+            <div class="col">
+                <div class="p-4 h-100">
+                    <div class="d-flex align-items-center mb-3">
+                        <i class="fas fa-car text-warning me-3 fa-2x"></i>
+                        <h5 class="mb-0">简单的车辆订阅模式</h5>
+                    </div>
+                    <p class="text-muted">
+                        Rush的全包式车辆订阅模式，不同于其他订阅服务，仅提供新车，并提供在计划结束时升级或更换到另一辆新车的选项。我们的申请流程快速，无需信用审查，也没有大额预付费用。
+                    </p>
+                </div>
+            </div>
+            
+            <div class="col">
+                <div class="p-4 h-100">
+                    <div class="d-flex align-items-center mb-3">
+                        <i class="fas fa-headset text-warning me-3 fa-2x"></i>
+                        <h5 class="mb-0">专业的服务团队</h5>
+                    </div>
+                    <p class="text-muted">
+                        您可以在当天从本地Rush服务点提取您的新车。请放心，我们将在您的整个订阅期间照顾您。
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- 全包式服务内容 -->
+<section class="all-inclusive-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-5 mb-4 mb-lg-0">
+                <h2 class="all-inclusive-title">全包式服务是什么意思？</h2>
+                <div class="mb-4">
+                    <h5 class="mb-3">全新的用车体验</h5>
+                    <p class="text-muted">
+                        车辆的费用已包括在内。Rush确保我们的车辆始终是新的，里程限制为15,000公里，为您提供永久的新车体验。
+                    </p>
+                </div>
+                <a href="{% url 'subscription' %}" class="btn btn-dark px-4 py-2">立即咨询 <i class="fas fa-arrow-right ms-2"></i></a>
+            </div>
+            
+            <div class="col-lg-7">
+                <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+                    <!-- 服务项目 -->
+                    <div class="col">
+                        <div class="benefit-card">
+                            <img src="{% static 'images/icons/car-experience.svg' %}" alt="新车体验" class="benefit-icon">
+                            <h6>新车体验</h6>
+                        </div>
+                    </div>
+                    
+                    <div class="col">
+                        <div class="benefit-card">
+                            <img src="{% static 'images/icons/registration.svg' %}" alt="车辆注册" class="benefit-icon">
+                            <h6>车辆注册</h6>
+                        </div>
+                    </div>
+                    
+                    <div class="col">
+                        <div class="benefit-card">
+                            <img src="{% static 'images/icons/maintenance.svg' %}" alt="维护与保养" class="benefit-icon">
+                            <h6>维护与保养</h6>
+                        </div>
+                    </div>
+                    
+                    <div class="col">
+                        <div class="benefit-card">
+                            <img src="{% static 'images/icons/roadside.svg' %}" alt="道路救援" class="benefit-icon">
+                            <h6>道路救援</h6>
+                        </div>
+                    </div>
+                    
+                    <div class="col">
+                        <div class="benefit-card">
+                            <img src="{% static 'images/icons/insurance.svg' %}" alt="车辆保险" class="benefit-icon">
+                            <h6>车辆保险</h6>
+                        </div>
+                    </div>
+                    
+                    <div class="col">
+                        <div class="benefit-card">
+                            <img src="{% static 'images/icons/plans.svg' %}" alt="灵活计划" class="benefit-icon">
+                            <h6>灵活计划</h6>
+                        </div>
+                    </div>
+                    
+                    <div class="col">
+                        <div class="benefit-card">
+                            <img src="{% static 'images/icons/mileage.svg' %}" alt="高额里程" class="benefit-icon">
+                            <h6>高额里程</h6>
+                        </div>
+                    </div>
+                    
+                    <div class="col">
+                        <div class="benefit-card">
+                            <img src="{% static 'images/icons/fees.svg' %}" alt="无隐藏费用" class="benefit-icon">
+                            <h6>无隐藏费用</h6>
+                        </div>
+                    </div>
+                    
+                    <div class="col">
+                        <div class="benefit-card">
+                            <img src="{% static 'images/icons/commitment.svg' %}" alt="无长期合约" class="benefit-icon">
+                            <h6>无长期合约</h6>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

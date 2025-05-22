@@ -9,4 +9,5 @@ urlpatterns = [
     path('pickup-guidelines/', views.pickup_guidelines, name='pickup_guidelines'),
     path('return-guidelines/', views.return_guidelines, name='return_guidelines'),
     path('about-us/', views.about_us, name='about_us'),
+    path('subscription/', views.subscription, name='subscription'),
 ]

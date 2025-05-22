@@ -54,3 +54,86 @@ def return_guidelines(request):
     
 def about_us(request):
     return render(request, 'pages/about_us.html')
+    
+def subscription(request):
+    """车辆订阅页面，显示可用于订阅的车辆"""
+    # 获取筛选参数
+    vehicle_type = request.GET.get('type', '')
+    
+    # 默认使用VehicleCategory模型中的数据
+    subscription_vehicles = VehicleCategory.objects.filter(is_available=True)
+    
+    # 应用筛选条件
+    if vehicle_type and vehicle_type != 'all':
+        subscription_vehicles = subscription_vehicles.filter(
+            vehicle_type__name__icontains=vehicle_type
+        )
+    
+    # 创建示例订阅车辆数据（模拟数据）
+    subscription_cars = [
+        {
+            'make': 'Hyundai',
+            'model': 'Venue',
+            'type': 'PETROL',
+            'image_url': '/static/images/subscription/hyundai-venue.jpg',
+            'price_per_week': 230,
+            'is_available': True,
+            'is_great_value': True
+        },
+        {
+            'make': 'Nissan',
+            'model': 'X-Trail',
+            'type': 'PETROL',
+            'image_url': '/static/images/subscription/nissan-xtrail.jpg',
+            'price_per_week': 260,
+            'is_available': True,
+            'is_great_value': False
+        },
+        {
+            'make': 'Toyota',
+            'model': 'Yaris Cross Hybrid',
+            'type': 'HYBRID',
+            'image_url': '/static/images/subscription/toyota-yaris.jpg',
+            'price_per_week': 279,
+            'is_available': True,
+            'is_great_value': False
+        },
+        {
+            'make': 'Suzuki',
+            'model': 'Swift',
+            'type': 'PETROL',
+            'image_url': '/static/images/subscription/suzuki-swift.jpg',
+            'price_per_week': 280,
+            'is_available': True,
+            'is_great_value': False
+        },
+        {
+            'make': 'Smart',
+            'model': '#1',
+            'type': 'ELECTRIC',
+            'image_url': '/static/images/subscription/smart-1.jpg',
+            'price_per_week': 289,
+            'is_available': True,
+            'is_great_value': True
+        },
+        {
+            'make': 'Smart',
+            'model': '#3',
+            'type': 'ELECTRIC',
+            'image_url': '/static/images/subscription/smart-3.jpg',
+            'price_per_week': 299,
+            'is_available': True,
+            'is_great_value': True
+        }
+    ]
+    
+    # 可用筛选选项
+    filter_options = ['ALL', 'PETROL', 'HYBRID', 'ELECTRIC']
+    
+    context = {
+        'subscription_cars': subscription_cars,
+        'vehicle_type': vehicle_type if vehicle_type else 'ALL',
+        'filter_options': filter_options
+    }
+    
+    return render(request, 'pages/subscription.html', context)
