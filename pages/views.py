@@ -75,7 +75,7 @@ def subscription(request):
             'make': 'Hyundai',
             'model': 'Venue',
             'type': 'PETROL',
-            'image_url': '/static/images/car-placeholder.jpg',
+            'image_url': '/static/images/pics/ts.jpg',
             'price_per_week': 230,
             'is_available': True,
             'is_great_value': True
@@ -84,7 +84,7 @@ def subscription(request):
             'make': 'Nissan',
             'model': 'X-Trail',
             'type': 'PETROL',
-            'image_url': '/static/images/car-placeholder.jpg',
+            'image_url': '/static/images/pics/ns.jpg',
             'price_per_week': 260,
             'is_available': True,
             'is_great_value': False
@@ -93,7 +93,7 @@ def subscription(request):
             'make': 'Toyota',
             'model': 'Yaris Cross Hybrid',
             'type': 'HYBRID',
-            'image_url': '/static/images/car-placeholder.jpg',
+            'image_url': '/static/images/pics/kin.jpg',
             'price_per_week': 279,
             'is_available': True,
             'is_great_value': False
@@ -102,7 +102,7 @@ def subscription(request):
             'make': 'Suzuki',
             'model': 'Swift',
             'type': 'PETROL',
-            'image_url': '/static/images/car-placeholder.jpg',
+            'image_url': '/static/images/pics/sb.jpg',
             'price_per_week': 280,
             'is_available': True,
             'is_great_value': False
@@ -111,7 +111,7 @@ def subscription(request):
             'make': 'Smart',
             'model': '#1',
             'type': 'ELECTRIC',
-            'image_url': '/static/images/car-placeholder.jpg',
+            'image_url': '/static/images/pics/mx.jpg',
             'price_per_week': 289,
             'is_available': True,
             'is_great_value': True
@@ -120,7 +120,7 @@ def subscription(request):
             'make': 'Smart',
             'model': '#3',
             'type': 'ELECTRIC',
-            'image_url': '/static/images/car-placeholder.jpg',
+            'image_url': '/static/images/pics/bz.jpg',
             'price_per_week': 299,
             'is_available': True,
             'is_great_value': True

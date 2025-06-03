@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}车辆订阅 - Rush Car Rental{% endblock %}
+{% block title %}Car Subscription - Rush Car Rental{% endblock %}
 
 {% block extra_css %}
 <style>
@@ -217,32 +217,32 @@
 {% endblock %}
 
 {% block content %}
-<!-- 英雄横幅部分 -->
+<!-- Hero Banner -->
 <section class="hero-section" style="background-color: #696969;">
     <div class="hero-overlay" style="background: rgba(0,0,0,0.2);">
         <div class="container">
             <div class="hero-content">
-                <h1 class="hero-title">灵活便捷的车辆订阅服务</h1>
-                <p class="hero-text">无需长期合同，无隐藏费用，全包式车辆订阅服务让您的出行更加轻松自由。</p>
-                <a href="#subscription-cars" class="cta-button">浏览可用车辆</a>
+                <h1 class="hero-title">Flexible & Convenient Car Subscription</h1>
+                <p class="hero-text">No long-term contracts, no hidden fees. Our all-inclusive car subscription service makes your travel easier and more flexible.</p>
+                <a href="#subscription-cars" class="cta-button">Browse Available Cars</a>
             </div>
         </div>
     </div>
 </section>
 
-<!-- 车辆搜索部分 -->
+<!-- Car Search Section -->
 <section class="car-search-section py-4 bg-light">
     <div class="container">
         <div class="row mb-3">
             <div class="col-12 text-center">
-                <h3 class="mb-2">探索超过95+种车型，找到适合您需求的车辆</h3>
+                <h3 class="mb-2">Explore over 95+ models and find the car that suits your needs</h3>
                 <div class="rating-display">
                     <i class="fas fa-star text-warning"></i>
                     <i class="fas fa-star text-warning"></i>
                     <i class="fas fa-star text-warning"></i>
                     <i class="fas fa-star text-warning"></i>
                     <i class="fas fa-star text-warning"></i>
-                    <span class="ms-2">4.9评分（基于500+评论）</span>
+                    <span class="ms-2">4.9 rating (based on 500+ reviews)</span>
                 </div>
             </div>
         </div>
@@ -253,48 +253,48 @@
                     <div class="row g-0">
                         <div class="col-md-3">
                             <div class="form-group p-3 border-end">
-                                <label class="small fw-bold mb-2">取车位置</label>
+                                <label class="small fw-bold mb-2">Pick-up Location</label>
                                 <select class="form-select border-0">
-                                    <option>布里斯班</option>
-                                    <option>悉尼</option>
-                                    <option>墨尔本</option>
-                                    <option>珀斯</option>
-                                    <option>阿德莱德</option>
+                                    <option>Brisbane</option>
+                                    <option>Sydney</option>
+                                    <option>Melbourne</option>
+                                    <option>Perth</option>
+                                    <option>Adelaide</option>
                                 </select>
                             </div>
                         </div>
                         <div class="col-md-3">
                             <div class="form-group p-3 border-end">
-                                <label class="small fw-bold mb-2">车身类型</label>
+                                <label class="small fw-bold mb-2">Body Type</label>
                                 <select class="form-select border-0">
-                                    <option>所有</option>
-                                    <option>轿车</option>
+                                    <option>All</option>
+                                    <option>Sedan</option>
                                     <option>SUV</option>
                                     <option>MPV</option>
-                                    <option>小型车</option>
+                                    <option>Compact</option>
                                 </select>
                             </div>
                         </div>
                         <div class="col-md-3">
                             <div class="form-group p-3 border-end">
-                                <label class="small fw-bold mb-2">燃油类型</label>
+                                <label class="small fw-bold mb-2">Fuel Type</label>
                                 <select class="form-select border-0">
-                                    <option>所有</option>
-                                    <option>汽油</option>
-                                    <option>混合动力</option>
-                                    <option>电动</option>
+                                    <option>All</option>
+                                    <option>Petrol</option>
+                                    <option>Hybrid</option>
+                                    <option>Electric</option>
                                 </select>
                             </div>
                         </div>
                         <div class="col-md-3">
                             <div class="form-group p-3">
-                                <label class="small fw-bold mb-2">座位数</label>
+                                <label class="small fw-bold mb-2">Seats</label>
                                 <select class="form-select border-0">
-                                    <option>所有</option>
-                                    <option>2座</option>
-                                    <option>4座</option>
-                                    <option>5座</option>
-                                    <option>7座以上</option>
+                                    <option>All</option>
+                                    <option>2 seats</option>
+                                    <option>4 seats</option>
+                                    <option>5 seats</option>
+                                    <option>7+ seats</option>
                                 </select>
                             </div>
                         </div>
@@ -303,7 +303,7 @@
                         <div class="col-md-12">
                             <div class="p-3 text-end bg-light">
                                 <button type="submit" class="btn btn-dark px-4">
-                                    查找我的车 <i class="fas fa-arrow-right ms-2"></i>
+                                    Find My Car <i class="fas fa-arrow-right ms-2"></i>
                                 </button>
                             </div>
                         </div>
@@ -314,15 +314,15 @@
     </div>
 </section>
 
-<!-- 订阅车辆部分 -->
+<!-- Subscription Cars Section -->
 <section id="subscription-cars" class="py-5">
     <div class="container">
         <div class="d-flex justify-content-between align-items-center mb-4">
-            <h2 class="mb-0">可订阅车辆</h2>
-            <a href="{% url 'car_list' %}" class="btn btn-outline-dark">查看所有车辆 <i class="fas fa-arrow-right ms-2"></i></a>
+            <h2 class="mb-0">Available Subscription Cars</h2>
+            <a href="{% url 'car_list' %}" class="btn btn-outline-dark">View All Cars <i class="fas fa-arrow-right ms-2"></i></a>
         </div>
         
-        <!-- 筛选器 -->
+        <!-- Filter -->
         <div class="mb-4">
             {% for option in filter_options %}
             <a href="{% url 'subscription' %}{% if option != 'ALL' %}?type={{ option }}{% endif %}" 
@@ -332,29 +332,43 @@
             {% endfor %}
         </div>
         
-        <!-- 车辆列表 -->
+        <!-- Car List -->
         <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
             {% for car in subscription_cars %}
             {% if car.type == vehicle_type or vehicle_type == 'ALL' %}
             <div class="col">
                 <div class="subscription-card">
                     {% if car.is_great_value %}
-                    <div class="great-value-badge">超值选择</div>
+                    <div class="great-value-badge">Great Value</div>
                     {% endif %}
+                    {% if 'Tesla' in car.make or 'Model 3' in car.model %}
+                    <img src="{% static 'images/pics/ts.jpg' %}" alt="Tesla Model 3" class="subscription-image">
+                    {% elif 'Nissan' in car.make or 'X-Trail' in car.model %}
+                    <img src="{% static 'images/pics/ns.jpg' %}" alt="Nissan X-Trail" class="subscription-image">
+                    {% elif 'Kia' in car.make or 'MPV' in car.model %}
+                    <img src="{% static 'images/pics/kin.jpg' %}" alt="Kia 8 seater MPV" class="subscription-image">
+                    {% elif 'Subaru' in car.make or 'Forester' in car.model %}
+                    <img src="{% static 'images/pics/sb.jpg' %}" alt="Subaru Forester" class="subscription-image">
+                    {% elif 'Mercedes' in car.make or 'C250' in car.model %}
+                    <img src="{% static 'images/pics/bz.jpg' %}" alt="Mercedes Benz C250 Travel Edition" class="subscription-image">
+                    {% elif 'MAZDA' in car.make or 'MX5' in car.model %}
+                    <img src="{% static 'images/pics/mx.jpg' %}" alt="MAZDA MX5" class="subscription-image">
+                    {% else %}
                     <img src="{{ car.image_url }}" alt="{{ car.make }} {{ car.model }}" class="subscription-image">
+                    {% endif %}
                     <div class="card-body p-4">
                         <div class="availability-badge">
-                            <i class="fas fa-check-circle"></i> 可用
+                            <i class="fas fa-check-circle"></i> Available
                         </div>
                         <p class="vehicle-make">{{ car.make }}</p>
                         <h5 class="vehicle-model">{{ car.model }}</h5>
                         <div class="d-flex justify-content-between align-items-end">
                             <div>
-                                <p class="price-label">起价</p>
+                                <p class="price-label">From</p>
                                 <p class="price-value">¥{{ car.price_per_week }}</p>
-                                <small class="text-muted">每周</small>
+                                <small class="text-muted">per week</small>
                             </div>
-                            <a href="{% url 'subscription' %}" class="btn btn-outline-warning">了解详情</a>
+                            <a href="{% url 'subscription' %}" class="btn btn-outline-warning">Learn More</a>
                         </div>
                     </div>
                 </div>
@@ -365,12 +379,12 @@
     </div>
 </section>
 
-<!-- 为什么选择我们 -->
+<!-- Why Choose Us -->
 <section class="why-choose-section">
     <div class="container">
         <div class="d-flex justify-content-between align-items-center mb-5">
-            <h2 class="mb-0">为什么选择Rush车辆订阅服务？</h2>
-            <a href="{% url 'about_us' %}" class="btn btn-link text-dark">关于我们 <i class="fas fa-arrow-right ms-1"></i></a>
+            <h2 class="mb-0">Why Choose Rush Car Subscription?</h2>
+            <a href="{% url 'about_us' %}" class="btn btn-link text-dark">About Us <i class="fas fa-arrow-right ms-1"></i></a>
         </div>
         
         <div class="row row-cols-1 row-cols-md-3 g-4 mb-5">
@@ -378,10 +392,10 @@
                 <div class="p-4 h-100">
                     <div class="d-flex align-items-center mb-3">
                         <i class="fas fa-star text-warning me-3 fa-2x"></i>
-                        <h5 class="mb-0">备受客户信赖</h5>
+                        <h5 class="mb-0">Trusted by Customers</h5>
                     </div>
                     <p class="text-muted">
-                        凭借 4.9 星的 Google 评分，我们致力于让您的用车体验尽可能愉快。这就是为什么我们不相信隐藏费用！通过 Rush 车辆订阅，没有申请费、设置费或交换费！
+                        With a 4.9-star Google rating, we strive to make your car experience as pleasant as possible. That's why we don't believe in hidden fees! With Rush Car Subscription, there are no application, setup, or swap fees!
                     </p>
                 </div>
             </div>
@@ -390,10 +404,10 @@
                 <div class="p-4 h-100">
                     <div class="d-flex align-items-center mb-3">
                         <i class="fas fa-car text-warning me-3 fa-2x"></i>
-                        <h5 class="mb-0">简单的车辆订阅模式</h5>
+                        <h5 class="mb-0">Simple Subscription Model</h5>
                     </div>
                     <p class="text-muted">
-                        Rush的全包式车辆订阅模式，不同于其他订阅服务，仅提供新车，并提供在计划结束时升级或更换到另一辆新车的选项。我们的申请流程快速，无需信用审查，也没有大额预付费用。
+                        Rush's all-inclusive car subscription model is different from others, offering only new cars and the option to upgrade or switch to another new car at the end of your plan. Our application process is fast, with no credit checks or large upfront payments.
                     </p>
                 </div>
             </div>
@@ -402,10 +416,10 @@
                 <div class="p-4 h-100">
                     <div class="d-flex align-items-center mb-3">
                         <i class="fas fa-headset text-warning me-3 fa-2x"></i>
-                        <h5 class="mb-0">专业的服务团队</h5>
+                        <h5 class="mb-0">Professional Service Team</h5>
                     </div>
                     <p class="text-muted">
-                        您可以在当天从本地Rush服务点提取您的新车。请放心，我们将在您的整个订阅期间照顾您。
+                        You can pick up your new car from a local Rush service point the same day. Rest assured, we will take care of you throughout your subscription.
                     </p>
                 </div>
             </div>
@@ -413,24 +427,24 @@
     </div>
 </section>
 
-<!-- 全包式服务内容 -->
+<!-- All-Inclusive Service Section -->
 <section class="all-inclusive-section">
     <div class="container">
         <div class="row">
             <div class="col-lg-5 mb-4 mb-lg-0">
-                <h2 class="all-inclusive-title">全包式服务是什么意思？</h2>
+                <h2 class="all-inclusive-title">What Does All-Inclusive Mean?</h2>
                 <div class="mb-4">
-                    <h5 class="mb-3">全新的用车体验</h5>
+                    <h5 class="mb-3">A Brand New Car Experience</h5>
                     <p class="text-muted">
-                        车辆的费用已包括在内。Rush确保我们的车辆始终是新的，里程限制为15,000公里，为您提供永久的新车体验。
+                        The cost of the car is included. Rush ensures our cars are always new, with a mileage limit of 15,000 km, giving you a permanent new car experience.
                     </p>
                 </div>
-                <a href="{% url 'subscription' %}" class="btn btn-dark px-4 py-2">立即咨询 <i class="fas fa-arrow-right ms-2"></i></a>
+                <a href="{% url 'subscription' %}" class="btn btn-dark px-4 py-2">Contact Us <i class="fas fa-arrow-right ms-2"></i></a>
             </div>
             
             <div class="col-lg-7">
                 <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-                    <!-- 服务项目 -->
+                    <!-- Service Items -->
                     <div class="col">
                         <div class="benefit-card">
                             <svg class="benefit-icon" style="width: 60px; height: 60px; fill: #5dcbb0;" viewBox="0 0 100 100">
@@ -438,7 +452,7 @@
                                 <circle cx="35" cy="40" r="8" fill="#5dcbb0" />
                                 <path d="M20 65 H80" stroke="#5dcbb0" stroke-width="4" />
                             </svg>
-                            <h6>新车体验</h6>
+                            <h6>New Car Experience</h6>
                         </div>
                     </div>
                     
@@ -450,7 +464,7 @@
                                 <rect x="55" y="35" width="10" height="10" fill="#5dcbb0" />
                                 <rect x="35" y="55" width="30" height="5" fill="#5dcbb0" />
                             </svg>
-                            <h6>车辆注册</h6>
+                            <h6>Vehicle Registration</h6>
                         </div>
                     </div>
                     
@@ -460,7 +474,7 @@
                                 <path d="M20 50 L40 30 L80 70 L60 90 Z" stroke="#5dcbb0" stroke-width="4" fill="none" />
                                 <path d="M60 40 L70 50" stroke="#5dcbb0" stroke-width="4" stroke-linecap="round" />
                             </svg>
-                            <h6>维护与保养</h6>
+                            <h6>Maintenance & Service</h6>
                         </div>
                     </div>
                     
@@ -472,7 +486,7 @@
                                 <path d="M30 60 Q50 30 70 60" stroke="#5dcbb0" stroke-width="4" fill="none" />
                                 <rect x="45" y="40" width="10" height="10" rx="2" fill="#5dcbb0" />
                             </svg>
-                            <h6>道路救援</h6>
+                            <h6>Roadside Assistance</h6>
                         </div>
                     </div>
                     
@@ -482,7 +496,7 @@
                                 <path d="M50 20 L85 40 L85 70 L50 90 L15 70 L15 40 Z" stroke="#5dcbb0" stroke-width="4" fill="none" />
                                 <circle cx="50" cy="55" r="10" fill="#5dcbb0" />
                             </svg>
-                            <h6>车辆保险</h6>
+                            <h6>Car Insurance</h6>
                         </div>
                     </div>
                     
@@ -492,7 +506,7 @@
                                 <rect x="20" y="20" width="30" height="60" rx="2" stroke="#5dcbb0" stroke-width="4" fill="none" />
                                 <rect x="50" y="20" width="30" height="60" rx="2" stroke="#5dcbb0" stroke-width="4" fill="none" />
                             </svg>
-                            <h6>灵活计划</h6>
+                            <h6>Flexible Plans</h6>
                         </div>
                     </div>
                     
@@ -502,7 +516,7 @@
                                 <circle cx="50" cy="50" r="30" stroke="#5dcbb0" stroke-width="4" fill="none" />
                                 <path d="M50 30 L50 50 L70 50" stroke="#5dcbb0" stroke-width="4" stroke-linecap="round" />
                             </svg>
-                            <h6>高额里程</h6>
+                            <h6>High Mileage</h6>
                         </div>
                     </div>
                     
@@ -513,7 +527,7 @@
                                 <path d="M35 50 L65 50" stroke="#5dcbb0" stroke-width="4" stroke-linecap="round" />
                                 <path d="M50 35 L50 65" stroke="#5dcbb0" stroke-width="4" stroke-linecap="round" />
                             </svg>
-                            <h6>无隐藏费用</h6>
+                            <h6>No Hidden Fees</h6>
                         </div>
                     </div>
                     
@@ -524,7 +538,7 @@
                                 <path d="M25 40 H75" stroke="#5dcbb0" stroke-width="4" />
                                 <rect x="45" y="15" width="10" height="20" fill="#5dcbb0" />
                             </svg>
-                            <h6>无长期合约</h6>
+                            <h6>No Long-Term Contracts</h6>
                         </div>
                     </div>
                 </div>
@@ -533,18 +547,18 @@
     </div>
 </section>
 
-<!-- 申请订阅服务部分 -->
+<!-- Subscription Application Section -->
 <section class="apply-section py-5 bg-light">
     <div class="container">
         <div class="row align-items-center">
             <div class="col-lg-6 mb-4 mb-lg-0">
                 <div class="car-top-view-container">
-                    <img src="{% static 'images/car-placeholder.jpg' %}" alt="车辆俯视图" class="img-fluid rounded">
+                    <img src="{% static 'images/pics/bz.jpg' %}" alt="Car Top View" class="img-fluid rounded">
                 </div>
             </div>
             <div class="col-lg-6">
-                <h2 class="mb-4">申请Rush车辆订阅服务</h2>
-                <p class="mb-4">Rush车辆订阅申请流程快速简便，就像车辆订阅服务应有的那样。无需信用审查或融资，申请可在5分钟内完成，并享有即时预审批优势。无申请费用，便捷的取消政策，您可以轻松订阅您梦想中的车辆。</p>
+                <h2 class="mb-4">Apply for Rush Car Subscription</h2>
+                <p class="mb-4">The Rush car subscription application process is quick and easy, just as a car subscription service should be. No credit checks or financing required, and you can complete your application in 5 minutes with instant pre-approval. No application fees, flexible cancellation policy, and you can easily subscribe to your dream car.</p>
                 
                 <div class="apply-steps">
                     <div class="apply-step d-flex align-items-start mb-4">
@@ -552,8 +566,8 @@
                             <i class="fas fa-clock"></i>
                         </div>
                         <div class="step-content">
-                            <h5>几分钟内完成申请</h5>
-                            <p class="text-muted">无需信用审查或融资，申请可在5分钟内完成，享有即时预审批优势。</p>
+                            <h5>Complete Application in Minutes</h5>
+                            <p class="text-muted">No credit checks or financing required, and you can complete your application in 5 minutes with instant pre-approval.</p>
                         </div>
                     </div>
                     
@@ -562,8 +576,8 @@
                             <i class="fas fa-phone-alt"></i>
                         </div>
                         <div class="step-content">
-                            <h5>我们会联系您</h5>
-                            <p class="text-muted">您的专属顾问会联系您，找到适合您需求的车辆和订阅计划。</p>
+                            <h5>We Will Contact You</h5>
+                            <p class="text-muted">Your dedicated consultant will contact you to find the car and subscription plan that suits your needs.</p>
                         </div>
                     </div>
                     
@@ -572,90 +586,90 @@
                             <i class="fas fa-car"></i>
                         </div>
                         <div class="step-content">
-                            <h5>当天取车上路</h5>
-                            <p class="text-muted">如果您选择的车辆有现货，您可以当天取车并开始您的订阅之旅！</p>
+                            <h5>Pick Up and Drive Same Day</h5>
+                            <p class="text-muted">If your chosen car is in stock, you can pick it up and start your subscription journey the same day!</p>
                         </div>
                     </div>
                 </div>
                 
                 <div class="d-flex align-items-center">
-                    <a href="#" class="btn btn-dark px-4 py-2 me-3">立即开始 <i class="fas fa-arrow-right ms-2"></i></a>
-                    <span class="text-muted small"><i class="far fa-clock me-1"></i> 5分钟完成申请</span>
+                    <a href="#" class="btn btn-dark px-4 py-2 me-3">Get Started <i class="fas fa-arrow-right ms-2"></i></a>
+                    <span class="text-muted small"><i class="far fa-clock me-1"></i> 5 minutes to complete application</span>
                 </div>
             </div>
         </div>
     </div>
 </section>
 
-<!-- 订阅对比部分 -->
+<!-- Subscription Comparison Section -->
 <section class="comparison-section py-5">
     <div class="container">
-        <h2 class="text-center mb-5">Rush订阅 VS 其他订阅 VS 租赁</h2>
+        <h2 class="text-center mb-5">Rush Subscription VS Other Subscriptions VS Rental</h2>
         
         <div class="mb-4 text-center">
-            <p class="lead">Rush车辆订阅与传统车辆租赁有显著不同，相比其他订阅服务也更具优势。与传统车辆租赁或贷款相比，Rush无入会费或高额预付费用。我们的车辆订阅服务全包、灵活且透明，是个人使用或企业车队管理的最佳选择，为您提供便捷的用车体验。</p>
+            <p class="lead">Rush car subscription is significantly different from traditional car rental and offers more advantages than other subscription services. Unlike traditional car rental or loans, Rush has no membership or high upfront fees. Our car subscription service is all-inclusive, flexible, and transparent, making it the best choice for personal use or fleet management, providing you with a convenient car experience.</p>
         </div>
         
         <div class="table-responsive">
             <table class="table comparison-table">
                 <thead>
                     <tr>
-                        <th>功能特点</th>
+                        <th>Features</th>
                         <th class="text-center bg-light">
                             <div class="d-flex justify-content-center align-items-center">
                                 <span class="me-2 fw-bold">Rush</span>
                                 <img src="{% static 'images/logo.png' %}" alt="Rush Logo" style="height: 30px;">
                             </div>
                         </th>
-                        <th class="text-center">其他订阅服务</th>
-                        <th class="text-center">传统租赁</th>
+                        <th class="text-center">Other Subscriptions</th>
+                        <th class="text-center">Traditional Rental</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td>全新车辆</td>
+                        <td>Brand New Cars</td>
                         <td class="text-center bg-light"><i class="fas fa-check-circle text-success"></i></td>
                         <td class="text-center"><i class="fas fa-times-circle text-danger"></i></td>
                         <td class="text-center"><i class="fas fa-check-circle text-success"></i></td>
                     </tr>
                     <tr>
-                        <td>无申请、注册或换车费用</td>
+                        <td>No Application, Registration, or Swap Fees</td>
                         <td class="text-center bg-light"><i class="fas fa-check-circle text-success"></i></td>
                         <td class="text-center"><i class="fas fa-times-circle text-danger"></i></td>
                         <td class="text-center"><i class="fas fa-times-circle text-danger"></i></td>
                     </tr>
                     <tr>
-                        <td>无信用审查</td>
-                        <td class="text-center bg-light"><i class="fas fa-check-circle text-success"></i></td>
-                        <td class="text-center"><i class="fas fa-check-circle text-success"></i></td>
-                        <td class="text-center"><i class="fas fa-times-circle text-danger"></i></td>
-                    </tr>
-                    <tr>
-                        <td>新车更换</td>
-                        <td class="text-center bg-light"><i class="fas fa-check-circle text-success"></i></td>
-                        <td class="text-center"><i class="fas fa-times-circle text-danger"></i></td>
-                        <td class="text-center"><i class="fas fa-times-circle text-danger"></i></td>
-                    </tr>
-                    <tr>
-                        <td>注册和保险</td>
+                        <td>No Credit Checks</td>
                         <td class="text-center bg-light"><i class="fas fa-check-circle text-success"></i></td>
                         <td class="text-center"><i class="fas fa-check-circle text-success"></i></td>
                         <td class="text-center"><i class="fas fa-times-circle text-danger"></i></td>
                     </tr>
                     <tr>
-                        <td>维护和服务</td>
+                        <td>New Car Replacement</td>
+                        <td class="text-center bg-light"><i class="fas fa-check-circle text-success"></i></td>
+                        <td class="text-center"><i class="fas fa-times-circle text-danger"></i></td>
+                        <td class="text-center"><i class="fas fa-times-circle text-danger"></i></td>
+                    </tr>
+                    <tr>
+                        <td>Registration & Insurance</td>
                         <td class="text-center bg-light"><i class="fas fa-check-circle text-success"></i></td>
                         <td class="text-center"><i class="fas fa-check-circle text-success"></i></td>
                         <td class="text-center"><i class="fas fa-times-circle text-danger"></i></td>
                     </tr>
                     <tr>
-                        <td>无长期承诺</td>
+                        <td>Maintenance & Service</td>
                         <td class="text-center bg-light"><i class="fas fa-check-circle text-success"></i></td>
                         <td class="text-center"><i class="fas fa-check-circle text-success"></i></td>
                         <td class="text-center"><i class="fas fa-times-circle text-danger"></i></td>
                     </tr>
                     <tr>
-                        <td>无隐藏费用</td>
+                        <td>No Long-Term Commitment</td>
+                        <td class="text-center bg-light"><i class="fas fa-check-circle text-success"></i></td>
+                        <td class="text-center"><i class="fas fa-check-circle text-success"></i></td>
+                        <td class="text-center"><i class="fas fa-times-circle text-danger"></i></td>
+                    </tr>
+                    <tr>
+                        <td>No Hidden Fees</td>
                         <td class="text-center bg-light"><i class="fas fa-check-circle text-success"></i></td>
                         <td class="text-center"><i class="fas fa-times-circle text-danger"></i></td>
                         <td class="text-center"><i class="fas fa-times-circle text-danger"></i></td>
