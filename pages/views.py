@@ -137,3 +137,68 @@ def subscription(request):
     }
     
     return render(request, 'pages/subscription.html', context)
+
+def subscription_car_detail(request, make, model):
+    """Subscription car detail page"""
+    # For demo, use the same subscription_cars as in subscription()
+    subscription_cars = [
+        {
+            'make': 'Hyundai',
+            'model': 'Venue',
+            'type': 'PETROL',
+            'image_url': 'https://allpicsandvideos.blob.core.windows.net/rush-car-rental-static/images/pics/ts.jpg',
+            'price_per_week': 230,
+            'is_available': True,
+            'is_great_value': True
+        },
+        {
+            'make': 'Nissan',
+            'model': 'X-Trail',
+            'type': 'PETROL',
+            'image_url': 'https://allpicsandvideos.blob.core.windows.net/rush-car-rental-static/images/pics/ns.jpg',
+            'price_per_week': 260,
+            'is_available': True,
+            'is_great_value': False
+        },
+        {
+            'make': 'Toyota',
+            'model': 'Yaris Cross Hybrid',
+            'type': 'HYBRID',
+            'image_url': 'https://allpicsandvideos.blob.core.windows.net/rush-car-rental-static/images/pics/kin.jpg',
+            'price_per_week': 279,
+            'is_available': True,
+            'is_great_value': False
+        },
+        {
+            'make': 'Suzuki',
+            'model': 'Swift',
+            'type': 'PETROL',
+            'image_url': 'https://allpicsandvideos.blob.core.windows.net/rush-car-rental-static/images/pics/sb.jpg',
+            'price_per_week': 280,
+            'is_available': True,
+            'is_great_value': False
+        },
+        {
+            'make': 'Smart',
+            'model': '#1',
+            'type': 'ELECTRIC',
+            'image_url': 'https://allpicsandvideos.blob.core.windows.net/rush-car-rental-static/images/pics/mx.jpg',
+            'price_per_week': 289,
+            'is_available': True,
+            'is_great_value': True
+        },
+        {
+            'make': 'Smart',
+            'model': '#3',
+            'type': 'ELECTRIC',
+            'image_url': 'https://allpicsandvideos.blob.core.windows.net/rush-car-rental-static/images/pics/bz.jpg',
+            'price_per_week': 299,
+            'is_available': True,
+            'is_great_value': True
+        }
+    ]
+    car = next((c for c in subscription_cars if c['make'].lower() == make.lower() and c['model'].lower() == model.lower()), None)
+    if not car:
+        from django.http import Http404
+        raise Http404('Car not found')
+    return render(request, 'pages/subscription_car_detail.html', {'car': car})

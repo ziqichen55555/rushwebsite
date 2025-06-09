@@ -22102,3 +22102,139 @@ WARNING 2025-06-09 05:10:27,421 base Session data corrupted
 INFO 2025-06-09 05:10:28,909 basehttp "GET / HTTP/1.1" 200 36487
 WARNING 2025-06-09 05:10:57,778 base Session data corrupted
 INFO 2025-06-09 05:10:59,080 basehttp "GET / HTTP/1.1" 200 36487
+INFO 2025-06-09 07:52:09,919 autoreload Watching for file changes with StatReloader
+INFO 2025-06-09 07:52:10,340 _util message='Request to Stripe api' method=get url=https://api.stripe.com/v1/account
+INFO 2025-06-09 07:52:10,537 _util message='Stripe API response' path=https://api.stripe.com/v1/account response_code=401
+INFO 2025-06-09 07:52:10,537 _util error_code=None error_message='Invalid API Key provided: sk_test_***********_key' error_param=None error_type=invalid_request_error message='Stripe v1 API error received'
+WARNING 2025-06-09 07:52:13,051 environment [ENV] 未识别的环境类型: development  # development, testing, production, 将使用默认环境
+WARNING 2025-06-09 07:52:13,051 environment [ENV] 未识别的环境类型: development  # development, testing, production, 将使用默认环境
+WARNING 2025-06-09 07:52:15,291 base Session data corrupted
+INFO 2025-06-09 07:52:15,295 basehttp "GET /subscription/ HTTP/1.1" 200 44225
+WARNING 2025-06-09 07:52:26,121 base Session data corrupted
+INFO 2025-06-09 07:52:26,122 basehttp "GET /subscription/Nissan/X-Trail/ HTTP/1.1" 200 10893
+WARNING 2025-06-09 07:52:42,589 base Session data corrupted
+INFO 2025-06-09 07:52:42,594 basehttp "GET /subscription/Smart/%233/ HTTP/1.1" 200 10987
+WARNING 2025-06-09 07:56:41,300 base Session data corrupted
+INFO 2025-06-09 07:56:41,304 basehttp "GET /subscription/Smart/%233/ HTTP/1.1" 200 18637
+WARNING 2025-06-09 07:57:22,050 base Session data corrupted
+INFO 2025-06-09 07:57:22,070 basehttp "GET /subscription/Smart/%233/ HTTP/1.1" 200 18692
+WARNING 2025-06-09 07:58:14,446 base Session data corrupted
+INFO 2025-06-09 07:58:14,451 basehttp "GET /subscription/Smart/%233/ HTTP/1.1" 200 18494
+WARNING 2025-06-09 08:08:28,806 base Session data corrupted
+ERROR 2025-06-09 08:08:28,834 log Internal Server Error: /subscription/Smart/#3/
+Traceback (most recent call last):
+  File "/Users/chrischan/RushRental-1/venv/lib/python3.13/site-packages/django/template/base.py", line 510, in parse
+    compile_func = self.tags[command]
+                   ~~~~~~~~~^^^^^^^^^
+KeyError: 'endblock'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/chrischan/RushRental-1/venv/lib/python3.13/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/Users/chrischan/RushRental-1/venv/lib/python3.13/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Users/chrischan/RushRental-1/pages/views.py", line 204, in subscription_car_detail
+    return render(request, 'pages/subscription_car_detail.html', {'car': car})
+  File "/Users/chrischan/RushRental-1/venv/lib/python3.13/site-packages/django/shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "/Users/chrischan/RushRental-1/venv/lib/python3.13/site-packages/django/template/loader.py", line 61, in render_to_string
+    template = get_template(template_name, using=using)
+  File "/Users/chrischan/RushRental-1/venv/lib/python3.13/site-packages/django/template/loader.py", line 15, in get_template
+    return engine.get_template(template_name)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "/Users/chrischan/RushRental-1/venv/lib/python3.13/site-packages/django/template/backends/django.py", line 79, in get_template
+    return Template(self.engine.get_template(template_name), self)
+                    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "/Users/chrischan/RushRental-1/venv/lib/python3.13/site-packages/django/template/engine.py", line 177, in get_template
+    template, origin = self.find_template(template_name)
+                       ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "/Users/chrischan/RushRental-1/venv/lib/python3.13/site-packages/django/template/engine.py", line 159, in find_template
+    template = loader.get_template(name, skip=skip)
+  File "/Users/chrischan/RushRental-1/venv/lib/python3.13/site-packages/django/template/loaders/cached.py", line 57, in get_template
+    template = super().get_template(template_name, skip)
+  File "/Users/chrischan/RushRental-1/venv/lib/python3.13/site-packages/django/template/loaders/base.py", line 28, in get_template
+    return Template(
+        contents,
+    ...<2 lines>...
+        self.engine,
+    )
+  File "/Users/chrischan/RushRental-1/venv/lib/python3.13/site-packages/django/template/base.py", line 154, in __init__
+    self.nodelist = self.compile_nodelist()
+                    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "/Users/chrischan/RushRental-1/venv/lib/python3.13/site-packages/django/template/base.py", line 196, in compile_nodelist
+    nodelist = parser.parse()
+  File "/Users/chrischan/RushRental-1/venv/lib/python3.13/site-packages/django/template/base.py", line 518, in parse
+    raise self.error(token, e)
+  File "/Users/chrischan/RushRental-1/venv/lib/python3.13/site-packages/django/template/base.py", line 516, in parse
+    compiled_result = compile_func(self, token)
+  File "/Users/chrischan/RushRental-1/venv/lib/python3.13/site-packages/django/template/loader_tags.py", line 299, in do_extends
+    nodelist = parser.parse()
+  File "/Users/chrischan/RushRental-1/venv/lib/python3.13/site-packages/django/template/base.py", line 512, in parse
+    self.invalid_block_tag(token, command, parse_until)
+    ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/chrischan/RushRental-1/venv/lib/python3.13/site-packages/django/template/base.py", line 577, in invalid_block_tag
+    raise self.error(
+    ...<3 lines>...
+    )
+django.template.exceptions.TemplateSyntaxError: Invalid block tag on line 176: 'endblock'. Did you forget to register or load this tag?
+ERROR 2025-06-09 08:08:28,839 basehttp "GET /subscription/Smart/%233/ HTTP/1.1" 500 174330
+WARNING 2025-06-09 08:08:41,401 base Session data corrupted
+INFO 2025-06-09 08:08:41,405 basehttp "GET /subscription/Smart/%233/ HTTP/1.1" 200 15820
+WARNING 2025-06-09 08:09:39,311 base Session data corrupted
+INFO 2025-06-09 08:09:39,312 basehttp "GET /subscription/Smart/%233/ HTTP/1.1" 200 15818
+WARNING 2025-06-09 08:09:59,227 base Session data corrupted
+INFO 2025-06-09 08:09:59,233 basehttp "GET /subscription/Smart/%233/ HTTP/1.1" 200 15820
+WARNING 2025-06-09 08:10:19,843 base Session data corrupted
+INFO 2025-06-09 08:10:19,853 basehttp "GET /subscription/ HTTP/1.1" 200 44225
+WARNING 2025-06-09 08:10:27,387 base Session data corrupted
+INFO 2025-06-09 08:10:27,392 basehttp "GET /subscription/Smart/%231/ HTTP/1.1" 200 15820
+WARNING 2025-06-09 08:11:51,665 base Session data corrupted
+INFO 2025-06-09 08:11:51,672 basehttp "GET /subscription/Smart/%231/ HTTP/1.1" 200 15802
+WARNING 2025-06-09 08:14:19,432 base Session data corrupted
+INFO 2025-06-09 08:14:19,441 basehttp "GET /subscription/Smart/%231/ HTTP/1.1" 200 15815
+WARNING 2025-06-09 08:14:40,276 base Session data corrupted
+INFO 2025-06-09 08:14:40,281 basehttp "GET /subscription/Smart/%231/ HTTP/1.1" 200 15804
+WARNING 2025-06-09 08:19:11,579 base Session data corrupted
+INFO 2025-06-09 08:19:11,582 basehttp "GET /subscription/Smart/%231/ HTTP/1.1" 200 17221
+WARNING 2025-06-09 08:27:35,508 base Session data corrupted
+INFO 2025-06-09 08:27:35,514 basehttp "GET /subscription/Smart/%231/ HTTP/1.1" 200 23891
+WARNING 2025-06-09 08:45:16,298 base Session data corrupted
+INFO 2025-06-09 08:45:16,304 basehttp "GET /subscription/Smart/%231/ HTTP/1.1" 200 30494
+WARNING 2025-06-09 08:46:20,263 base Session data corrupted
+INFO 2025-06-09 08:46:20,268 basehttp "GET /subscription/Smart/%231/?car_type=ridesharing&duration=unemployed&budget=1500-2000&city=%2450%2C000+-+%2475%2C000&seats=Newcastle&brand=Subaru&fuel_type=Diesel&preference=Comfortable&start_date=2025-05-01&comments=&full_name=%E4%BB%8E&email=test%40test.com&phone=1223&contact_method=Email HTTP/1.1" 200 30494
+WARNING 2025-06-09 08:46:22,403 base Session data corrupted
+INFO 2025-06-09 08:46:22,405 basehttp "GET /subscription/Smart/%231/?car_type=ridesharing&duration=unemployed&budget=1500-2000&city=%2450%2C000+-+%2475%2C000&seats=Newcastle&brand=Subaru&fuel_type=Diesel&preference=Comfortable&start_date=2025-05-01&comments=&full_name=%E4%BB%8E&email=test%40test.com&phone=1223&contact_method=Email HTTP/1.1" 200 30494
+WARNING 2025-06-09 08:47:06,922 base Session data corrupted
+INFO 2025-06-09 08:47:06,926 basehttp "GET /subscription/ HTTP/1.1" 200 44225
+WARNING 2025-06-09 08:47:15,481 base Session data corrupted
+INFO 2025-06-09 08:47:15,488 basehttp "GET /subscription/? HTTP/1.1" 200 44225
+WARNING 2025-06-09 08:47:22,013 base Session data corrupted
+INFO 2025-06-09 08:47:22,015 basehttp "GET /subscription/Smart/%231/ HTTP/1.1" 200 31014
+WARNING 2025-06-09 08:52:52,600 base Session data corrupted
+INFO 2025-06-09 08:52:52,602 basehttp "GET /subscription/Smart/%231/ HTTP/1.1" 200 31911
+WARNING 2025-06-09 08:53:26,450 base Session data corrupted
+INFO 2025-06-09 08:53:26,452 basehttp "GET /subscription/Smart/%231/ HTTP/1.1" 200 31911
+WARNING 2025-06-09 08:54:33,870 base Session data corrupted
+INFO 2025-06-09 08:54:33,875 basehttp "GET /subscription/Smart/%231/ HTTP/1.1" 200 31860
+WARNING 2025-06-09 08:54:45,553 base Session data corrupted
+INFO 2025-06-09 08:54:45,559 basehttp "GET /subscription/ HTTP/1.1" 200 44225
+WARNING 2025-06-09 08:54:50,876 base Session data corrupted
+INFO 2025-06-09 08:54:50,879 basehttp "GET /subscription/Toyota/Yaris%20Cross%20Hybrid/ HTTP/1.1" 200 31829
+WARNING 2025-06-09 09:02:03,118 base Session data corrupted
+INFO 2025-06-09 09:02:03,124 basehttp "GET /subscription/Toyota/Yaris%20Cross%20Hybrid/ HTTP/1.1" 200 33135
+WARNING 2025-06-09 09:03:54,699 base Session data corrupted
+INFO 2025-06-09 09:03:54,701 basehttp "GET /subscription/Toyota/Yaris%20Cross%20Hybrid/ HTTP/1.1" 200 33135
+WARNING 2025-06-09 09:04:28,419 base Session data corrupted
+INFO 2025-06-09 09:04:28,424 basehttp "GET /subscription/Toyota/Yaris%20Cross%20Hybrid/ HTTP/1.1" 200 33910
+WARNING 2025-06-09 09:08:35,066 base Session data corrupted
+INFO 2025-06-09 09:08:35,070 basehttp "GET /subscription/Toyota/Yaris%20Cross%20Hybrid/ HTTP/1.1" 200 33838
+WARNING 2025-06-09 09:19:19,892 base Session data corrupted
+INFO 2025-06-09 09:19:19,894 basehttp "GET /subscription/Toyota/Yaris%20Cross%20Hybrid/ HTTP/1.1" 200 33921
+WARNING 2025-06-09 10:21:47,317 base Session data corrupted
+INFO 2025-06-09 10:21:47,319 basehttp "GET /subscription/Toyota/Yaris%20Cross%20Hybrid/ HTTP/1.1" 200 33829
+WARNING 2025-06-09 10:22:19,057 base Session data corrupted
+INFO 2025-06-09 10:22:19,060 basehttp "GET /subscription/Toyota/Yaris%20Cross%20Hybrid/ HTTP/1.1" 200 33829
+WARNING 2025-06-09 10:23:17,989 base Session data corrupted
+INFO 2025-06-09 10:23:17,994 basehttp "GET /subscription/Toyota/Yaris%20Cross%20Hybrid/ HTTP/1.1" 200 33829

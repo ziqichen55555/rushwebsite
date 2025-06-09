@@ -367,7 +367,7 @@
                                 <p class="price-value">¥{{ car.price_per_week }}</p>
                                 <small class="text-muted">per week</small>
                             </div>
-                            <a href="{% url 'subscription' %}" class="btn btn-outline-warning">Learn More</a>
+                            <a href="{% url 'subscription_car_detail' car.make car.model %}" class="btn btn-outline-warning">Learn More</a>
                         </div>
                     </div>
                 </div>

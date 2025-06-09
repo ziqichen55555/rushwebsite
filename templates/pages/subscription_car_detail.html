@@ -1,0 +1,515 @@
+{% extends 'base.html' %}
+{% block title %}{{ car.make }} {{ car.model }} Subscription - Rush Car Rental{% endblock %}
+
+{% block content %}
+<div class="bg-light py-3">
+    <div class="container">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb mb-0">
+                <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
+                <li class="breadcrumb-item"><a href="{% url 'subscription' %}">Subscription</a></li>
+                <li class="breadcrumb-item active" aria-current="page">{{ car.make }} {{ car.model }}</li>
+            </ol>
+        </nav>
+    </div>
+</div>
+
+<section class="py-5">
+    <div class="container">
+        <div class="row">
+            <!-- Left: Vehicle Info -->
+            <div class="col-lg-8">
+                <!-- Vehicle Image -->
+                <div class="card shadow-sm mb-4">
+                    <img src="{{ car.image_url }}" class="card-img-top" alt="{{ car.make }} {{ car.model }}" style="height: 300px; object-fit: cover; border-radius: 0.75rem;">
+                    <span class="badge bg-warning text-dark position-absolute top-0 start-0 m-3">Available Now</span>
+                </div>
+
+                <!-- Vehicle Description -->
+                <div class="card shadow-sm mb-4">
+                    <div class="card-body">
+                        <h1 class="card-title">{{ car.make }} {{ car.model }}({{car.location}})</h1>
+                        <p class="text-muted mb-2">Type: {{ car.type }}</p>
+                        {% if car.is_great_value %}
+                        <span class="badge bg-warning text-dark mb-3">Great Value</span>
+                        {% endif %}
+                        <h5 class="border-bottom pb-2 mb-3 mt-4">Description</h5>
+                        <p>{{ car.description }}</p>
+                    </div>
+                </div>
+
+                <!-- Vehicle Specifications -->
+                <div class="card shadow-sm mb-4">
+                    <div class="card-body">
+                        <h5 class="border-bottom pb-2 mb-3">Vehicle Specifications</h5>
+                        <div class="row g-3">
+                            <div class="col-6 col-md-4">
+                                <div class="spec-card p-3 bg-light rounded text-center h-100">
+                                    <div class="fw-bold mb-1">Drive Type</div>
+                                    <div>{{ car.drive_type }}</div>
+                                </div>
+                            </div>
+                            <div class="col-6 col-md-4">
+                                <div class="spec-card p-3 bg-light rounded text-center h-100">
+                                    <div class="fw-bold mb-1">Model</div>
+                                    <div>{{ car.model }}</div>
+                                </div>
+                            </div>
+                            <div class="col-6 col-md-4">
+                                <div class="spec-card p-3 bg-light rounded text-center h-100">
+                                    <div class="fw-bold mb-1">Year</div>
+                                    <div>{{ car.year }}</div>
+                                </div>
+                            </div>
+                            <div class="col-6 col-md-4">
+                                <div class="spec-card p-3 bg-light rounded text-center h-100">
+                                    <div class="fw-bold mb-1">Mileage</div>
+                                    <div>{{ car.mileage }}</div>
+                                </div>
+                            </div>
+                            <div class="col-6 col-md-4">
+                                <div class="spec-card p-3 bg-light rounded text-center h-100">
+                                    <div class="fw-bold mb-1">Fuel Type</div>
+                                    <div>{{ car.fuel_type }}</div>
+                                </div>
+                            </div>
+                            <div class="col-6 col-md-4">
+                                <div class="spec-card p-3 bg-light rounded text-center h-100">
+                                    <div class="fw-bold mb-1">Transmission</div>
+                                    <div>{{ car.transmission }}</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right: Subscription Plans -->
+            <div class="col-lg-4">
+                <div class="card shadow-sm mb-4 sticky-top" style="top: 20px; z-index: 999;">
+                    <div class="card-header bg-warning text-dark">
+                        <h5 class="card-title mb-0">Subscription Plans</h5>
+                    </div>
+                    <div class="card-body">
+                        <!-- BEST VALUE -->
+                        <div class="plan-card mb-4 border border-success rounded p-3 plan-select" data-value="BEST VALUE">
+                            <span class="badge bg-success position-absolute top-0 start-0 m-2">BEST VALUE</span>
+                            <div class="d-flex align-items-baseline mb-2">
+                                <span class="display-6 fw-bold me-2">${{ car.price_9_months }}</span>
+                                <span class="text-muted">PER WEEK</span>
+                            </div>
+                            <ul class="list-unstyled mb-0">
+                                <li>• 9 months minimum term Subscription</li>
+                                <li>• 385 km weekly mileage included (30c per excess KM)</li>
+                                <li>• 1x primary driver</li>
+                            </ul>
+                        </div>
+                        <!-- POPULAR -->
+                        <div class="plan-card mb-4 border border-primary rounded p-3 plan-select" data-value="POPULAR">
+                            <span class="badge bg-primary position-absolute top-0 start-0 m-2">POPULAR</span>
+                            <div class="d-flex align-items-baseline mb-2">
+                                <span class="display-6 fw-bold me-2">${{ car.price_6_months }}</span>
+                                <span class="text-muted">PER WEEK</span>
+                            </div>
+                            <ul class="list-unstyled mb-0">
+                                <li>• 6 months minimum term Subscription</li>
+                                <li>• 385 km weekly mileage included (30c per excess KM)</li>
+                                <li>• 1x primary driver</li>
+                            </ul>
+                        </div>
+                        <!-- MOST FLEXIBLE -->
+                        <div class="plan-card mb-4 border border-warning rounded p-3 plan-select" data-value="MOST FLEXIBLE">
+                            <span class="badge bg-warning text-dark position-absolute top-0 start-0 m-2">MOST FLEXIBLE</span>
+                            <div class="d-flex align-items-baseline mb-2">
+                                <span class="display-6 fw-bold me-2">${{ car.price_3_months }}</span>
+                                <span class="text-muted">PER WEEK</span>
+                            </div>
+                            <ul class="list-unstyled mb-0">
+                                <li>• 3 months minimum term Subscription</li>
+                                <li>• 385 km weekly mileage included (30c per excess KM)</li>
+                                <li>• 1x primary driver</li>
+                            </ul>
+                        </div>
+                        <input type="hidden" id="selectedPlan" name="selected_plan" required>
+                        <!-- Enquiry Button -->
+                        <a href="#" id="startInquiryBtn" class="btn btn-warning w-100 mb-2 disabled" data-bs-toggle="modal" data-bs-target="#subscriptionInquiryModal">Start Subscription Inquiry</a>
+                        <a href="{% url 'subscription' %}" class="btn btn-outline-secondary w-100">Back to List</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Modal for Subscription Inquiry -->
+<div class="modal fade" id="subscriptionInquiryModal" tabindex="-1" aria-labelledby="subscriptionInquiryModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="subscriptionInquiryModalLabel">Subscription Inquiry</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form id="subscriptionInquiryForm">
+          <div id="inquiry-steps">
+            <!-- Step 1 -->
+            <div class="inquiry-step" data-step="1">
+              <div class="mb-4">
+                <label class="form-label fw-bold">1. What are you looking for?</label>
+                <div class="row g-3">
+                  <div class="col-12 col-md-6 col-lg-4">
+                    <div class="option-card" data-value="ridesharing">A car for ridesharing (uber driving)</div>
+                  </div>
+                  <div class="col-12 col-md-6 col-lg-4">
+                    <div class="option-card" data-value="daily use">A car for daily use (family use or personal use)</div>
+                  </div>
+                  <div class="col-12 col-md-6 col-lg-4">
+                    <div class="option-card" data-value="fleet">A fleet of more than 5 cars</div>
+                  </div>
+                  <div class="col-12 col-md-6 col-lg-4">
+                    <div class="option-card" data-value="Other">Other</div>
+                  </div>
+                </div>
+                <input type="hidden" name="car_type" required>
+              </div>
+            </div>
+            <!-- Step 2 -->
+            <div class="inquiry-step d-none" data-step="2">
+              <div class="mb-4">
+                <label class="form-label fw-bold">2. Employment status?</label>
+                <div class="row g-3">
+                  <div class="col-6 col-md-4"><div class="option-card" data-value="full-time">Full time</div></div>
+                  <div class="col-6 col-md-4"><div class="option-card" data-value="part-time">Part time</div></div>
+                  <div class="col-6 col-md-4"><div class="option-card" data-value="casual">Casual</div></div>
+                  <div class="col-6 col-md-4"><div class="option-card" data-value="self-employed">Self employed</div></div>
+                  <div class="col-6 col-md-4"><div class="option-card" data-value="unemployed">Unemployed</div></div>
+                  <div class="col-6 col-md-4"><div class="option-card" data-value="retired">Retired</div></div>
+                  <div class="col-6 col-md-4"><div class="option-card" data-value="other">Other</div></div>
+                </div>
+                <input type="hidden" name="duration" required>
+              </div>
+            </div>
+            <!-- Step 3 -->
+            <div class="inquiry-step d-none" data-step="3">
+              <div class="mb-4">
+                <label class="form-label fw-bold">3. What is your estimated monthly budget? (AUD)</label>
+                <div class="row g-3">
+                  <div class="col-6 col-md-4"><div class="option-card" data-value="Below 1000">Below $1000</div></div>
+                  <div class="col-6 col-md-4"><div class="option-card" data-value="1000-1500">$1000 - $1500</div></div>
+                  <div class="col-6 col-md-4"><div class="option-card" data-value="1500-2000">$1500 - $2000</div></div>
+                  <div class="col-6 col-md-4"><div class="option-card" data-value="2000+">$2000+</div></div>
+                </div>
+                <input type="hidden" name="budget" required>
+              </div>
+            </div>
+            <!-- Step 4 -->
+            <div class="inquiry-step d-none" data-step="4">
+              <div class="mb-4">
+                <label class="form-label fw-bold">4. Annual pre-tax income?</label>
+                <div class="row g-3">
+                  <div class="col-6 col-md-4"><div class="option-card" data-value="under $50k">under $50k</div></div>
+                  <div class="col-6 col-md-4"><div class="option-card" data-value="$50,000 - $75,000">$50k - $75k</div></div>
+                  <div class="col-6 col-md-4"><div class="option-card" data-value="$75,000 - $100,000">$75k - $100k</div></div>
+                  <div class="col-6 col-md-4"><div class="option-card" data-value="$100,000 - $150,000">$100k - $150k</div></div>
+                  <div class="col-6 col-md-4"><div class="option-card" data-value="over $200,000">over $200k</div></div>
+                </div>
+                <input type="hidden" name="city" required>
+              </div>
+            </div>
+            <!-- Step 5 -->
+            <div class="inquiry-step d-none" data-step="5">
+              <div class="mb-4">
+                <label class="form-label fw-bold">5. Where do you live?</label>
+                <div class="row g-3">
+                  <div class="col-6 col-md-4"><div class="option-card" data-value="Sydney">Sydney</div></div>
+                  <div class="col-6 col-md-4"><div class="option-card" data-value="Melbourne">Melbourne</div></div>
+                  <div class="col-6 col-md-4"><div class="option-card" data-value="Brisbane">Brisbane</div></div>
+                  <div class="col-6 col-md-4"><div class="option-card" data-value="Perth">Perth</div></div>
+                  <div class="col-6 col-md-4"><div class="option-card" data-value="Adelaide">Adelaide</div></div>
+                  <div class="col-6 col-md-4"><div class="option-card" data-value="Hobart">Hobart</div></div>
+                  <div class="col-6 col-md-4"><div class="option-card" data-value="Darwin">Darwin</div></div>
+                  <div class="col-6 col-md-4"><div class="option-card" data-value="Canberra">Canberra</div></div>
+                  <div class="col-6 col-md-4"><div class="option-card" data-value="Newcastle">Newcastle</div></div>
+                  <div class="col-6 col-md-4"><div class="option-card" data-value="Wollongong">Wollongong</div></div>
+                  <div class="col-6 col-md-4"><div class="option-card" data-value="Gold Coast">Gold Coast</div></div>
+                  <div class="col-6 col-md-4"><div class="option-card" data-value="Sunshine Coast">Sunshine Coast</div></div>
+                  <div class="col-6 col-md-4"><div class="option-card" data-value="Other">Other</div></div>
+                </div>
+                <input type="hidden" name="seats" required>
+              </div>
+            </div>
+            <!-- Step 6 -->
+            <div class="inquiry-step d-none" data-step="6">
+              <div class="mb-4">
+                <label class="form-label fw-bold">6. Do you have a preferred car brand?</label>
+                <div class="row g-3">
+                  <div class="col-6 col-md-4"><div class="option-card" data-value="Toyota">Toyota</div></div>
+                  <div class="col-6 col-md-4"><div class="option-card" data-value="Nissan">Nissan</div></div>
+                  <div class="col-6 col-md-4"><div class="option-card" data-value="Hyundai">Hyundai</div></div>
+                  <div class="col-6 col-md-4"><div class="option-card" data-value="Kia">Kia</div></div>
+                  <div class="col-6 col-md-4"><div class="option-card" data-value="Mazda">Mazda</div></div>
+                  <div class="col-6 col-md-4"><div class="option-card" data-value="Subaru">Subaru</div></div>
+                  <div class="col-6 col-md-4"><div class="option-card" data-value="Mercedes">Mercedes</div></div>
+                  <div class="col-6 col-md-4"><div class="option-card" data-value="Other">Other</div></div>
+                  <div class="col-6 col-md-4"><div class="option-card" data-value="">No preference</div></div>
+                </div>
+                <input type="hidden" name="brand" required>
+              </div>
+            </div>
+            <!-- Step 7 -->
+            <div class="inquiry-step d-none" data-step="7">
+              <div class="mb-4">
+                <label class="form-label fw-bold">7. Fuel type?</label>
+                <div class="row g-3">
+                  <div class="col-6 col-md-4"><div class="option-card" data-value="Petrol">Petrol</div></div>
+                  <div class="col-6 col-md-4"><div class="option-card" data-value="Diesel">Diesel</div></div>
+                  <div class="col-6 col-md-4"><div class="option-card" data-value="Electric">Electric</div></div>
+                  <div class="col-6 col-md-4"><div class="option-card" data-value="Hybrid">Hybrid</div></div>
+                  <div class="col-6 col-md-4"><div class="option-card" data-value="">No preference</div></div>
+                </div>
+                <input type="hidden" name="fuel_type" required>
+              </div>
+            </div>
+            <!-- Step 8 -->
+            <div class="inquiry-step d-none" data-step="8">
+              <div class="mb-4">
+                <label class="form-label fw-bold">8. I would like it to be:</label>
+                <div class="row g-3">
+                  <div class="col-6 col-md-4"><div class="option-card" data-value="Affordable">Affordable</div></div>
+                  <div class="col-6 col-md-4"><div class="option-card" data-value="Comfortable">Comfortable</div></div>
+                  <div class="col-6 col-md-4"><div class="option-card" data-value="Luxury">Luxury</div></div>
+                  <div class="col-6 col-md-4"><div class="option-card" data-value="Other">Other</div></div>
+                </div>
+                <input type="hidden" name="preference" required>
+              </div>
+            </div>
+            <!-- Step 9 -->
+            <div class="inquiry-step d-none" data-step="9">
+              <div class="mb-4">
+                <label class="form-label fw-bold">9. When do you want to start your subscription?</label>
+                <input type="date" class="form-control" name="start_date">
+              </div>
+            </div>
+            <!-- Step 10 -->
+            <div class="inquiry-step d-none" data-step="10">
+              <div class="mb-4">
+                <label class="form-label fw-bold">10. Any special requirements or comments?</label>
+                <textarea class="form-control" name="comments" rows="3" placeholder="Please specify if you have any special needs or requests."></textarea>
+              </div>
+            </div>
+            <!-- Step 11: Customer Info -->
+            <div class="inquiry-step d-none" data-step="11">
+              <h5 class="mb-3">Your Contact Information</h5>
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label class="form-label">Full Name *</label>
+                  <input type="text" class="form-control" name="full_name" required>
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label class="form-label">Email Address *</label>
+                  <input type="email" class="form-control" name="email" required>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label class="form-label">Phone Number *</label>
+                  <input type="tel" class="form-control" name="phone" required>
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label class="form-label">Preferred Contact Method</label>
+                  <select class="form-select" name="contact_method">
+                    <option value="Email">Email</option>
+                    <option value="Phone">Phone</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="d-flex justify-content-between mt-4">
+            <button type="button" class="btn btn-outline-secondary" id="inquiryPrevBtn" disabled>Previous</button>
+            <button type="button" class="btn btn-warning" id="inquiryNextBtn" disabled>Next</button>
+            <button type="submit" class="btn btn-success d-none" id="inquirySubmitBtn">Submit Inquiry</button>
+          </div>
+        </form>
+
+      </div>
+    </div>
+  </div>
+</div>
+<!-- 全局感谢提醒 -->
+<div id="globalThankYou" class="d-none position-fixed top-50 start-50 translate-middle bg-white shadow-lg rounded p-4 text-center" style="z-index: 2000; min-width: 320px;">
+  <h4 class="mb-0">Thank you for your inquiry. Our team will contact you soon.</h4>
+</div>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+.spec-card {
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    transition: box-shadow 0.2s;
+}
+.spec-card:hover {
+    box-shadow: 0 4px 16px rgba(0,0,0,0.10);
+    background: #fffbe6;
+}
+.option-card {
+  border: 2px solid #eee;
+  border-radius: 0.75rem;
+  background: #f8f9fa;
+  padding: 1.2rem 1rem;
+  text-align: center;
+  cursor: pointer;
+  font-weight: 500;
+  transition: border-color 0.2s, background 0.2s, color 0.2s;
+  user-select: none;
+}
+.option-card.selected, .option-card:active {
+  border-color: #ffdd00;
+  background: #fffbe6;
+  color: #333;
+}
+.option-card:hover {
+  border-color: #ffd000;
+}
+.plan-card {
+  background: #fff;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  min-height: 180px;
+  cursor: pointer;
+  border-width: 2px;
+  transition: box-shadow 0.2s, background 0.2s, border-color 0.2s;
+}
+.plan-card:hover {
+  box-shadow: 0 4px 16px rgba(0,0,0,0.10);
+  background: #fffbe6;
+  border-color: #ffdd00 !important;
+}
+.plan-card.selected {
+  border-color: #ffdd00 !important;
+  background: #fffbe6;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+}
+.plan-card .badge {
+  font-size: 0.95rem;
+  padding: 0.5em 1em;
+  border-radius: 0.5em;
+}
+</style>
+{% endblock %}
+
+{% block extra_js %}
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  let currentStep = 1;
+  const totalSteps = 11;
+  const steps = document.querySelectorAll('.inquiry-step');
+  const prevBtn = document.getElementById('inquiryPrevBtn');
+  const nextBtn = document.getElementById('inquiryNextBtn');
+  const submitBtn = document.getElementById('inquirySubmitBtn');
+
+  function showStep(step) {
+    steps.forEach((el) => {
+      el.classList.add('d-none');
+      if (parseInt(el.dataset.step) === step) {
+        el.classList.remove('d-none');
+      }
+    });
+    prevBtn.disabled = step === 1;
+    // Next按钮在选项未选时禁用
+    if (step <= 8) {
+      nextBtn.disabled = true;
+    } else {
+      nextBtn.disabled = false;
+    }
+    nextBtn.classList.toggle('d-none', step === totalSteps);
+    submitBtn.classList.toggle('d-none', step !== totalSteps);
+  }
+
+  // 选项卡片点击逻辑
+  document.querySelectorAll('.inquiry-step').forEach(function(stepDiv) {
+    stepDiv.addEventListener('click', function(e) {
+      if (e.target.classList.contains('option-card')) {
+        // 取消所有选中
+        stepDiv.querySelectorAll('.option-card').forEach(card => card.classList.remove('selected'));
+        // 选中当前
+        e.target.classList.add('selected');
+        // 设置隐藏input的值
+        const input = stepDiv.querySelector('input[type="hidden"]');
+        if (input) {
+          input.value = e.target.getAttribute('data-value');
+        }
+        // 启用Next按钮
+        nextBtn.disabled = false;
+      }
+    });
+  });
+
+  // 进入每一步时判断是否已选
+  function checkStepSelected(step) {
+    if (step <= 8) {
+      const stepDiv = document.querySelector('.inquiry-step[data-step="' + step + '"]');
+      const input = stepDiv.querySelector('input[type="hidden"]');
+      nextBtn.disabled = !input || !input.value;
+    } else {
+      nextBtn.disabled = false;
+    }
+  }
+
+  nextBtn.addEventListener('click', function() {
+    if (currentStep < totalSteps) {
+      currentStep++;
+      showStep(currentStep);
+      checkStepSelected(currentStep);
+    }
+  });
+  prevBtn.addEventListener('click', function() {
+    if (currentStep > 1) {
+      currentStep--;
+      showStep(currentStep);
+      checkStepSelected(currentStep);
+    }
+  });
+  showStep(currentStep);
+  checkStepSelected(currentStep);
+
+  document.getElementById('subscriptionInquiryForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    // 关闭modal
+    const modal = bootstrap.Modal.getOrCreateInstance(document.getElementById('subscriptionInquiryModal'));
+    modal.hide();
+    // 显示全局感谢提醒
+    const globalThankYou = document.getElementById('globalThankYou');
+    globalThankYou.classList.remove('d-none');
+    setTimeout(function() {
+      globalThankYou.classList.add('d-none');
+    }, 3000);
+    // 重置表单和ThankYou内容
+    document.getElementById('subscriptionInquiryForm').reset();
+    document.getElementById('inquiryThankYou').classList.add('d-none');
+    document.getElementById('subscriptionInquiryForm').classList.remove('d-none');
+  });
+
+  // Plan select logic
+  const planCards = document.querySelectorAll('.plan-select');
+  const planInput = document.getElementById('selectedPlan');
+  const startBtn = document.getElementById('startInquiryBtn');
+  planCards.forEach(card => {
+    card.addEventListener('click', function() {
+      planCards.forEach(c => c.classList.remove('selected'));
+      card.classList.add('selected');
+      planInput.value = card.getAttribute('data-value');
+      startBtn.classList.remove('disabled');
+      startBtn.removeAttribute('aria-disabled');
+    });
+  });
+  // 禁止未选中时点击
+  startBtn.addEventListener('click', function(e) {
+    if (!planInput.value) {
+      e.preventDefault();
+      return false;
+    }
+  });
+});
+</script>
+{% endblock %}
