@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load custom_filters %}
 
 {% block title %}Car Subscription - Rush Car Rental{% endblock %}
 
@@ -248,67 +249,49 @@
         </div>
         
         <div class="row">
-            <div class="col-lg-10 mx-auto">
-                <form class="car-search-form bg-white p-0 rounded shadow">
-                    <div class="row g-0">
-                        <div class="col-md-3">
-                            <div class="form-group p-3 border-end">
-                                <label class="small fw-bold mb-2">Pick-up Location</label>
-                                <select class="form-select border-0">
-                                    <option>Brisbane</option>
-                                    <option>Sydney</option>
-                                    <option>Melbourne</option>
-                                    <option>Perth</option>
-                                    <option>Adelaide</option>
-                                </select>
-                            </div>
+            <div class="col-12">
+                <div class="filter-section p-3 bg-white rounded shadow-sm">
+                    <form id="filterForm" class="row g-3">
+                        <!-- Pickup Location Filter -->
+                        <div class="col-md-4">
+                            <label for="pickup_location" class="form-label">Pickup Location</label>
+                            <select class="form-select" id="pickup_location" name="pickup_location">
+                                <option value="">All Locations</option>
+                                {% for location in locations %}
+                                <option value="{{ location.name }}" {% if location.name == selected_location %}selected{% endif %}>
+                                    {{ location.name }}
+                                </option>
+                                {% endfor %}
+                            </select>
                         </div>
-                        <div class="col-md-3">
-                            <div class="form-group p-3 border-end">
-                                <label class="small fw-bold mb-2">Body Type</label>
-                                <select class="form-select border-0">
-                                    <option>All</option>
-                                    <option>Sedan</option>
-                                    <option>SUV</option>
-                                    <option>MPV</option>
-                                    <option>Compact</option>
-                                </select>
-                            </div>
+                        
+                        <!-- Fuel Type Filter -->
+                        <div class="col-md-4">
+                            <label for="fuel_type" class="form-label">Fuel Type</label>
+                            <select class="form-select" id="fuel_type" name="fuel_type">
+                                <option value="">All Types</option>
+                                {% for type in fuel_types %}
+                                <option value="{{ type }}" {% if type == selected_fuel_type %}selected{% endif %}>
+                                    {{ type }}
+                                </option>
+                                {% endfor %}
+                            </select>
                         </div>
-                        <div class="col-md-3">
-                            <div class="form-group p-3 border-end">
-                                <label class="small fw-bold mb-2">Fuel Type</label>
-                                <select class="form-select border-0">
-                                    <option>All</option>
-                                    <option>Petrol</option>
-                                    <option>Hybrid</option>
-                                    <option>Electric</option>
-                                </select>
-                            </div>
+                        
+                        <!-- Price Range Filter -->
+                        <div class="col-md-4">
+                            <label for="price_range" class="form-label">Price Range</label>
+                            <select class="form-select" id="price_range" name="price_range">
+                                <option value="">All Prices</option>
+                                {% for range in price_ranges %}
+                                <option value="{{ range.value }}" {% if range.value == selected_price_range %}selected{% endif %}>
+                                    {{ range.label }}
+                                </option>
+                                {% endfor %}
+                            </select>
                         </div>
-                        <div class="col-md-3">
-                            <div class="form-group p-3">
-                                <label class="small fw-bold mb-2">Seats</label>
-                                <select class="form-select border-0">
-                                    <option>All</option>
-                                    <option>2 seats</option>
-                                    <option>4 seats</option>
-                                    <option>5 seats</option>
-                                    <option>7+ seats</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row g-0">
-                        <div class="col-md-12">
-                            <div class="p-3 text-end bg-light">
-                                <button type="submit" class="btn btn-dark px-4">
-                                    Find My Car <i class="fas fa-arrow-right ms-2"></i>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </form>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
@@ -317,62 +300,30 @@
 <!-- Subscription Cars Section -->
 <section id="subscription-cars" class="py-5">
     <div class="container">
-        <div class="d-flex justify-content-between align-items-center mb-4">
-            <h2 class="mb-0">Available Subscription Cars</h2>
-        </div>
-        
-        <!-- Filter -->
-        <div class="mb-4">
-            {% for option in filter_options %}
-            <a href="{% url 'subscription' %}{% if option != 'ALL' %}?type={{ option }}{% endif %}" 
-               class="filter-btn {% if vehicle_type == option %}active{% endif %}">
-                {{ option }}
-            </a>
-            {% endfor %}
-        </div>
-        
-        <!-- Car List -->
-        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
-            {% for car in subscription_cars %}
-            {% if car.type == vehicle_type or vehicle_type == 'ALL' %}
-            <div class="col">
+        <div class="row">
+            {% for vehicle in subscription_vehicles %}
+            <div class="col-md-4 mb-4">
                 <div class="subscription-card">
-                    {% if car.is_great_value %}
+                    {% if vehicle.is_great_value %}
                     <div class="great-value-badge">Great Value</div>
                     {% endif %}
-                    {% if 'Tesla' in car.make or 'Model 3' in car.model %}
-                    <img src="{% static 'images/pics/ts.jpg' %}" alt="Tesla Model 3" class="subscription-image">
-                    {% elif 'Nissan' in car.make or 'X-Trail' in car.model %}
-                    <img src="{% static 'images/pics/ns.jpg' %}" alt="Nissan X-Trail" class="subscription-image">
-                    {% elif 'Kia' in car.make or 'MPV' in car.model %}
-                    <img src="{% static 'images/pics/kin.jpg' %}" alt="Kia 8 seater MPV" class="subscription-image">
-                    {% elif 'Subaru' in car.make or 'Forester' in car.model %}
-                    <img src="{% static 'images/pics/sb.jpg' %}" alt="Subaru Forester" class="subscription-image">
-                    {% elif 'Mercedes' in car.make or 'C250' in car.model %}
-                    <img src="{% static 'images/pics/bz.jpg' %}" alt="Mercedes Benz C250 Travel Edition" class="subscription-image">
-                    {% elif 'MAZDA' in car.make or 'MX5' in car.model %}
-                    <img src="{% static 'images/pics/mx.jpg' %}" alt="MAZDA MX5" class="subscription-image">
-                    {% else %}
-                    <img src="{{ car.image_url }}" alt="{{ car.make }} {{ car.model }}" class="subscription-image">
-                    {% endif %}
-                    <div class="card-body p-4">
+                    <img src="{{ vehicle.image_url }}" alt="{{ vehicle.make }} {{ vehicle.model }}" class="subscription-image">
+                    <div class="p-3">
                         <div class="availability-badge">
-                            <i class="fas fa-check-circle"></i> Available
+                            <i class="fas fa-check-circle"></i> Available Now
                         </div>
-                        <p class="vehicle-make">{{ car.make }}</p>
-                        <h5 class="vehicle-model">{{ car.model }}</h5>
-                        <div class="d-flex justify-content-between align-items-end">
-                            <div>
-                                <p class="price-label">From</p>
-                                <p class="price-value">¥{{ car.price_per_week }}</p>
-                                <small class="text-muted">per week</small>
-                            </div>
-                            <a href="{% url 'subscription_car_detail' car.make car.model %}" class="btn btn-outline-warning">Learn More</a>
-                        </div>
+                        <p class="vehicle-make">{{ vehicle.make }}</p>
+                        <h3 class="vehicle-model">{{ vehicle.model }}</h3>
+                        <p class="price-label">Weekly Rate</p>
+                        <p class="price-value">${{ vehicle.daily_rate|multiply:7 }}</p>
+                        <a href="{% url 'bookings:create' %}?vehicle_id={{ vehicle.id }}" class="btn btn-primary w-100">Book Now</a>
                     </div>
                 </div>
             </div>
-            {% endif %}
+            {% empty %}
+            <div class="col-12 text-center">
+                <p class="lead">No vehicles found matching your criteria. Please try different filters.</p>
+            </div>
             {% endfor %}
         </div>
     </div>
@@ -678,4 +629,21 @@
         </div>
     </div>
 </section>
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const filterForm = document.getElementById('filterForm');
+    const filterInputs = filterForm.querySelectorAll('select');
+    
+    filterInputs.forEach(input => {
+        input.addEventListener('change', function() {
+            const formData = new FormData(filterForm);
+            const searchParams = new URLSearchParams(formData);
+            window.location.href = `${window.location.pathname}?${searchParams.toString()}`;
+        });
+    });
+});
+</script>
+{% endblock %}
 {% endblock %}

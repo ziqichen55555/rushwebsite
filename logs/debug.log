@@ -22244,3 +22244,1397 @@ WARNING 2025-06-09 10:30:33,815 base Session data corrupted
 INFO 2025-06-09 10:30:33,822 basehttp "GET /subscription/Toyota/Yaris%20Cross%20Hybrid/ HTTP/1.1" 200 33876
 WARNING 2025-06-09 10:32:22,836 base Session data corrupted
 INFO 2025-06-09 10:32:22,843 basehttp "GET /subscription/ HTTP/1.1" 200 44225
+INFO 2025-06-09 12:51:42,996 _util message='Request to Stripe api' method=get url=https://api.stripe.com/v1/account
+INFO 2025-06-09 12:51:43,194 _util message='Stripe API response' path=https://api.stripe.com/v1/account response_code=401
+INFO 2025-06-09 12:51:43,194 _util error_code=None error_message='Invalid API Key provided: sk_test_***********_key' error_param=None error_type=invalid_request_error message='Stripe v1 API error received'
+INFO 2025-06-09 12:51:59,190 autoreload Watching for file changes with StatReloader
+INFO 2025-06-09 12:51:59,558 _util message='Request to Stripe api' method=get url=https://api.stripe.com/v1/account
+INFO 2025-06-09 12:51:59,738 _util message='Stripe API response' path=https://api.stripe.com/v1/account response_code=401
+INFO 2025-06-09 12:51:59,738 _util error_code=None error_message='Invalid API Key provided: sk_test_***********_key' error_param=None error_type=invalid_request_error message='Stripe v1 API error received'
+INFO 2025-06-09 12:52:02,365 environment [ENV] 当前运行环境: development
+INFO 2025-06-09 12:52:02,365 environment [ENV] 当前运行环境: development
+INFO 2025-06-09 12:53:48,533 autoreload Watching for file changes with StatReloader
+INFO 2025-06-09 12:53:48,916 _util message='Request to Stripe api' method=get url=https://api.stripe.com/v1/account
+INFO 2025-06-09 12:53:49,111 _util message='Stripe API response' path=https://api.stripe.com/v1/account response_code=401
+INFO 2025-06-09 12:53:49,111 _util error_code=None error_message='Invalid API Key provided: sk_test_***********_key' error_param=None error_type=invalid_request_error message='Stripe v1 API error received'
+INFO 2025-06-09 12:53:51,589 environment [ENV] 当前运行环境: development
+INFO 2025-06-09 12:53:51,589 environment [ENV] 当前运行环境: development
+WARNING 2025-06-09 12:54:02,265 base Session data corrupted
+INFO 2025-06-09 12:54:02,312 basehttp "GET /subscription/ HTTP/1.1" 200 44225
+WARNING 2025-06-09 12:58:15,505 base Session data corrupted
+INFO 2025-06-09 12:58:15,507 basehttp "GET /subscription/Nissan/X-Trail/ HTTP/1.1" 200 33820
+WARNING 2025-06-09 12:58:40,344 base Session data corrupted
+ERROR 2025-06-09 12:58:40,354 log Internal Server Error: /
+Traceback (most recent call last):
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/db/backends/utils.py", line 105, in _execute
+    return self.cursor.execute(sql, params)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+psycopg2.errors.UndefinedColumn: column app_vehiclecategory.is_available does not exist
+LINE 1: ...RE ("app_vehiclecategorytype"."web_available" AND "app_vehic...
+                                                             ^
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Users/chrischan/rushwebsite/pages/views.py", line 15, in home
+    if featured_vehicles.count() < 4:
+       ~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/db/models/query.py", line 604, in count
+    return self.query.get_count(using=self.db)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/db/models/sql/query.py", line 644, in get_count
+    return obj.get_aggregation(using, {"__count": Count("*")})["__count"]
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/db/models/sql/query.py", line 626, in get_aggregation
+    result = compiler.execute_sql(SINGLE)
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/db/models/sql/compiler.py", line 1622, in execute_sql
+    cursor.execute(sql, params)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/db/backends/utils.py", line 122, in execute
+    return super().execute(sql, params)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/db/backends/utils.py", line 79, in execute
+    return self._execute_with_wrappers(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        sql, params, many=False, executor=self._execute
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/db/backends/utils.py", line 92, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/db/backends/utils.py", line 100, in _execute
+    with self.db.wrap_database_errors:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/db/utils.py", line 91, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/db/backends/utils.py", line 105, in _execute
+    return self.cursor.execute(sql, params)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+django.db.utils.ProgrammingError: column app_vehiclecategory.is_available does not exist
+LINE 1: ...RE ("app_vehiclecategorytype"."web_available" AND "app_vehic...
+                                                             ^
+
+ERROR 2025-06-09 12:58:40,357 basehttp "GET / HTTP/1.1" 500 129297
+INFO 2025-06-09 13:00:05,617 _util message='Request to Stripe api' method=get url=https://api.stripe.com/v1/account
+INFO 2025-06-09 13:00:05,811 _util message='Stripe API response' path=https://api.stripe.com/v1/account response_code=401
+INFO 2025-06-09 13:00:05,811 _util error_code=None error_message='Invalid API Key provided: sk_test_***********_key' error_param=None error_type=invalid_request_error message='Stripe v1 API error received'
+INFO 2025-06-09 13:02:06,579 _util message='Request to Stripe api' method=get url=https://api.stripe.com/v1/account
+INFO 2025-06-09 13:02:06,778 _util message='Stripe API response' path=https://api.stripe.com/v1/account response_code=401
+INFO 2025-06-09 13:02:06,778 _util error_code=None error_message='Invalid API Key provided: sk_test_***********_key' error_param=None error_type=invalid_request_error message='Stripe v1 API error received'
+INFO 2025-06-09 13:02:12,528 _util message='Request to Stripe api' method=get url=https://api.stripe.com/v1/account
+INFO 2025-06-09 13:02:12,711 _util message='Stripe API response' path=https://api.stripe.com/v1/account response_code=401
+INFO 2025-06-09 13:02:12,712 _util error_code=None error_message='Invalid API Key provided: sk_test_***********_key' error_param=None error_type=invalid_request_error message='Stripe v1 API error received'
+INFO 2025-06-09 13:08:21,227 _util message='Request to Stripe api' method=get url=https://api.stripe.com/v1/account
+INFO 2025-06-09 13:08:21,431 _util message='Stripe API response' path=https://api.stripe.com/v1/account response_code=401
+INFO 2025-06-09 13:08:21,431 _util error_code=None error_message='Invalid API Key provided: sk_test_***********_key' error_param=None error_type=invalid_request_error message='Stripe v1 API error received'
+INFO 2025-06-09 13:10:35,515 _util message='Request to Stripe api' method=get url=https://api.stripe.com/v1/account
+INFO 2025-06-09 13:10:35,713 _util message='Stripe API response' path=https://api.stripe.com/v1/account response_code=401
+INFO 2025-06-09 13:10:35,713 _util error_code=None error_message='Invalid API Key provided: sk_test_***********_key' error_param=None error_type=invalid_request_error message='Stripe v1 API error received'
+INFO 2025-06-09 13:10:49,178 _util message='Request to Stripe api' method=get url=https://api.stripe.com/v1/account
+INFO 2025-06-09 13:10:49,363 _util message='Stripe API response' path=https://api.stripe.com/v1/account response_code=401
+INFO 2025-06-09 13:10:49,363 _util error_code=None error_message='Invalid API Key provided: sk_test_***********_key' error_param=None error_type=invalid_request_error message='Stripe v1 API error received'
+INFO 2025-06-09 13:11:01,144 _util message='Request to Stripe api' method=get url=https://api.stripe.com/v1/account
+INFO 2025-06-09 13:11:01,340 _util message='Stripe API response' path=https://api.stripe.com/v1/account response_code=401
+INFO 2025-06-09 13:11:01,340 _util error_code=None error_message='Invalid API Key provided: sk_test_***********_key' error_param=None error_type=invalid_request_error message='Stripe v1 API error received'
+INFO 2025-06-09 13:11:16,238 _util message='Request to Stripe api' method=get url=https://api.stripe.com/v1/account
+INFO 2025-06-09 13:11:16,428 _util message='Stripe API response' path=https://api.stripe.com/v1/account response_code=401
+INFO 2025-06-09 13:11:16,428 _util error_code=None error_message='Invalid API Key provided: sk_test_***********_key' error_param=None error_type=invalid_request_error message='Stripe v1 API error received'
+INFO 2025-06-09 13:11:35,375 _util message='Request to Stripe api' method=get url=https://api.stripe.com/v1/account
+INFO 2025-06-09 13:11:35,559 _util message='Stripe API response' path=https://api.stripe.com/v1/account response_code=401
+INFO 2025-06-09 13:11:35,559 _util error_code=None error_message='Invalid API Key provided: sk_test_***********_key' error_param=None error_type=invalid_request_error message='Stripe v1 API error received'
+INFO 2025-06-09 13:11:50,190 _util message='Request to Stripe api' method=get url=https://api.stripe.com/v1/account
+INFO 2025-06-09 13:11:50,392 _util message='Stripe API response' path=https://api.stripe.com/v1/account response_code=401
+INFO 2025-06-09 13:11:50,393 _util error_code=None error_message='Invalid API Key provided: sk_test_***********_key' error_param=None error_type=invalid_request_error message='Stripe v1 API error received'
+INFO 2025-06-09 13:14:27,415 autoreload Watching for file changes with StatReloader
+INFO 2025-06-09 13:14:27,838 _util message='Request to Stripe api' method=get url=https://api.stripe.com/v1/account
+INFO 2025-06-09 13:14:28,034 _util message='Stripe API response' path=https://api.stripe.com/v1/account response_code=401
+INFO 2025-06-09 13:14:28,035 _util error_code=None error_message='Invalid API Key provided: sk_test_***********_key' error_param=None error_type=invalid_request_error message='Stripe v1 API error received'
+INFO 2025-06-09 13:14:30,542 environment [ENV] 当前运行环境: development
+INFO 2025-06-09 13:14:30,542 environment [ENV] 当前运行环境: development
+WARNING 2025-06-09 13:14:36,725 base Session data corrupted
+ERROR 2025-06-09 13:14:36,739 log Internal Server Error: /
+Traceback (most recent call last):
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/db/backends/utils.py", line 105, in _execute
+    return self.cursor.execute(sql, params)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+psycopg2.errors.UndefinedColumn: column app_vehiclecategory.is_available does not exist
+LINE 1: ...RE ("app_vehiclecategorytype"."web_available" AND "app_vehic...
+                                                             ^
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Users/chrischan/rushwebsite/pages/views.py", line 15, in home
+    if featured_vehicles.count() < 4:
+       ~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/db/models/query.py", line 604, in count
+    return self.query.get_count(using=self.db)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/db/models/sql/query.py", line 644, in get_count
+    return obj.get_aggregation(using, {"__count": Count("*")})["__count"]
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/db/models/sql/query.py", line 626, in get_aggregation
+    result = compiler.execute_sql(SINGLE)
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/db/models/sql/compiler.py", line 1622, in execute_sql
+    cursor.execute(sql, params)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/db/backends/utils.py", line 122, in execute
+    return super().execute(sql, params)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/db/backends/utils.py", line 79, in execute
+    return self._execute_with_wrappers(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        sql, params, many=False, executor=self._execute
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/db/backends/utils.py", line 92, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/db/backends/utils.py", line 100, in _execute
+    with self.db.wrap_database_errors:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/db/utils.py", line 91, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/db/backends/utils.py", line 105, in _execute
+    return self.cursor.execute(sql, params)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+django.db.utils.ProgrammingError: column app_vehiclecategory.is_available does not exist
+LINE 1: ...RE ("app_vehiclecategorytype"."web_available" AND "app_vehic...
+                                                             ^
+
+ERROR 2025-06-09 13:14:36,742 basehttp "GET / HTTP/1.1" 500 129871
+INFO 2025-06-09 13:19:11,743 _util message='Request to Stripe api' method=get url=https://api.stripe.com/v1/account
+INFO 2025-06-09 13:19:11,945 _util message='Stripe API response' path=https://api.stripe.com/v1/account response_code=401
+INFO 2025-06-09 13:19:11,946 _util error_code=None error_message='Invalid API Key provided: sk_test_***********_key' error_param=None error_type=invalid_request_error message='Stripe v1 API error received'
+INFO 2025-06-09 13:19:33,132 autoreload Watching for file changes with StatReloader
+INFO 2025-06-09 13:19:33,478 _util message='Request to Stripe api' method=get url=https://api.stripe.com/v1/account
+INFO 2025-06-09 13:19:33,663 _util message='Stripe API response' path=https://api.stripe.com/v1/account response_code=401
+INFO 2025-06-09 13:19:33,663 _util error_code=None error_message='Invalid API Key provided: sk_test_***********_key' error_param=None error_type=invalid_request_error message='Stripe v1 API error received'
+INFO 2025-06-09 13:19:36,101 environment [ENV] 当前运行环境: development
+INFO 2025-06-09 13:19:36,101 environment [ENV] 当前运行环境: development
+WARNING 2025-06-09 13:19:39,776 base Session data corrupted
+ERROR 2025-06-09 13:19:39,806 log Internal Server Error: /
+Traceback (most recent call last):
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/db/backends/utils.py", line 105, in _execute
+    return self.cursor.execute(sql, params)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+psycopg2.errors.UndefinedColumn: column app_vehiclecategory.is_available does not exist
+LINE 1: ...RE ("app_vehiclecategorytype"."web_available" AND "app_vehic...
+                                                             ^
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Users/chrischan/rushwebsite/pages/views.py", line 15, in home
+    if featured_vehicles.count() < 4:
+       ~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/db/models/query.py", line 604, in count
+    return self.query.get_count(using=self.db)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/db/models/sql/query.py", line 644, in get_count
+    return obj.get_aggregation(using, {"__count": Count("*")})["__count"]
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/db/models/sql/query.py", line 626, in get_aggregation
+    result = compiler.execute_sql(SINGLE)
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/db/models/sql/compiler.py", line 1622, in execute_sql
+    cursor.execute(sql, params)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/db/backends/utils.py", line 122, in execute
+    return super().execute(sql, params)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/db/backends/utils.py", line 79, in execute
+    return self._execute_with_wrappers(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        sql, params, many=False, executor=self._execute
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/db/backends/utils.py", line 92, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/db/backends/utils.py", line 100, in _execute
+    with self.db.wrap_database_errors:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/db/utils.py", line 91, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/db/backends/utils.py", line 105, in _execute
+    return self.cursor.execute(sql, params)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+django.db.utils.ProgrammingError: column app_vehiclecategory.is_available does not exist
+LINE 1: ...RE ("app_vehiclecategorytype"."web_available" AND "app_vehic...
+                                                             ^
+
+ERROR 2025-06-09 13:19:39,810 basehttp "GET / HTTP/1.1" 500 129604
+INFO 2025-06-09 13:20:16,503 _util message='Request to Stripe api' method=get url=https://api.stripe.com/v1/account
+INFO 2025-06-09 13:20:16,699 _util message='Stripe API response' path=https://api.stripe.com/v1/account response_code=401
+INFO 2025-06-09 13:20:16,699 _util error_code=None error_message='Invalid API Key provided: sk_test_***********_key' error_param=None error_type=invalid_request_error message='Stripe v1 API error received'
+INFO 2025-06-09 13:20:33,020 autoreload /Users/chrischan/rushwebsite/pages/views.py changed, reloading.
+INFO 2025-06-09 13:20:33,438 autoreload Watching for file changes with StatReloader
+INFO 2025-06-09 13:20:33,813 _util message='Request to Stripe api' method=get url=https://api.stripe.com/v1/account
+INFO 2025-06-09 13:20:33,995 _util message='Stripe API response' path=https://api.stripe.com/v1/account response_code=401
+INFO 2025-06-09 13:20:33,996 _util error_code=None error_message='Invalid API Key provided: sk_test_***********_key' error_param=None error_type=invalid_request_error message='Stripe v1 API error received'
+INFO 2025-06-09 13:20:36,474 environment [ENV] 当前运行环境: development
+INFO 2025-06-09 13:20:36,474 environment [ENV] 当前运行环境: development
+WARNING 2025-06-09 13:20:38,966 base Session data corrupted
+INFO 2025-06-09 13:20:40,274 basehttp "GET / HTTP/1.1" 200 36488
+WARNING 2025-06-09 13:20:59,734 base Session data corrupted
+INFO 2025-06-09 13:20:59,739 basehttp "GET /subscription/ HTTP/1.1" 200 44225
+WARNING 2025-06-09 13:21:21,526 base Session data corrupted
+INFO 2025-06-09 13:21:21,528 basehttp "GET /subscription/Nissan/X-Trail/ HTTP/1.1" 200 33820
+INFO 2025-06-09 13:23:53,941 autoreload /Users/chrischan/rushwebsite/pages/views.py changed, reloading.
+INFO 2025-06-09 13:23:54,410 autoreload Watching for file changes with StatReloader
+INFO 2025-06-09 13:23:54,796 _util message='Request to Stripe api' method=get url=https://api.stripe.com/v1/account
+INFO 2025-06-09 13:23:54,996 _util message='Stripe API response' path=https://api.stripe.com/v1/account response_code=401
+INFO 2025-06-09 13:23:54,996 _util error_code=None error_message='Invalid API Key provided: sk_test_***********_key' error_param=None error_type=invalid_request_error message='Stripe v1 API error received'
+INFO 2025-06-09 13:23:57,499 environment [ENV] 当前运行环境: development
+INFO 2025-06-09 13:23:57,499 environment [ENV] 当前运行环境: development
+INFO 2025-06-09 13:25:14,554 autoreload /Users/chrischan/rushwebsite/pages/views.py changed, reloading.
+INFO 2025-06-09 13:25:15,109 autoreload Watching for file changes with StatReloader
+INFO 2025-06-09 13:25:15,537 _util message='Request to Stripe api' method=get url=https://api.stripe.com/v1/account
+INFO 2025-06-09 13:25:15,729 _util message='Stripe API response' path=https://api.stripe.com/v1/account response_code=401
+INFO 2025-06-09 13:25:15,729 _util error_code=None error_message='Invalid API Key provided: sk_test_***********_key' error_param=None error_type=invalid_request_error message='Stripe v1 API error received'
+INFO 2025-06-09 13:25:18,162 environment [ENV] 当前运行环境: development
+INFO 2025-06-09 13:25:18,162 environment [ENV] 当前运行环境: development
+WARNING 2025-06-09 13:25:22,908 base Session data corrupted
+ERROR 2025-06-09 13:25:22,929 log Internal Server Error: /subscription/
+Traceback (most recent call last):
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Users/chrischan/rushwebsite/pages/views.py", line 92, in subscription
+    fuel_types = VehicleType.objects.values_list('name', flat=True).distinct()
+                 ^^^^^^^^^^^
+NameError: name 'VehicleType' is not defined
+ERROR 2025-06-09 13:25:22,931 basehttp "GET /subscription/ HTTP/1.1" 500 71328
+INFO 2025-06-09 13:25:49,981 autoreload /Users/chrischan/rushwebsite/pages/views.py changed, reloading.
+INFO 2025-06-09 13:25:50,383 autoreload Watching for file changes with StatReloader
+INFO 2025-06-09 13:25:50,739 _util message='Request to Stripe api' method=get url=https://api.stripe.com/v1/account
+INFO 2025-06-09 13:25:50,923 _util message='Stripe API response' path=https://api.stripe.com/v1/account response_code=401
+INFO 2025-06-09 13:25:50,923 _util error_code=None error_message='Invalid API Key provided: sk_test_***********_key' error_param=None error_type=invalid_request_error message='Stripe v1 API error received'
+INFO 2025-06-09 13:25:53,506 environment [ENV] 当前运行环境: development
+INFO 2025-06-09 13:25:53,506 environment [ENV] 当前运行环境: development
+INFO 2025-06-09 13:25:59,289 autoreload /Users/chrischan/rushwebsite/pages/views.py changed, reloading.
+INFO 2025-06-09 13:25:59,692 autoreload Watching for file changes with StatReloader
+INFO 2025-06-09 13:26:00,068 _util message='Request to Stripe api' method=get url=https://api.stripe.com/v1/account
+INFO 2025-06-09 13:26:00,253 _util message='Stripe API response' path=https://api.stripe.com/v1/account response_code=401
+INFO 2025-06-09 13:26:00,253 _util error_code=None error_message='Invalid API Key provided: sk_test_***********_key' error_param=None error_type=invalid_request_error message='Stripe v1 API error received'
+INFO 2025-06-09 13:26:02,738 environment [ENV] 当前运行环境: development
+INFO 2025-06-09 13:26:02,738 environment [ENV] 当前运行环境: development
+WARNING 2025-06-09 13:26:06,383 base Session data corrupted
+ERROR 2025-06-09 13:26:06,454 log Internal Server Error: /subscription/
+Traceback (most recent call last):
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Users/chrischan/rushwebsite/pages/views.py", line 114, in subscription
+    return render(request, 'pages/subscription.html', context)
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/template/loader.py", line 61, in render_to_string
+    template = get_template(template_name, using=using)
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/template/loader.py", line 15, in get_template
+    return engine.get_template(template_name)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/template/backends/django.py", line 79, in get_template
+    return Template(self.engine.get_template(template_name), self)
+                    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/template/engine.py", line 177, in get_template
+    template, origin = self.find_template(template_name)
+                       ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/template/engine.py", line 159, in find_template
+    template = loader.get_template(name, skip=skip)
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/template/loaders/cached.py", line 57, in get_template
+    template = super().get_template(template_name, skip)
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/template/loaders/base.py", line 28, in get_template
+    return Template(
+        contents,
+    ...<2 lines>...
+        self.engine,
+    )
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/template/base.py", line 154, in __init__
+    self.nodelist = self.compile_nodelist()
+                    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/template/base.py", line 196, in compile_nodelist
+    nodelist = parser.parse()
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/template/base.py", line 518, in parse
+    raise self.error(token, e)
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/template/base.py", line 516, in parse
+    compiled_result = compile_func(self, token)
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/template/loader_tags.py", line 299, in do_extends
+    nodelist = parser.parse()
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/template/base.py", line 518, in parse
+    raise self.error(token, e)
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/template/base.py", line 516, in parse
+    compiled_result = compile_func(self, token)
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/template/loader_tags.py", line 234, in do_block
+    nodelist = parser.parse(("endblock",))
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/template/base.py", line 518, in parse
+    raise self.error(token, e)
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/template/base.py", line 516, in parse
+    compiled_result = compile_func(self, token)
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/template/defaulttags.py", line 862, in do_for
+    nodelist_loop = parser.parse(
+        (
+    ...<2 lines>...
+        )
+    )
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/template/base.py", line 489, in parse
+    raise self.error(token, e)
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/template/base.py", line 487, in parse
+    filter_expression = self.compile_filter(token.contents)
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/template/base.py", line 609, in compile_filter
+    return FilterExpression(token, self)
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/template/base.py", line 705, in __init__
+    filter_func = parser.find_filter(filter_name)
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/template/base.py", line 615, in find_filter
+    raise TemplateSyntaxError("Invalid filter: '%s'" % filter_name)
+django.template.exceptions.TemplateSyntaxError: Invalid filter: 'multiply'
+ERROR 2025-06-09 13:26:06,458 basehttp "GET /subscription/ HTTP/1.1" 500 233203
+INFO 2025-06-09 13:27:38,950 autoreload /Users/chrischan/rushwebsite/pages/templatetags/custom_filters.py changed, reloading.
+INFO 2025-06-09 13:27:39,411 autoreload Watching for file changes with StatReloader
+INFO 2025-06-09 13:27:39,833 _util message='Request to Stripe api' method=get url=https://api.stripe.com/v1/account
+INFO 2025-06-09 13:27:40,033 _util message='Stripe API response' path=https://api.stripe.com/v1/account response_code=401
+INFO 2025-06-09 13:27:40,033 _util error_code=None error_message='Invalid API Key provided: sk_test_***********_key' error_param=None error_type=invalid_request_error message='Stripe v1 API error received'
+INFO 2025-06-09 13:27:42,567 environment [ENV] 当前运行环境: development
+INFO 2025-06-09 13:27:42,567 environment [ENV] 当前运行环境: development
+WARNING 2025-06-09 13:27:52,164 base Session data corrupted
+ERROR 2025-06-09 13:27:58,741 log Internal Server Error: /subscription/
+Traceback (most recent call last):
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/db/backends/utils.py", line 105, in _execute
+    return self.cursor.execute(sql, params)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+psycopg2.errors.UndefinedColumn: column app_vehicletype.name does not exist
+LINE 1: SELECT DISTINCT "app_vehicletype"."name" AS "name" FROM "app...
+                        ^
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Users/chrischan/rushwebsite/pages/views.py", line 114, in subscription
+    return render(request, 'pages/subscription.html', context)
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/template/loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/template/backends/django.py", line 107, in render
+    return self.template.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/template/base.py", line 171, in render
+    return self._render(context)
+           ~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/template/base.py", line 163, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/template/base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/template/base.py", line 977, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/template/loader_tags.py", line 159, in render
+    return compiled_parent._render(context)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/template/base.py", line 163, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/template/base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/template/base.py", line 977, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/template/loader_tags.py", line 65, in render
+    result = block.nodelist.render(context)
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/template/base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/template/base.py", line 977, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/template/defaulttags.py", line 199, in render
+    len_values = len(values)
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/db/models/query.py", line 366, in __len__
+    self._fetch_all()
+    ~~~~~~~~~~~~~~~^^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/db/models/query.py", line 1935, in _fetch_all
+    self._result_cache = list(self._iterable_class(self))
+                         ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/db/models/query.py", line 271, in __iter__
+    for row in compiler.results_iter(
+               ~~~~~~~~~~~~~~~~~~~~~^
+        chunked_fetch=self.chunked_fetch, chunk_size=self.chunk_size
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ):
+    ^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/db/models/sql/compiler.py", line 1571, in results_iter
+    results = self.execute_sql(
+        MULTI, chunked_fetch=chunked_fetch, chunk_size=chunk_size
+    )
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/db/models/sql/compiler.py", line 1622, in execute_sql
+    cursor.execute(sql, params)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/db/backends/utils.py", line 122, in execute
+    return super().execute(sql, params)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/db/backends/utils.py", line 79, in execute
+    return self._execute_with_wrappers(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        sql, params, many=False, executor=self._execute
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/db/backends/utils.py", line 92, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/db/backends/utils.py", line 100, in _execute
+    with self.db.wrap_database_errors:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/db/utils.py", line 91, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/db/backends/utils.py", line 105, in _execute
+    return self.cursor.execute(sql, params)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+django.db.utils.ProgrammingError: column app_vehicletype.name does not exist
+LINE 1: SELECT DISTINCT "app_vehicletype"."name" AS "name" FROM "app...
+                        ^
+
+ERROR 2025-06-09 13:27:58,746 basehttp "GET /subscription/ HTTP/1.1" 500 207771
+INFO 2025-06-09 13:28:37,640 autoreload /Users/chrischan/rushwebsite/pages/views.py changed, reloading.
+INFO 2025-06-09 13:28:38,123 autoreload Watching for file changes with StatReloader
+INFO 2025-06-09 13:28:38,528 _util message='Request to Stripe api' method=get url=https://api.stripe.com/v1/account
+INFO 2025-06-09 13:28:38,723 _util message='Stripe API response' path=https://api.stripe.com/v1/account response_code=401
+INFO 2025-06-09 13:28:38,723 _util error_code=None error_message='Invalid API Key provided: sk_test_***********_key' error_param=None error_type=invalid_request_error message='Stripe v1 API error received'
+INFO 2025-06-09 13:28:41,165 environment [ENV] 当前运行环境: development
+INFO 2025-06-09 13:28:41,165 environment [ENV] 当前运行环境: development
+INFO 2025-06-09 13:29:00,395 autoreload /Users/chrischan/rushwebsite/pages/views.py changed, reloading.
+INFO 2025-06-09 13:29:00,799 autoreload Watching for file changes with StatReloader
+INFO 2025-06-09 13:29:01,151 _util message='Request to Stripe api' method=get url=https://api.stripe.com/v1/account
+INFO 2025-06-09 13:29:01,334 _util message='Stripe API response' path=https://api.stripe.com/v1/account response_code=401
+INFO 2025-06-09 13:29:01,334 _util error_code=None error_message='Invalid API Key provided: sk_test_***********_key' error_param=None error_type=invalid_request_error message='Stripe v1 API error received'
+INFO 2025-06-09 13:29:03,880 environment [ENV] 当前运行环境: development
+INFO 2025-06-09 13:29:03,880 environment [ENV] 当前运行环境: development
+WARNING 2025-06-09 13:29:11,806 base Session data corrupted
+ERROR 2025-06-09 13:29:18,999 log Internal Server Error: /subscription/
+Traceback (most recent call last):
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/db/backends/utils.py", line 105, in _execute
+    return self.cursor.execute(sql, params)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+psycopg2.errors.UndefinedColumn: column app_vehicletype.name does not exist
+LINE 1: SELECT DISTINCT "app_vehicletype"."name" AS "name" FROM "app...
+                        ^
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Users/chrischan/rushwebsite/pages/views.py", line 116, in subscription
+    return render(request, 'pages/subscription.html', context)
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/template/loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/template/backends/django.py", line 107, in render
+    return self.template.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/template/base.py", line 171, in render
+    return self._render(context)
+           ~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/template/base.py", line 163, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/template/base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/template/base.py", line 977, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/template/loader_tags.py", line 159, in render
+    return compiled_parent._render(context)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/template/base.py", line 163, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/template/base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/template/base.py", line 977, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/template/loader_tags.py", line 65, in render
+    result = block.nodelist.render(context)
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/template/base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/template/base.py", line 977, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/template/defaulttags.py", line 199, in render
+    len_values = len(values)
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/db/models/query.py", line 366, in __len__
+    self._fetch_all()
+    ~~~~~~~~~~~~~~~^^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/db/models/query.py", line 1935, in _fetch_all
+    self._result_cache = list(self._iterable_class(self))
+                         ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/db/models/query.py", line 271, in __iter__
+    for row in compiler.results_iter(
+               ~~~~~~~~~~~~~~~~~~~~~^
+        chunked_fetch=self.chunked_fetch, chunk_size=self.chunk_size
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ):
+    ^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/db/models/sql/compiler.py", line 1571, in results_iter
+    results = self.execute_sql(
+        MULTI, chunked_fetch=chunked_fetch, chunk_size=chunk_size
+    )
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/db/models/sql/compiler.py", line 1622, in execute_sql
+    cursor.execute(sql, params)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/db/backends/utils.py", line 122, in execute
+    return super().execute(sql, params)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/db/backends/utils.py", line 79, in execute
+    return self._execute_with_wrappers(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        sql, params, many=False, executor=self._execute
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/db/backends/utils.py", line 92, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/db/backends/utils.py", line 100, in _execute
+    with self.db.wrap_database_errors:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/db/utils.py", line 91, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/db/backends/utils.py", line 105, in _execute
+    return self.cursor.execute(sql, params)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+django.db.utils.ProgrammingError: column app_vehicletype.name does not exist
+LINE 1: SELECT DISTINCT "app_vehicletype"."name" AS "name" FROM "app...
+                        ^
+
+ERROR 2025-06-09 13:29:19,008 basehttp "GET /subscription/ HTTP/1.1" 500 209619
+WARNING 2025-06-09 13:29:25,907 base Session data corrupted
+ERROR 2025-06-09 13:29:32,366 log Internal Server Error: /subscription/
+Traceback (most recent call last):
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/db/backends/utils.py", line 105, in _execute
+    return self.cursor.execute(sql, params)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+psycopg2.errors.UndefinedColumn: column app_vehicletype.name does not exist
+LINE 1: SELECT DISTINCT "app_vehicletype"."name" AS "name" FROM "app...
+                        ^
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Users/chrischan/rushwebsite/pages/views.py", line 116, in subscription
+    return render(request, 'pages/subscription.html', context)
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/template/loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/template/backends/django.py", line 107, in render
+    return self.template.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/template/base.py", line 171, in render
+    return self._render(context)
+           ~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/template/base.py", line 163, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/template/base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/template/base.py", line 977, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/template/loader_tags.py", line 159, in render
+    return compiled_parent._render(context)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/template/base.py", line 163, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/template/base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/template/base.py", line 977, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/template/loader_tags.py", line 65, in render
+    result = block.nodelist.render(context)
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/template/base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/template/base.py", line 977, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/template/defaulttags.py", line 199, in render
+    len_values = len(values)
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/db/models/query.py", line 366, in __len__
+    self._fetch_all()
+    ~~~~~~~~~~~~~~~^^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/db/models/query.py", line 1935, in _fetch_all
+    self._result_cache = list(self._iterable_class(self))
+                         ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/db/models/query.py", line 271, in __iter__
+    for row in compiler.results_iter(
+               ~~~~~~~~~~~~~~~~~~~~~^
+        chunked_fetch=self.chunked_fetch, chunk_size=self.chunk_size
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ):
+    ^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/db/models/sql/compiler.py", line 1571, in results_iter
+    results = self.execute_sql(
+        MULTI, chunked_fetch=chunked_fetch, chunk_size=chunk_size
+    )
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/db/models/sql/compiler.py", line 1622, in execute_sql
+    cursor.execute(sql, params)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/db/backends/utils.py", line 122, in execute
+    return super().execute(sql, params)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/db/backends/utils.py", line 79, in execute
+    return self._execute_with_wrappers(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        sql, params, many=False, executor=self._execute
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/db/backends/utils.py", line 92, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/db/backends/utils.py", line 100, in _execute
+    with self.db.wrap_database_errors:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/db/utils.py", line 91, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/db/backends/utils.py", line 105, in _execute
+    return self.cursor.execute(sql, params)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+django.db.utils.ProgrammingError: column app_vehicletype.name does not exist
+LINE 1: SELECT DISTINCT "app_vehicletype"."name" AS "name" FROM "app...
+                        ^
+
+ERROR 2025-06-09 13:29:32,369 basehttp "GET /subscription/ HTTP/1.1" 500 209619
+INFO 2025-06-09 13:30:56,138 _util message='Request to Stripe api' method=get url=https://api.stripe.com/v1/account
+INFO 2025-06-09 13:30:56,335 _util message='Stripe API response' path=https://api.stripe.com/v1/account response_code=401
+INFO 2025-06-09 13:30:56,335 _util error_code=None error_message='Invalid API Key provided: sk_test_***********_key' error_param=None error_type=invalid_request_error message='Stripe v1 API error received'
+INFO 2025-06-09 13:31:03,517 _util message='Request to Stripe api' method=get url=https://api.stripe.com/v1/account
+INFO 2025-06-09 13:31:03,707 _util message='Stripe API response' path=https://api.stripe.com/v1/account response_code=401
+INFO 2025-06-09 13:31:03,707 _util error_code=None error_message='Invalid API Key provided: sk_test_***********_key' error_param=None error_type=invalid_request_error message='Stripe v1 API error received'
+INFO 2025-06-09 13:31:21,873 autoreload /Users/chrischan/rushwebsite/pages/views.py changed, reloading.
+INFO 2025-06-09 13:31:22,422 autoreload Watching for file changes with StatReloader
+INFO 2025-06-09 13:31:22,815 _util message='Request to Stripe api' method=get url=https://api.stripe.com/v1/account
+INFO 2025-06-09 13:31:22,999 _util message='Stripe API response' path=https://api.stripe.com/v1/account response_code=401
+INFO 2025-06-09 13:31:22,999 _util error_code=None error_message='Invalid API Key provided: sk_test_***********_key' error_param=None error_type=invalid_request_error message='Stripe v1 API error received'
+INFO 2025-06-09 13:31:25,477 environment [ENV] 当前运行环境: development
+INFO 2025-06-09 13:31:25,477 environment [ENV] 当前运行环境: development
+INFO 2025-06-09 13:31:35,476 autoreload /Users/chrischan/rushwebsite/pages/views.py changed, reloading.
+INFO 2025-06-09 13:31:35,915 autoreload Watching for file changes with StatReloader
+INFO 2025-06-09 13:31:36,281 _util message='Request to Stripe api' method=get url=https://api.stripe.com/v1/account
+INFO 2025-06-09 13:31:36,463 _util message='Stripe API response' path=https://api.stripe.com/v1/account response_code=401
+INFO 2025-06-09 13:31:36,463 _util error_code=None error_message='Invalid API Key provided: sk_test_***********_key' error_param=None error_type=invalid_request_error message='Stripe v1 API error received'
+INFO 2025-06-09 13:31:38,963 environment [ENV] 当前运行环境: development
+INFO 2025-06-09 13:31:38,963 environment [ENV] 当前运行环境: development
+WARNING 2025-06-09 13:31:42,476 base Session data corrupted
+ERROR 2025-06-09 13:31:48,872 log Internal Server Error: /subscription/
+Traceback (most recent call last):
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/db/backends/utils.py", line 105, in _execute
+    return self.cursor.execute(sql, params)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+psycopg2.errors.UndefinedColumn: column app_vehiclecategory.is_available does not exist
+LINE 1: ...description", "app_vehiclecategory"."daily_rate", "app_vehic...
+                                                             ^
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Users/chrischan/rushwebsite/pages/views.py", line 114, in subscription
+    return render(request, 'pages/subscription.html', context)
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/template/loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/template/backends/django.py", line 107, in render
+    return self.template.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/template/base.py", line 171, in render
+    return self._render(context)
+           ~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/template/base.py", line 163, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/template/base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/template/base.py", line 977, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/template/loader_tags.py", line 159, in render
+    return compiled_parent._render(context)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/template/base.py", line 163, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/template/base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/template/base.py", line 977, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/template/loader_tags.py", line 65, in render
+    result = block.nodelist.render(context)
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/template/base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/template/base.py", line 977, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/template/defaulttags.py", line 199, in render
+    len_values = len(values)
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/db/models/query.py", line 366, in __len__
+    self._fetch_all()
+    ~~~~~~~~~~~~~~~^^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/db/models/query.py", line 1935, in _fetch_all
+    self._result_cache = list(self._iterable_class(self))
+                         ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/db/models/query.py", line 91, in __iter__
+    results = compiler.execute_sql(
+        chunked_fetch=self.chunked_fetch, chunk_size=self.chunk_size
+    )
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/db/models/sql/compiler.py", line 1622, in execute_sql
+    cursor.execute(sql, params)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/db/backends/utils.py", line 122, in execute
+    return super().execute(sql, params)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/db/backends/utils.py", line 79, in execute
+    return self._execute_with_wrappers(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        sql, params, many=False, executor=self._execute
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/db/backends/utils.py", line 92, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/db/backends/utils.py", line 100, in _execute
+    with self.db.wrap_database_errors:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/db/utils.py", line 91, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/db/backends/utils.py", line 105, in _execute
+    return self.cursor.execute(sql, params)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+django.db.utils.ProgrammingError: column app_vehiclecategory.is_available does not exist
+LINE 1: ...description", "app_vehiclecategory"."daily_rate", "app_vehic...
+                                                             ^
+
+ERROR 2025-06-09 13:31:48,882 basehttp "GET /subscription/ HTTP/1.1" 500 219284
+WARNING 2025-06-09 13:33:01,625 base Session data corrupted
+ERROR 2025-06-09 13:33:08,012 log Internal Server Error: /subscription/
+Traceback (most recent call last):
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/db/backends/utils.py", line 105, in _execute
+    return self.cursor.execute(sql, params)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+psycopg2.errors.UndefinedColumn: column app_vehiclecategory.is_available does not exist
+LINE 1: ...description", "app_vehiclecategory"."daily_rate", "app_vehic...
+                                                             ^
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Users/chrischan/rushwebsite/pages/views.py", line 114, in subscription
+    return render(request, 'pages/subscription.html', context)
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/template/loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/template/backends/django.py", line 107, in render
+    return self.template.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/template/base.py", line 171, in render
+    return self._render(context)
+           ~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/template/base.py", line 163, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/template/base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/template/base.py", line 977, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/template/loader_tags.py", line 159, in render
+    return compiled_parent._render(context)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/template/base.py", line 163, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/template/base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/template/base.py", line 977, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/template/loader_tags.py", line 65, in render
+    result = block.nodelist.render(context)
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/template/base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/template/base.py", line 977, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/template/defaulttags.py", line 199, in render
+    len_values = len(values)
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/db/models/query.py", line 366, in __len__
+    self._fetch_all()
+    ~~~~~~~~~~~~~~~^^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/db/models/query.py", line 1935, in _fetch_all
+    self._result_cache = list(self._iterable_class(self))
+                         ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/db/models/query.py", line 91, in __iter__
+    results = compiler.execute_sql(
+        chunked_fetch=self.chunked_fetch, chunk_size=self.chunk_size
+    )
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/db/models/sql/compiler.py", line 1622, in execute_sql
+    cursor.execute(sql, params)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/db/backends/utils.py", line 122, in execute
+    return super().execute(sql, params)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/db/backends/utils.py", line 79, in execute
+    return self._execute_with_wrappers(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        sql, params, many=False, executor=self._execute
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/db/backends/utils.py", line 92, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/db/backends/utils.py", line 100, in _execute
+    with self.db.wrap_database_errors:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/db/utils.py", line 91, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/db/backends/utils.py", line 105, in _execute
+    return self.cursor.execute(sql, params)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+django.db.utils.ProgrammingError: column app_vehiclecategory.is_available does not exist
+LINE 1: ...description", "app_vehiclecategory"."daily_rate", "app_vehic...
+                                                             ^
+
+ERROR 2025-06-09 13:33:08,025 basehttp "GET /subscription/ HTTP/1.1" 500 219284
+WARNING 2025-06-09 13:42:08,313 base Session data corrupted
+ERROR 2025-06-09 13:42:14,956 log Internal Server Error: /subscription/
+Traceback (most recent call last):
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/db/backends/utils.py", line 105, in _execute
+    return self.cursor.execute(sql, params)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+psycopg2.errors.UndefinedColumn: column app_vehiclecategory.is_available does not exist
+LINE 1: ...description", "app_vehiclecategory"."daily_rate", "app_vehic...
+                                                             ^
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Users/chrischan/rushwebsite/pages/views.py", line 114, in subscription
+    return render(request, 'pages/subscription.html', context)
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/template/loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/template/backends/django.py", line 107, in render
+    return self.template.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/template/base.py", line 171, in render
+    return self._render(context)
+           ~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/template/base.py", line 163, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/template/base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/template/base.py", line 977, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/template/loader_tags.py", line 159, in render
+    return compiled_parent._render(context)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/template/base.py", line 163, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/template/base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/template/base.py", line 977, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/template/loader_tags.py", line 65, in render
+    result = block.nodelist.render(context)
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/template/base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/template/base.py", line 977, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/template/defaulttags.py", line 199, in render
+    len_values = len(values)
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/db/models/query.py", line 366, in __len__
+    self._fetch_all()
+    ~~~~~~~~~~~~~~~^^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/db/models/query.py", line 1935, in _fetch_all
+    self._result_cache = list(self._iterable_class(self))
+                         ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/db/models/query.py", line 91, in __iter__
+    results = compiler.execute_sql(
+        chunked_fetch=self.chunked_fetch, chunk_size=self.chunk_size
+    )
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/db/models/sql/compiler.py", line 1622, in execute_sql
+    cursor.execute(sql, params)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/db/backends/utils.py", line 122, in execute
+    return super().execute(sql, params)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/db/backends/utils.py", line 79, in execute
+    return self._execute_with_wrappers(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        sql, params, many=False, executor=self._execute
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/db/backends/utils.py", line 92, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/db/backends/utils.py", line 100, in _execute
+    with self.db.wrap_database_errors:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/db/utils.py", line 91, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/db/backends/utils.py", line 105, in _execute
+    return self.cursor.execute(sql, params)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+django.db.utils.ProgrammingError: column app_vehiclecategory.is_available does not exist
+LINE 1: ...description", "app_vehiclecategory"."daily_rate", "app_vehic...
+                                                             ^
+
+ERROR 2025-06-09 13:42:14,959 basehttp "GET /subscription/ HTTP/1.1" 500 219284
+INFO 2025-06-09 13:42:54,299 _util message='Request to Stripe api' method=get url=https://api.stripe.com/v1/account
+INFO 2025-06-09 13:42:54,497 _util message='Stripe API response' path=https://api.stripe.com/v1/account response_code=401
+INFO 2025-06-09 13:42:54,497 _util error_code=None error_message='Invalid API Key provided: sk_test_***********_key' error_param=None error_type=invalid_request_error message='Stripe v1 API error received'
+WARNING 2025-06-09 13:48:26,091 base Session data corrupted
+ERROR 2025-06-09 13:48:32,495 log Internal Server Error: /subscription/
+Traceback (most recent call last):
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/db/backends/utils.py", line 105, in _execute
+    return self.cursor.execute(sql, params)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+psycopg2.errors.UndefinedColumn: column app_vehiclecategory.is_available does not exist
+LINE 1: ...description", "app_vehiclecategory"."daily_rate", "app_vehic...
+                                                             ^
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Users/chrischan/rushwebsite/pages/views.py", line 114, in subscription
+    return render(request, 'pages/subscription.html', context)
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/template/loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/template/backends/django.py", line 107, in render
+    return self.template.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/template/base.py", line 171, in render
+    return self._render(context)
+           ~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/template/base.py", line 163, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/template/base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/template/base.py", line 977, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/template/loader_tags.py", line 159, in render
+    return compiled_parent._render(context)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/template/base.py", line 163, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/template/base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/template/base.py", line 977, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/template/loader_tags.py", line 65, in render
+    result = block.nodelist.render(context)
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/template/base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/template/base.py", line 977, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/template/defaulttags.py", line 199, in render
+    len_values = len(values)
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/db/models/query.py", line 366, in __len__
+    self._fetch_all()
+    ~~~~~~~~~~~~~~~^^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/db/models/query.py", line 1935, in _fetch_all
+    self._result_cache = list(self._iterable_class(self))
+                         ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/db/models/query.py", line 91, in __iter__
+    results = compiler.execute_sql(
+        chunked_fetch=self.chunked_fetch, chunk_size=self.chunk_size
+    )
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/db/models/sql/compiler.py", line 1622, in execute_sql
+    cursor.execute(sql, params)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/db/backends/utils.py", line 122, in execute
+    return super().execute(sql, params)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/db/backends/utils.py", line 79, in execute
+    return self._execute_with_wrappers(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        sql, params, many=False, executor=self._execute
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/db/backends/utils.py", line 92, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/db/backends/utils.py", line 100, in _execute
+    with self.db.wrap_database_errors:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/db/utils.py", line 91, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/db/backends/utils.py", line 105, in _execute
+    return self.cursor.execute(sql, params)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+django.db.utils.ProgrammingError: column app_vehiclecategory.is_available does not exist
+LINE 1: ...description", "app_vehiclecategory"."daily_rate", "app_vehic...
+                                                             ^
+
+ERROR 2025-06-09 13:48:32,497 basehttp "GET /subscription/ HTTP/1.1" 500 219284
+INFO 2025-06-09 13:48:45,549 _util message='Request to Stripe api' method=get url=https://api.stripe.com/v1/account
+INFO 2025-06-09 13:48:45,752 _util message='Stripe API response' path=https://api.stripe.com/v1/account response_code=401
+INFO 2025-06-09 13:48:45,752 _util error_code=None error_message='Invalid API Key provided: sk_test_***********_key' error_param=None error_type=invalid_request_error message='Stripe v1 API error received'
+WARNING 2025-06-09 13:49:52,056 base Session data corrupted
+ERROR 2025-06-09 13:49:58,189 log Internal Server Error: /subscription/
+Traceback (most recent call last):
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/db/backends/utils.py", line 105, in _execute
+    return self.cursor.execute(sql, params)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+psycopg2.errors.UndefinedColumn: column app_vehiclecategory.comparison_provider1_name does not exist
+LINE 1: ...aily_rate", "app_vehiclecategory"."is_available", "app_vehic...
+                                                             ^
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Users/chrischan/rushwebsite/pages/views.py", line 114, in subscription
+    return render(request, 'pages/subscription.html', context)
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/template/loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/template/backends/django.py", line 107, in render
+    return self.template.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/template/base.py", line 171, in render
+    return self._render(context)
+           ~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/template/base.py", line 163, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/template/base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/template/base.py", line 977, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/template/loader_tags.py", line 159, in render
+    return compiled_parent._render(context)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/template/base.py", line 163, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/template/base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/template/base.py", line 977, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/template/loader_tags.py", line 65, in render
+    result = block.nodelist.render(context)
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/template/base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/template/base.py", line 977, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/template/defaulttags.py", line 199, in render
+    len_values = len(values)
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/db/models/query.py", line 366, in __len__
+    self._fetch_all()
+    ~~~~~~~~~~~~~~~^^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/db/models/query.py", line 1935, in _fetch_all
+    self._result_cache = list(self._iterable_class(self))
+                         ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/db/models/query.py", line 91, in __iter__
+    results = compiler.execute_sql(
+        chunked_fetch=self.chunked_fetch, chunk_size=self.chunk_size
+    )
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/db/models/sql/compiler.py", line 1622, in execute_sql
+    cursor.execute(sql, params)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/db/backends/utils.py", line 122, in execute
+    return super().execute(sql, params)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/db/backends/utils.py", line 79, in execute
+    return self._execute_with_wrappers(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        sql, params, many=False, executor=self._execute
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/db/backends/utils.py", line 92, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/db/backends/utils.py", line 100, in _execute
+    with self.db.wrap_database_errors:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/db/utils.py", line 91, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/db/backends/utils.py", line 105, in _execute
+    return self.cursor.execute(sql, params)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+django.db.utils.ProgrammingError: column app_vehiclecategory.comparison_provider1_name does not exist
+LINE 1: ...aily_rate", "app_vehiclecategory"."is_available", "app_vehic...
+                                                             ^
+
+ERROR 2025-06-09 13:49:58,193 basehttp "GET /subscription/ HTTP/1.1" 500 219687
+INFO 2025-06-09 13:51:39,658 _util message='Request to Stripe api' method=get url=https://api.stripe.com/v1/account
+INFO 2025-06-09 13:51:39,857 _util message='Stripe API response' path=https://api.stripe.com/v1/account response_code=401
+INFO 2025-06-09 13:51:39,857 _util error_code=None error_message='Invalid API Key provided: sk_test_***********_key' error_param=None error_type=invalid_request_error message='Stripe v1 API error received'
+INFO 2025-06-09 14:00:15,876 autoreload /Users/chrischan/rushwebsite/pages/views.py changed, reloading.
+INFO 2025-06-09 14:00:16,363 autoreload Watching for file changes with StatReloader
+INFO 2025-06-09 14:00:16,802 _util message='Request to Stripe api' method=get url=https://api.stripe.com/v1/account
+INFO 2025-06-09 14:00:16,997 _util message='Stripe API response' path=https://api.stripe.com/v1/account response_code=401
+INFO 2025-06-09 14:00:16,997 _util error_code=None error_message='Invalid API Key provided: sk_test_***********_key' error_param=None error_type=invalid_request_error message='Stripe v1 API error received'
+INFO 2025-06-09 14:00:19,459 environment [ENV] 当前运行环境: development
+INFO 2025-06-09 14:00:19,459 environment [ENV] 当前运行环境: development
+INFO 2025-06-09 14:00:30,407 autoreload /Users/chrischan/rushwebsite/pages/views.py changed, reloading.
+INFO 2025-06-09 14:00:30,776 autoreload Watching for file changes with StatReloader
+INFO 2025-06-09 14:00:31,148 _util message='Request to Stripe api' method=get url=https://api.stripe.com/v1/account
+INFO 2025-06-09 14:00:31,333 _util message='Stripe API response' path=https://api.stripe.com/v1/account response_code=401
+INFO 2025-06-09 14:00:31,334 _util error_code=None error_message='Invalid API Key provided: sk_test_***********_key' error_param=None error_type=invalid_request_error message='Stripe v1 API error received'
+INFO 2025-06-09 14:00:33,817 environment [ENV] 当前运行环境: development
+INFO 2025-06-09 14:00:33,817 environment [ENV] 当前运行环境: development
+INFO 2025-06-09 14:00:34,636 autoreload /Users/chrischan/rushwebsite/pages/views.py changed, reloading.
+INFO 2025-06-09 14:00:35,008 autoreload Watching for file changes with StatReloader
+INFO 2025-06-09 14:00:35,341 _util message='Request to Stripe api' method=get url=https://api.stripe.com/v1/account
+INFO 2025-06-09 14:00:35,525 _util message='Stripe API response' path=https://api.stripe.com/v1/account response_code=401
+INFO 2025-06-09 14:00:35,525 _util error_code=None error_message='Invalid API Key provided: sk_test_***********_key' error_param=None error_type=invalid_request_error message='Stripe v1 API error received'
+INFO 2025-06-09 14:00:37,952 environment [ENV] 当前运行环境: development
+INFO 2025-06-09 14:00:37,952 environment [ENV] 当前运行环境: development
+INFO 2025-06-09 14:01:26,702 autoreload /Users/chrischan/rushwebsite/pages/views.py changed, reloading.
+INFO 2025-06-09 14:01:27,189 autoreload Watching for file changes with StatReloader
+INFO 2025-06-09 14:01:27,601 _util message='Request to Stripe api' method=get url=https://api.stripe.com/v1/account
+INFO 2025-06-09 14:01:27,801 _util message='Stripe API response' path=https://api.stripe.com/v1/account response_code=401
+INFO 2025-06-09 14:01:27,802 _util error_code=None error_message='Invalid API Key provided: sk_test_***********_key' error_param=None error_type=invalid_request_error message='Stripe v1 API error received'
+INFO 2025-06-09 14:01:31,248 environment [ENV] 当前运行环境: development
+INFO 2025-06-09 14:01:31,248 environment [ENV] 当前运行环境: development
+INFO 2025-06-09 14:02:54,947 _util message='Request to Stripe api' method=get url=https://api.stripe.com/v1/account
+INFO 2025-06-09 14:02:55,141 _util message='Stripe API response' path=https://api.stripe.com/v1/account response_code=401
+INFO 2025-06-09 14:02:55,142 _util error_code=None error_message='Invalid API Key provided: sk_test_***********_key' error_param=None error_type=invalid_request_error message='Stripe v1 API error received'
+WARNING 2025-06-09 14:03:23,599 base Session data corrupted
+ERROR 2025-06-09 14:03:29,649 log Internal Server Error: /subscription/
+Traceback (most recent call last):
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/db/backends/utils.py", line 105, in _execute
+    return self.cursor.execute(sql, params)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+psycopg2.errors.UndefinedColumn: column app_vehiclecategory.comparison_provider1_name does not exist
+LINE 1: ...aily_rate", "app_vehiclecategory"."is_available", "app_vehic...
+                                                             ^
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Users/chrischan/rushwebsite/pages/views.py", line 117, in subscription
+    return render(request, 'pages/subscription.html', context)
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/template/loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/template/backends/django.py", line 107, in render
+    return self.template.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/template/base.py", line 171, in render
+    return self._render(context)
+           ~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/template/base.py", line 163, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/template/base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/template/base.py", line 977, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/template/loader_tags.py", line 159, in render
+    return compiled_parent._render(context)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/template/base.py", line 163, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/template/base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/template/base.py", line 977, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/template/loader_tags.py", line 65, in render
+    result = block.nodelist.render(context)
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/template/base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/template/base.py", line 977, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/template/defaulttags.py", line 199, in render
+    len_values = len(values)
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/db/models/query.py", line 366, in __len__
+    self._fetch_all()
+    ~~~~~~~~~~~~~~~^^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/db/models/query.py", line 1935, in _fetch_all
+    self._result_cache = list(self._iterable_class(self))
+                         ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/db/models/query.py", line 91, in __iter__
+    results = compiler.execute_sql(
+        chunked_fetch=self.chunked_fetch, chunk_size=self.chunk_size
+    )
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/db/models/sql/compiler.py", line 1622, in execute_sql
+    cursor.execute(sql, params)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/db/backends/utils.py", line 122, in execute
+    return super().execute(sql, params)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/db/backends/utils.py", line 79, in execute
+    return self._execute_with_wrappers(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        sql, params, many=False, executor=self._execute
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/db/backends/utils.py", line 92, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/db/backends/utils.py", line 100, in _execute
+    with self.db.wrap_database_errors:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/db/utils.py", line 91, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/db/backends/utils.py", line 105, in _execute
+    return self.cursor.execute(sql, params)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+django.db.utils.ProgrammingError: column app_vehiclecategory.comparison_provider1_name does not exist
+LINE 1: ...aily_rate", "app_vehiclecategory"."is_available", "app_vehic...
+                                                             ^
+
+ERROR 2025-06-09 14:03:29,654 basehttp "GET /subscription/ HTTP/1.1" 500 219687
+INFO 2025-06-09 14:03:50,946 _util message='Request to Stripe api' method=get url=https://api.stripe.com/v1/account
+INFO 2025-06-09 14:03:51,142 _util message='Stripe API response' path=https://api.stripe.com/v1/account response_code=401
+INFO 2025-06-09 14:03:51,143 _util error_code=None error_message='Invalid API Key provided: sk_test_***********_key' error_param=None error_type=invalid_request_error message='Stripe v1 API error received'
+INFO 2025-06-09 14:04:48,697 _util message='Request to Stripe api' method=get url=https://api.stripe.com/v1/account
+INFO 2025-06-09 14:04:48,903 _util message='Stripe API response' path=https://api.stripe.com/v1/account response_code=401
+INFO 2025-06-09 14:04:48,903 _util error_code=None error_message='Invalid API Key provided: sk_test_***********_key' error_param=None error_type=invalid_request_error message='Stripe v1 API error received'
+INFO 2025-06-09 14:06:10,420 _util message='Request to Stripe api' method=get url=https://api.stripe.com/v1/account
+INFO 2025-06-09 14:06:10,616 _util message='Stripe API response' path=https://api.stripe.com/v1/account response_code=401
+INFO 2025-06-09 14:06:10,616 _util error_code=None error_message='Invalid API Key provided: sk_test_***********_key' error_param=None error_type=invalid_request_error message='Stripe v1 API error received'
+INFO 2025-06-09 14:07:08,178 _util message='Request to Stripe api' method=get url=https://api.stripe.com/v1/account
+INFO 2025-06-09 14:07:08,361 _util message='Stripe API response' path=https://api.stripe.com/v1/account response_code=401
+INFO 2025-06-09 14:07:08,361 _util error_code=None error_message='Invalid API Key provided: sk_test_***********_key' error_param=None error_type=invalid_request_error message='Stripe v1 API error received'
+INFO 2025-06-09 14:11:33,636 _util message='Request to Stripe api' method=get url=https://api.stripe.com/v1/account
+INFO 2025-06-09 14:11:33,832 _util message='Stripe API response' path=https://api.stripe.com/v1/account response_code=401
+INFO 2025-06-09 14:11:33,833 _util error_code=None error_message='Invalid API Key provided: sk_test_***********_key' error_param=None error_type=invalid_request_error message='Stripe v1 API error received'
+INFO 2025-06-09 14:11:57,160 _util message='Request to Stripe api' method=get url=https://api.stripe.com/v1/account
+INFO 2025-06-09 14:11:57,404 _util message='Stripe API response' path=https://api.stripe.com/v1/account response_code=401
+INFO 2025-06-09 14:11:57,404 _util error_code=None error_message='Invalid API Key provided: sk_test_***********_key' error_param=None error_type=invalid_request_error message='Stripe v1 API error received'
+INFO 2025-06-09 14:14:31,963 _util message='Request to Stripe api' method=get url=https://api.stripe.com/v1/account
+INFO 2025-06-09 14:14:32,159 _util message='Stripe API response' path=https://api.stripe.com/v1/account response_code=401
+INFO 2025-06-09 14:14:32,159 _util error_code=None error_message='Invalid API Key provided: sk_test_***********_key' error_param=None error_type=invalid_request_error message='Stripe v1 API error received'
+WARNING 2025-06-09 14:14:48,301 base Session data corrupted
+INFO 2025-06-09 14:14:48,829 basehttp "GET /subscription/ HTTP/1.1" 200 36771
+WARNING 2025-06-09 14:15:12,132 base Session data corrupted
+INFO 2025-06-09 14:15:12,664 basehttp "GET /subscription/?pickup_location=&fuel_type=PETROL&price_range= HTTP/1.1" 200 36779
+INFO 2025-06-09 14:15:12,665 basehttp - Broken pipe from ('127.0.0.1', 60077)
+WARNING 2025-06-09 14:15:14,806 base Session data corrupted
+INFO 2025-06-09 14:15:15,337 basehttp "GET /subscription/?pickup_location=&fuel_type=PETROL&price_range=200-300 HTTP/1.1" 200 36787
+WARNING 2025-06-09 14:15:52,479 base Session data corrupted
+INFO 2025-06-09 14:15:53,766 basehttp "GET / HTTP/1.1" 200 36488
