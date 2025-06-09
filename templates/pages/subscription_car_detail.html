@@ -483,6 +483,7 @@ document.addEventListener('DOMContentLoaded', function() {
     globalThankYou.classList.remove('d-none');
     setTimeout(function() {
       globalThankYou.classList.add('d-none');
+      window.location.href = "{% url 'subscription' %}";
     }, 3000);
     // 重置表单和ThankYou内容
     document.getElementById('subscriptionInquiryForm').reset();

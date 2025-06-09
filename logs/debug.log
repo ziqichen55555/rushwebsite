@@ -22238,3 +22238,9 @@ WARNING 2025-06-09 10:22:19,057 base Session data corrupted
 INFO 2025-06-09 10:22:19,060 basehttp "GET /subscription/Toyota/Yaris%20Cross%20Hybrid/ HTTP/1.1" 200 33829
 WARNING 2025-06-09 10:23:17,989 base Session data corrupted
 INFO 2025-06-09 10:23:17,994 basehttp "GET /subscription/Toyota/Yaris%20Cross%20Hybrid/ HTTP/1.1" 200 33829
+WARNING 2025-06-09 10:29:40,038 base Session data corrupted
+INFO 2025-06-09 10:29:40,045 basehttp "GET /subscription/Toyota/Yaris%20Cross%20Hybrid/ HTTP/1.1" 200 33829
+WARNING 2025-06-09 10:30:33,815 base Session data corrupted
+INFO 2025-06-09 10:30:33,822 basehttp "GET /subscription/Toyota/Yaris%20Cross%20Hybrid/ HTTP/1.1" 200 33876
+WARNING 2025-06-09 10:32:22,836 base Session data corrupted
+INFO 2025-06-09 10:32:22,843 basehttp "GET /subscription/ HTTP/1.1" 200 44225
