@@ -55,6 +55,7 @@ INSTALLED_APPS = [
     'django.contrib.humanize',
     
     # Third-party apps
+    'storages',
     'widget_tweaks',
     
     # Project apps
@@ -96,28 +97,81 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'rush_car_rental.wsgi.application'
 
-# Database
+# Database configuration - Azure Database for PostgreSQL Flexible Server
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-# 使用 dj_database_url 解析数据库 URL
-import dj_database_url
-
-DATABASE_URL = os.environ.get('DATABASE_URL')
-
-if DATABASE_URL:
-    DATABASES = {
-        'default': dj_database_url.parse(DATABASE_URL)
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'rush-website-and-management-system',  # 你的数据库名
+        'USER': 'melbournerushcarrental',    # 🔴 替换为你的用户名
+        'PASSWORD': 'rushrcm@250401',  # 🔴 替换为你的密码
+        'HOST': 'all-data-for-sql.postgres.database.azure.com',  # 🔴 新的服务器地址
+        'PORT': '5432',
+        'OPTIONS': {
+            'sslmode': 'require',
+        },
     }
-    print(f"使用 dj_database_url 解析的数据库配置: {DATABASE_URL}")
+}
+
+# Azure Blob Storage Configuration - 直接硬编码配置
+# 启用 Azure Storage
+USE_AZURE_STORAGE = True
+
+if USE_AZURE_STORAGE:
+    # Azure Storage Account 硬编码配置
+    AZURE_ACCOUNT_NAME = 'allpicsandvideos'  # 🔴 替换为你的存储账户名
+    AZURE_ACCOUNT_KEY = 'Ttct7cEvrGEtTuWQ83VfTJKVEaqzHwisU7uSP4MbYPKozhTx7m3H4ykQEuEnP28ft0CvkWiAOasA+AStYc/yxg=='       # 🔴 替换为你的存储密钥
+    AZURE_CUSTOM_DOMAIN = None  # 🔵 可选：如果有CDN域名，在这里填写
+    
+    # Azure Storage settings for django-storages
+    AZURE_SSL = True
+    AZURE_AUTO_SIGN = True  # Automatically sign URLs for private containers
+    AZURE_EXPIRATION_SECS = 3600  # URL expiration in seconds
+    
+    # Django 4.2+ Storage Configuration
+    STORAGES = {
+        "default": {
+            "BACKEND": "storages.backends.azure_storage.AzureStorage",
+            "OPTIONS": {
+                "account_name": AZURE_ACCOUNT_NAME,
+                "account_key": AZURE_ACCOUNT_KEY,
+                "azure_container": "rush-car-rental-media",
+                "azure_ssl": AZURE_SSL,
+            },
+        },
+        "staticfiles": {
+            "BACKEND": "storages.backends.azure_storage.AzureStorage",
+            "OPTIONS": {
+                "account_name": AZURE_ACCOUNT_NAME,
+                "account_key": AZURE_ACCOUNT_KEY,
+                "azure_container": "rush-car-rental-static",
+                "azure_ssl": AZURE_SSL,
+            },
+        },
+    }
+    
+    # URL configurations
+    AZURE_STATIC_CONTAINER = 'rush-car-rental-static'
+    AZURE_MEDIA_CONTAINER = 'rush-car-rental-media'
+    STATIC_URL = f'https://{AZURE_ACCOUNT_NAME}.blob.core.windows.net/{AZURE_STATIC_CONTAINER}/'
+    MEDIA_URL = f'https://{AZURE_ACCOUNT_NAME}.blob.core.windows.net/{AZURE_MEDIA_CONTAINER}/'
+    
+    if AZURE_CUSTOM_DOMAIN:
+        STATIC_URL = f'https://{AZURE_CUSTOM_DOMAIN}/{AZURE_STATIC_CONTAINER}/'
+        MEDIA_URL = f'https://{AZURE_CUSTOM_DOMAIN}/{AZURE_MEDIA_CONTAINER}/'
+    
 else:
-    # 回退到 SQLite
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': BASE_DIR / 'db.sqlite3',
-        }
-    }
-    print("使用默认 SQLite 数据库配置")
+    # Local development storage
+    STATIC_URL = '/static/'
+    STATICFILES_DIRS = [
+        BASE_DIR / 'static',
+    ]
+    STATIC_ROOT = BASE_DIR / 'staticfiles'
+    
+    # Media files for local development
+    MEDIA_URL = '/media/'
+    MEDIA_ROOT = BASE_DIR / 'media'
 
 # Password validation
 AUTH_PASSWORD_VALIDATORS = [
@@ -140,13 +194,6 @@ LANGUAGE_CODE = 'en-us'
 TIME_ZONE = 'UTC'
 USE_I18N = True
 USE_TZ = True
-
-# Static files (CSS, JavaScript, Images)
-STATIC_URL = 'static/'
-STATICFILES_DIRS = [
-    BASE_DIR / 'static',
-]
-STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 # Default primary key field type
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'

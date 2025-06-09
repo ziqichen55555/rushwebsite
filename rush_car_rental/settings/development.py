@@ -2,7 +2,6 @@
 Rush Car Rental - 开发环境设置
 """
 from .base import *
-from rush_car_rental.utils.environment import get_database_config
 
 # 调试模式开启
 DEBUG = True
@@ -19,13 +18,79 @@ CSRF_TRUSTED_ORIGINS = [
 ]
 CORS_ALLOW_ALL_ORIGINS = True
 
-# 开发环境数据库设置 - 使用Replit提供的PostgreSQL
-import os
-from rush_car_rental.utils.environment import get_database_config
-
+# 开发环境数据库设置 - Azure Database for PostgreSQL Flexible Server
 DATABASES = {
-    'default': get_database_config()
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'rush-website-and-management-system',  # 新的数据库名
+        'USER': 'melbournerushcarrental',    # 用户名
+        'PASSWORD': 'rushrcm@250401',  # 密码
+        'HOST': 'all-data-for-sql.postgres.database.azure.com',  # 新的服务器地址
+        'PORT': '5432',
+        'OPTIONS': {
+            'sslmode': 'require',
+        },
+    }
 }
+
+# Azure Blob Storage Configuration - 直接硬编码配置
+# 启用 Azure Storage
+USE_AZURE_STORAGE = True
+
+if USE_AZURE_STORAGE:
+    # Azure Storage Account 硬编码配置
+    AZURE_ACCOUNT_NAME = 'allpicsandvideos'  # 新的存储账户名
+    AZURE_ACCOUNT_KEY = 'Ttct7cEvrGEtTuWQ83VfTJKVEaqzHwisU7uSP4MbYPKozhTx7m3H4ykQEuEnP28ft0CvkWiAOasA+AStYc/yxg=='  # 新的存储密钥
+    AZURE_CUSTOM_DOMAIN = None  # CDN域名（可选）
+    
+    # Azure Storage settings for django-storages
+    AZURE_SSL = True
+    AZURE_AUTO_SIGN = True  # Automatically sign URLs for private containers
+    AZURE_EXPIRATION_SECS = 3600  # URL expiration in seconds
+    
+    # Django 4.2+ Storage Configuration
+    STORAGES = {
+        "default": {
+            "BACKEND": "storages.backends.azure_storage.AzureStorage",
+            "OPTIONS": {
+                "account_name": AZURE_ACCOUNT_NAME,
+                "account_key": AZURE_ACCOUNT_KEY,
+                "azure_container": "rush-car-rental-media",
+                "azure_ssl": AZURE_SSL,
+            },
+        },
+        "staticfiles": {
+            "BACKEND": "storages.backends.azure_storage.AzureStorage",
+            "OPTIONS": {
+                "account_name": AZURE_ACCOUNT_NAME,
+                "account_key": AZURE_ACCOUNT_KEY,
+                "azure_container": "rush-car-rental-static",
+                "azure_ssl": AZURE_SSL,
+            },
+        },
+    }
+    
+    # URL configurations
+    AZURE_STATIC_CONTAINER = 'rush-car-rental-static'
+    AZURE_MEDIA_CONTAINER = 'rush-car-rental-media'
+    STATIC_URL = f'https://{AZURE_ACCOUNT_NAME}.blob.core.windows.net/{AZURE_STATIC_CONTAINER}/'
+    MEDIA_URL = f'https://{AZURE_ACCOUNT_NAME}.blob.core.windows.net/{AZURE_MEDIA_CONTAINER}/'
+    
+    if AZURE_CUSTOM_DOMAIN:
+        STATIC_URL = f'https://{AZURE_CUSTOM_DOMAIN}/{AZURE_STATIC_CONTAINER}/'
+        MEDIA_URL = f'https://{AZURE_CUSTOM_DOMAIN}/{AZURE_MEDIA_CONTAINER}/'
+    
+else:
+    # Local development storage fallback
+    STATIC_URL = '/static/'
+    STATICFILES_DIRS = [
+        BASE_DIR / 'static',
+    ]
+    STATIC_ROOT = BASE_DIR / 'staticfiles'
+    
+    # Media files for local development
+    MEDIA_URL = '/media/'
+    MEDIA_ROOT = BASE_DIR / 'media'
 
 # 开发环境邮件设置 - 输出到控制台
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'

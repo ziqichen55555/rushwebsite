@@ -23,7 +23,7 @@
       href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css"
     />
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="/static/css/styles.css" />
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}" />
     <style>
       .main-navbar {
         background-color: #e8fe04;
@@ -51,7 +51,8 @@
           <img
             src="{% static 'images/logo.png' %}"
             alt="Rush Logo"
-            style="height: 48px; vertical-align: middle"
+            class="navbar-logo"
+            style="height: 55px; vertical-align: middle"
           />
           <!-- <span class="fw-bold align-middle">Rush</span> <span class="text-dark align-middle">Car Rental</span> -->
         </a>
@@ -189,9 +190,9 @@
               <a href="https://www.instagram.com/rushcarrental.com.au?igsh=ZTRkcXBycTZ0c2I4&utm_source=qr" title="Instagram" target="_blank"><i class="fab fa-instagram"></i></a>
               <a href="https://www.tiktok.com/@rushcarrental?_t=ZS-8wTjNiBoCnZ&_r=1" title='TikTok'><i class="fab fa-tiktok" target="_blank"></i></a>
               <a href="https://www.xiaohongshu.com/user/profile/66b08f4a000000000d027883?xsec_token=YBtrR_XQfNrne10jQc1pu5gIraYUH3LOZ93CFfZt8hGJw=&xsec_source=app_share&xhsshare=CopyLink&appuid=66b08f4a000000000d027883&apptime=1747636548&share_id=75b141f870b342da9d29f7ec77efb250" title='Redbook' target="_blank">
-                  <img src="/static/images/Xiaohongshu.svg" alt="小红书" style="height: 22px;" />
+                  <img src="{% static 'images/Xiaohongshu.svg' %}" alt="小红书" style="height: 22px;" />
               </a>
-              <img src="/static/images/whatsapp.png" alt="WhatsApp" class="social-icon" style="height: 120px;" />
+              <img src="{% static 'images/whatsapp.png' %}" alt="WhatsApp" class="social-icon" style="height: 120px;" />
             </div>
           </div>
           <div class="col-md-4 mb-4">
@@ -229,7 +230,7 @@
     <!-- Swiper JS for Carousels -->
     <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
     <!-- Custom JS -->
-    <script src="/static/js/scripts.js"></script>
+    <script src="{% static 'js/scripts.js' %}"></script>
     {% block extra_js %}{% endblock %}
   </body>
 </html>
