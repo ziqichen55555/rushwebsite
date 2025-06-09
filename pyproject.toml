@@ -1,17 +1,22 @@
-[project]
-name = "repl-nix-workspace"
+[tool.poetry]
+name = "rush-car-rental"
 version = "0.1.0"
-description = "Add your description here"
-requires-python = ">=3.11"
-dependencies = [
-    "django-widget-tweaks>=1.5.0",
-    "django>=5.2",
-    "django-crispy-forms>=2.3",
-    "pillow>=11.1.0",
-    "psycopg2-binary>=2.9.10",
-    "stripe>=12.0.0",
-    "python-dotenv>=1.1.0",
-    "django-storages[azure]>=1.14.6",
-    "django-redis>=5.4.0",
-    "dj-database-url>=2.3.0",
-]
+description = "Rush Car Rental Website"
+authors = ["Your Name <your.email@example.com>"]
+
+[tool.poetry.dependencies]
+python = ">=3.11"
+django-widget-tweaks = ">=1.5.0"
+django = ">=5.2"
+django-crispy-forms = ">=2.3"
+pillow = ">=11.1.0"
+psycopg2-binary = ">=2.9.10"
+stripe = ">=12.0.0"
+python-dotenv = ">=1.1.0"
+django-storages = {extras = ["azure"], version = ">=1.14.6"}
+django-redis = ">=5.4.0"
+dj-database-url = ">=2.3.0"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
