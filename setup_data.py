@@ -1,5 +1,6 @@
 import os
 import django
+from django.utils import timezone
 
 # Setup Django environment
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "rush_car_rental.settings")
@@ -7,7 +8,7 @@ django.setup()
 
 from django.contrib.auth.models import User
 from locations.models import State, Location, CityHighlight
-from cars.models import CarCategory, Car, CarFeature
+from cars.models import CarCategory, Car, CarFeature, VehicleType, VehicleCategoryType, VehicleCategory
 from accounts.models import Profile
 from bookings.models import Booking
 
@@ -34,23 +35,171 @@ def create_states():
 
 # Create Car Categories
 def create_car_categories():
-    categories = [
-        {"name": "Economy", "description": "Small, fuel-efficient cars ideal for city driving and budget-conscious travelers."},
-        {"name": "Compact", "description": "Slightly larger than Economy, offering more comfort for small groups or couples."},
-        {"name": "Midsize", "description": "Balanced size and comfort, perfect for families or small groups with moderate luggage."},
-        {"name": "SUV", "description": "Spacious vehicles with excellent cargo capacity and often four-wheel drive capabilities."},
-        {"name": "Luxury", "description": "Premium vehicles offering superior comfort, performance, and features."},
-        {"name": "Sports Car", "description": "High-performance vehicles designed for speed and driving excitement."},
-        {"name": "Minivan", "description": "Spacious vehicles designed to carry 6-8 passengers comfortably."},
-    ]
+    """Create car categories"""
+    print("Creating car categories...")
     
-    for cat_data in categories:
-        CarCategory.objects.get_or_create(
-            name=cat_data["name"],
-            defaults={"description": cat_data["description"]}
+    # Create vehicle types first
+    vehicle_types = {
+        'PETROL': 'Petrol vehicles',
+        'HYBRID': 'Hybrid vehicles',
+        'ELECTRIC': 'Electric vehicles'
+    }
+    
+    for type_name, description in vehicle_types.items():
+        VehicleType.objects.get_or_create(
+            name=type_name,
+            defaults={'description': description}
         )
     
-    print(f"Added {len(categories)} car categories")
+    # Create vehicle category types
+    category_types = [
+        {
+            'category_type': 'Economy',
+            'rate_type': 'DAILY',
+            'web_available': True,
+            'ordering': 1
+        },
+        {
+            'category_type': 'Compact',
+            'rate_type': 'DAILY',
+            'web_available': True,
+            'ordering': 2
+        },
+        {
+            'category_type': 'Midsize',
+            'rate_type': 'DAILY',
+            'web_available': True,
+            'ordering': 3
+        },
+        {
+            'category_type': 'SUV',
+            'rate_type': 'DAILY',
+            'web_available': True,
+            'ordering': 4
+        },
+        {
+            'category_type': 'Luxury',
+            'rate_type': 'DAILY',
+            'web_available': True,
+            'ordering': 5
+        }
+    ]
+    
+    for type_data in category_types:
+        VehicleCategoryType.objects.get_or_create(
+            category_type=type_data['category_type'],
+            defaults={
+                'rate_type': type_data['rate_type'],
+                'web_available': type_data['web_available'],
+                'ordering': type_data['ordering'],
+                'created_at': timezone.now(),
+                'updated_at': timezone.now()
+            }
+        )
+    
+    # Create test vehicles
+    test_vehicles = [
+        {
+            'name': 'Toyota Corolla',
+            'vehicle_category': 'Toyota Corolla',
+            'category_type': 'Economy',
+            'vehicle_type': 'PETROL',
+            'daily_rate': 50.00,
+            'num_adults': 4,
+            'num_children': 1,
+            'num_large_case': 2,
+            'num_small_case': 2,
+            'renting_category': True,
+            'is_available': True
+        },
+        {
+            'name': 'Honda Civic',
+            'vehicle_category': 'Honda Civic',
+            'category_type': 'Compact',
+            'vehicle_type': 'HYBRID',
+            'daily_rate': 60.00,
+            'num_adults': 4,
+            'num_children': 1,
+            'num_large_case': 2,
+            'num_small_case': 2,
+            'renting_category': True,
+            'is_available': True
+        },
+        {
+            'name': 'Toyota Camry',
+            'vehicle_category': 'Toyota Camry',
+            'category_type': 'Midsize',
+            'vehicle_type': 'PETROL',
+            'daily_rate': 70.00,
+            'num_adults': 5,
+            'num_children': 0,
+            'num_large_case': 3,
+            'num_small_case': 2,
+            'renting_category': True,
+            'is_available': True
+        },
+        {
+            'name': 'Toyota RAV4',
+            'vehicle_category': 'Toyota RAV4',
+            'category_type': 'SUV',
+            'vehicle_type': 'HYBRID',
+            'daily_rate': 80.00,
+            'num_adults': 5,
+            'num_children': 0,
+            'num_large_case': 4,
+            'num_small_case': 2,
+            'renting_category': True,
+            'is_available': True
+        },
+        {
+            'name': 'Tesla Model 3',
+            'vehicle_category': 'Tesla Model 3',
+            'category_type': 'Luxury',
+            'vehicle_type': 'ELECTRIC',
+            'daily_rate': 100.00,
+            'num_adults': 5,
+            'num_children': 0,
+            'num_large_case': 3,
+            'num_small_case': 2,
+            'renting_category': True,
+            'is_available': True
+        },
+        {
+            'name': 'BMW 3 Series',
+            'vehicle_category': 'BMW 3 Series',
+            'category_type': 'Luxury',
+            'vehicle_type': 'PETROL',
+            'daily_rate': 90.00,
+            'num_adults': 5,
+            'num_children': 0,
+            'num_large_case': 3,
+            'num_small_case': 2,
+            'renting_category': True,
+            'is_available': True
+        }
+    ]
+    
+    for vehicle_data in test_vehicles:
+        category_type = VehicleCategoryType.objects.get(category_type=vehicle_data['category_type'])
+        vehicle_type = VehicleType.objects.get(name=vehicle_data['vehicle_type'])
+        
+        VehicleCategory.objects.get_or_create(
+            vehicle_category=vehicle_data['vehicle_category'],
+            defaults={
+                'name': vehicle_data['name'],
+                'category_type': category_type,
+                'vehicle_type': vehicle_type,
+                'daily_rate': vehicle_data['daily_rate'],
+                'num_adults': vehicle_data['num_adults'],
+                'num_children': vehicle_data['num_children'],
+                'num_large_case': vehicle_data['num_large_case'],
+                'num_small_case': vehicle_data['num_small_case'],
+                'renting_category': vehicle_data['renting_category'],
+                'is_available': vehicle_data['is_available']
+            }
+        )
+    
+    print("Added test vehicles")
 
 # Create Locations
 def create_locations():

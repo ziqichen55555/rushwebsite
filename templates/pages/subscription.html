@@ -253,7 +253,7 @@
                 <div class="filter-section p-3 bg-white rounded shadow-sm">
                     <form id="filterForm" class="row g-3">
                         <!-- Pickup Location Filter -->
-                        <div class="col-md-4">
+                        <div class="col-md-3">
                             <label for="pickup_location" class="form-label">Pickup Location</label>
                             <select class="form-select" id="pickup_location" name="pickup_location">
                                 <option value="">All Locations</option>
@@ -266,7 +266,7 @@
                         </div>
                         
                         <!-- Fuel Type Filter -->
-                        <div class="col-md-4">
+                        <div class="col-md-3">
                             <label for="fuel_type" class="form-label">Fuel Type</label>
                             <select class="form-select" id="fuel_type" name="fuel_type">
                                 <option value="">All Types</option>
@@ -277,15 +277,27 @@
                                 {% endfor %}
                             </select>
                         </div>
-                        
-                        <!-- Price Range Filter -->
-                        <div class="col-md-4">
-                            <label for="price_range" class="form-label">Price Range</label>
-                            <select class="form-select" id="price_range" name="price_range">
-                                <option value="">All Prices</option>
-                                {% for range in price_ranges %}
-                                <option value="{{ range.value }}" {% if range.value == selected_price_range %}selected{% endif %}>
-                                    {{ range.label }}
+                        <!--car category filter-->
+                        <div class="col-md-3">
+                            <label for="car_category" class="form-label">Car Category</label>
+                            <select class="form-select" id="car_category" name="car_category">
+                                <option value="">All Categories</option>
+                            </select>
+                            {% for category in car_categories %}
+                            <option value="{{ category.name }}" {% if category.name == selected_car_category %}selected{% endif %}>
+                                {{ category.name }}
+                            </option>
+                            {% endfor %}
+                        </div>
+                       
+                        <!-- seat number filter -->
+                        <div class="col-md-3">
+                            <label for="seat_number" class="form-label">Seat Number</label>
+                            <select class="form-select" id="seat_number" name="seat_number">
+                                <option value="">All Seat Numbers</option>
+                                {% for seat_number in seat_numbers %}
+                                <option value="{{ seat_number }}" {% if seat_number == selected_seat_number %}selected{% endif %}>
+                                    {{ seat_number }}
                                 </option>
                                 {% endfor %}
                             </select>
@@ -307,7 +319,7 @@
                     {% if vehicle.is_great_value %}
                     <div class="great-value-badge">Great Value</div>
                     {% endif %}
-                    <img src="{{ vehicle.image_url }}" alt="{{ vehicle.make }} {{ vehicle.model }}" class="subscription-image">
+                    <img src="{{ vehicle.get_image_url }}" alt="{{ vehicle.name|default:vehicle.vehicle_category }}" class="subscription-image">
                     <div class="p-3">
                         <div class="availability-badge">
                             <i class="fas fa-check-circle"></i> Available Now
@@ -629,6 +641,28 @@
         </div>
     </div>
 </section>
+
+<!-- Subscription Cars Section -->
+<div class="car-section">
+    <h2>Available Cars</h2>
+    <div class="car-list">
+        <div class="car-item">
+            <h3>Car 1</h3>
+            <p>Description: This is a sample car description.</p>
+            <p>Price: $100/day</p>
+        </div>
+        <div class="car-item">
+            <h3>Car 2</h3>
+            <p>Description: Another sample car description.</p>
+            <p>Price: $150/day</p>
+        </div>
+        <div class="car-item">
+            <h3>Car 3</h3>
+            <p>Description: Yet another sample car description.</p>
+            <p>Price: $200/day</p>
+        </div>
+    </div>
+</div>
 
 {% block extra_js %}
 <script>

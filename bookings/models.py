@@ -18,6 +18,11 @@ class BookingOption(models.Model):
     def __str__(self):
         return self.name
 
+    class Meta:
+        db_table = 'bookings_bookingoption'
+        verbose_name = _("Booking Option")
+        verbose_name_plural = _("Booking Options")
+
 class Booking(models.Model):
     STATUS_CHOICES = [
         ('pending', 'Pending'),
@@ -76,6 +81,10 @@ class Booking(models.Model):
             
         return cost
 
+    class Meta:
+        db_table = 'bookings_booking'
+        ordering = ['-booking_date']
+
 
 class Driver(models.Model):
     """驾驶员信息模型"""
@@ -128,6 +137,7 @@ class Driver(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     
     class Meta:
+        db_table = 'bookings_driver'
         verbose_name = _("Driver")
         verbose_name_plural = _("Drivers")
     

@@ -23,7 +23,7 @@ class VehicleImage(models.Model):
         db_table = 'app_vehicleimage'
 
 
-class VehicleType(models.Model):
+class VehicleType(AuditModelMixin):
     name = models.CharField(max_length=50)
     description = models.TextField(blank=True)
 
@@ -158,6 +158,9 @@ class VehicleFeature(models.Model):
     def __str__(self):
         return self.feature
 
+    class Meta:
+        db_table = 'app_vehiclefeature'
+
 
 # 保留旧模型以兼容现有代码，但将它们链接到新模型
 class CarCategory(models.Model):
@@ -172,6 +175,7 @@ class CarCategory(models.Model):
         return self.name
 
     class Meta:
+        db_table = 'app_carcategory'
         verbose_name_plural = 'Car Categories (Legacy)'
 
 
@@ -235,6 +239,9 @@ class Car(models.Model):
             return self.locations.first().name
         return "General"
 
+    class Meta:
+        db_table = 'app_car'
+
 
 class CarFeature(models.Model):
     car = models.ForeignKey(Car,
@@ -244,3 +251,18 @@ class CarFeature(models.Model):
 
     def __str__(self):
         return self.feature
+
+    class Meta:
+        db_table = 'app_carfeature'
+
+
+class Testimonial(models.Model):
+    name = models.CharField(max_length=100)
+    testimonial = models.TextField()
+    date = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        db_table = 'cars_testimonial'
