@@ -7,6 +7,10 @@ class State(models.Model):
     def __str__(self):
         return self.name
 
+    class Meta:
+        db_table = 'locations_state'
+        ordering = ['name']
+
 class Location(models.Model):
     name = models.CharField(max_length=100)
     address = models.CharField(max_length=255)
@@ -24,6 +28,7 @@ class Location(models.Model):
         return f"{self.name}, {self.city}"
     
     class Meta:
+        db_table = 'locations_location'
         ordering = ['state', 'city', 'name']
 
 class CityHighlight(models.Model):

@@ -62,7 +62,8 @@ def subscription(request):
     # 获取筛选参数
     pickup_location = request.GET.get('pickup_location', '')
     fuel_type = request.GET.get('fuel_type', '')
-    price_range = request.GET.get('price_range', '')
+    car_category = request.GET.get('car_category', '')
+    seat_number = request.GET.get('seat_number', '')
     
     # 默认使用VehicleCategory模型中的数据
     subscription_vehicles = VehicleCategory.objects.filter(
@@ -81,37 +82,44 @@ def subscription(request):
             vehicle_type__name__icontains=fuel_type
         )
     
-    if price_range:
-        min_price, max_price = map(int, price_range.split('-'))
+    if car_category:
         subscription_vehicles = subscription_vehicles.filter(
-            daily_rate__gte=min_price,
-            daily_rate__lte=max_price
+            name__icontains=car_category
+        )
+    
+    if seat_number:
+        subscription_vehicles = subscription_vehicles.filter(
+            num_adults__gte=int(seat_number)
         )
     
     # 获取所有可用的取车地点
     locations = Location.objects.filter(is_airport=False)
     
     # 获取所有可用的燃料类型
-    fuel_types = ['PETROL', 'HYBRID', 'ELECTRIC']  # 使用预定义的燃料类型
+    fuel_types = VehicleType.objects.all()
     
-    # 价格范围选项
-    price_ranges = [
-        {'value': '0-100', 'label': 'Under $100'},
-        {'value': '100-200', 'label': '$100 - $200'},
-        {'value': '200-300', 'label': '$200 - $300'},
-        {'value': '300-400', 'label': '$300 - $400'},
-        {'value': '400-500', 'label': '$400 - $500'},
-        {'value': '500-1000', 'label': 'Over $500'},
-    ]
+    # 获取所有可用的车辆类别
+    car_categories = VehicleCategory.objects.filter(
+        renting_category=True,
+        category_type__web_available=True
+    ).values_list('name', flat=True).distinct()
+    
+    # 获取所有可用的座位数
+    seat_numbers = VehicleCategory.objects.filter(
+        renting_category=True,
+        category_type__web_available=True
+    ).values_list('num_adults', flat=True).distinct().order_by('num_adults')
     
     context = {
         'subscription_vehicles': subscription_vehicles,
         'locations': locations,
         'fuel_types': fuel_types,
-        'price_ranges': price_ranges,
+        'car_categories': car_categories,
+        'seat_numbers': seat_numbers,
         'selected_location': pickup_location,
         'selected_fuel_type': fuel_type,
-        'selected_price_range': price_range,
+        'selected_car_category': car_category,
+        'selected_seat_number': seat_number,
     }
     
     return render(request, 'pages/subscription.html', context)
@@ -175,8 +183,23 @@ def subscription_car_detail(request, make, model):
             'is_great_value': True
         }
     ]
-    car = next((c for c in subscription_cars if c['make'].lower() == make.lower() and c['model'].lower() == model.lower()), None)
+    
+    # 将输入转换为小写并移除连字符
+    make = make.lower()
+    model = model.lower().replace('-', ' ')
+    
+    # 特殊处理 Smart 车型
+    if make == 'smart':
+        if model == '1':
+            model = '#1'
+        elif model == '3':
+            model = '#3'
+    
+    # 查找匹配的车辆
+    car = next((c for c in subscription_cars if c['make'].lower() == make and c['model'].lower() == model), None)
+    
     if not car:
         from django.http import Http404
         raise Http404('Car not found')
+        
     return render(request, 'pages/subscription_car_detail.html', {'car': car})

@@ -214,6 +214,26 @@
             height: 400px;
         }
     }
+
+    .option-card {
+        border: 2px solid #eee;
+        border-radius: 0.75rem;
+        background: #f8f9fa;
+        padding: 1.2rem 1rem;
+        text-align: center;
+        cursor: pointer;
+        font-weight: 500;
+        transition: border-color 0.2s, background 0.2s, color 0.2s;
+        user-select: none;
+    }
+    .option-card.selected, .option-card:active {
+        border-color: #ffdd00;
+        background: #fffbe6;
+        color: #333;
+    }
+    .option-card:hover {
+        border-color: #ffd000;
+    }
 </style>
 {% endblock %}
 
@@ -253,7 +273,7 @@
                 <div class="filter-section p-3 bg-white rounded shadow-sm">
                     <form id="filterForm" class="row g-3">
                         <!-- Pickup Location Filter -->
-                        <div class="col-md-4">
+                        <div class="col-md-3">
                             <label for="pickup_location" class="form-label">Pickup Location</label>
                             <select class="form-select" id="pickup_location" name="pickup_location">
                                 <option value="">All Locations</option>
@@ -266,7 +286,7 @@
                         </div>
                         
                         <!-- Fuel Type Filter -->
-                        <div class="col-md-4">
+                        <div class="col-md-3">
                             <label for="fuel_type" class="form-label">Fuel Type</label>
                             <select class="form-select" id="fuel_type" name="fuel_type">
                                 <option value="">All Types</option>
@@ -277,15 +297,27 @@
                                 {% endfor %}
                             </select>
                         </div>
-                        
-                        <!-- Price Range Filter -->
-                        <div class="col-md-4">
-                            <label for="price_range" class="form-label">Price Range</label>
-                            <select class="form-select" id="price_range" name="price_range">
-                                <option value="">All Prices</option>
-                                {% for range in price_ranges %}
-                                <option value="{{ range.value }}" {% if range.value == selected_price_range %}selected{% endif %}>
-                                    {{ range.label }}
+                        <!--car category filter-->
+                        <div class="col-md-3">
+                            <label for="car_category" class="form-label">Car Category</label>
+                            <select class="form-select" id="car_category" name="car_category">
+                                <option value="">All Categories</option>
+                            </select>
+                            {% for category in car_categories %}
+                            <option value="{{ category.name }}" {% if category.name == selected_car_category %}selected{% endif %}>
+                                {{ category.name }}
+                            </option>
+                            {% endfor %}
+                        </div>
+                       
+                        <!-- seat number filter -->
+                        <div class="col-md-3">
+                            <label for="seat_number" class="form-label">Seat Number</label>
+                            <select class="form-select" id="seat_number" name="seat_number">
+                                <option value="">All Seat Numbers</option>
+                                {% for seat_number in seat_numbers %}
+                                <option value="{{ seat_number }}" {% if seat_number == selected_seat_number %}selected{% endif %}>
+                                    {{ seat_number }}
                                 </option>
                                 {% endfor %}
                             </select>
@@ -307,7 +339,7 @@
                     {% if vehicle.is_great_value %}
                     <div class="great-value-badge">Great Value</div>
                     {% endif %}
-                    <img src="{{ vehicle.image_url }}" alt="{{ vehicle.make }} {{ vehicle.model }}" class="subscription-image">
+                    <img src="{{ vehicle.get_image_url }}" alt="{{ vehicle.name|default:vehicle.vehicle_category }}" class="subscription-image">
                     <div class="p-3">
                         <div class="availability-badge">
                             <i class="fas fa-check-circle"></i> Available Now
@@ -316,13 +348,109 @@
                         <h3 class="vehicle-model">{{ vehicle.model }}</h3>
                         <p class="price-label">Weekly Rate</p>
                         <p class="price-value">${{ vehicle.daily_rate|multiply:7 }}</p>
-                        <a href="{% url 'bookings:create' %}?vehicle_id={{ vehicle.id }}" class="btn btn-primary w-100">Book Now</a>
+                        <a href="{% url 'subscription_car_detail' make=vehicle.make|lower model=vehicle.model|lower %}" class="btn btn-primary w-100">View Details</a>
                     </div>
                 </div>
             </div>
             {% empty %}
-            <div class="col-12 text-center">
-                <p class="lead">No vehicles found matching your criteria. Please try different filters.</p>
+            <!-- 示例车辆数据 -->
+            <div class="col-md-4 mb-4">
+                <div class="subscription-card">
+                    <div class="great-value-badge">Great Value</div>
+                    <img src="https://allpicsandvideos.blob.core.windows.net/rush-car-rental-static/images/pics/ts.jpg" alt="Hyundai Venue" class="subscription-image">
+                    <div class="p-3">
+                        <div class="availability-badge">
+                            <i class="fas fa-check-circle"></i> Available Now
+                        </div>
+                        <p class="vehicle-make">Hyundai</p>
+                        <h3 class="vehicle-model">Venue</h3>
+                        <p class="price-label">Weekly Rate</p>
+                        <p class="price-value"><small>from</small> $230</p>
+                        <a href="{% url 'subscription_car_detail' make='hyundai' model='venue' %}" class="btn btn-primary w-100">View Details</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4 mb-4">
+                <div class="subscription-card">
+                    <img src="https://allpicsandvideos.blob.core.windows.net/rush-car-rental-static/images/pics/ns.jpg" alt="Nissan X-Trail" class="subscription-image">
+                    <div class="p-3">
+                        <div class="availability-badge">
+                            <i class="fas fa-check-circle"></i> Available Now
+                        </div>
+                        <p class="vehicle-make">Nissan</p>
+                        <h3 class="vehicle-model">X-Trail</h3>
+                        <p class="price-label">Weekly Rate</p>
+                        <p class="price-value"><small>from</small> $260</p>
+                        <a href="{% url 'subscription_car_detail' make='nissan' model='x-trail' %}" class="btn btn-primary w-100">View Details</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4 mb-4">
+                <div class="subscription-card">
+                    <img src="https://allpicsandvideos.blob.core.windows.net/rush-car-rental-static/images/pics/kin.jpg" alt="Toyota Yaris Cross" class="subscription-image">
+                    <div class="p-3">
+                        <div class="availability-badge">
+                            <i class="fas fa-check-circle"></i> Available Now
+                        </div>
+                        <p class="vehicle-make">Toyota</p>
+                        <h3 class="vehicle-model">Yaris Cross Hybrid</h3>
+                        <p class="price-label">Weekly Rate</p>
+                        <p class="price-value"><small>from</small> $279</p>
+                        <a href="{% url 'subscription_car_detail' make='toyota' model='yaris cross hybrid' %}" class="btn btn-primary w-100">View Details</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4 mb-4">
+                <div class="subscription-card">
+                    <img src="https://allpicsandvideos.blob.core.windows.net/rush-car-rental-static/images/pics/sb.jpg" alt="Suzuki Swift" class="subscription-image">
+                    <div class="p-3">
+                        <div class="availability-badge">
+                            <i class="fas fa-check-circle"></i> Available Now
+                        </div>
+                        <p class="vehicle-make">Suzuki</p>
+                        <h3 class="vehicle-model">Swift</h3>
+                        <p class="price-label">Weekly Rate</p>
+                        <p class="price-value"><small>from</small> $280</p>
+                        <a href="{% url 'subscription_car_detail' make='suzuki' model='swift' %}" class="btn btn-primary w-100">View Details</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4 mb-4">
+                <div class="subscription-card">
+                    <div class="great-value-badge">Great Value</div>
+                    <img src="https://allpicsandvideos.blob.core.windows.net/rush-car-rental-static/images/pics/mx.jpg" alt="Smart #1" class="subscription-image">
+                    <div class="p-3">
+                        <div class="availability-badge">
+                            <i class="fas fa-check-circle"></i> Available Now
+                        </div>
+                        <p class="vehicle-make">Smart</p>
+                        <h3 class="vehicle-model">#1</h3>
+                        <p class="price-label">Weekly Rate</p>
+                        <p class="price-value"><small>from</small> $289</p>
+                        <a href="{% url 'subscription_car_detail' make='smart' model='#1' %}" class="btn btn-primary w-100">View Details</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4 mb-4">
+                <div class="subscription-card">
+                    <div class="great-value-badge">Great Value</div>
+                    <img src="https://allpicsandvideos.blob.core.windows.net/rush-car-rental-static/images/pics/bz.jpg" alt="Smart #3" class="subscription-image">
+                    <div class="p-3">
+                        <div class="availability-badge">
+                            <i class="fas fa-check-circle"></i> Available Now
+                        </div>
+                        <p class="vehicle-make">Smart</p>
+                        <h3 class="vehicle-model">#3</h3>
+                        <p class="price-label">Weekly Rate</p>
+                        <p class="price-value"><small>from</small> $299</p>
+                        <a href="{% url 'subscription_car_detail' make='smart' model='#3' %}" class="btn btn-primary w-100">View Details</a>
+                    </div>
+                </div>
             </div>
             {% endfor %}
         </div>
@@ -389,7 +517,6 @@
                         The cost of the car is included. Rush ensures our cars are always new, with a mileage limit of 15,000 km, giving you a permanent new car experience.
                     </p>
                 </div>
-                <a href="{% url 'subscription' %}" class="btn btn-dark px-4 py-2">Contact Us <i class="fas fa-arrow-right ms-2"></i></a>
             </div>
             
             <div class="col-lg-7">
@@ -543,7 +670,9 @@
                 </div>
                 
                 <div class="d-flex align-items-center">
-                    <a href="#" class="btn btn-dark px-4 py-2 me-3">Get Started <i class="fas fa-arrow-right ms-2"></i></a>
+                    <a href="#" class="btn btn-dark px-4 py-2 me-3" data-bs-toggle="modal" data-bs-target="#subscriptionInquiryModal">
+                        Get Started <i class="fas fa-arrow-right ms-2"></i>
+                    </a>
                     <span class="text-muted small"><i class="far fa-clock me-1"></i> 5 minutes to complete application</span>
                 </div>
             </div>
@@ -630,19 +759,342 @@
     </div>
 </section>
 
+<!-- Modal for Subscription Inquiry -->
+<div class="modal fade" id="subscriptionInquiryModal" tabindex="-1" aria-labelledby="subscriptionInquiryModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="subscriptionInquiryModalLabel">Subscription Inquiry</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form id="subscriptionInquiryForm">
+          <div id="inquiry-steps">
+            <!-- Step 1 -->
+            <div class="inquiry-step" data-step="1">
+              <div class="mb-4">
+                <label class="form-label fw-bold">1. What are you looking for?</label>
+                <div class="row g-3">
+                  <div class="col-12 col-md-6 col-lg-4">
+                    <div class="option-card" data-value="ridesharing">A car for ridesharing (uber driving)</div>
+                  </div>
+                  <div class="col-12 col-md-6 col-lg-4">
+                    <div class="option-card" data-value="daily use">A car for daily use (family use or personal use)</div>
+                  </div>
+                  <div class="col-12 col-md-6 col-lg-4">
+                    <div class="option-card" data-value="fleet">A fleet of more than 5 cars</div>
+                  </div>
+                  <div class="col-12 col-md-6 col-lg-4">
+                    <div class="option-card" data-value="Other">Other</div>
+                  </div>
+                </div>
+                <input type="hidden" name="car_type" required>
+              </div>
+            </div>
+            <!-- Step 2 -->
+            <div class="inquiry-step d-none" data-step="2">
+              <div class="mb-4">
+                <label class="form-label fw-bold">2. How long do you need the car for?</label>
+                <div class="row g-3">
+                  <div class="col-6 col-md-4">
+                    <div class="option-card" data-value="3 months">3 months</div>
+                  </div>
+                  <div class="col-6 col-md-4">
+                    <div class="option-card" data-value="6 months">6 months</div>
+                  </div>
+                  <div class="col-6 col-md-4">
+                    <div class="option-card" data-value="9 months">9 months</div>
+                  </div>
+                  <div class="col-6 col-md-4">
+                    <div class="option-card" data-value="12 months">12 months</div>
+                  </div>
+                  <div class="col-6 col-md-4">
+                    <div class="option-card" data-value="Other">Other</div>
+                  </div>
+                </div>
+                <input type="hidden" name="duration" required>
+              </div>
+            </div>
+            <!-- Step 3 -->
+            <div class="inquiry-step d-none" data-step="3">
+              <div class="mb-4">
+                <label class="form-label fw-bold">3. How many kilometers do you drive per week?</label>
+                <div class="row g-3">
+                  <div class="col-6 col-md-4">
+                    <div class="option-card" data-value="Less than 385km">Less than 385km</div>
+                  </div>
+                  <div class="col-6 col-md-4">
+                    <div class="option-card" data-value="385km-500km">385km-500km</div>
+                  </div>
+                  <div class="col-6 col-md-4">
+                    <div class="option-card" data-value="500km-750km">500km-750km</div>
+                  </div>
+                  <div class="col-6 col-md-4">
+                    <div class="option-card" data-value="More than 750km">More than 750km</div>
+                  </div>
+                </div>
+                <input type="hidden" name="mileage" required>
+              </div>
+            </div>
+            <!-- Step 4 -->
+            <div class="inquiry-step d-none" data-step="4">
+              <div class="mb-4">
+                <label class="form-label fw-bold">4. Do you need a driver?</label>
+                <div class="row g-3">
+                  <div class="col-6">
+                    <div class="option-card" data-value="Yes">Yes</div>
+                  </div>
+                  <div class="col-6">
+                    <div class="option-card" data-value="No">No</div>
+                  </div>
+                </div>
+                <input type="hidden" name="need_driver" required>
+              </div>
+            </div>
+            <!-- Step 5 -->
+            <div class="inquiry-step d-none" data-step="5">
+              <div class="mb-4">
+                <label class="form-label fw-bold">5. Do you have a preferred pickup location?</label>
+                <div class="row g-3">
+                  <div class="col-6 col-md-4">
+                    <div class="option-card" data-value="Sydney">Sydney</div>
+                  </div>
+                  <div class="col-6 col-md-4">
+                    <div class="option-card" data-value="Melbourne">Melbourne</div>
+                  </div>
+                  <div class="col-6 col-md-4">
+                    <div class="option-card" data-value="Brisbane">Brisbane</div>
+                  </div>
+                  <div class="col-6 col-md-4">
+                    <div class="option-card" data-value="Perth">Perth</div>
+                  </div>
+                  <div class="col-6 col-md-4">
+                    <div class="option-card" data-value="Adelaide">Adelaide</div>
+                  </div>
+                  <div class="col-6 col-md-4">
+                    <div class="option-card" data-value="Other">Other</div>
+                  </div>
+                </div>
+                <input type="hidden" name="pickup_location" required>
+              </div>
+            </div>
+            <!-- Step 6 -->
+            <div class="inquiry-step d-none" data-step="6">
+              <div class="mb-4">
+                <label class="form-label fw-bold">6. Do you have a preferred car brand?</label>
+                <div class="row g-3">
+                  <div class="col-6 col-md-4"><div class="option-card" data-value="Toyota">Toyota</div></div>
+                  <div class="col-6 col-md-4"><div class="option-card" data-value="Nissan">Nissan</div></div>
+                  <div class="col-6 col-md-4"><div class="option-card" data-value="Hyundai">Hyundai</div></div>
+                  <div class="col-6 col-md-4"><div class="option-card" data-value="Kia">Kia</div></div>
+                  <div class="col-6 col-md-4"><div class="option-card" data-value="Mazda">Mazda</div></div>
+                  <div class="col-6 col-md-4"><div class="option-card" data-value="Subaru">Subaru</div></div>
+                  <div class="col-6 col-md-4"><div class="option-card" data-value="Mercedes">Mercedes</div></div>
+                  <div class="col-6 col-md-4"><div class="option-card" data-value="Other">Other</div></div>
+                  <div class="col-6 col-md-4"><div class="option-card" data-value="">No preference</div></div>
+                </div>
+                <input type="hidden" name="brand" required>
+              </div>
+            </div>
+            <!-- Step 7 -->
+            <div class="inquiry-step d-none" data-step="7">
+              <div class="mb-4">
+                <label class="form-label fw-bold">7. Fuel type?</label>
+                <div class="row g-3">
+                  <div class="col-6 col-md-4"><div class="option-card" data-value="Petrol">Petrol</div></div>
+                  <div class="col-6 col-md-4"><div class="option-card" data-value="Diesel">Diesel</div></div>
+                  <div class="col-6 col-md-4"><div class="option-card" data-value="Electric">Electric</div></div>
+                  <div class="col-6 col-md-4"><div class="option-card" data-value="Hybrid">Hybrid</div></div>
+                  <div class="col-6 col-md-4"><div class="option-card" data-value="">No preference</div></div>
+                </div>
+                <input type="hidden" name="fuel_type" required>
+              </div>
+            </div>
+            <!-- Step 8 -->
+            <div class="inquiry-step d-none" data-step="8">
+              <div class="mb-4">
+                <label class="form-label fw-bold">8. I would like it to be:</label>
+                <div class="row g-3">
+                  <div class="col-6 col-md-4"><div class="option-card" data-value="Affordable">Affordable</div></div>
+                  <div class="col-6 col-md-4"><div class="option-card" data-value="Comfortable">Comfortable</div></div>
+                  <div class="col-6 col-md-4"><div class="option-card" data-value="Luxury">Luxury</div></div>
+                  <div class="col-6 col-md-4"><div class="option-card" data-value="Other">Other</div></div>
+                </div>
+                <input type="hidden" name="preference" required>
+              </div>
+            </div>
+            <!-- Step 9 -->
+            <div class="inquiry-step d-none" data-step="9">
+              <div class="mb-4">
+                <label class="form-label fw-bold">9. When do you want to start your subscription?</label>
+                <input type="date" class="form-control" name="start_date">
+              </div>
+            </div>
+            <!-- Step 10 -->
+            <div class="inquiry-step d-none" data-step="10">
+              <div class="mb-4">
+                <label class="form-label fw-bold">10. Any special requirements or comments?</label>
+                <textarea class="form-control" name="comments" rows="3" placeholder="Please specify if you have any special needs or requests."></textarea>
+              </div>
+            </div>
+            <!-- Step 11: Customer Info -->
+            <div class="inquiry-step d-none" data-step="11">
+              <h5 class="mb-3">Your Contact Information</h5>
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label class="form-label">Full Name *</label>
+                  <input type="text" class="form-control" name="full_name" required>
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label class="form-label">Email Address *</label>
+                  <input type="email" class="form-control" name="email" required>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label class="form-label">Phone Number *</label>
+                  <input type="tel" class="form-control" name="phone" required>
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label class="form-label">Preferred Contact Method</label>
+                  <select class="form-select" name="contact_method">
+                    <option value="Email">Email</option>
+                    <option value="Phone">Phone</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="d-flex justify-content-between mt-4">
+            <button type="button" class="btn btn-outline-secondary" id="inquiryPrevBtn" disabled>Previous</button>
+            <button type="button" class="btn btn-warning" id="inquiryNextBtn" disabled>Next</button>
+            <button type="submit" class="btn btn-success d-none" id="inquirySubmitBtn">Submit Inquiry</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 全局感谢提醒 -->
+<div id="globalThankYou" class="d-none position-fixed top-50 start-50 translate-middle bg-white shadow-lg rounded p-4 text-center" style="z-index: 2000; min-width: 320px;">
+  <h4 class="mb-0">Thank you for your inquiry. Our team will contact you soon.</h4>
+</div>
+
 {% block extra_js %}
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    const filterForm = document.getElementById('filterForm');
-    const filterInputs = filterForm.querySelectorAll('select');
-    
-    filterInputs.forEach(input => {
-        input.addEventListener('change', function() {
-            const formData = new FormData(filterForm);
-            const searchParams = new URLSearchParams(formData);
-            window.location.href = `${window.location.pathname}?${searchParams.toString()}`;
+    // 获取所有需要的元素
+    const form = document.getElementById('subscriptionInquiryForm');
+    const steps = document.querySelectorAll('.inquiry-step');
+    const nextBtn = document.getElementById('inquiryNextBtn');
+    const prevBtn = document.getElementById('inquiryPrevBtn');
+    const submitBtn = document.getElementById('inquirySubmitBtn');
+    const optionCards = document.querySelectorAll('.option-card');
+    const globalThankYou = document.getElementById('globalThankYou');
+    const modal = document.getElementById('subscriptionInquiryModal');
+    const modalInstance = new bootstrap.Modal(modal);
+
+    let currentStep = 1;
+    const totalSteps = steps.length;
+
+    // 更新按钮状态
+    function updateButtons() {
+        prevBtn.disabled = currentStep === 1;
+        nextBtn.disabled = !isStepValid(currentStep);
+        
+        if (currentStep === totalSteps) {
+            nextBtn.classList.add('d-none');
+            submitBtn.classList.remove('d-none');
+        } else {
+            nextBtn.classList.remove('d-none');
+            submitBtn.classList.add('d-none');
+        }
+    }
+
+    // 检查当前步骤是否有效
+    function isStepValid(step) {
+        const currentStepElement = document.querySelector(`.inquiry-step[data-step="${step}"]`);
+        const requiredInput = currentStepElement.querySelector('input[required]');
+        
+        if (requiredInput) {
+            if (requiredInput.type === 'hidden') {
+                return requiredInput.value !== '';
+            } else {
+                return requiredInput.value.trim() !== '';
+            }
+        }
+        return true;
+    }
+
+    // 显示指定步骤
+    function showStep(step) {
+        steps.forEach(s => s.classList.add('d-none'));
+        document.querySelector(`.inquiry-step[data-step="${step}"]`).classList.remove('d-none');
+        currentStep = step;
+        updateButtons();
+    }
+
+    // 下一步按钮点击事件
+    nextBtn.addEventListener('click', () => {
+        if (currentStep < totalSteps) {
+            showStep(currentStep + 1);
+        }
+    });
+
+    // 上一步按钮点击事件
+    prevBtn.addEventListener('click', () => {
+        if (currentStep > 1) {
+            showStep(currentStep - 1);
+        }
+    });
+
+    // 选项卡片点击事件
+    optionCards.forEach(card => {
+        card.addEventListener('click', function() {
+            const step = this.closest('.inquiry-step');
+            const input = step.querySelector('input[type="hidden"]');
+            
+            // 移除同一步骤中其他卡片的选中状态
+            step.querySelectorAll('.option-card').forEach(c => c.classList.remove('selected'));
+            
+            // 添加当前卡片的选中状态
+            this.classList.add('selected');
+            
+            // 更新隐藏输入框的值
+            if (input) {
+                input.value = this.dataset.value;
+                updateButtons();
+            }
         });
     });
+
+    // 表单提交事件
+    form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        // 收集表单数据
+        const formData = new FormData(form);
+        const data = Object.fromEntries(formData.entries());
+        
+        // 这里可以添加发送数据到服务器的代码
+        console.log('Form data:', data);
+        
+        // 显示感谢信息
+        modalInstance.hide();
+        globalThankYou.classList.remove('d-none');
+        
+        // 3秒后隐藏感谢信息
+        setTimeout(() => {
+            globalThankYou.classList.add('d-none');
+            // 重置表单
+            form.reset();
+            showStep(1);
+        }, 3000);
+    });
+
+    // 初始化
+    showStep(1);
 });
 </script>
 {% endblock %}
