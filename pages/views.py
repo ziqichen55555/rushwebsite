@@ -183,8 +183,23 @@ def subscription_car_detail(request, make, model):
             'is_great_value': True
         }
     ]
-    car = next((c for c in subscription_cars if c['make'].lower() == make.lower() and c['model'].lower() == model.lower()), None)
+    
+    # 将输入转换为小写并移除连字符
+    make = make.lower()
+    model = model.lower().replace('-', ' ')
+    
+    # 特殊处理 Smart 车型
+    if make == 'smart':
+        if model == '1':
+            model = '#1'
+        elif model == '3':
+            model = '#3'
+    
+    # 查找匹配的车辆
+    car = next((c for c in subscription_cars if c['make'].lower() == make and c['model'].lower() == model), None)
+    
     if not car:
         from django.http import Http404
         raise Http404('Car not found')
+        
     return render(request, 'pages/subscription_car_detail.html', {'car': car})

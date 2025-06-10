@@ -46784,3 +46784,68 @@ WARNING 2025-06-10 08:55:19,772 environment [ENV] 未识别的环境类型: deve
 WARNING 2025-06-10 08:55:19,772 environment [ENV] 未识别的环境类型: development  # development, testing, production, 将使用默认环境
 WARNING 2025-06-10 08:55:22,952 base Session data corrupted
 INFO 2025-06-10 08:55:24,456 basehttp "GET /subscription/ HTTP/1.1" 200 36443
+INFO 2025-06-10 10:32:25,234 autoreload Watching for file changes with StatReloader
+INFO 2025-06-10 10:32:25,613 _util message='Request to Stripe api' method=get url=https://api.stripe.com/v1/account
+INFO 2025-06-10 10:32:25,824 _util message='Stripe API response' path=https://api.stripe.com/v1/account response_code=401
+INFO 2025-06-10 10:32:25,824 _util error_code=None error_message='Invalid API Key provided: sk_test_***********_key' error_param=None error_type=invalid_request_error message='Stripe v1 API error received'
+WARNING 2025-06-10 10:32:28,427 environment [ENV] 未识别的环境类型: development  # development, testing, production, 将使用默认环境
+WARNING 2025-06-10 10:32:28,427 environment [ENV] 未识别的环境类型: development  # development, testing, production, 将使用默认环境
+INFO 2025-06-10 10:32:54,607 autoreload /Users/chrischan/rushwebsite/pages/views.py changed, reloading.
+INFO 2025-06-10 10:32:55,011 autoreload Watching for file changes with StatReloader
+INFO 2025-06-10 10:32:55,356 _util message='Request to Stripe api' method=get url=https://api.stripe.com/v1/account
+INFO 2025-06-10 10:32:55,550 _util message='Stripe API response' path=https://api.stripe.com/v1/account response_code=401
+INFO 2025-06-10 10:32:55,551 _util error_code=None error_message='Invalid API Key provided: sk_test_***********_key' error_param=None error_type=invalid_request_error message='Stripe v1 API error received'
+WARNING 2025-06-10 10:32:58,126 environment [ENV] 未识别的环境类型: development  # development, testing, production, 将使用默认环境
+WARNING 2025-06-10 10:32:58,126 environment [ENV] 未识别的环境类型: development  # development, testing, production, 将使用默认环境
+WARNING 2025-06-10 10:33:02,534 base Session data corrupted
+INFO 2025-06-10 10:33:02,545 basehttp "GET /subscription/toyota/yaris-cross-hybrid/ HTTP/1.1" 200 33876
+WARNING 2025-06-10 10:33:07,944 base Session data corrupted
+INFO 2025-06-10 10:33:07,950 basehttp "GET /subscription/toyota/yaris-cross-hybrid/ HTTP/1.1" 200 33876
+WARNING 2025-06-10 10:33:11,913 log Not Found: /subscription/smart/3/
+WARNING 2025-06-10 10:33:11,913 basehttp "GET /subscription/smart/3/ HTTP/1.1" 404 4857
+WARNING 2025-06-10 10:33:14,341 log Not Found: /subscription/smart/1/
+WARNING 2025-06-10 10:33:14,341 basehttp "GET /subscription/smart/1/ HTTP/1.1" 404 4857
+WARNING 2025-06-10 10:33:18,957 base Session data corrupted
+INFO 2025-06-10 10:33:18,964 basehttp "GET /subscription/suzuki/swift/ HTTP/1.1" 200 33810
+WARNING 2025-06-10 10:33:21,465 log Not Found: /subscription/smart/1/
+WARNING 2025-06-10 10:33:21,465 basehttp "GET /subscription/smart/1/ HTTP/1.1" 404 4857
+WARNING 2025-06-10 10:33:35,061 log Not Found: /subscription/smart/3/
+WARNING 2025-06-10 10:33:35,062 basehttp "GET /subscription/smart/3/ HTTP/1.1" 404 4857
+INFO 2025-06-10 10:33:58,132 autoreload /Users/chrischan/rushwebsite/pages/views.py changed, reloading.
+INFO 2025-06-10 10:33:58,561 autoreload Watching for file changes with StatReloader
+INFO 2025-06-10 10:33:58,923 _util message='Request to Stripe api' method=get url=https://api.stripe.com/v1/account
+INFO 2025-06-10 10:33:59,121 _util message='Stripe API response' path=https://api.stripe.com/v1/account response_code=401
+INFO 2025-06-10 10:33:59,122 _util error_code=None error_message='Invalid API Key provided: sk_test_***********_key' error_param=None error_type=invalid_request_error message='Stripe v1 API error received'
+WARNING 2025-06-10 10:34:01,615 environment [ENV] 未识别的环境类型: development  # development, testing, production, 将使用默认环境
+WARNING 2025-06-10 10:34:01,615 environment [ENV] 未识别的环境类型: development  # development, testing, production, 将使用默认环境
+INFO 2025-06-10 10:34:58,690 autoreload /Users/chrischan/rushwebsite/pages/views.py changed, reloading.
+INFO 2025-06-10 10:34:59,129 autoreload Watching for file changes with StatReloader
+INFO 2025-06-10 10:34:59,504 _util message='Request to Stripe api' method=get url=https://api.stripe.com/v1/account
+INFO 2025-06-10 10:34:59,700 _util message='Stripe API response' path=https://api.stripe.com/v1/account response_code=401
+INFO 2025-06-10 10:34:59,700 _util error_code=None error_message='Invalid API Key provided: sk_test_***********_key' error_param=None error_type=invalid_request_error message='Stripe v1 API error received'
+WARNING 2025-06-10 10:35:02,363 environment [ENV] 未识别的环境类型: development  # development, testing, production, 将使用默认环境
+WARNING 2025-06-10 10:35:02,363 environment [ENV] 未识别的环境类型: development  # development, testing, production, 将使用默认环境
+WARNING 2025-06-10 10:35:06,423 base Session data corrupted
+INFO 2025-06-10 10:35:06,432 basehttp "GET /subscription/smart/3/ HTTP/1.1" 200 33907
+WARNING 2025-06-10 10:35:12,229 base Session data corrupted
+INFO 2025-06-10 10:35:12,232 basehttp - Broken pipe from ('127.0.0.1', 54165)
+WARNING 2025-06-10 10:35:13,799 base Session data corrupted
+INFO 2025-06-10 10:35:13,801 basehttp "GET /subscription/smart/1/ HTTP/1.1" 200 33907
+WARNING 2025-06-10 10:35:25,370 base Session data corrupted
+INFO 2025-06-10 10:35:25,376 basehttp "GET /subscription/smart/3/ HTTP/1.1" 200 33907
+WARNING 2025-06-10 10:35:44,914 base Session data corrupted
+INFO 2025-06-10 10:35:46,227 basehttp "GET /subscription/ HTTP/1.1" 200 41270
+WARNING 2025-06-10 10:36:04,641 base Session data corrupted
+INFO 2025-06-10 10:36:05,953 basehttp "GET / HTTP/1.1" 200 36488
+WARNING 2025-06-10 10:36:09,939 base Session data corrupted
+INFO 2025-06-10 10:36:11,295 basehttp "GET /subscription/ HTTP/1.1" 200 41270
+WARNING 2025-06-10 10:41:27,134 base Session data corrupted
+INFO 2025-06-10 10:41:28,484 basehttp "GET /subscription/ HTTP/1.1" 200 60117
+WARNING 2025-06-10 10:41:47,464 base Session data corrupted
+INFO 2025-06-10 10:41:48,766 basehttp "GET /subscription/ HTTP/1.1" 200 60117
+WARNING 2025-06-10 10:42:07,425 base Session data corrupted
+INFO 2025-06-10 10:42:07,428 basehttp "GET /about-us/ HTTP/1.1" 200 16641
+WARNING 2025-06-10 10:42:14,363 base Session data corrupted
+INFO 2025-06-10 10:42:15,717 basehttp "GET /subscription/ HTTP/1.1" 200 59990
+WARNING 2025-06-10 10:43:24,638 base Session data corrupted
+INFO 2025-06-10 10:43:26,002 basehttp "GET /subscription/ HTTP/1.1" 200 60102
