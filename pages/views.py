@@ -195,8 +195,10 @@ def subscription_car_detail(request, make, model):
         elif model == '3':
             model = '#3'
     
-    # 查找匹配的车辆
-    car = next((c for c in subscription_cars if c['make'].lower() == make and c['model'].lower() == model), None)
+    # 查找匹配的车辆，同时处理模型名称中的连字符
+    car = next((c for c in subscription_cars if 
+                c['make'].lower() == make and 
+                c['model'].lower().replace('-', ' ') == model), None)
     
     if not car:
         from django.http import Http404

@@ -46849,3 +46849,32 @@ WARNING 2025-06-10 10:42:14,363 base Session data corrupted
 INFO 2025-06-10 10:42:15,717 basehttp "GET /subscription/ HTTP/1.1" 200 59990
 WARNING 2025-06-10 10:43:24,638 base Session data corrupted
 INFO 2025-06-10 10:43:26,002 basehttp "GET /subscription/ HTTP/1.1" 200 60102
+INFO 2025-06-10 11:16:39,427 autoreload Watching for file changes with StatReloader
+INFO 2025-06-10 11:16:39,800 _util message='Request to Stripe api' method=get url=https://api.stripe.com/v1/account
+INFO 2025-06-10 11:16:40,019 _util message='Stripe API response' path=https://api.stripe.com/v1/account response_code=401
+INFO 2025-06-10 11:16:40,020 _util error_code=None error_message='Invalid API Key provided: sk_test_***********_key' error_param=None error_type=invalid_request_error message='Stripe v1 API error received'
+WARNING 2025-06-10 11:16:42,500 environment [ENV] 未识别的环境类型: development  # development, testing, production, 将使用默认环境
+WARNING 2025-06-10 11:16:42,500 environment [ENV] 未识别的环境类型: development  # development, testing, production, 将使用默认环境
+WARNING 2025-06-10 11:16:47,173 log Not Found: /subscription/nissan/x-trail/
+WARNING 2025-06-10 11:16:47,174 basehttp "GET /subscription/nissan/x-trail/ HTTP/1.1" 404 4878
+INFO 2025-06-10 11:16:59,869 basehttp "GET /subscription HTTP/1.1" 301 0
+WARNING 2025-06-10 11:17:02,083 base Session data corrupted
+INFO 2025-06-10 11:17:03,410 basehttp "GET /subscription/ HTTP/1.1" 200 60102
+WARNING 2025-06-10 11:17:07,077 log Not Found: /subscription/nissan/x-trail/
+WARNING 2025-06-10 11:17:07,078 basehttp "GET /subscription/nissan/x-trail/ HTTP/1.1" 404 4878
+INFO 2025-06-10 11:17:44,653 autoreload /Users/chrischan/rushwebsite/pages/views.py changed, reloading.
+INFO 2025-06-10 11:17:45,080 autoreload Watching for file changes with StatReloader
+INFO 2025-06-10 11:17:45,437 _util message='Request to Stripe api' method=get url=https://api.stripe.com/v1/account
+INFO 2025-06-10 11:17:45,633 _util message='Stripe API response' path=https://api.stripe.com/v1/account response_code=401
+INFO 2025-06-10 11:17:45,633 _util error_code=None error_message='Invalid API Key provided: sk_test_***********_key' error_param=None error_type=invalid_request_error message='Stripe v1 API error received'
+WARNING 2025-06-10 11:17:48,131 environment [ENV] 未识别的环境类型: development  # development, testing, production, 将使用默认环境
+WARNING 2025-06-10 11:17:48,131 environment [ENV] 未识别的环境类型: development  # development, testing, production, 将使用默认环境
+INFO 2025-06-10 11:17:49,931 autoreload /Users/chrischan/rushwebsite/pages/views.py changed, reloading.
+INFO 2025-06-10 11:17:50,258 autoreload Watching for file changes with StatReloader
+INFO 2025-06-10 11:17:50,681 _util message='Request to Stripe api' method=get url=https://api.stripe.com/v1/account
+INFO 2025-06-10 11:17:50,871 _util message='Stripe API response' path=https://api.stripe.com/v1/account response_code=401
+INFO 2025-06-10 11:17:50,871 _util error_code=None error_message='Invalid API Key provided: sk_test_***********_key' error_param=None error_type=invalid_request_error message='Stripe v1 API error received'
+WARNING 2025-06-10 11:17:53,339 environment [ENV] 未识别的环境类型: development  # development, testing, production, 将使用默认环境
+WARNING 2025-06-10 11:17:53,339 environment [ENV] 未识别的环境类型: development  # development, testing, production, 将使用默认环境
+WARNING 2025-06-10 11:17:56,601 base Session data corrupted
+INFO 2025-06-10 11:17:56,608 basehttp "GET /subscription/nissan/x-trail/ HTTP/1.1" 200 33820
