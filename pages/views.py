@@ -1,7 +1,8 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from cars.models import Car, CarCategory, VehicleCategory, VehicleCategoryType
 from locations.models import Location, CityHighlight
 from .models import Testimonial, CarSubscription
+from cars.models import VehicleFuel
 import os
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'rush_car_rental.settings')
@@ -65,10 +66,10 @@ def subscription(request):
     locations = Location.objects.all()
     
     # 获取所有车辆类别
-    car_categories = VehicleCategoryType.objects.all()
+    car_categories = VehicleCategory.objects.values_list('vehicle_category', flat=True).distinct()
     
     # 获取所有燃料类型
-    fuel_types = VehicleCategory.objects.values_list('fuel_type', flat=True).distinct()
+    fuel_types = VehicleFuel.objects.all()
     
     # 获取所有座位数
     seat_numbers = VehicleCategory.objects.values_list('num_adults', flat=True).distinct()
@@ -83,11 +84,11 @@ def subscription(request):
     if selected_location:
         subscriptions = subscriptions.filter(location__name=selected_location)
     if selected_fuel_type:
-        subscriptions = subscriptions.filter(category__fuel_type=selected_fuel_type)
+        subscriptions = subscriptions.filter(fuel_type=selected_fuel_type)
     if selected_car_category:
-        subscriptions = subscriptions.filter(category__category_type=selected_car_category)
+        subscriptions = subscriptions.filter(vehicle_category__vehicle_category=selected_car_category)
     if selected_seat_number:
-        subscriptions = subscriptions.filter(category__num_adults=selected_seat_number)
+        subscriptions = subscriptions.filter(vehicle_category__num_adults=selected_seat_number)
     
     context = {
         'subscriptions': subscriptions,
@@ -105,82 +106,30 @@ def subscription(request):
 
 def subscription_car_detail(request, make, model):
     """Subscription car detail page"""
-    # For demo, use the same subscription_cars as in subscription()
-    subscription_cars = [
-        {
-            'make': 'Hyundai',
-            'model': 'Venue',
-            'type': 'PETROL',
-            'image_url': 'https://allpicsandvideos.blob.core.windows.net/rush-car-rental-static/images/pics/ts.jpg',
-            'price_per_week': 230,
-            'is_available': True,
-            'is_great_value': True
-        },
-        {
-            'make': 'Nissan',
-            'model': 'X-Trail',
-            'type': 'PETROL',
-            'image_url': 'https://allpicsandvideos.blob.core.windows.net/rush-car-rental-static/images/pics/ns.jpg',
-            'price_per_week': 260,
-            'is_available': True,
-            'is_great_value': False
-        },
-        {
-            'make': 'Toyota',
-            'model': 'Yaris Cross Hybrid',
-            'type': 'HYBRID',
-            'image_url': 'https://allpicsandvideos.blob.core.windows.net/rush-car-rental-static/images/pics/kin.jpg',
-            'price_per_week': 279,
-            'is_available': True,
-            'is_great_value': False
-        },
-        {
-            'make': 'Suzuki',
-            'model': 'Swift',
-            'type': 'PETROL',
-            'image_url': 'https://allpicsandvideos.blob.core.windows.net/rush-car-rental-static/images/pics/sb.jpg',
-            'price_per_week': 280,
-            'is_available': True,
-            'is_great_value': False
-        },
-        {
-            'make': 'Smart',
-            'model': '#1',
-            'type': 'ELECTRIC',
-            'image_url': 'https://allpicsandvideos.blob.core.windows.net/rush-car-rental-static/images/pics/mx.jpg',
-            'price_per_week': 289,
-            'is_available': True,
-            'is_great_value': True
-        },
-        {
-            'make': 'Smart',
-            'model': '#3',
-            'type': 'ELECTRIC',
-            'image_url': 'https://allpicsandvideos.blob.core.windows.net/rush-car-rental-static/images/pics/bz.jpg',
-            'price_per_week': 299,
-            'is_available': True,
-            'is_great_value': True
+    # Get the car subscription based on make and model
+    car = get_object_or_404(
+        CarSubscription.objects.select_related('model__make', 'vehicle_category', 'fuel_type'),
+        model__make__name__iexact=make,
+        model__model_name__iexact=model
+    )
+    
+    context = {
+        'car': {
+            'make': car.model.make.name,
+            'model': car.model.model_name,
+            'type': car.fuel_type.name,
+            'image_url': car.image1.url if car.image1 else '',
+            'location': car.location.name,
+            'description': car.description,
+            'year': car.year,
+            'mileage': car.mileage,
+            'status': car.status,
+            'price_3_months': car.subscription_plan1,
+            'price_6_months': car.subscription_plan2,
+            'price_9_months': car.subscription_plan3,
+            'is_available': car.status == 'available',
+            'is_great_value': True  # You can set this based on your business logic
         }
-    ]
+    }
     
-    # 将输入转换为小写并移除连字符
-    make = make.lower()
-    model = model.lower().replace('-', ' ')
-    
-    # 特殊处理 Smart 车型
-    if make == 'smart':
-        if model == '1':
-            model = '#1'
-        elif model == '3':
-            model = '#3'
-    
-    # 查找匹配的车辆，同时处理模型名称中的连字符
-    car = next((c for c in subscription_cars if 
-                c['make'].lower() == make and 
-                c['model'].lower().replace('-', ' ') == model), None)
-    
-    if not car:
-        from django.http import Http404
-        raise Http404('Car not found')
-        
-    return render(request, 'pages/subscription_car_detail.html', {'car': car})
+    return render(request, 'pages/subscription_car_detail.html', context)

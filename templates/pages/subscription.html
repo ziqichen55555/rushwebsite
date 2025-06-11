@@ -269,72 +269,60 @@
         </div>
         
         <div class="row">
-            <div class="col-12">
-                <div class="filter-section p-3 bg-white rounded shadow-sm">
-                    <form id="filterForm" class="row g-3" method="get">
-                        <!-- Pickup Location Filter -->
-                        <div class="col-md-3">
-                            <label for="pickup_location" class="form-label">Pickup Location</label>
-                            <select class="form-select" id="pickup_location" name="pickup_location">
-                                <option value="">All Locations</option>
-                                {% for location in locations %}
-                                <option value="{{ location.name }}" {% if location.name == selected_location %}selected{% endif %}>
-                                    {{ location.name }}
-                                </option>
-                                {% endfor %}
-                            </select>
-                        </div>
-                        
-                        <!-- Fuel Type Filter -->
-                        <div class="col-md-3">
-                            <label for="fuel_type" class="form-label">Fuel Type</label>
-                            <select class="form-select" id="fuel_type" name="fuel_type">
-                                <option value="">All Types</option>
-                                {% for type in fuel_types %}
-                                <option value="{{ type }}" {% if type == selected_fuel_type %}selected{% endif %}>
-                                    {{ type }}
-                                </option>
-                                {% endfor %}
-                            </select>
-                        </div>
-                        
-                        <!-- Car Category Filter -->
-                        <div class="col-md-3">
-                            <label for="car_category" class="form-label">Car Category</label>
-                            <select class="form-select" id="car_category" name="car_category">
-                                <option value="">All Categories</option>
-                                {% for category in car_categories %}
-                                <option value="{{ category.category_type }}" {% if category.category_type == selected_car_category %}selected{% endif %}>
-                                    {{ category.category_type }}
-                                </option>
-                                {% endfor %}
-                            </select>
-                        </div>
-                       
-                        <!-- Seat Number Filter -->
-                        <div class="col-md-3">
-                            <label for="seat_number" class="form-label">Seat Number</label>
-                            <select class="form-select" id="seat_number" name="seat_number">
-                                <option value="">All Seat Numbers</option>
-                                {% for seat in seat_numbers %}
-                                <option value="{{ seat }}" {% if seat|stringformat:"i" == selected_seat_number %}selected{% endif %}>
-                                    {{ seat }} Seats
-                                </option>
-                                {% endfor %}
-                            </select>
-                        </div>
-                        
-                        <!-- Filter Buttons -->
-                        <div class="col-12 text-center mt-3">
-                            <button type="submit" class="btn btn-primary px-4">
-                                <i class="fas fa-filter me-2"></i>Apply Filters
-                            </button>
-                            <a href="{% url 'subscription' %}" class="btn btn-outline-secondary px-4 ms-2">
-                                <i class="fas fa-times me-2"></i>Clear Filters
-                            </a>
-                        </div>
-                    </form>
-                </div>
+            <div class="filter-section p-3 bg-white rounded shadow-sm">
+                <form id="filterForm" class="row g-3">
+                    <!-- Pickup Location Filter -->
+                    <div class="col-md-3">
+                        <label for="pickup_location" class="form-label">Pickup Location</label>
+                        <select class="form-select filter-select" id="pickup_location" name="pickup_location">
+                            <option value="">All Locations</option>
+                            {% for location in locations %}
+                            <option value="{{ location.name }}" {% if location.name == selected_location %}selected{% endif %}>
+                                {{ location.name }}
+                            </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    
+                    <!-- Fuel Type Filter -->
+                    <div class="col-md-3">
+                        <label for="fuel_type" class="form-label">Fuel Type</label>
+                        <select class="form-select filter-select" id="fuel_type" name="fuel_type">
+                            <option value="">All Types</option>
+                            {% for fuel in fuel_types %}
+                            <option value="{{ fuel.id }}" {% if fuel.id|stringformat:"i" == selected_fuel_type %}selected{% endif %}>
+                                {{ fuel.name }}
+                            </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    
+                    <!-- Car Category Filter -->
+                    <div class="col-md-3">
+                        <label for="car_category" class="form-label">Car Category</label>
+                        <select class="form-select filter-select" id="car_category" name="car_category">
+                            <option value="">All Categories</option>
+                            {% for category in car_categories %}
+                            <option value="{{ category }}" {% if category == selected_car_category %}selected{% endif %}>
+                                {{ category }}
+                            </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                   
+                    <!-- Seat Number Filter -->
+                    <div class="col-md-3">
+                        <label for="seat_number" class="form-label">Seat Number</label>
+                        <select class="form-select filter-select" id="seat_number" name="seat_number">
+                            <option value="">All Seat Numbers</option>
+                            {% for seat in seat_numbers %}
+                            <option value="{{ seat }}" {% if seat|stringformat:"i" == selected_seat_number %}selected{% endif %}>
+                                {{ seat }} Seats
+                            </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
@@ -347,19 +335,27 @@
             {% for subscription in subscriptions %}
             <div class="col-md-4 mb-4">
                 <div class="subscription-card">
-                    {% if subscription.is_great_value %}
-                    <div class="great-value-badge">Great Value</div>
-                    {% endif %}
-                    <img src="{{ subscription.image_url }}" alt="{{ subscription.model }}" class="subscription-image">
+                    <div class="position-relative">
+                        {% if subscription.status == 'available' %}
+                        <div class="great-value-badge">Available</div>
+                        {% else %}
+                        <div class="great-value-badge bg-danger">Unavailable</div>
+                        {% endif %}
+                        <img src="{{ subscription.image1.url }}" alt="{{ subscription.model }}" class="subscription-image">
+                    </div>
                     <div class="p-3">
                         <div class="availability-badge">
-                            <i class="fas fa-check-circle"></i> Available Now
+                            <i class="fas fa-check-circle"></i> {{ subscription.status|title }}
                         </div>
-                        <p class="vehicle-make">{{ subscription.make }}</p>
-                        <h3 class="vehicle-model">{{ subscription.model }}</h3>
+                        <p class="vehicle-make">{{ subscription.model.make }}</p>
+                        <h3 class="vehicle-model">{{ subscription.model.model_name }}</h3>
                         <p class="price-label">Weekly Rate</p>
-                        <p class="price-value">${{ subscription.weekly_rate }}</p>
-                        <a href="{% url 'subscription_car_detail' make=subscription.make|lower model=subscription.model|lower %}" class="btn btn-primary w-100">View Details</a>
+                        <p class="price-value">
+                            3 months: ${{ subscription.subscription_plan1 }}<br>
+                            6 months: ${{ subscription.subscription_plan2 }}<br>
+                            9 months: ${{ subscription.subscription_plan3 }}
+                        </p>
+                        <a href="{% url 'subscription_car_detail' make=subscription.model.make.name|lower model=subscription.model.model_name|lower %}" class="btn btn-primary w-100">View Details</a>
                     </div>
                 </div>
             </div>
@@ -1013,6 +1009,30 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // 初始化
     showStep(1);
+
+    // 获取所有过滤器select元素
+    const filterSelects = document.querySelectorAll('.filter-select');
+    
+    // 为每个select添加change事件监听器
+    filterSelects.forEach(select => {
+        select.addEventListener('change', function() {
+            // 构建URL参数
+            const form = document.getElementById('filterForm');
+            const formData = new FormData(form);
+            const params = new URLSearchParams();
+            
+            // 只添加有值的参数
+            for(let pair of formData.entries()) {
+                if(pair[1]) {
+                    params.append(pair[0], pair[1]);
+                }
+            }
+            
+            // 构建新的URL并跳转
+            const newUrl = `${window.location.pathname}${params.toString() ? '?' + params.toString() : ''}`;
+            window.location.href = newUrl;
+        });
+    });
 });
 </script>
 {% endblock %}

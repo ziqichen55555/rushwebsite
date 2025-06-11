@@ -22,13 +22,17 @@
                 <!-- Vehicle Image -->
                 <div class="card shadow-sm mb-4">
                     <img src="{{ car.image_url }}" class="card-img-top" alt="{{ car.make }} {{ car.model }}" style="height: 300px; object-fit: cover; border-radius: 0.75rem;">
+                    {% if car.is_available %}
                     <span class="badge bg-warning text-dark position-absolute top-0 start-0 m-3">Available Now</span>
+                    {% else %}
+                    <span class="badge bg-danger text-white position-absolute top-0 start-0 m-3">Unavailable</span>
+                    {% endif %}
                 </div>
 
                 <!-- Vehicle Description -->
                 <div class="card shadow-sm mb-4">
                     <div class="card-body">
-                        <h1 class="card-title">{{ car.make }} {{ car.model }}({{car.location}})</h1>
+                        <h1 class="card-title">{{ car.make }} {{ car.model }} ({{ car.location }})</h1>
                         <p class="text-muted mb-2">Type: {{ car.type }}</p>
                         {% if car.is_great_value %}
                         <span class="badge bg-warning text-dark mb-3">Great Value</span>
@@ -45,8 +49,8 @@
                         <div class="row g-3">
                             <div class="col-6 col-md-4">
                                 <div class="spec-card p-3 bg-light rounded text-center h-100">
-                                    <div class="fw-bold mb-1">Drive Type</div>
-                                    <div>{{ car.drive_type }}</div>
+                                    <div class="fw-bold mb-1">Status</div>
+                                    <div>{{ car.status|title }}</div>
                                 </div>
                             </div>
                             <div class="col-6 col-md-4">
@@ -64,19 +68,19 @@
                             <div class="col-6 col-md-4">
                                 <div class="spec-card p-3 bg-light rounded text-center h-100">
                                     <div class="fw-bold mb-1">Mileage</div>
-                                    <div>{{ car.mileage }}</div>
+                                    <div>{{ car.mileage }} km</div>
                                 </div>
                             </div>
                             <div class="col-6 col-md-4">
                                 <div class="spec-card p-3 bg-light rounded text-center h-100">
                                     <div class="fw-bold mb-1">Fuel Type</div>
-                                    <div>{{ car.fuel_type }}</div>
+                                    <div>{{ car.type }}</div>
                                 </div>
                             </div>
                             <div class="col-6 col-md-4">
                                 <div class="spec-card p-3 bg-light rounded text-center h-100">
-                                    <div class="fw-bold mb-1">Transmission</div>
-                                    <div>{{ car.transmission }}</div>
+                                    <div class="fw-bold mb-1">Location</div>
+                                    <div>{{ car.location }}</div>
                                 </div>
                             </div>
                         </div>
@@ -132,8 +136,9 @@
                         </div>
                         <input type="hidden" id="selectedPlan" name="selected_plan" required>
                         <!-- Enquiry Button -->
-                        <a href="#" id="startInquiryBtn" class="btn btn-warning w-100 mb-2 disabled" data-bs-toggle="modal" data-bs-target="#subscriptionInquiryModal">Start Subscription Inquiry</a>
-                        <a href="{% url 'subscription' %}" class="btn btn-outline-secondary w-100">Back to List</a>
+                        <button type="button" class="btn btn-primary w-100" data-bs-toggle="modal" data-bs-target="#subscriptionInquiryModal">
+                            Make an Enquiry
+                        </button>
                     </div>
                 </div>
             </div>
