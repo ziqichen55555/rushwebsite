@@ -256,7 +256,7 @@
     <div class="container">
         <div class="row mb-3">
             <div class="col-12 text-center">
-                <h3 class="mb-2">Explore over 95+ models and find the car that suits your needs</h3>
+                <h3 class="mb-2">Explore over {{ subscriptions.count }}+ models and find the car that suits your needs</h3>
                 <div class="rating-display">
                     <i class="fas fa-star text-warning"></i>
                     <i class="fas fa-star text-warning"></i>
@@ -271,7 +271,7 @@
         <div class="row">
             <div class="col-12">
                 <div class="filter-section p-3 bg-white rounded shadow-sm">
-                    <form id="filterForm" class="row g-3">
+                    <form id="filterForm" class="row g-3" method="get">
                         <!-- Pickup Location Filter -->
                         <div class="col-md-3">
                             <label for="pickup_location" class="form-label">Pickup Location</label>
@@ -297,30 +297,41 @@
                                 {% endfor %}
                             </select>
                         </div>
-                        <!--car category filter-->
+                        
+                        <!-- Car Category Filter -->
                         <div class="col-md-3">
                             <label for="car_category" class="form-label">Car Category</label>
                             <select class="form-select" id="car_category" name="car_category">
                                 <option value="">All Categories</option>
+                                {% for category in car_categories %}
+                                <option value="{{ category.category_type }}" {% if category.category_type == selected_car_category %}selected{% endif %}>
+                                    {{ category.category_type }}
+                                </option>
+                                {% endfor %}
                             </select>
-                            {% for category in car_categories %}
-                            <option value="{{ category.name }}" {% if category.name == selected_car_category %}selected{% endif %}>
-                                {{ category.name }}
-                            </option>
-                            {% endfor %}
                         </div>
                        
-                        <!-- seat number filter -->
+                        <!-- Seat Number Filter -->
                         <div class="col-md-3">
                             <label for="seat_number" class="form-label">Seat Number</label>
                             <select class="form-select" id="seat_number" name="seat_number">
                                 <option value="">All Seat Numbers</option>
-                                {% for seat_number in seat_numbers %}
-                                <option value="{{ seat_number }}" {% if seat_number == selected_seat_number %}selected{% endif %}>
-                                    {{ seat_number }}
+                                {% for seat in seat_numbers %}
+                                <option value="{{ seat }}" {% if seat|stringformat:"i" == selected_seat_number %}selected{% endif %}>
+                                    {{ seat }} Seats
                                 </option>
                                 {% endfor %}
                             </select>
+                        </div>
+                        
+                        <!-- Filter Buttons -->
+                        <div class="col-12 text-center mt-3">
+                            <button type="submit" class="btn btn-primary px-4">
+                                <i class="fas fa-filter me-2"></i>Apply Filters
+                            </button>
+                            <a href="{% url 'subscription' %}" class="btn btn-outline-secondary px-4 ms-2">
+                                <i class="fas fa-times me-2"></i>Clear Filters
+                            </a>
                         </div>
                     </form>
                 </div>
@@ -333,123 +344,30 @@
 <section id="subscription-cars" class="py-5">
     <div class="container">
         <div class="row">
-            {% for vehicle in subscription_vehicles %}
+            {% for subscription in subscriptions %}
             <div class="col-md-4 mb-4">
                 <div class="subscription-card">
-                    {% if vehicle.is_great_value %}
+                    {% if subscription.is_great_value %}
                     <div class="great-value-badge">Great Value</div>
                     {% endif %}
-                    <img src="{{ vehicle.get_image_url }}" alt="{{ vehicle.name|default:vehicle.vehicle_category }}" class="subscription-image">
+                    <img src="{{ subscription.image_url }}" alt="{{ subscription.model }}" class="subscription-image">
                     <div class="p-3">
                         <div class="availability-badge">
                             <i class="fas fa-check-circle"></i> Available Now
                         </div>
-                        <p class="vehicle-make">{{ vehicle.make }}</p>
-                        <h3 class="vehicle-model">{{ vehicle.model }}</h3>
+                        <p class="vehicle-make">{{ subscription.make }}</p>
+                        <h3 class="vehicle-model">{{ subscription.model }}</h3>
                         <p class="price-label">Weekly Rate</p>
-                        <p class="price-value">${{ vehicle.daily_rate|multiply:7 }}</p>
-                        <a href="{% url 'subscription_car_detail' make=vehicle.make|lower model=vehicle.model|lower %}" class="btn btn-primary w-100">View Details</a>
+                        <p class="price-value">${{ subscription.weekly_rate }}</p>
+                        <a href="{% url 'subscription_car_detail' make=subscription.make|lower model=subscription.model|lower %}" class="btn btn-primary w-100">View Details</a>
                     </div>
                 </div>
             </div>
             {% empty %}
-            <!-- 示例车辆数据 -->
-            <div class="col-md-4 mb-4">
-                <div class="subscription-card">
-                    <div class="great-value-badge">Great Value</div>
-                    <img src="https://allpicsandvideos.blob.core.windows.net/rush-car-rental-static/images/pics/ts.jpg" alt="Hyundai Venue" class="subscription-image">
-                    <div class="p-3">
-                        <div class="availability-badge">
-                            <i class="fas fa-check-circle"></i> Available Now
-                        </div>
-                        <p class="vehicle-make">Hyundai</p>
-                        <h3 class="vehicle-model">Venue</h3>
-                        <p class="price-label">Weekly Rate</p>
-                        <p class="price-value"><small>from</small> $230</p>
-                        <a href="{% url 'subscription_car_detail' make='hyundai' model='venue' %}" class="btn btn-primary w-100">View Details</a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-4 mb-4">
-                <div class="subscription-card">
-                    <img src="https://allpicsandvideos.blob.core.windows.net/rush-car-rental-static/images/pics/ns.jpg" alt="Nissan X-Trail" class="subscription-image">
-                    <div class="p-3">
-                        <div class="availability-badge">
-                            <i class="fas fa-check-circle"></i> Available Now
-                        </div>
-                        <p class="vehicle-make">Nissan</p>
-                        <h3 class="vehicle-model">X-Trail</h3>
-                        <p class="price-label">Weekly Rate</p>
-                        <p class="price-value"><small>from</small> $260</p>
-                        <a href="{% url 'subscription_car_detail' make='nissan' model='x-trail' %}" class="btn btn-primary w-100">View Details</a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-4 mb-4">
-                <div class="subscription-card">
-                    <img src="https://allpicsandvideos.blob.core.windows.net/rush-car-rental-static/images/pics/kin.jpg" alt="Toyota Yaris Cross" class="subscription-image">
-                    <div class="p-3">
-                        <div class="availability-badge">
-                            <i class="fas fa-check-circle"></i> Available Now
-                        </div>
-                        <p class="vehicle-make">Toyota</p>
-                        <h3 class="vehicle-model">Yaris Cross Hybrid</h3>
-                        <p class="price-label">Weekly Rate</p>
-                        <p class="price-value"><small>from</small> $279</p>
-                        <a href="{% url 'subscription_car_detail' make='toyota' model='yaris cross hybrid' %}" class="btn btn-primary w-100">View Details</a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-4 mb-4">
-                <div class="subscription-card">
-                    <img src="https://allpicsandvideos.blob.core.windows.net/rush-car-rental-static/images/pics/sb.jpg" alt="Suzuki Swift" class="subscription-image">
-                    <div class="p-3">
-                        <div class="availability-badge">
-                            <i class="fas fa-check-circle"></i> Available Now
-                        </div>
-                        <p class="vehicle-make">Suzuki</p>
-                        <h3 class="vehicle-model">Swift</h3>
-                        <p class="price-label">Weekly Rate</p>
-                        <p class="price-value"><small>from</small> $280</p>
-                        <a href="{% url 'subscription_car_detail' make='suzuki' model='swift' %}" class="btn btn-primary w-100">View Details</a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-4 mb-4">
-                <div class="subscription-card">
-                    <div class="great-value-badge">Great Value</div>
-                    <img src="https://allpicsandvideos.blob.core.windows.net/rush-car-rental-static/images/pics/mx.jpg" alt="Smart #1" class="subscription-image">
-                    <div class="p-3">
-                        <div class="availability-badge">
-                            <i class="fas fa-check-circle"></i> Available Now
-                        </div>
-                        <p class="vehicle-make">Smart</p>
-                        <h3 class="vehicle-model">#1</h3>
-                        <p class="price-label">Weekly Rate</p>
-                        <p class="price-value"><small>from</small> $289</p>
-                        <a href="{% url 'subscription_car_detail' make='smart' model='#1' %}" class="btn btn-primary w-100">View Details</a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-4 mb-4">
-                <div class="subscription-card">
-                    <div class="great-value-badge">Great Value</div>
-                    <img src="https://allpicsandvideos.blob.core.windows.net/rush-car-rental-static/images/pics/bz.jpg" alt="Smart #3" class="subscription-image">
-                    <div class="p-3">
-                        <div class="availability-badge">
-                            <i class="fas fa-check-circle"></i> Available Now
-                        </div>
-                        <p class="vehicle-make">Smart</p>
-                        <h3 class="vehicle-model">#3</h3>
-                        <p class="price-label">Weekly Rate</p>
-                        <p class="price-value"><small>from</small> $299</p>
-                        <a href="{% url 'subscription_car_detail' make='smart' model='#3' %}" class="btn btn-primary w-100">View Details</a>
-                    </div>
+            <div class="col-12 text-center">
+                <div class="alert alert-info">
+                    <i class="fas fa-info-circle me-2"></i>
+                    No vehicles found matching your criteria. Please try adjusting your filters.
                 </div>
             </div>
             {% endfor %}

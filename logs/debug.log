@@ -46878,3 +46878,339 @@ WARNING 2025-06-10 11:17:53,339 environment [ENV] 未识别的环境类型: deve
 WARNING 2025-06-10 11:17:53,339 environment [ENV] 未识别的环境类型: development  # development, testing, production, 将使用默认环境
 WARNING 2025-06-10 11:17:56,601 base Session data corrupted
 INFO 2025-06-10 11:17:56,608 basehttp "GET /subscription/nissan/x-trail/ HTTP/1.1" 200 33820
+INFO 2025-06-11 05:21:30,249 autoreload Watching for file changes with StatReloader
+INFO 2025-06-11 05:21:30,605 _util message='Request to Stripe api' method=get url=https://api.stripe.com/v1/account
+INFO 2025-06-11 05:21:30,797 _util message='Stripe API response' path=https://api.stripe.com/v1/account response_code=401
+INFO 2025-06-11 05:21:30,797 _util error_code=None error_message='Invalid API Key provided: sk_test_***********_key' error_param=None error_type=invalid_request_error message='Stripe v1 API error received'
+WARNING 2025-06-11 05:21:33,445 environment [ENV] 未识别的环境类型: development  # development, testing, production, 将使用默认环境
+WARNING 2025-06-11 05:21:33,445 environment [ENV] 未识别的环境类型: development  # development, testing, production, 将使用默认环境
+WARNING 2025-06-11 05:21:37,175 base Session data corrupted
+INFO 2025-06-11 05:21:38,470 basehttp "GET /subscription/ HTTP/1.1" 200 60102
+INFO 2025-06-11 05:25:16,634 autoreload /Users/chrischan/rushwebsite/pages/views.py changed, reloading.
+INFO 2025-06-11 05:25:17,031 autoreload Watching for file changes with StatReloader
+INFO 2025-06-11 05:25:17,371 _util message='Request to Stripe api' method=get url=https://api.stripe.com/v1/account
+INFO 2025-06-11 05:25:17,566 _util message='Stripe API response' path=https://api.stripe.com/v1/account response_code=401
+INFO 2025-06-11 05:25:17,566 _util error_code=None error_message='Invalid API Key provided: sk_test_***********_key' error_param=None error_type=invalid_request_error message='Stripe v1 API error received'
+WARNING 2025-06-11 05:25:20,004 environment [ENV] 未识别的环境类型: development  # development, testing, production, 将使用默认环境
+WARNING 2025-06-11 05:25:20,004 environment [ENV] 未识别的环境类型: development  # development, testing, production, 将使用默认环境
+INFO 2025-06-11 05:25:26,860 autoreload /Users/chrischan/rushwebsite/pages/views.py changed, reloading.
+INFO 2025-06-11 05:25:27,166 autoreload Watching for file changes with StatReloader
+INFO 2025-06-11 05:25:27,468 _util message='Request to Stripe api' method=get url=https://api.stripe.com/v1/account
+INFO 2025-06-11 05:25:27,649 _util message='Stripe API response' path=https://api.stripe.com/v1/account response_code=401
+INFO 2025-06-11 05:25:27,650 _util error_code=None error_message='Invalid API Key provided: sk_test_***********_key' error_param=None error_type=invalid_request_error message='Stripe v1 API error received'
+WARNING 2025-06-11 05:25:30,048 environment [ENV] 未识别的环境类型: development  # development, testing, production, 将使用默认环境
+WARNING 2025-06-11 05:25:30,048 environment [ENV] 未识别的环境类型: development  # development, testing, production, 将使用默认环境
+WARNING 2025-06-11 05:26:14,974 base Session data corrupted
+INFO 2025-06-11 05:26:17,034 basehttp "GET /subscription/ HTTP/1.1" 200 55533
+WARNING 2025-06-11 05:26:24,350 base Session data corrupted
+INFO 2025-06-11 05:26:25,630 basehttp "GET /subscription/ HTTP/1.1" 200 55533
+WARNING 2025-06-11 05:26:46,417 base Session data corrupted
+INFO 2025-06-11 05:26:47,852 basehttp "GET /subscription/?pickup_location=&fuel_type=&car_category=suv&seat_number= HTTP/1.1" 200 55541
+INFO 2025-06-11 05:27:48,733 autoreload /Users/chrischan/rushwebsite/cars/models.py changed, reloading.
+INFO 2025-06-11 05:27:49,120 autoreload Watching for file changes with StatReloader
+INFO 2025-06-11 05:27:49,465 _util message='Request to Stripe api' method=get url=https://api.stripe.com/v1/account
+INFO 2025-06-11 05:27:49,661 _util message='Stripe API response' path=https://api.stripe.com/v1/account response_code=401
+INFO 2025-06-11 05:27:49,661 _util error_code=None error_message='Invalid API Key provided: sk_test_***********_key' error_param=None error_type=invalid_request_error message='Stripe v1 API error received'
+WARNING 2025-06-11 05:27:52,082 environment [ENV] 未识别的环境类型: development  # development, testing, production, 将使用默认环境
+WARNING 2025-06-11 05:27:52,082 environment [ENV] 未识别的环境类型: development  # development, testing, production, 将使用默认环境
+INFO 2025-06-11 05:27:55,922 autoreload /Users/chrischan/rushwebsite/cars/models.py changed, reloading.
+INFO 2025-06-11 05:27:56,281 autoreload Watching for file changes with StatReloader
+INFO 2025-06-11 05:27:56,577 _util message='Request to Stripe api' method=get url=https://api.stripe.com/v1/account
+INFO 2025-06-11 05:27:56,760 _util message='Stripe API response' path=https://api.stripe.com/v1/account response_code=401
+INFO 2025-06-11 05:27:56,761 _util error_code=None error_message='Invalid API Key provided: sk_test_***********_key' error_param=None error_type=invalid_request_error message='Stripe v1 API error received'
+WARNING 2025-06-11 05:27:59,209 environment [ENV] 未识别的环境类型: development  # development, testing, production, 将使用默认环境
+WARNING 2025-06-11 05:27:59,209 environment [ENV] 未识别的环境类型: development  # development, testing, production, 将使用默认环境
+INFO 2025-06-11 05:36:48,747 autoreload /Users/chrischan/rushwebsite/pages/views.py changed, reloading.
+INFO 2025-06-11 05:36:49,139 autoreload Watching for file changes with StatReloader
+INFO 2025-06-11 05:36:52,214 autoreload /Users/chrischan/rushwebsite/pages/views.py changed, reloading.
+INFO 2025-06-11 05:36:52,403 autoreload Watching for file changes with StatReloader
+INFO 2025-06-11 05:38:15,340 autoreload /Users/chrischan/rushwebsite/pages/views.py changed, reloading.
+INFO 2025-06-11 05:38:15,602 autoreload Watching for file changes with StatReloader
+INFO 2025-06-11 05:38:40,931 autoreload /Users/chrischan/rushwebsite/cars/models.py changed, reloading.
+INFO 2025-06-11 05:38:41,137 autoreload Watching for file changes with StatReloader
+INFO 2025-06-11 05:43:47,104 autoreload /Users/chrischan/rushwebsite/pages/models.py changed, reloading.
+INFO 2025-06-11 05:43:47,366 autoreload Watching for file changes with StatReloader
+INFO 2025-06-11 05:46:54,672 autoreload /Users/chrischan/rushwebsite/cars/models.py changed, reloading.
+INFO 2025-06-11 05:46:54,947 autoreload Watching for file changes with StatReloader
+INFO 2025-06-11 05:47:42,632 autoreload /Users/chrischan/rushwebsite/pages/models.py changed, reloading.
+INFO 2025-06-11 05:47:42,904 autoreload Watching for file changes with StatReloader
+INFO 2025-06-11 05:47:51,124 autoreload /Users/chrischan/rushwebsite/pages/models.py changed, reloading.
+INFO 2025-06-11 05:47:51,319 autoreload Watching for file changes with StatReloader
+INFO 2025-06-11 05:48:20,736 autoreload /Users/chrischan/rushwebsite/pages/models.py changed, reloading.
+INFO 2025-06-11 05:48:20,943 autoreload Watching for file changes with StatReloader
+INFO 2025-06-11 06:03:50,959 autoreload /Users/chrischan/rushwebsite/pages/models.py changed, reloading.
+INFO 2025-06-11 06:03:51,258 autoreload Watching for file changes with StatReloader
+INFO 2025-06-11 06:05:39,671 autoreload /Users/chrischan/rushwebsite/pages/models.py changed, reloading.
+INFO 2025-06-11 06:05:39,943 autoreload Watching for file changes with StatReloader
+INFO 2025-06-11 06:06:27,653 autoreload /Users/chrischan/rushwebsite/pages/models.py changed, reloading.
+INFO 2025-06-11 06:06:27,863 autoreload Watching for file changes with StatReloader
+INFO 2025-06-11 06:06:28,217 _util message='Request to Stripe api' method=get url=https://api.stripe.com/v1/account
+INFO 2025-06-11 06:06:28,413 _util message='Stripe API response' path=https://api.stripe.com/v1/account response_code=401
+INFO 2025-06-11 06:06:28,414 _util error_code=None error_message='Invalid API Key provided: sk_test_***********_key' error_param=None error_type=invalid_request_error message='Stripe v1 API error received'
+WARNING 2025-06-11 06:06:31,134 environment [ENV] 未识别的环境类型: development  # development, testing, production, 将使用默认环境
+WARNING 2025-06-11 06:06:31,134 environment [ENV] 未识别的环境类型: development  # development, testing, production, 将使用默认环境
+INFO 2025-06-11 06:08:53,185 _util message='Request to Stripe api' method=get url=https://api.stripe.com/v1/account
+INFO 2025-06-11 06:08:53,383 _util message='Stripe API response' path=https://api.stripe.com/v1/account response_code=401
+INFO 2025-06-11 06:08:53,383 _util error_code=None error_message='Invalid API Key provided: sk_test_***********_key' error_param=None error_type=invalid_request_error message='Stripe v1 API error received'
+INFO 2025-06-11 06:09:02,842 _util message='Request to Stripe api' method=get url=https://api.stripe.com/v1/account
+INFO 2025-06-11 06:09:03,024 _util message='Stripe API response' path=https://api.stripe.com/v1/account response_code=401
+INFO 2025-06-11 06:09:03,024 _util error_code=None error_message='Invalid API Key provided: sk_test_***********_key' error_param=None error_type=invalid_request_error message='Stripe v1 API error received'
+INFO 2025-06-11 06:10:30,403 _util message='Request to Stripe api' method=get url=https://api.stripe.com/v1/account
+INFO 2025-06-11 06:10:30,597 _util message='Stripe API response' path=https://api.stripe.com/v1/account response_code=401
+INFO 2025-06-11 06:10:30,597 _util error_code=None error_message='Invalid API Key provided: sk_test_***********_key' error_param=None error_type=invalid_request_error message='Stripe v1 API error received'
+INFO 2025-06-11 06:10:53,286 _util message='Request to Stripe api' method=get url=https://api.stripe.com/v1/account
+INFO 2025-06-11 06:10:53,474 _util message='Stripe API response' path=https://api.stripe.com/v1/account response_code=401
+INFO 2025-06-11 06:10:53,474 _util error_code=None error_message='Invalid API Key provided: sk_test_***********_key' error_param=None error_type=invalid_request_error message='Stripe v1 API error received'
+INFO 2025-06-11 06:14:23,717 _util message='Request to Stripe api' method=get url=https://api.stripe.com/v1/account
+INFO 2025-06-11 06:14:23,912 _util message='Stripe API response' path=https://api.stripe.com/v1/account response_code=401
+INFO 2025-06-11 06:14:23,912 _util error_code=None error_message='Invalid API Key provided: sk_test_***********_key' error_param=None error_type=invalid_request_error message='Stripe v1 API error received'
+INFO 2025-06-11 06:15:20,265 _util message='Request to Stripe api' method=get url=https://api.stripe.com/v1/account
+INFO 2025-06-11 06:15:20,463 _util message='Stripe API response' path=https://api.stripe.com/v1/account response_code=401
+INFO 2025-06-11 06:15:20,463 _util error_code=None error_message='Invalid API Key provided: sk_test_***********_key' error_param=None error_type=invalid_request_error message='Stripe v1 API error received'
+INFO 2025-06-11 06:16:48,408 _util message='Request to Stripe api' method=get url=https://api.stripe.com/v1/account
+INFO 2025-06-11 06:16:48,607 _util message='Stripe API response' path=https://api.stripe.com/v1/account response_code=401
+INFO 2025-06-11 06:16:48,607 _util error_code=None error_message='Invalid API Key provided: sk_test_***********_key' error_param=None error_type=invalid_request_error message='Stripe v1 API error received'
+INFO 2025-06-11 06:16:55,297 _util message='Request to Stripe api' method=get url=https://api.stripe.com/v1/account
+INFO 2025-06-11 06:16:55,481 _util message='Stripe API response' path=https://api.stripe.com/v1/account response_code=401
+INFO 2025-06-11 06:16:55,481 _util error_code=None error_message='Invalid API Key provided: sk_test_***********_key' error_param=None error_type=invalid_request_error message='Stripe v1 API error received'
+INFO 2025-06-11 06:19:31,826 _util message='Request to Stripe api' method=get url=https://api.stripe.com/v1/account
+INFO 2025-06-11 06:19:32,022 _util message='Stripe API response' path=https://api.stripe.com/v1/account response_code=401
+INFO 2025-06-11 06:19:32,022 _util error_code=None error_message='Invalid API Key provided: sk_test_***********_key' error_param=None error_type=invalid_request_error message='Stripe v1 API error received'
+INFO 2025-06-11 06:19:37,180 _util message='Request to Stripe api' method=get url=https://api.stripe.com/v1/account
+INFO 2025-06-11 06:19:37,370 _util message='Stripe API response' path=https://api.stripe.com/v1/account response_code=401
+INFO 2025-06-11 06:19:37,370 _util error_code=None error_message='Invalid API Key provided: sk_test_***********_key' error_param=None error_type=invalid_request_error message='Stripe v1 API error received'
+INFO 2025-06-11 06:23:33,539 _util message='Request to Stripe api' method=get url=https://api.stripe.com/v1/account
+INFO 2025-06-11 06:23:33,738 _util message='Stripe API response' path=https://api.stripe.com/v1/account response_code=401
+INFO 2025-06-11 06:23:33,738 _util error_code=None error_message='Invalid API Key provided: sk_test_***********_key' error_param=None error_type=invalid_request_error message='Stripe v1 API error received'
+INFO 2025-06-11 06:23:39,836 _util message='Request to Stripe api' method=get url=https://api.stripe.com/v1/account
+INFO 2025-06-11 06:23:40,020 _util message='Stripe API response' path=https://api.stripe.com/v1/account response_code=401
+INFO 2025-06-11 06:23:40,021 _util error_code=None error_message='Invalid API Key provided: sk_test_***********_key' error_param=None error_type=invalid_request_error message='Stripe v1 API error received'
+INFO 2025-06-11 06:40:46,544 _util message='Request to Stripe api' method=get url=https://api.stripe.com/v1/account
+INFO 2025-06-11 06:40:46,745 _util message='Stripe API response' path=https://api.stripe.com/v1/account response_code=401
+INFO 2025-06-11 06:40:46,745 _util error_code=None error_message='Invalid API Key provided: sk_test_***********_key' error_param=None error_type=invalid_request_error message='Stripe v1 API error received'
+INFO 2025-06-11 06:40:49,954 _util message='Request to Stripe api' method=get url=https://api.stripe.com/v1/account
+INFO 2025-06-11 06:40:50,139 _util message='Stripe API response' path=https://api.stripe.com/v1/account response_code=401
+INFO 2025-06-11 06:40:50,139 _util error_code=None error_message='Invalid API Key provided: sk_test_***********_key' error_param=None error_type=invalid_request_error message='Stripe v1 API error received'
+INFO 2025-06-11 12:20:29,127 _util message='Request to Stripe api' method=get url=https://api.stripe.com/v1/account
+INFO 2025-06-11 12:20:29,327 _util message='Stripe API response' path=https://api.stripe.com/v1/account response_code=401
+INFO 2025-06-11 12:20:29,328 _util error_code=None error_message='Invalid API Key provided: sk_test_***********_key' error_param=None error_type=invalid_request_error message='Stripe v1 API error received'
+INFO 2025-06-11 12:20:32,594 _util message='Request to Stripe api' method=get url=https://api.stripe.com/v1/account
+INFO 2025-06-11 12:20:32,779 _util message='Stripe API response' path=https://api.stripe.com/v1/account response_code=401
+INFO 2025-06-11 12:20:32,780 _util error_code=None error_message='Invalid API Key provided: sk_test_***********_key' error_param=None error_type=invalid_request_error message='Stripe v1 API error received'
+INFO 2025-06-11 12:23:09,245 _util message='Request to Stripe api' method=get url=https://api.stripe.com/v1/account
+INFO 2025-06-11 12:23:09,441 _util message='Stripe API response' path=https://api.stripe.com/v1/account response_code=401
+INFO 2025-06-11 12:23:09,441 _util error_code=None error_message='Invalid API Key provided: sk_test_***********_key' error_param=None error_type=invalid_request_error message='Stripe v1 API error received'
+INFO 2025-06-11 12:23:20,031 _util message='Request to Stripe api' method=get url=https://api.stripe.com/v1/account
+INFO 2025-06-11 12:23:20,218 _util message='Stripe API response' path=https://api.stripe.com/v1/account response_code=401
+INFO 2025-06-11 12:23:20,218 _util error_code=None error_message='Invalid API Key provided: sk_test_***********_key' error_param=None error_type=invalid_request_error message='Stripe v1 API error received'
+INFO 2025-06-11 12:23:41,191 _util message='Request to Stripe api' method=get url=https://api.stripe.com/v1/account
+INFO 2025-06-11 12:23:41,398 _util message='Stripe API response' path=https://api.stripe.com/v1/account response_code=401
+INFO 2025-06-11 12:23:41,398 _util error_code=None error_message='Invalid API Key provided: sk_test_***********_key' error_param=None error_type=invalid_request_error message='Stripe v1 API error received'
+INFO 2025-06-11 12:24:21,394 _util message='Request to Stripe api' method=get url=https://api.stripe.com/v1/account
+INFO 2025-06-11 12:24:21,592 _util message='Stripe API response' path=https://api.stripe.com/v1/account response_code=401
+INFO 2025-06-11 12:24:21,592 _util error_code=None error_message='Invalid API Key provided: sk_test_***********_key' error_param=None error_type=invalid_request_error message='Stripe v1 API error received'
+INFO 2025-06-11 12:24:52,700 _util message='Request to Stripe api' method=get url=https://api.stripe.com/v1/account
+INFO 2025-06-11 12:24:52,891 _util message='Stripe API response' path=https://api.stripe.com/v1/account response_code=401
+INFO 2025-06-11 12:24:52,892 _util error_code=None error_message='Invalid API Key provided: sk_test_***********_key' error_param=None error_type=invalid_request_error message='Stripe v1 API error received'
+INFO 2025-06-11 12:53:29,908 autoreload Watching for file changes with StatReloader
+INFO 2025-06-11 12:53:30,265 _util message='Request to Stripe api' method=get url=https://api.stripe.com/v1/account
+INFO 2025-06-11 12:53:30,464 _util message='Stripe API response' path=https://api.stripe.com/v1/account response_code=401
+INFO 2025-06-11 12:53:30,464 _util error_code=None error_message='Invalid API Key provided: sk_test_***********_key' error_param=None error_type=invalid_request_error message='Stripe v1 API error received'
+INFO 2025-06-11 13:00:03,893 _util message='Request to Stripe api' method=get url=https://api.stripe.com/v1/account
+INFO 2025-06-11 13:00:04,088 _util message='Stripe API response' path=https://api.stripe.com/v1/account response_code=401
+INFO 2025-06-11 13:00:04,088 _util error_code=None error_message='Invalid API Key provided: sk_test_***********_key' error_param=None error_type=invalid_request_error message='Stripe v1 API error received'
+INFO 2025-06-11 13:31:45,547 _util message='Request to Stripe api' method=get url=https://api.stripe.com/v1/account
+INFO 2025-06-11 13:31:45,745 _util message='Stripe API response' path=https://api.stripe.com/v1/account response_code=401
+INFO 2025-06-11 13:31:45,745 _util error_code=None error_message='Invalid API Key provided: sk_test_***********_key' error_param=None error_type=invalid_request_error message='Stripe v1 API error received'
+INFO 2025-06-11 13:51:24,000 _util message='Request to Stripe api' method=get url=https://api.stripe.com/v1/account
+INFO 2025-06-11 13:51:24,201 _util message='Stripe API response' path=https://api.stripe.com/v1/account response_code=401
+INFO 2025-06-11 13:51:24,201 _util error_code=None error_message='Invalid API Key provided: sk_test_***********_key' error_param=None error_type=invalid_request_error message='Stripe v1 API error received'
+INFO 2025-06-11 13:52:07,935 _util message='Request to Stripe api' method=get url=https://api.stripe.com/v1/account
+INFO 2025-06-11 13:52:08,121 _util message='Stripe API response' path=https://api.stripe.com/v1/account response_code=401
+INFO 2025-06-11 13:52:08,122 _util error_code=None error_message='Invalid API Key provided: sk_test_***********_key' error_param=None error_type=invalid_request_error message='Stripe v1 API error received'
+INFO 2025-06-11 13:52:22,222 _util message='Request to Stripe api' method=get url=https://api.stripe.com/v1/account
+INFO 2025-06-11 13:52:22,409 _util message='Stripe API response' path=https://api.stripe.com/v1/account response_code=401
+INFO 2025-06-11 13:52:22,409 _util error_code=None error_message='Invalid API Key provided: sk_test_***********_key' error_param=None error_type=invalid_request_error message='Stripe v1 API error received'
+INFO 2025-06-11 13:52:57,307 _util message='Request to Stripe api' method=get url=https://api.stripe.com/v1/account
+INFO 2025-06-11 13:52:57,505 _util message='Stripe API response' path=https://api.stripe.com/v1/account response_code=401
+INFO 2025-06-11 13:52:57,505 _util error_code=None error_message='Invalid API Key provided: sk_test_***********_key' error_param=None error_type=invalid_request_error message='Stripe v1 API error received'
+INFO 2025-06-11 13:53:45,487 _util message='Request to Stripe api' method=get url=https://api.stripe.com/v1/account
+INFO 2025-06-11 13:53:45,685 _util message='Stripe API response' path=https://api.stripe.com/v1/account response_code=401
+INFO 2025-06-11 13:53:45,685 _util error_code=None error_message='Invalid API Key provided: sk_test_***********_key' error_param=None error_type=invalid_request_error message='Stripe v1 API error received'
+INFO 2025-06-11 13:59:14,617 _util message='Request to Stripe api' method=get url=https://api.stripe.com/v1/account
+INFO 2025-06-11 13:59:14,811 _util message='Stripe API response' path=https://api.stripe.com/v1/account response_code=401
+INFO 2025-06-11 13:59:14,811 _util error_code=None error_message='Invalid API Key provided: sk_test_***********_key' error_param=None error_type=invalid_request_error message='Stripe v1 API error received'
+INFO 2025-06-11 13:59:54,620 _util message='Request to Stripe api' method=get url=https://api.stripe.com/v1/account
+INFO 2025-06-11 13:59:54,823 _util message='Stripe API response' path=https://api.stripe.com/v1/account response_code=401
+INFO 2025-06-11 13:59:54,823 _util error_code=None error_message='Invalid API Key provided: sk_test_***********_key' error_param=None error_type=invalid_request_error message='Stripe v1 API error received'
+INFO 2025-06-11 14:01:34,874 _util message='Request to Stripe api' method=get url=https://api.stripe.com/v1/account
+INFO 2025-06-11 14:01:35,073 _util message='Stripe API response' path=https://api.stripe.com/v1/account response_code=401
+INFO 2025-06-11 14:01:35,074 _util error_code=None error_message='Invalid API Key provided: sk_test_***********_key' error_param=None error_type=invalid_request_error message='Stripe v1 API error received'
+INFO 2025-06-11 14:02:24,400 _util message='Request to Stripe api' method=get url=https://api.stripe.com/v1/account
+INFO 2025-06-11 14:02:24,584 _util message='Stripe API response' path=https://api.stripe.com/v1/account response_code=401
+INFO 2025-06-11 14:02:24,584 _util error_code=None error_message='Invalid API Key provided: sk_test_***********_key' error_param=None error_type=invalid_request_error message='Stripe v1 API error received'
+INFO 2025-06-11 14:03:24,639 autoreload Watching for file changes with StatReloader
+INFO 2025-06-11 14:03:25,016 _util message='Request to Stripe api' method=get url=https://api.stripe.com/v1/account
+INFO 2025-06-11 14:03:25,217 _util message='Stripe API response' path=https://api.stripe.com/v1/account response_code=401
+INFO 2025-06-11 14:03:25,217 _util error_code=None error_message='Invalid API Key provided: sk_test_***********_key' error_param=None error_type=invalid_request_error message='Stripe v1 API error received'
+WARNING 2025-06-11 14:03:27,766 environment [ENV] 未识别的环境类型: development  # development, testing, production, 将使用默认环境
+WARNING 2025-06-11 14:03:27,766 environment [ENV] 未识别的环境类型: development  # development, testing, production, 将使用默认环境
+INFO 2025-06-11 14:03:39,147 autoreload Watching for file changes with StatReloader
+INFO 2025-06-11 14:03:39,502 _util message='Request to Stripe api' method=get url=https://api.stripe.com/v1/account
+INFO 2025-06-11 14:03:39,690 _util message='Stripe API response' path=https://api.stripe.com/v1/account response_code=401
+INFO 2025-06-11 14:03:39,690 _util error_code=None error_message='Invalid API Key provided: sk_test_***********_key' error_param=None error_type=invalid_request_error message='Stripe v1 API error received'
+WARNING 2025-06-11 14:03:42,410 environment [ENV] 未识别的环境类型: development  # development, testing, production, 将使用默认环境
+WARNING 2025-06-11 14:03:42,410 environment [ENV] 未识别的环境类型: development  # development, testing, production, 将使用默认环境
+WARNING 2025-06-11 14:03:47,069 base Session data corrupted
+ERROR 2025-06-11 14:03:47,094 log Internal Server Error: /subscription/
+Traceback (most recent call last):
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/db/models/sql/query.py", line 2234, in add_fields
+    join_info = self.setup_joins(
+        name.split(LOOKUP_SEP), opts, alias, allow_many=allow_m2m
+    )
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/db/models/sql/query.py", line 1897, in setup_joins
+    path, final_field, targets, rest = self.names_to_path(
+                                       ~~~~~~~~~~~~~~~~~~^
+        names[:pivot],
+        ^^^^^^^^^^^^^^
+    ...<2 lines>...
+        fail_on_missing=True,
+        ^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/db/models/sql/query.py", line 1802, in names_to_path
+    raise FieldError(
+    ...<2 lines>...
+    )
+django.core.exceptions.FieldError: Cannot resolve keyword 'fuel_type' into field. Choices are: age_youngest_driver, category_type, category_type_id, comparison_provider1_name, comparison_provider1_rate, comparison_provider2_name, comparison_provider2_rate, created_at, daily_rate, emission_rate, features, friendly_description, id, image_upload, image_upload_id, is_available, legacy_cars, locations, name, num_adults, num_children, num_large_case, num_small_case, region, renting_category, sipp_code, updated_at, vehicle_category, vehicle_desc_url, vehicle_type, vehicle_type_id
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Users/chrischan/rushwebsite/pages/views.py", line 71, in subscription
+    fuel_types = VehicleCategory.objects.values_list('fuel_type', flat=True).distinct()
+                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/db/models/manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/db/models/query.py", line 1397, in values_list
+    clone = self._values(*_fields, **expressions)
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/db/models/query.py", line 1360, in _values
+    clone.query.set_values(fields)
+    ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/db/models/sql/query.py", line 2557, in set_values
+    self.add_fields(field_names, True)
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/db/models/sql/query.py", line 2262, in add_fields
+    raise FieldError(
+    ...<2 lines>...
+    )
+django.core.exceptions.FieldError: Cannot resolve keyword 'fuel_type' into field. Choices are: age_youngest_driver, category_type, category_type_id, comparison_provider1_name, comparison_provider1_rate, comparison_provider2_name, comparison_provider2_rate, created_at, daily_rate, emission_rate, features, friendly_description, id, image_upload, image_upload_id, is_available, legacy_cars, locations, name, num_adults, num_children, num_large_case, num_small_case, region, renting_category, sipp_code, updated_at, vehicle_category, vehicle_desc_url, vehicle_type, vehicle_type_id
+ERROR 2025-06-11 14:03:47,098 basehttp "GET /subscription/?pickup_location=&fuel_type=&car_category=suv&seat_number= HTTP/1.1" 500 117855
+WARNING 2025-06-11 14:04:40,025 base Session data corrupted
+ERROR 2025-06-11 14:04:40,049 log Internal Server Error: /subscription/
+Traceback (most recent call last):
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/db/models/sql/query.py", line 2234, in add_fields
+    join_info = self.setup_joins(
+        name.split(LOOKUP_SEP), opts, alias, allow_many=allow_m2m
+    )
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/db/models/sql/query.py", line 1897, in setup_joins
+    path, final_field, targets, rest = self.names_to_path(
+                                       ~~~~~~~~~~~~~~~~~~^
+        names[:pivot],
+        ^^^^^^^^^^^^^^
+    ...<2 lines>...
+        fail_on_missing=True,
+        ^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/db/models/sql/query.py", line 1802, in names_to_path
+    raise FieldError(
+    ...<2 lines>...
+    )
+django.core.exceptions.FieldError: Cannot resolve keyword 'fuel_type' into field. Choices are: age_youngest_driver, category_type, category_type_id, comparison_provider1_name, comparison_provider1_rate, comparison_provider2_name, comparison_provider2_rate, created_at, daily_rate, emission_rate, features, friendly_description, id, image_upload, image_upload_id, is_available, legacy_cars, locations, name, num_adults, num_children, num_large_case, num_small_case, region, renting_category, sipp_code, updated_at, vehicle_category, vehicle_desc_url, vehicle_type, vehicle_type_id
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Users/chrischan/rushwebsite/pages/views.py", line 71, in subscription
+    fuel_types = VehicleCategory.objects.values_list('fuel_type', flat=True).distinct()
+                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/db/models/manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/db/models/query.py", line 1397, in values_list
+    clone = self._values(*_fields, **expressions)
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/db/models/query.py", line 1360, in _values
+    clone.query.set_values(fields)
+    ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/db/models/sql/query.py", line 2557, in set_values
+    self.add_fields(field_names, True)
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/db/models/sql/query.py", line 2262, in add_fields
+    raise FieldError(
+    ...<2 lines>...
+    )
+django.core.exceptions.FieldError: Cannot resolve keyword 'fuel_type' into field. Choices are: age_youngest_driver, category_type, category_type_id, comparison_provider1_name, comparison_provider1_rate, comparison_provider2_name, comparison_provider2_rate, created_at, daily_rate, emission_rate, features, friendly_description, id, image_upload, image_upload_id, is_available, legacy_cars, locations, name, num_adults, num_children, num_large_case, num_small_case, region, renting_category, sipp_code, updated_at, vehicle_category, vehicle_desc_url, vehicle_type, vehicle_type_id
+ERROR 2025-06-11 14:04:40,052 basehttp "GET /subscription/ HTTP/1.1" 500 116721
+INFO 2025-06-11 14:04:40,312 basehttp - Broken pipe from ('127.0.0.1', 53210)
+WARNING 2025-06-11 14:04:41,726 base Session data corrupted
+INFO 2025-06-11 14:04:43,230 basehttp "GET / HTTP/1.1" 200 36488
+WARNING 2025-06-11 14:05:02,465 base Session data corrupted
+ERROR 2025-06-11 14:05:02,486 log Internal Server Error: /subscription/
+Traceback (most recent call last):
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/db/models/sql/query.py", line 2234, in add_fields
+    join_info = self.setup_joins(
+        name.split(LOOKUP_SEP), opts, alias, allow_many=allow_m2m
+    )
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/db/models/sql/query.py", line 1897, in setup_joins
+    path, final_field, targets, rest = self.names_to_path(
+                                       ~~~~~~~~~~~~~~~~~~^
+        names[:pivot],
+        ^^^^^^^^^^^^^^
+    ...<2 lines>...
+        fail_on_missing=True,
+        ^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/db/models/sql/query.py", line 1802, in names_to_path
+    raise FieldError(
+    ...<2 lines>...
+    )
+django.core.exceptions.FieldError: Cannot resolve keyword 'fuel_type' into field. Choices are: age_youngest_driver, category_type, category_type_id, comparison_provider1_name, comparison_provider1_rate, comparison_provider2_name, comparison_provider2_rate, created_at, daily_rate, emission_rate, features, friendly_description, id, image_upload, image_upload_id, is_available, legacy_cars, locations, name, num_adults, num_children, num_large_case, num_small_case, region, renting_category, sipp_code, updated_at, vehicle_category, vehicle_desc_url, vehicle_type, vehicle_type_id
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Users/chrischan/rushwebsite/pages/views.py", line 71, in subscription
+    fuel_types = VehicleCategory.objects.values_list('fuel_type', flat=True).distinct()
+                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/db/models/manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/db/models/query.py", line 1397, in values_list
+    clone = self._values(*_fields, **expressions)
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/db/models/query.py", line 1360, in _values
+    clone.query.set_values(fields)
+    ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/db/models/sql/query.py", line 2557, in set_values
+    self.add_fields(field_names, True)
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/db/models/sql/query.py", line 2262, in add_fields
+    raise FieldError(
+    ...<2 lines>...
+    )
+django.core.exceptions.FieldError: Cannot resolve keyword 'fuel_type' into field. Choices are: age_youngest_driver, category_type, category_type_id, comparison_provider1_name, comparison_provider1_rate, comparison_provider2_name, comparison_provider2_rate, created_at, daily_rate, emission_rate, features, friendly_description, id, image_upload, image_upload_id, is_available, legacy_cars, locations, name, num_adults, num_children, num_large_case, num_small_case, region, renting_category, sipp_code, updated_at, vehicle_category, vehicle_desc_url, vehicle_type, vehicle_type_id
+ERROR 2025-06-11 14:05:02,488 basehttp "GET /subscription/ HTTP/1.1" 500 116872

@@ -1,7 +1,7 @@
 from django.shortcuts import render
-from cars.models import Car, CarCategory, VehicleCategory, VehicleCategoryType, VehicleType
+from cars.models import Car, CarCategory, VehicleCategory, VehicleCategoryType
 from locations.models import Location, CityHighlight
-from .models import Testimonial
+from .models import Testimonial, CarSubscription
 import os
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'rush_car_rental.settings')
@@ -58,68 +58,47 @@ def about_us(request):
     return render(request, 'pages/about_us.html')
     
 def subscription(request):
-    """车辆订阅页面，显示可用于订阅的车辆"""
+    # 获取所有订阅车辆数据
+    subscriptions = CarSubscription.objects.all()
+    
+    # 获取所有位置
+    locations = Location.objects.all()
+    
+    # 获取所有车辆类别
+    car_categories = VehicleCategoryType.objects.all()
+    
+    # 获取所有燃料类型
+    fuel_types = VehicleCategory.objects.values_list('fuel_type', flat=True).distinct()
+    
+    # 获取所有座位数
+    seat_numbers = VehicleCategory.objects.values_list('num_adults', flat=True).distinct()
+    
     # 获取筛选参数
-    pickup_location = request.GET.get('pickup_location', '')
-    fuel_type = request.GET.get('fuel_type', '')
-    car_category = request.GET.get('car_category', '')
-    seat_number = request.GET.get('seat_number', '')
+    selected_location = request.GET.get('pickup_location', '')
+    selected_fuel_type = request.GET.get('fuel_type', '')
+    selected_car_category = request.GET.get('car_category', '')
+    selected_seat_number = request.GET.get('seat_number', '')
     
-    # 默认使用VehicleCategory模型中的数据
-    subscription_vehicles = VehicleCategory.objects.filter(
-        renting_category=True,
-        category_type__web_available=True
-    )
-    
-    # 应用筛选条件
-    if pickup_location:
-        subscription_vehicles = subscription_vehicles.filter(
-            locations__name__icontains=pickup_location
-        )
-    
-    if fuel_type:
-        subscription_vehicles = subscription_vehicles.filter(
-            vehicle_type__name__icontains=fuel_type
-        )
-    
-    if car_category:
-        subscription_vehicles = subscription_vehicles.filter(
-            name__icontains=car_category
-        )
-    
-    if seat_number:
-        subscription_vehicles = subscription_vehicles.filter(
-            num_adults__gte=int(seat_number)
-        )
-    
-    # 获取所有可用的取车地点
-    locations = Location.objects.filter(is_airport=False)
-    
-    # 获取所有可用的燃料类型
-    fuel_types = VehicleType.objects.all()
-    
-    # 获取所有可用的车辆类别
-    car_categories = VehicleCategory.objects.filter(
-        renting_category=True,
-        category_type__web_available=True
-    ).values_list('name', flat=True).distinct()
-    
-    # 获取所有可用的座位数
-    seat_numbers = VehicleCategory.objects.filter(
-        renting_category=True,
-        category_type__web_available=True
-    ).values_list('num_adults', flat=True).distinct().order_by('num_adults')
+    # 应用筛选
+    if selected_location:
+        subscriptions = subscriptions.filter(location__name=selected_location)
+    if selected_fuel_type:
+        subscriptions = subscriptions.filter(category__fuel_type=selected_fuel_type)
+    if selected_car_category:
+        subscriptions = subscriptions.filter(category__category_type=selected_car_category)
+    if selected_seat_number:
+        subscriptions = subscriptions.filter(category__num_adults=selected_seat_number)
     
     context = {
-        'subscription_vehicles': subscription_vehicles,
+        'subscriptions': subscriptions,
         'locations': locations,
-        'fuel_types': fuel_types,
         'car_categories': car_categories,
+        'fuel_types': fuel_types,
         'seat_numbers': seat_numbers,
-        'selected_location': pickup_location,
-        'selected_fuel_type': fuel_type,
-        'selected_car_category': car_category,
-        'selected_seat_number': seat_number,
+        'selected_location': selected_location,
+        'selected_fuel_type': selected_fuel_type,
+        'selected_car_category': selected_car_category,
+        'selected_seat_number': selected_seat_number,
     }
     
     return render(request, 'pages/subscription.html', context)

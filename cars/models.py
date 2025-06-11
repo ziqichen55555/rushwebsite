@@ -20,8 +20,8 @@ class VehicleImage(models.Model):
         return self.name
 
     class Meta:
-        db_table = 'cars_vehicleimage'
-
+        db_table = 'app_vehicleimage'
+        managed = False
 
 class VehicleType(AuditModelMixin):
     name = models.CharField(max_length=50)
@@ -31,7 +31,8 @@ class VehicleType(AuditModelMixin):
         return self.name
 
     class Meta:
-        db_table = 'cars_vehicletype'
+        db_table = 'app_vehicletype'
+        managed = False
 
 
 class VehicleCategoryType(AuditModelMixin):
@@ -46,6 +47,7 @@ class VehicleCategoryType(AuditModelMixin):
     class Meta:
         db_table = 'app_vehiclecategorytype'
         ordering = ['ordering', 'category_type']
+        managed = False
 
 
 class VehicleCategory(AuditModelMixin):
@@ -242,7 +244,48 @@ class Car(models.Model):
     class Meta:
         db_table = 'cars_car'
 
+class VehicleFuel(AuditModelMixin):
+    YES_NO_CHOICES = (
+        (True, 'Yes'),
+        (False, 'No'),
+    )
+    fuel_type = models.CharField(max_length=100)
+    is_electric = models.BooleanField(default=False, choices=YES_NO_CHOICES)
+    fuel_unit = models.CharField(max_length=50, default='Liter')
+    fuel_unit_price = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
+    is_default = models.BooleanField(default=False, choices=YES_NO_CHOICES)
+    fuel_notes = models.TextField(blank=True, null=True)
 
+    class Meta:
+        ordering = ['fuel_type']
+        managed = False
+        db_table = 'app_vehiclefuel'
+    def __str__(self):
+        return self.fuel_type
+
+
+class VehicleMake(AuditModelMixin):
+    name = models.CharField(max_length=100)
+
+    class Meta:
+        ordering = ['name']
+        managed = False
+        db_table = 'app_vehiclemake'
+    def __str__(self):
+        return self.name
+
+class VehicleModel(AuditModelMixin):
+    make = models.ForeignKey(VehicleMake, on_delete=models.CASCADE, related_name='models')
+    model_name = models.CharField(max_length=100)
+    fuel_capacity = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True, default=0)
+
+    class Meta:
+        ordering = ['model_name']
+        managed = False
+        db_table = 'app_vehiclemodel'   
+    def __str__(self):
+        return self.model_name
+    
 class CarFeature(models.Model):
     car = models.ForeignKey(Car,
                             on_delete=models.CASCADE,
@@ -254,3 +297,4 @@ class CarFeature(models.Model):
 
     class Meta:
         db_table = 'cars_carfeature'
+
