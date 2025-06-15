@@ -9,7 +9,7 @@ class AuditModelMixin(models.Model):
 
     class Meta:
         abstract = True
-
+        managed = False 
 
 class VehicleImage(models.Model):
     name = models.CharField(max_length=100)
@@ -20,8 +20,8 @@ class VehicleImage(models.Model):
         return self.name
 
     class Meta:
-        db_table = 'cars_vehicleimage'
-
+        db_table = 'app_vehicleimage'
+        managed = False
 
 class VehicleType(AuditModelMixin):
     name = models.CharField(max_length=50)
@@ -31,7 +31,8 @@ class VehicleType(AuditModelMixin):
         return self.name
 
     class Meta:
-        db_table = 'cars_vehicletype'
+        db_table = 'app_vehicletype'
+        managed = False
 
 
 class VehicleCategoryType(AuditModelMixin):
@@ -46,6 +47,7 @@ class VehicleCategoryType(AuditModelMixin):
     class Meta:
         db_table = 'app_vehiclecategorytype'
         ordering = ['ordering', 'category_type']
+        managed = False
 
 
 class VehicleCategory(AuditModelMixin):
@@ -65,19 +67,12 @@ class VehicleCategory(AuditModelMixin):
         ('nanjing', 'Nanjing'),
     ]
 
-    name = models.CharField(max_length=100, blank=True, null=True)
-    category_type = models.ForeignKey(VehicleCategoryType,
-                                      on_delete=models.CASCADE,
-                                      related_name='categories')
+    
+    name = models.CharField(max_length=100,blank=True, null=True)
+    category_type = models.ForeignKey(VehicleCategoryType, on_delete=models.CASCADE, related_name='categories')
     vehicle_category = models.CharField(max_length=100)
-    vehicle_type = models.ForeignKey(VehicleType,
-                                     on_delete=models.CASCADE,
-                                     related_name='categories',
-                                     null=True,
-                                     blank=True)
-    region = models.CharField(max_length=50,
-                              choices=REGION_CHOICES,
-                              default='melbourne')
+    vehicle_type = models.ForeignKey(VehicleType, on_delete=models.CASCADE, related_name='categories', null=True, blank=True)  
+    region = models.CharField(max_length=50, choices=REGION_CHOICES, default='melbourne')
     renting_category = models.BooleanField(default=False)
     sipp_code = models.CharField(max_length=10, blank=True, null=True)
     age_youngest_driver = models.IntegerField(default=21)
@@ -87,37 +82,19 @@ class VehicleCategory(AuditModelMixin):
     num_small_case = models.IntegerField(default=0)
     emission_rate = models.CharField(max_length=50, blank=True, null=True)
     vehicle_desc_url = models.URLField(blank=True, null=True)
-    image_upload = models.ForeignKey(VehicleImage,
-                                     on_delete=models.SET_NULL,
-                                     null=True,
-                                     blank=True,
-                                     related_name='categories')
+    image_upload = models.ForeignKey(VehicleImage, on_delete=models.SET_NULL, null=True, blank=True, related_name='categories')
     friendly_description = models.TextField(blank=True, null=True)
+    
     daily_rate = models.DecimalField(max_digits=8, decimal_places=2, default=0)
-    is_available = models.BooleanField(default=True)  # 添加 is_available 字段
-    locations = models.ManyToManyField(Location,
-                                       related_name='available_vehicles')
 
-    # Comparison pricing fields
-    comparison_provider1_name = models.CharField(max_length=50, blank=True)
-    comparison_provider1_rate = models.DecimalField(max_digits=8,
-                                                    decimal_places=2,
-                                                    null=True,
-                                                    blank=True)
-    comparison_provider2_name = models.CharField(max_length=50, blank=True)
-    comparison_provider2_rate = models.DecimalField(max_digits=8,
-                                                    decimal_places=2,
-                                                    null=True,
-                                                    blank=True)
+    class Meta:
+        ordering = ['category_type', 'vehicle_category']
+        verbose_name_plural = "Vehicle Categories"
+        managed = False
 
     def __str__(self):
-        display_name = self.name if self.name else self.vehicle_category
-        return f"{display_name} ({self.get_region_display()})"
+        return f"{self.category_type.category_type} - {self.vehicle_category}"
 
-    def get_image_url(self):
-        if self.image_upload and self.image_upload.image:
-            return self.image_upload.image.url
-        return '/static/images/car-placeholder.jpg'
 
     # Compatibility methods to match Car model interface
     @property
@@ -179,78 +156,197 @@ class CarCategory(models.Model):
         verbose_name_plural = 'Car Categories (Legacy)'
 
 
-class Car(models.Model):
-    TRANSMISSION_CHOICES = [
-        ('A', 'Automatic'),
-        ('M', 'Manual'),
-    ]
+class VehicleFuel(AuditModelMixin):
+    YES_NO_CHOICES = (
+        (True, 'Yes'),
+        (False, 'No'),
+    )
+    fuel_type = models.CharField(max_length=100)
+    is_electric = models.BooleanField(default=False, choices=YES_NO_CHOICES)
+    fuel_unit = models.CharField(max_length=50, default='Liter')
+    fuel_unit_price = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
+    is_default = models.BooleanField(default=False, choices=YES_NO_CHOICES)
+    fuel_notes = models.TextField(blank=True, null=True)
 
+    class Meta:
+        ordering = ['fuel_type']
+        managed = False
+        db_table = 'app_vehiclefuel'
+    def __str__(self):
+        return self.fuel_type
+
+
+class VehicleMake(AuditModelMixin):
     name = models.CharField(max_length=100)
-    make = models.CharField(max_length=50)
-    model = models.CharField(max_length=50)
-    year = models.PositiveIntegerField()
-    category = models.ForeignKey(CarCategory, on_delete=models.CASCADE)
-    vehicle_category = models.ForeignKey(VehicleCategory,
-                                         on_delete=models.SET_NULL,
-                                         null=True,
-                                         blank=True,
-                                         related_name='legacy_cars')
-    seats = models.PositiveIntegerField()
-    bags = models.PositiveIntegerField()
-    doors = models.PositiveIntegerField()
-    transmission = models.CharField(max_length=1, choices=TRANSMISSION_CHOICES)
-    air_conditioning = models.BooleanField(default=True)
-    image_url = models.URLField()
-    daily_rate = models.DecimalField(max_digits=8, decimal_places=2)
-    is_available = models.BooleanField(default=True)  # 添加 is_available 字段
-    locations = models.ManyToManyField(Location, related_name='available_cars')
-
-    # Comparison pricing fields
-    comparison_provider1_name = models.CharField(max_length=50, blank=True)
-    comparison_provider1_rate = models.DecimalField(max_digits=8,
-                                                    decimal_places=2,
-                                                    null=True,
-                                                    blank=True)
-    comparison_provider2_name = models.CharField(max_length=50, blank=True)
-    comparison_provider2_rate = models.DecimalField(max_digits=8,
-                                                    decimal_places=2,
-                                                    null=True,
-                                                    blank=True)
-
-    def __str__(self):
-        return f"{self.year} {self.make} {self.model}"
-
-    def get_display_name(self):
-        return f"{self.make} {self.model}"
-
-    def get_image_url(self):
-        """
-        Return the image URL for this car
-        Added for compatibility with VehicleCategory model
-        """
-        return self.image_url
-
-    def get_region_display(self):
-        """
-        Return a default region display for compatibility with VehicleCategory model
-        """
-        # Return the first location name if available, otherwise a default
-        if self.locations.exists():
-            return self.locations.first().name
-        return "General"
 
     class Meta:
-        db_table = 'cars_car'
-
-
-class CarFeature(models.Model):
-    car = models.ForeignKey(Car,
-                            on_delete=models.CASCADE,
-                            related_name='features')
-    feature = models.CharField(max_length=100)
-
+        ordering = ['name']
+        managed = False
+        db_table = 'app_vehiclemake'
     def __str__(self):
-        return self.feature
+        return self.name
+
+class VehicleModel(AuditModelMixin):
+    make = models.ForeignKey(VehicleMake, on_delete=models.CASCADE, related_name='models')
+    model_name = models.CharField(max_length=100)
+    fuel_capacity = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True, default=0)
 
     class Meta:
-        db_table = 'cars_carfeature'
+        ordering = ['model_name']
+        managed = False
+        db_table = 'app_vehiclemodel'   
+    def __str__(self):
+        return self.model_name
+# System Settings Models
+class Country(AuditModelMixin):
+    name = models.CharField(max_length=100, default='Australia')
+    sales_tax_name = models.CharField(max_length=100, blank=True, null=True)
+    sales_tax_rate = models.DecimalField(max_digits=5, decimal_places=2, default=0)
+    sales_tax_start_date = models.DateField(blank=True, null=True)
+    document_culture = models.CharField(max_length=10, default='en-AU')
+    system_culture = models.CharField(max_length=10, default='en-AU')
+    currency = models.CharField(max_length=10, default='AUD')
+    currency_symbol = models.CharField(max_length=10, default='$')
+    is_default = models.BooleanField(default=False)
+
+    class Meta:
+        ordering = ['name']
+        verbose_name_plural = "Countries"
+        managed = False
+    def __str__(self):
+        return self.name
+
+class StateProvince(AuditModelMixin):
+    country = models.ForeignKey(Country, on_delete=models.CASCADE, related_name='states')
+    name = models.CharField(max_length=100)
+    code = models.CharField(max_length=10)
+    state_tax_name = models.CharField(max_length=100, blank=True, null=True)
+    state_tax_rate = models.DecimalField(max_digits=5, decimal_places=2, default=0)
+    state_tax_start_date = models.DateField(blank=True, null=True)
+
+    class Meta:
+        ordering = ['country', 'name']
+        verbose_name_plural = "States/Provinces"
+        managed = False
+    def __str__(self):
+        return self.name
+
+class City(AuditModelMixin):
+    state = models.ForeignKey(StateProvince, on_delete=models.CASCADE, related_name='cities')
+    name = models.CharField(max_length=100)
+
+    class Meta:
+        ordering = ['state', 'name']
+        verbose_name_plural = "Cities"
+        managed = False
+    def __str__(self):
+        return self.name
+    
+class Airport(AuditModelMixin):
+    city = models.ForeignKey(City, on_delete=models.CASCADE, related_name='airports')
+    name = models.CharField(max_length=100)
+    code = models.CharField(max_length=3)
+
+    class Meta:
+        ordering = ['city', 'name']
+        managed = False
+    def __str__(self):
+        return self.name
+
+class MasterLocation(AuditModelMixin):
+    master_location_name = models.CharField(max_length=100)
+
+    class Meta:
+        ordering = ['master_location_name']
+        managed = False
+    def __str__(self):
+        return self.master_location_name
+    
+class Location(AuditModelMixin):
+    location_name = models.CharField(max_length=100)
+    code = models.CharField(max_length=10, default='')
+    renting_location = models.BooleanField(default=True)
+    prefix = models.CharField(max_length=3, blank=True, null=True)
+    company_name = models.CharField(max_length=100, blank=True, null=True)
+    address = models.CharField(max_length=255)
+    suburb = models.CharField(max_length=100, blank=True, null=True)
+    city = models.ForeignKey(City, on_delete=models.CASCADE, related_name='locations')
+    state = models.ForeignKey(StateProvince, on_delete=models.CASCADE, related_name='locations')
+    country = models.ForeignKey(Country, on_delete=models.CASCADE, related_name='locations')
+    master_location = models.ForeignKey(MasterLocation, on_delete=models.SET_NULL, null=True, blank=True, related_name='locations')
+    airport = models.ForeignKey(Airport, on_delete=models.SET_NULL, null=True, blank=True, related_name='locations')
+    postcode = models.CharField(max_length=10, blank=True, null=True)
+    phone = models.CharField(max_length=20, blank=True, null=True)
+    fax = models.CharField(max_length=20, blank=True, null=True)
+    free_phone = models.CharField(max_length=20, blank=True, null=True)
+    mobile = models.CharField(max_length=20, blank=True, null=True)
+    email = models.EmailField(blank=True, null=True)
+    gmt_difference = models.CharField(max_length=10, blank=True, null=True)
+    registration_number = models.CharField(max_length=50, blank=True, null=True)
+    licence_no = models.CharField(max_length=50, blank=True, null=True)
+    currency = models.CharField(max_length=3, blank=True, null=True)
+    currency_symbol = models.CharField(max_length=1, blank=True, null=True)
+    ip = models.GenericIPAddressField(blank=True, null=True)
+    payment_details = models.TextField(blank=True, null=True)
+    map_url = models.URLField(blank=True, null=True)
+    latitude = models.DecimalField(max_digits=9, decimal_places=6, blank=True, null=True)
+    longitude = models.DecimalField(max_digits=9, decimal_places=6, blank=True, null=True)
+
+    class Meta:
+        ordering = ['location_name']
+        managed = False 
+    def __str__(self):
+        return self.location_name
+
+
+class Car(AuditModelMixin):
+    # 其他必要字段
+    is_available = models.BooleanField(default=True, verbose_name=('Is Available'))
+    available_for_booking = models.BooleanField(default=True, verbose_name=('Available for Booking'))
+    is_virtual = models.BooleanField(default=False, verbose_name=('Is Virtual'))
+    is_utilize = models.BooleanField(default=True, verbose_name=('Is Utilize'))
+    
+    # 车辆基本信息
+    registration_no = models.CharField(max_length=20, blank=True, null=True, verbose_name=('Registration No'))
+    model = models.ForeignKey(VehicleModel, on_delete=models.CASCADE, null=True, blank=True, related_name='cars', verbose_name=('Model'))
+    category = models.ForeignKey(VehicleCategory, on_delete=models.CASCADE, null=True, blank=True, related_name='cars', verbose_name=('Category'))
+    vehicle_type = models.ForeignKey(VehicleType, on_delete=models.SET_NULL, null=True, blank=True, related_name='cars', verbose_name=('Vehicle Type'))
+    year = models.PositiveIntegerField(blank=True, null=True, verbose_name=('Year'))
+    make = models.ForeignKey(VehicleMake, on_delete=models.CASCADE, null=True, blank=True, related_name='cars', verbose_name=('Make'))
+    # 位置信息
+    owning_location = models.ForeignKey(Location, on_delete=models.SET_NULL, null=True, blank=True, related_name='owned_cars', verbose_name=('Owning Location'))
+    currently_located = models.ForeignKey(Location, on_delete=models.SET_NULL, null=True, blank=True, related_name='current_cars', verbose_name=('Currently Located'))
+    fleet_no = models.CharField(max_length=20, blank=True, null=True, verbose_name=('Fleet No'))
+    colour = models.CharField(max_length=50, blank=True, null=True, verbose_name=('Colour'))
+    transmission = models.CharField(max_length=20, blank=True, null=True, verbose_name=('Transmission'))
+    fuel_type = models.ForeignKey(VehicleFuel, on_delete=models.SET_NULL, null=True, blank=True, related_name='cars', verbose_name=('Fuel Type'))
+    fuel_capacity = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True, default=0, verbose_name=('Fuel Capacity'))
+    current_kms = models.IntegerField(blank=True, null=True, default=0, verbose_name=('Current KMs'))
+
+    date_off_fleet = models.DateField(blank=True, null=True, verbose_name= ('Date Off Fleet'))
+    rego_expiration_date = models.DateField(blank=True, null=True, verbose_name=('Registration Expiration Date'))
+    rwc_cof_date = models.DateField(blank=True, null=True, verbose_name=('RWC/COF Date'))
+    electrical_date = models.DateField(blank=True, null=True, verbose_name=('Electrical Date'))
+    
+    # 其他信息
+    grade = models.CharField(max_length=20, blank=True, null=True, verbose_name=('Grade'))
+    radio_code = models.CharField(max_length=20, blank=True, null=True, verbose_name=('Radio Code'))
+    pm_schedule_category = models.CharField(max_length=100, blank=True, null=True, verbose_name=('PM Schedule Category'))
+    pm_base_date = models.DateField(blank=True, null=True, verbose_name=('PM Base Date'))
+    pm_base_mileage = models.IntegerField(blank=True, null=True, verbose_name=('PM Base Mileage'))
+    road_user_expiry_kms = models.IntegerField(blank=True, null=True, verbose_name=('Road User Expiry KMs'))
+    emission_rate = models.CharField(max_length=50, blank=True, null=True, verbose_name=('Emission Rate'))
+    notes = models.TextField(blank=True, null=True, verbose_name=('Notes'))
+    
+    
+        
+    class Meta:
+        ordering = ['id', 'registration_no']
+        verbose_name = ('Car')
+        verbose_name_plural = ('Cars')
+        managed = False
+    def __str__(self):
+        if self.registration_no:
+            return f"{self.registration_no} ({self.model})"
+        return f"Car #{self.id}"
+    

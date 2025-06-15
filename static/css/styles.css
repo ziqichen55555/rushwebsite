@@ -99,7 +99,7 @@ body {
 
 /* Hero Section */
 .hero-section {
-    max-width: 1200px;      /* 你可以根据实际需要调整宽度 */
+    max-width: 1000px;      /* 你可以根据实际需要调整宽度 */
     margin: 32px auto 0 auto; /* 顶部留白，两侧自动居中 */
     border-radius: 16px;    /* 可选：让卡片有圆角 */
     overflow: hidden;       /* 防止圆角溢出 */
@@ -146,7 +146,7 @@ body {
 }
 
 .slogan-container {
-    margin-bottom: 2rem !important;
+    margin-bottom: 8rem !important;
 }
 
 .slogan-text {
@@ -489,13 +489,8 @@ body {
     }
     
     .slogan-container {
-        margin-bottom: 1.5rem !important;
+        margin-bottom: 3rem !important;
     }
-    
-    .slogan-text {
-        font-size: 1.2rem;
-    }
-}
 
 @media (max-width: 768px) {
     .hero-section {
@@ -503,6 +498,7 @@ body {
         padding: 1rem;
     }
     
+
     .transparent-card {
         width: 100%;
         margin: 0;
@@ -869,4 +865,5 @@ body {
     font-weight: bold;
     z-index: 1050;
     font-size: 12px;
+}
 }
