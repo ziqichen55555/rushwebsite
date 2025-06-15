@@ -40,6 +40,7 @@ def about_us(request):
 def subscription(request):
     # 获取所有订阅车辆数据
     subscriptions = CarSubscription.objects.all()
+    models = VehicleModel.objects.all()
     # 获取所有位置
     locations = Location.objects.all()
     # 获取所有车辆类别
@@ -68,6 +69,7 @@ def subscription(request):
 
     context = {
         'subscriptions': subscriptions,
+        'models': models,
         'locations': locations,
         'car_categories': car_categories,
         'fuel_types': fuel_types,

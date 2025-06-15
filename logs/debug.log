@@ -47841,3 +47841,404 @@ WARNING 2025-06-15 08:47:53,457 environment [ENV] 未识别的环境类型: deve
 WARNING 2025-06-15 08:47:53,457 environment [ENV] 未识别的环境类型: development  # development, testing, production, 将使用默认环境
 WARNING 2025-06-15 08:47:56,943 base Session data corrupted
 INFO 2025-06-15 08:47:57,217 basehttp "GET /subscription/ HTTP/1.1" 200 17159
+WARNING 2025-06-15 08:54:41,923 base Session data corrupted
+INFO 2025-06-15 08:54:42,234 basehttp "GET /subscription/ HTTP/1.1" 200 17159
+INFO 2025-06-15 08:55:02,306 autoreload /Users/chrischan/rushwebsite/pages/views.py changed, reloading.
+INFO 2025-06-15 08:55:02,822 autoreload Watching for file changes with StatReloader
+INFO 2025-06-15 08:55:03,191 _util message='Request to Stripe api' method=get url=https://api.stripe.com/v1/account
+INFO 2025-06-15 08:55:03,397 _util message='Stripe API response' path=https://api.stripe.com/v1/account response_code=401
+INFO 2025-06-15 08:55:03,397 _util error_code=None error_message='Invalid API Key provided: sk_test_***********_key' error_param=None error_type=invalid_request_error message='Stripe v1 API error received'
+WARNING 2025-06-15 08:55:05,887 environment [ENV] 未识别的环境类型: development  # development, testing, production, 将使用默认环境
+WARNING 2025-06-15 08:55:05,887 environment [ENV] 未识别的环境类型: development  # development, testing, production, 将使用默认环境
+WARNING 2025-06-15 08:55:36,067 base Session data corrupted
+INFO 2025-06-15 08:55:36,338 basehttp "GET /subscription/ HTTP/1.1" 200 17159
+WARNING 2025-06-15 09:03:35,419 base Session data corrupted
+INFO 2025-06-15 09:03:35,683 basehttp "GET /subscription/ HTTP/1.1" 200 17159
+WARNING 2025-06-15 09:04:28,612 base Session data corrupted
+INFO 2025-06-15 09:04:28,876 basehttp "GET /subscription/ HTTP/1.1" 200 17159
+INFO 2025-06-15 09:04:39,840 autoreload /Users/chrischan/rushwebsite/pages/views.py changed, reloading.
+INFO 2025-06-15 09:04:40,247 autoreload Watching for file changes with StatReloader
+INFO 2025-06-15 09:04:40,606 _util message='Request to Stripe api' method=get url=https://api.stripe.com/v1/account
+INFO 2025-06-15 09:04:40,805 _util message='Stripe API response' path=https://api.stripe.com/v1/account response_code=401
+INFO 2025-06-15 09:04:40,805 _util error_code=None error_message='Invalid API Key provided: sk_test_***********_key' error_param=None error_type=invalid_request_error message='Stripe v1 API error received'
+INFO 2025-06-15 09:04:41,955 autoreload /Users/chrischan/rushwebsite/pages/views.py changed, reloading.
+INFO 2025-06-15 09:04:42,235 autoreload Watching for file changes with StatReloader
+INFO 2025-06-15 09:04:42,524 _util message='Request to Stripe api' method=get url=https://api.stripe.com/v1/account
+INFO 2025-06-15 09:04:42,714 _util message='Stripe API response' path=https://api.stripe.com/v1/account response_code=401
+INFO 2025-06-15 09:04:42,714 _util error_code=None error_message='Invalid API Key provided: sk_test_***********_key' error_param=None error_type=invalid_request_error message='Stripe v1 API error received'
+WARNING 2025-06-15 09:04:45,127 environment [ENV] 未识别的环境类型: development  # development, testing, production, 将使用默认环境
+WARNING 2025-06-15 09:04:45,127 environment [ENV] 未识别的环境类型: development  # development, testing, production, 将使用默认环境
+WARNING 2025-06-15 09:04:47,786 base Session data corrupted
+INFO 2025-06-15 09:04:48,045 basehttp "GET /subscription/ HTTP/1.1" 200 17159
+WARNING 2025-06-15 09:27:29,386 base Session data corrupted
+INFO 2025-06-15 09:27:29,649 basehttp "GET /subscription/ HTTP/1.1" 200 17159
+INFO 2025-06-15 09:28:50,467 autoreload /Users/chrischan/rushwebsite/pages/views.py changed, reloading.
+INFO 2025-06-15 09:28:50,996 autoreload Watching for file changes with StatReloader
+INFO 2025-06-15 09:28:51,367 _util message='Request to Stripe api' method=get url=https://api.stripe.com/v1/account
+INFO 2025-06-15 09:28:51,561 _util message='Stripe API response' path=https://api.stripe.com/v1/account response_code=401
+INFO 2025-06-15 09:28:51,561 _util error_code=None error_message='Invalid API Key provided: sk_test_***********_key' error_param=None error_type=invalid_request_error message='Stripe v1 API error received'
+WARNING 2025-06-15 09:28:54,096 environment [ENV] 未识别的环境类型: development  # development, testing, production, 将使用默认环境
+WARNING 2025-06-15 09:28:54,096 environment [ENV] 未识别的环境类型: development  # development, testing, production, 将使用默认环境
+WARNING 2025-06-15 09:29:10,744 base Session data corrupted
+INFO 2025-06-15 09:29:11,036 basehttp "GET /subscription/ HTTP/1.1" 200 17159
+WARNING 2025-06-15 09:29:22,318 base Session data corrupted
+INFO 2025-06-15 09:29:22,627 basehttp "GET /subscription/ HTTP/1.1" 200 17159
+WARNING 2025-06-15 09:29:28,568 base Session data corrupted
+INFO 2025-06-15 09:29:29,095 basehttp "GET / HTTP/1.1" 200 35620
+WARNING 2025-06-15 09:29:33,987 base Session data corrupted
+INFO 2025-06-15 09:29:34,249 basehttp "GET /subscription/ HTTP/1.1" 200 17159
+INFO 2025-06-15 09:32:02,746 autoreload /Users/chrischan/rushwebsite/pages/views.py changed, reloading.
+INFO 2025-06-15 09:32:03,235 autoreload Watching for file changes with StatReloader
+INFO 2025-06-15 09:32:03,592 _util message='Request to Stripe api' method=get url=https://api.stripe.com/v1/account
+INFO 2025-06-15 09:32:03,794 _util message='Stripe API response' path=https://api.stripe.com/v1/account response_code=401
+INFO 2025-06-15 09:32:03,794 _util error_code=None error_message='Invalid API Key provided: sk_test_***********_key' error_param=None error_type=invalid_request_error message='Stripe v1 API error received'
+INFO 2025-06-15 09:32:05,962 autoreload /Users/chrischan/rushwebsite/pages/views.py changed, reloading.
+INFO 2025-06-15 09:32:06,468 autoreload Watching for file changes with StatReloader
+INFO 2025-06-15 09:32:06,755 _util message='Request to Stripe api' method=get url=https://api.stripe.com/v1/account
+INFO 2025-06-15 09:32:06,944 _util message='Stripe API response' path=https://api.stripe.com/v1/account response_code=401
+INFO 2025-06-15 09:32:06,944 _util error_code=None error_message='Invalid API Key provided: sk_test_***********_key' error_param=None error_type=invalid_request_error message='Stripe v1 API error received'
+WARNING 2025-06-15 09:32:09,512 environment [ENV] 未识别的环境类型: development  # development, testing, production, 将使用默认环境
+WARNING 2025-06-15 09:32:09,512 environment [ENV] 未识别的环境类型: development  # development, testing, production, 将使用默认环境
+WARNING 2025-06-15 09:32:12,813 base Session data corrupted
+INFO 2025-06-15 09:32:13,383 basehttp "GET /subscription/ HTTP/1.1" 200 17160
+WARNING 2025-06-15 09:34:04,430 base Session data corrupted
+INFO 2025-06-15 09:34:05,050 basehttp "GET /subscription/ HTTP/1.1" 200 22588
+WARNING 2025-06-15 09:34:10,883 base Session data corrupted
+INFO 2025-06-15 09:34:11,413 basehttp "GET /subscription/ HTTP/1.1" 200 22588
+WARNING 2025-06-15 09:35:03,435 base Session data corrupted
+INFO 2025-06-15 09:35:03,964 basehttp "GET / HTTP/1.1" 200 35620
+WARNING 2025-06-15 09:36:38,237 base Session data corrupted
+INFO 2025-06-15 09:36:38,767 basehttp "GET /subscription/ HTTP/1.1" 200 22588
+WARNING 2025-06-15 09:36:52,526 base Session data corrupted
+INFO 2025-06-15 09:36:52,531 basehttp "GET /about-us/ HTTP/1.1" 200 16641
+WARNING 2025-06-15 09:42:37,238 base Session data corrupted
+ERROR 2025-06-15 09:42:53,541 log Internal Server Error: /subscription/
+Traceback (most recent call last):
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/template/base.py", line 510, in parse
+    compile_func = self.tags[command]
+                   ~~~~~~~~~^^^^^^^^^
+KeyError: 'static'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Users/chrischan/rushwebsite/pages/views.py", line 83, in subscription
+    return render(request, 'pages/subscription.html', context)
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/template/loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/template/backends/django.py", line 107, in render
+    return self.template.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/template/base.py", line 171, in render
+    return self._render(context)
+           ~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/template/base.py", line 163, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/template/base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/template/base.py", line 977, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/template/loader_tags.py", line 159, in render
+    return compiled_parent._render(context)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/template/base.py", line 163, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/template/base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/template/base.py", line 977, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/template/loader_tags.py", line 65, in render
+    result = block.nodelist.render(context)
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/template/base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/template/base.py", line 977, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/template/loader_tags.py", line 199, in render
+    template = context.template.engine.select_template(template_name)
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/template/engine.py", line 208, in select_template
+    return self.get_template(template_name)
+           ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/template/engine.py", line 177, in get_template
+    template, origin = self.find_template(template_name)
+                       ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/template/engine.py", line 159, in find_template
+    template = loader.get_template(name, skip=skip)
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/template/loaders/cached.py", line 57, in get_template
+    template = super().get_template(template_name, skip)
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/template/loaders/base.py", line 28, in get_template
+    return Template(
+        contents,
+    ...<2 lines>...
+        self.engine,
+    )
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/template/base.py", line 154, in __init__
+    self.nodelist = self.compile_nodelist()
+                    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/template/base.py", line 196, in compile_nodelist
+    nodelist = parser.parse()
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/template/base.py", line 512, in parse
+    self.invalid_block_tag(token, command, parse_until)
+    ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/template/base.py", line 577, in invalid_block_tag
+    raise self.error(
+    ...<3 lines>...
+    )
+django.template.exceptions.TemplateSyntaxError: Invalid block tag on line 5: 'static'. Did you forget to register or load this tag?
+ERROR 2025-06-15 09:42:53,549 basehttp "GET /subscription/ HTTP/1.1" 500 215063
+WARNING 2025-06-15 09:43:10,962 base Session data corrupted
+ERROR 2025-06-15 09:43:28,555 log Internal Server Error: /subscription/
+Traceback (most recent call last):
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/template/base.py", line 510, in parse
+    compile_func = self.tags[command]
+                   ~~~~~~~~~^^^^^^^^^
+KeyError: 'static'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Users/chrischan/rushwebsite/pages/views.py", line 83, in subscription
+    return render(request, 'pages/subscription.html', context)
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/template/loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/template/backends/django.py", line 107, in render
+    return self.template.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/template/base.py", line 171, in render
+    return self._render(context)
+           ~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/template/base.py", line 163, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/template/base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/template/base.py", line 977, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/template/loader_tags.py", line 159, in render
+    return compiled_parent._render(context)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/template/base.py", line 163, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/template/base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/template/base.py", line 977, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/template/loader_tags.py", line 65, in render
+    result = block.nodelist.render(context)
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/template/base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/template/base.py", line 977, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/template/loader_tags.py", line 199, in render
+    template = context.template.engine.select_template(template_name)
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/template/engine.py", line 208, in select_template
+    return self.get_template(template_name)
+           ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/template/engine.py", line 177, in get_template
+    template, origin = self.find_template(template_name)
+                       ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/template/engine.py", line 159, in find_template
+    template = loader.get_template(name, skip=skip)
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/template/loaders/cached.py", line 57, in get_template
+    template = super().get_template(template_name, skip)
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/template/loaders/base.py", line 28, in get_template
+    return Template(
+        contents,
+    ...<2 lines>...
+        self.engine,
+    )
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/template/base.py", line 154, in __init__
+    self.nodelist = self.compile_nodelist()
+                    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/template/base.py", line 196, in compile_nodelist
+    nodelist = parser.parse()
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/template/base.py", line 512, in parse
+    self.invalid_block_tag(token, command, parse_until)
+    ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/chrischan/rushwebsite/venv/lib/python3.13/site-packages/django/template/base.py", line 577, in invalid_block_tag
+    raise self.error(
+    ...<3 lines>...
+    )
+django.template.exceptions.TemplateSyntaxError: Invalid block tag on line 5: 'static'. Did you forget to register or load this tag?
+ERROR 2025-06-15 09:43:28,558 basehttp "GET /subscription/ HTTP/1.1" 500 214475
+WARNING 2025-06-15 09:50:34,963 base Session data corrupted
+INFO 2025-06-15 09:50:35,558 basehttp "GET /subscription/ HTTP/1.1" 200 19601
+WARNING 2025-06-15 09:50:42,762 base Session data corrupted
+INFO 2025-06-15 09:50:43,330 basehttp "GET / HTTP/1.1" 200 32633
+WARNING 2025-06-15 09:50:51,769 base Session data corrupted
+INFO 2025-06-15 09:50:52,387 basehttp "GET /subscription/ HTTP/1.1" 200 19601
+INFO 2025-06-15 09:51:21,410 basehttp - Broken pipe from ('127.0.0.1', 51637)
+WARNING 2025-06-15 09:52:27,741 base Session data corrupted
+INFO 2025-06-15 09:52:28,252 basehttp "GET /subscription/ HTTP/1.1" 200 19569
+WARNING 2025-06-15 09:53:27,317 base Session data corrupted
+INFO 2025-06-15 09:53:27,837 basehttp "GET /subscription/ HTTP/1.1" 200 19531
+WARNING 2025-06-15 09:54:37,280 base Session data corrupted
+INFO 2025-06-15 09:54:37,810 basehttp "GET /subscription/ HTTP/1.1" 200 19557
+WARNING 2025-06-15 09:57:52,344 base Session data corrupted
+INFO 2025-06-15 09:57:52,963 basehttp "GET /subscription/ HTTP/1.1" 200 19633
+WARNING 2025-06-15 09:57:58,808 base Session data corrupted
+INFO 2025-06-15 09:57:59,327 basehttp "GET /subscription/ HTTP/1.1" 200 19633
+WARNING 2025-06-15 09:58:53,329 base Session data corrupted
+INFO 2025-06-15 09:58:53,890 basehttp "GET /subscription/ HTTP/1.1" 200 19605
+WARNING 2025-06-15 09:58:59,110 base Session data corrupted
+INFO 2025-06-15 09:58:59,681 basehttp "GET /subscription/ HTTP/1.1" 200 19605
+WARNING 2025-06-15 09:59:21,026 base Session data corrupted
+INFO 2025-06-15 09:59:21,545 basehttp "GET /subscription/ HTTP/1.1" 200 19605
+WARNING 2025-06-15 09:59:46,060 base Session data corrupted
+INFO 2025-06-15 09:59:46,628 basehttp "GET /subscription/ HTTP/1.1" 200 20801
+WARNING 2025-06-15 09:59:47,810 base Session data corrupted
+INFO 2025-06-15 09:59:48,934 basehttp "GET /subscription/ HTTP/1.1" 200 20801
+WARNING 2025-06-15 10:00:52,568 base Session data corrupted
+INFO 2025-06-15 10:00:53,188 basehttp "GET /subscription/ HTTP/1.1" 200 20926
+WARNING 2025-06-15 10:00:57,999 base Session data corrupted
+INFO 2025-06-15 10:00:58,613 basehttp "GET /subscription/ HTTP/1.1" 200 20926
+WARNING 2025-06-15 10:01:27,804 base Session data corrupted
+INFO 2025-06-15 10:01:28,321 basehttp "GET /subscription/ HTTP/1.1" 200 20926
+WARNING 2025-06-15 10:01:43,015 base Session data corrupted
+INFO 2025-06-15 10:01:43,573 basehttp "GET /subscription/ HTTP/1.1" 200 20928
+WARNING 2025-06-15 10:01:47,717 base Session data corrupted
+INFO 2025-06-15 10:01:48,298 basehttp "GET /subscription/ HTTP/1.1" 200 20928
+WARNING 2025-06-15 10:02:18,281 base Session data corrupted
+INFO 2025-06-15 10:02:18,900 basehttp "GET /subscription/ HTTP/1.1" 200 20951
+WARNING 2025-06-15 10:02:38,091 base Session data corrupted
+INFO 2025-06-15 10:02:39,169 basehttp "GET /subscription/ HTTP/1.1" 200 20949
+WARNING 2025-06-15 10:04:23,947 base Session data corrupted
+INFO 2025-06-15 10:04:24,546 basehttp "GET /subscription/ HTTP/1.1" 200 20949
+WARNING 2025-06-15 10:04:29,655 base Session data corrupted
+INFO 2025-06-15 10:04:30,183 basehttp "GET /subscription/ HTTP/1.1" 200 20949
+WARNING 2025-06-15 10:05:13,864 base Session data corrupted
+INFO 2025-06-15 10:05:14,518 basehttp "GET /subscription/ HTTP/1.1" 200 20949
+WARNING 2025-06-15 10:06:27,038 base Session data corrupted
+INFO 2025-06-15 10:06:27,585 basehttp "GET /subscription/ HTTP/1.1" 200 20949
+WARNING 2025-06-15 10:06:32,035 base Session data corrupted
+INFO 2025-06-15 10:06:32,601 basehttp "GET /subscription/ HTTP/1.1" 200 20949
+WARNING 2025-06-15 10:13:40,757 base Session data corrupted
+INFO 2025-06-15 10:13:41,292 basehttp "GET /subscription/ HTTP/1.1" 200 20959
+WARNING 2025-06-15 10:14:24,367 base Session data corrupted
+INFO 2025-06-15 10:14:24,886 basehttp "GET /subscription/ HTTP/1.1" 200 20997
+WARNING 2025-06-15 10:15:51,334 base Session data corrupted
+INFO 2025-06-15 10:15:51,863 basehttp "GET /subscription/ HTTP/1.1" 200 20997
+WARNING 2025-06-15 10:16:18,977 base Session data corrupted
+INFO 2025-06-15 10:16:19,515 basehttp "GET /cars/ HTTP/1.1" 200 16972
+WARNING 2025-06-15 10:19:37,138 base Session data corrupted
+INFO 2025-06-15 10:19:37,656 basehttp "GET /subscription/ HTTP/1.1" 200 21223
+WARNING 2025-06-15 10:19:56,608 base Session data corrupted
+INFO 2025-06-15 10:19:57,133 basehttp "GET /subscription/ HTTP/1.1" 200 21225
+WARNING 2025-06-15 10:20:28,550 base Session data corrupted
+INFO 2025-06-15 10:20:29,078 basehttp "GET /subscription/ HTTP/1.1" 200 21213
+INFO 2025-06-15 10:20:29,080 basehttp - Broken pipe from ('127.0.0.1', 55494)
+WARNING 2025-06-15 10:20:29,441 base Session data corrupted
+INFO 2025-06-15 10:20:29,953 basehttp "GET /subscription/ HTTP/1.1" 200 21213
+WARNING 2025-06-15 10:21:03,337 base Session data corrupted
+INFO 2025-06-15 10:21:03,871 basehttp "GET /subscription/ HTTP/1.1" 200 21257
+WARNING 2025-06-15 10:21:50,990 base Session data corrupted
+INFO 2025-06-15 10:21:51,516 basehttp "GET /subscription/ HTTP/1.1" 200 21327
+WARNING 2025-06-15 10:22:30,945 base Session data corrupted
+INFO 2025-06-15 10:22:31,469 basehttp "GET /subscription/ HTTP/1.1" 200 21382
+WARNING 2025-06-15 10:24:46,089 base Session data corrupted
+INFO 2025-06-15 10:24:46,621 basehttp "GET /subscription/ HTTP/1.1" 200 21382
+WARNING 2025-06-15 10:25:44,733 base Session data corrupted
+INFO 2025-06-15 10:25:45,263 basehttp "GET /subscription/ HTTP/1.1" 200 21396
+WARNING 2025-06-15 10:26:44,786 base Session data corrupted
+INFO 2025-06-15 10:26:45,319 basehttp "GET /subscription/ HTTP/1.1" 200 21420
+WARNING 2025-06-15 10:27:14,729 base Session data corrupted
+INFO 2025-06-15 10:27:15,259 basehttp "GET /subscription/ HTTP/1.1" 200 21432
+WARNING 2025-06-15 10:27:40,522 base Session data corrupted
+INFO 2025-06-15 10:27:41,054 basehttp "GET /subscription/ HTTP/1.1" 200 21432
+WARNING 2025-06-15 10:29:23,150 base Session data corrupted
+INFO 2025-06-15 10:29:23,684 basehttp "GET /subscription/ HTTP/1.1" 200 21432
+WARNING 2025-06-15 10:29:46,845 base Session data corrupted
+INFO 2025-06-15 10:29:47,377 basehttp "GET /subscription/ HTTP/1.1" 200 21432
+WARNING 2025-06-15 10:30:11,829 base Session data corrupted
+INFO 2025-06-15 10:30:12,351 basehttp "GET /subscription/ HTTP/1.1" 200 21432
+WARNING 2025-06-15 10:30:45,699 base Session data corrupted
+INFO 2025-06-15 10:30:46,229 basehttp "GET /subscription/ HTTP/1.1" 200 21432
+WARNING 2025-06-15 10:31:44,987 base Session data corrupted
+INFO 2025-06-15 10:31:45,517 basehttp "GET /subscription/ HTTP/1.1" 200 21408
+WARNING 2025-06-15 10:31:56,089 base Session data corrupted
+INFO 2025-06-15 10:31:56,618 basehttp "GET /subscription/ HTTP/1.1" 200 21408
+WARNING 2025-06-15 10:32:47,959 base Session data corrupted
+INFO 2025-06-15 10:32:48,481 basehttp "GET /subscription/ HTTP/1.1" 200 21432
+WARNING 2025-06-15 10:33:23,370 base Session data corrupted
+INFO 2025-06-15 10:33:23,885 basehttp "GET /subscription/ HTTP/1.1" 200 21456
+WARNING 2025-06-15 10:33:50,498 base Session data corrupted
+INFO 2025-06-15 10:33:51,022 basehttp "GET /subscription/ HTTP/1.1" 200 21432
+WARNING 2025-06-15 10:34:08,936 base Session data corrupted
+INFO 2025-06-15 10:34:09,457 basehttp "GET /subscription/ HTTP/1.1" 200 21432
+WARNING 2025-06-15 10:41:33,952 base Session data corrupted
+INFO 2025-06-15 10:41:34,468 basehttp "GET /subscription/ HTTP/1.1" 200 21468
+WARNING 2025-06-15 10:41:49,311 base Session data corrupted
+INFO 2025-06-15 10:41:49,833 basehttp "GET /subscription/ HTTP/1.1" 200 21468
+WARNING 2025-06-15 10:42:26,515 base Session data corrupted
+INFO 2025-06-15 10:42:27,046 basehttp "GET /subscription/ HTTP/1.1" 200 21468
+WARNING 2025-06-15 10:42:45,046 base Session data corrupted
+INFO 2025-06-15 10:42:46,072 basehttp "GET /subscription/ HTTP/1.1" 200 21466
+WARNING 2025-06-15 10:43:09,265 base Session data corrupted
+INFO 2025-06-15 10:43:09,884 basehttp "GET /subscription/ HTTP/1.1" 200 21456
+WARNING 2025-06-15 10:43:14,629 base Session data corrupted
+INFO 2025-06-15 10:43:15,207 basehttp "GET /subscription/ HTTP/1.1" 200 21456
+WARNING 2025-06-15 10:44:49,854 base Session data corrupted
+INFO 2025-06-15 10:44:50,385 basehttp "GET /subscription/ HTTP/1.1" 200 19980
+WARNING 2025-06-15 10:46:01,630 base Session data corrupted
+INFO 2025-06-15 10:46:02,150 basehttp "GET /subscription/ HTTP/1.1" 200 21204
+INFO 2025-06-15 10:46:02,150 basehttp - Broken pipe from ('127.0.0.1', 59265)
+WARNING 2025-06-15 10:46:02,313 base Session data corrupted
+INFO 2025-06-15 10:46:02,938 basehttp "GET /subscription/ HTTP/1.1" 200 21204
+WARNING 2025-06-15 10:46:30,188 base Session data corrupted
+INFO 2025-06-15 10:46:30,706 basehttp "GET /subscription/ HTTP/1.1" 200 21235
+WARNING 2025-06-15 10:46:40,303 base Session data corrupted
+INFO 2025-06-15 10:46:40,925 basehttp "GET /subscription/ HTTP/1.1" 200 21235
+WARNING 2025-06-15 10:46:51,165 base Session data corrupted
+INFO 2025-06-15 10:46:51,695 basehttp "GET /subscription/ HTTP/1.1" 200 21235
+WARNING 2025-06-15 10:47:09,905 base Session data corrupted
+INFO 2025-06-15 10:47:10,523 basehttp "GET /subscription/ HTTP/1.1" 200 21619
+WARNING 2025-06-15 10:47:58,239 base Session data corrupted
+INFO 2025-06-15 10:47:58,857 basehttp "GET /subscription/ HTTP/1.1" 200 21764
+WARNING 2025-06-15 10:49:59,482 base Session data corrupted
+INFO 2025-06-15 10:49:59,997 basehttp "GET /subscription/ HTTP/1.1" 200 21750
+WARNING 2025-06-15 10:50:08,755 base Session data corrupted
+INFO 2025-06-15 10:50:09,284 basehttp "GET /subscription/ HTTP/1.1" 200 21750
+WARNING 2025-06-15 10:50:41,688 base Session data corrupted
+INFO 2025-06-15 10:50:42,206 basehttp "GET /subscription/ HTTP/1.1" 200 21774
+WARNING 2025-06-15 10:50:48,160 base Session data corrupted
+INFO 2025-06-15 10:50:48,741 basehttp "GET /subscription/ HTTP/1.1" 200 21774
+WARNING 2025-06-15 10:59:32,966 base Session data corrupted
+INFO 2025-06-15 10:59:33,504 basehttp "GET /subscription/ HTTP/1.1" 200 22107
+WARNING 2025-06-15 10:59:58,122 base Session data corrupted
+INFO 2025-06-15 10:59:58,740 basehttp "GET /subscription/ HTTP/1.1" 200 22051
+WARNING 2025-06-15 11:00:16,479 base Session data corrupted
+INFO 2025-06-15 11:00:17,069 basehttp "GET /subscription/ HTTP/1.1" 200 22051
+WARNING 2025-06-15 11:00:37,490 base Session data corrupted
+INFO 2025-06-15 11:00:38,020 basehttp "GET /subscription/ HTTP/1.1" 200 22075
+WARNING 2025-06-15 11:08:51,640 base Session data corrupted
+INFO 2025-06-15 11:08:52,258 basehttp "GET /subscription/ HTTP/1.1" 200 22075
+WARNING 2025-06-15 11:09:04,772 base Session data corrupted
+INFO 2025-06-15 11:09:05,295 basehttp "GET /subscription/ HTTP/1.1" 200 22075

@@ -253,11 +253,13 @@
 
 
 {% block content %}
+{% include 'components/hero_section.html' %}
+
 <section class="car-search-section py-4 bg-light">
     <div class="container">
         <div class="row mb-3">
             <div class="col-12 text-center">
-                <h3 class="mb-2">Explore over {{ subscriptions_models_count }}+ models and find the car that suits your needs</h3>
+                <h3 class="mb-2">Explore over {{ models.count }}+ models and find the car that suits your needs</h3>
                 <div class="rating-display">
                     <i class="fas fa-star text-warning"></i>
                     <i class="fas fa-star text-warning"></i>
@@ -270,6 +272,8 @@
         </div>
     </div>
 </section>
+<!-- filter section -->
+
 
 <!-- Subscription Cars Section -->
 <section id="subscription-cars" class="py-5">
