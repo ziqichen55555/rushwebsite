@@ -272,8 +272,67 @@
         </div>
     </div>
 </section>
-<!-- filter section -->
 
+<!-- Filter Section -->
+<section class="container mb-10">
+  <form method="get" class="row g-4 align-items-end justify-content-center" id="filterForm">
+    <div class="col-md-2">
+      <label for="pickup_location" class="form-label">Location</label>
+      <select name="pickup_location" id="pickup_location" class="form-select">
+        <option value="">All</option>
+        {% for loc in locations %}
+          <option value="{{ loc.name }}" {% if loc.name == selected_location %}selected{% endif %}>{{ loc.name }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="col-md-2">
+      <label for="make" class="form-label">Brand</label>
+      <select name="make" id="make" class="form-select">
+        <option value="">All</option>
+        {% for make in makes %}
+          <option value="{{ make.name }}" {% if make.name == selected_make %}selected{% endif %}>{{ make.name }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="col-md-2">
+      <label for="fuel_type" class="form-label">Fuel Type</label>
+      <select name="fuel_type" id="fuel_type" class="form-select">
+        <option value="">All</option>
+        {% for fuel in fuel_types %}
+          <option value="{{ fuel.fuel_type }}" {% if fuel.fuel_type == selected_fuel_type %}selected{% endif %}>{{ fuel.fuel_type }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="col-md-2">
+      <label for="car_category" class="form-label">Category</label>
+      <select name="car_category" id="car_category" class="form-select">
+        <option value="">All</option>
+        {% for cat in car_categories %}
+          <option value="{{ cat.name }}" {% if cat.name == selected_car_category %}selected{% endif %}>{{ cat.name }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="col-md-2">
+      <label for="seat_number" class="form-label">Seats</label>
+      <select name="seat_number" id="seat_number" class="form-select">
+        <option value="">All</option>
+        {% for seat in seat_numbers %}
+          <option value="{{ seat }}" {% if seat|stringformat:'s' == selected_seat_number|stringformat:'s' %}selected{% endif %}>{{ seat }}</option>
+        {% endfor %}
+      </select>
+    </div>
+  </form>
+</section>
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const form = document.getElementById('filterForm');
+    form.querySelectorAll('select').forEach(function(select) {
+      select.addEventListener('change', function() {
+        form.submit();
+      });
+    });
+  });
+</script>
 
 <!-- Subscription Cars Section -->
 <section id="subscription-cars" class="py-5">

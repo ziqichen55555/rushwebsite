@@ -44,7 +44,7 @@ def subscription(request):
     # 获取所有位置
     locations = Location.objects.all()
     # 获取所有车辆类别
-    car_categories = CarCategory.objects.all()
+    car_categories = VehicleCategory.objects.all()
     # 获取所有燃料类型
     fuel_types = VehicleFuel.objects.all()
     # 获取所有车辆品牌
@@ -53,6 +53,7 @@ def subscription(request):
     seat_numbers = CarSubscription.objects.values_list('seat_number', flat=True).distinct()
     # 获取筛选参数
     selected_location = request.GET.get('pickup_location', '')
+    selected_make = request.GET.get('make', '')
     selected_fuel_type = request.GET.get('fuel_type', '')
     selected_car_category = request.GET.get('car_category', '')
     selected_seat_number = request.GET.get('seat_number', '')
@@ -60,6 +61,8 @@ def subscription(request):
     # 应用筛选
     if selected_location:
         subscriptions = subscriptions.filter(car__currently_located__name=selected_location)
+    if selected_make:
+        subscriptions = subscriptions.filter(car__model__make__name=selected_make)
     if selected_fuel_type:
         subscriptions = subscriptions.filter(car__fuel_type__fuel_type=selected_fuel_type)
     if selected_car_category:
@@ -79,6 +82,7 @@ def subscription(request):
         'selected_fuel_type': selected_fuel_type,
         'selected_car_category': selected_car_category,
         'selected_seat_number': selected_seat_number,
+        'selected_make': selected_make,
     }
     return render(request, 'pages/subscription.html', context)
 
