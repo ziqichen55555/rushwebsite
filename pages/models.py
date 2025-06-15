@@ -1,6 +1,6 @@
 from django.db import models
-
-from cars.models import VehicleCategory, VehicleFuel, VehicleMake, VehicleModel, VehicleCategory,  AuditModelMixin
+from cars.models import Car, CarCategory, VehicleCategory, VehicleCategoryType,VehicleMake,VehicleModel,VehicleFuel,VehicleType,VehicleImage
+from django.utils.translation import gettext_lazy as _
 
 
 
@@ -23,199 +23,102 @@ class Testimonial(models.Model):
 
 
 
-
-class Country(AuditModelMixin):
-    name = models.CharField(max_length=100, default='Australia')
-    sales_tax_name = models.CharField(max_length=100, blank=True, null=True)
-    sales_tax_rate = models.DecimalField(max_digits=5, decimal_places=2, default=0)
-    sales_tax_start_date = models.DateField(blank=True, null=True)
-    document_culture = models.CharField(max_length=10, default='en-AU')
-    system_culture = models.CharField(max_length=10, default='en-AU')
-    currency = models.CharField(max_length=10, default='AUD')
-    currency_symbol = models.CharField(max_length=10, default='$')
-    is_default = models.BooleanField(default=False)
-
-    class Meta:
-        ordering = ['name']
-        verbose_name_plural = "Countries"
-        managed = False
-        db_table = 'app_country'
-
-class StateProvince(AuditModelMixin):
-    country = models.ForeignKey(Country, on_delete=models.CASCADE, related_name='states')
-    name = models.CharField(max_length=100)
-    code = models.CharField(max_length=10)
-    state_tax_name = models.CharField(max_length=100, blank=True, null=True)
-    state_tax_rate = models.DecimalField(max_digits=5, decimal_places=2, default=0)
-    state_tax_start_date = models.DateField(blank=True, null=True)
-
-    class Meta:
-        ordering = ['country', 'name']
-        verbose_name_plural = "States/Provinces"
-        managed = False
-        db_table = 'app_stateprovince'
-class City(AuditModelMixin):
-    state = models.ForeignKey(StateProvince, on_delete=models.CASCADE, related_name='cities')
-    name = models.CharField(max_length=100)
-
-    class Meta:
-        ordering = ['state', 'name']
-        verbose_name_plural = "Cities"
-        managed = False
-        db_table = 'app_city'
-
-class VehicleFuel(AuditModelMixin):
-    YES_NO_CHOICES = (
-        (True, 'Yes'),
-        (False, 'No'),
-    )
-    fuel_type = models.CharField(max_length=100)
-    is_electric = models.BooleanField(default=False, choices=YES_NO_CHOICES)
-    fuel_unit = models.CharField(max_length=50, default='Liter')
-    fuel_unit_price = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
-    is_default = models.BooleanField(default=False, choices=YES_NO_CHOICES)
-    fuel_notes = models.TextField(blank=True, null=True)
-
-    class Meta:
-        ordering = ['fuel_type']
-        managed = False
-        db_table = 'app_vehiclefuel'
-class VehicleMake(AuditModelMixin):
-    name = models.CharField(max_length=100)
-
-    class Meta:
-        ordering = ['name']
-        managed = False
-        db_table = 'app_vehiclemake'
-    
-class VehicleModel(AuditModelMixin):
-    make = models.ForeignKey(VehicleMake, on_delete=models.DO_NOTHING, related_name='models')
-    model_name = models.CharField(max_length=100)
-    fuel_capacity = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True, default=0)
-
-    class Meta:
-        ordering = ['model_name']
-        managed = False 
-        db_table = 'app_vehiclemodel'
-
-
-
 class CarSubscription(models.Model):
     class Meta:
         app_label = 'rushwebsite'
-        verbose_name = ('Car Subscription')
-        verbose_name_plural = ('Car Subscriptions')
+        verbose_name = _('Car Subscription')
+        verbose_name_plural = _('Car Subscriptions')
         ordering = ['-created_at']
-        db_table = 'rushwebsite_carsubscription'
-        managed = False
+
     STATUS_CHOICES = (
-        ('available', ('Available')),
-        ('unavailable', ('Unavailable')),
+        ('available', _('Available')),
+        ('unavailable', _('Unavailable')),
     )
 
-    vehicle_category = models.ForeignKey(
-        VehicleCategory,
-        on_delete=models.DO_NOTHING,
-        verbose_name=('Vehicle Category')
-    )
-    location = models.ForeignKey(
-        City,
-        on_delete=models.DO_NOTHING,
-        verbose_name=('Location')
-    )
-    fuel_type = models.ForeignKey(
-        VehicleFuel,
-        on_delete=models.DO_NOTHING,
-        verbose_name=('Fuel Type')
-    )
-    model = models.ForeignKey(
-        VehicleModel,
-        on_delete=models.DO_NOTHING,
-        verbose_name=('Vehicle Model')
+    car = models.ForeignKey(
+        Car,
+        on_delete=models.CASCADE,
+        verbose_name=_('Car'),
+        related_name='rushwebsite_carsubscriptions'
     )
     
+    
     # Additional fields
-    registration_number = models.CharField(
-        max_length=20,
-        unique=True,
-        verbose_name=('Registration Number')
-    )
-    year = models.IntegerField(verbose_name=('Year'))
-    mileage = models.IntegerField(verbose_name=('Mileage'))
+    
     subscription_plan1 = models.DecimalField(
         max_digits=10,
         decimal_places=2,
-        verbose_name=('subscription plan1(3months)')
+        verbose_name=_('subscription plan1(3months)')
     )
     subscription_plan2 = models.DecimalField(
         max_digits=10,
         decimal_places=2,
-        verbose_name=('subscription plan2(6months)')
+        verbose_name=_('subscription plan2(6months)')
     )
     subscription_plan3 = models.DecimalField(
         max_digits=10,
         decimal_places=2,
-        verbose_name=('subscription plan3(9months)')
+        verbose_name=_('subscription plan3(9months)')
     )
-    
+    seat_number = models.IntegerField(verbose_name=_('Seat Number'))
     # Multiple image fields to match your form
     image1 = models.ImageField(
         upload_to='car_subscription_images/',
-        verbose_name=('Car Image 1'),
+        verbose_name=_('Car Image 1'),
         blank=True,
         null=True,
-        help_text=('Upload car image (maximum 300kb)')
+        help_text=_('Upload car image (maximum 300kb)')
     )
     image2 = models.ImageField(
         upload_to='car_subscription_images/',
-        verbose_name=('Car Image 2'),
+        verbose_name=_('Car Image 2'),
         blank=True,
         null=True,
-        help_text=('Upload car image (maximum 300kb)')
+        help_text=_('Upload car image (maximum 300kb)')
     )
     image3 = models.ImageField(
         upload_to='car_subscription_images/',
-        verbose_name=('Car Image 3'),
+        verbose_name=_('Car Image 3'),
         blank=True,
         null=True,
-        help_text=('Upload car image (maximum 300kb)')
+        help_text=_('Upload car image (maximum 300kb)')
     )
     image4 = models.ImageField(
         upload_to='car_subscription_images/',
-        verbose_name=('Car Image 4'),
+        verbose_name=_('Car Image 4'),
         blank=True,
         null=True,
-        help_text=('Upload car image (maximum 300kb)')
+        help_text=_('Upload car image (maximum 300kb)')
     )
     image5 = models.ImageField(
         upload_to='car_subscription_images/',
-        verbose_name=('Car Image 5'),
+        verbose_name=_('Car Image 5'),
         blank=True,
         null=True,
-        help_text=('Upload car image (maximum 300kb)')
+        help_text=_('Upload car image (maximum 300kb)')
     )
     
     status = models.CharField(
         max_length=20,
         choices=STATUS_CHOICES,
         default='available',
-        verbose_name=('Status')
+        verbose_name=_('Status')
     )
     description = models.TextField(
         blank=True,
-        verbose_name=('Description')
+        verbose_name=_('Description')
     )
     created_at = models.DateTimeField(
         auto_now_add=True,
-        verbose_name=('Created At')
+        verbose_name=_('Created At')
     )
     updated_at = models.DateTimeField(
         auto_now=True,
-        verbose_name=('Updated At')
+        verbose_name=_('Updated At')
     )
 
     def __str__(self):
-        return f"{self.model} - {self.registration_number}"
+        return f"{self.car.id}"
     
     def get_images(self):
         """Return list of all non-empty images"""
@@ -233,3 +136,72 @@ class CarSubscription(models.Model):
             if image:
                 return image
         return None
+    
+class CarFeature(models.Model):
+    car = models.ForeignKey(Car,
+                            on_delete=models.CASCADE,
+                            related_name='features')
+    feature = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.feature
+
+    class Meta:
+        db_table = 'cars_carfeature'
+
+class RushSubscriptionEnquiry(models.Model):
+    # 所选订阅车辆（可为空）
+    vehicle = models.ForeignKey(
+        Car,
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        verbose_name=("Selected Vehicle")
+    )
+
+    # 用户选择的订阅价格（例如每月价格）
+    subscription_plan = models.DecimalField(
+        max_digits=10,
+        decimal_places=2,
+        null=True,
+        blank=True,
+        verbose_name=("Subscription Price")
+    )
+
+    # 存储10个问题的答案（JSON）
+    enquiry_answers = models.JSONField(
+        null=True,
+        blank=True,
+        verbose_name=("Form Answers")
+    )
+    source_page = models.CharField(max_length=100, blank=True)
+    # 联系人信息
+    name = models.CharField(max_length=100, verbose_name=("Full Name"))
+    email = models.EmailField(verbose_name=("Email Address"))
+    phone = models.CharField(max_length=20, blank=True, verbose_name=("Phone Number"))
+    contact_method = models.CharField(
+        max_length=10,
+        choices=[('Email', 'Email'), ('Phone', 'Phone')],
+        default='Email',
+        verbose_name=("Preferred Contact Method")
+    )
+
+
+    # 提交时间
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name=("Submitted At"))
+
+    class Meta:
+        verbose_name = ("Rush Subscription Enquiry")
+        verbose_name_plural = ("Rush Subscription Enquiries")
+        ordering = ['-created_at']
+        db_table = 'rushwebsite_rushsubscriptionenquiry'
+    def __str__(self):
+        return f'{self.name} ({self.email}) - {self.created_at.strftime("%Y-%m-%d")}'
+    @property  
+    def inferred_type(self):
+        if self.vehicle and self.subscription_plan:
+            return 'subscription'
+        elif self.source_page == 'contact-us':
+            return 'contact'
+        else:
+            return 'general'
