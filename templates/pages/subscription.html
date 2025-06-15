@@ -51,10 +51,22 @@
         transition: transform 0.3s;
         height: 100%;
         position: relative;
+        display: flex;
+        flex-direction: column;
     }
     
     .subscription-card:hover {
         transform: translateY(-5px);
+    }
+    
+    .subscription-card .position-relative {
+        flex: 0 0 auto;
+    }
+    
+    .subscription-card .p-3 {
+        flex: 1 1 auto;
+        display: flex;
+        flex-direction: column;
     }
     
     .great-value-badge {
@@ -70,9 +82,11 @@
     }
     
     .subscription-image {
-        height: 200px;
-        object-fit: cover;
         width: 100%;
+        height: 200px;
+        aspect-ratio: 16/9;
+        object-fit: cover;
+        display: block;
     }
     
     .availability-badge {
@@ -238,25 +252,11 @@
 {% endblock %}
 
 {% block content %}
-<!-- Hero Banner -->
-<section class="hero-section" style="background-color: #696969;">
-    <div class="hero-overlay" style="background: rgba(0,0,0,0.2);">
-        <div class="container">
-            <div class="hero-content">
-                <h1 class="hero-title">Flexible & Convenient Car Subscription</h1>
-                <p class="hero-text">No long-term contracts, no hidden fees. Our all-inclusive car subscription service makes your travel easier and more flexible.</p>
-                <a href="#subscription-cars" class="cta-button">Browse Available Cars</a>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- Car Search Section -->
 <section class="car-search-section py-4 bg-light">
     <div class="container">
         <div class="row mb-3">
             <div class="col-12 text-center">
-                <h3 class="mb-2">Explore over {{ subscriptions.count }}+ models and find the car that suits your needs</h3>
+                <h3 class="mb-2">Explore over {{ subscriptions_models_count }}+ models and find the car that suits your needs</h3>
                 <div class="rating-display">
                     <i class="fas fa-star text-warning"></i>
                     <i class="fas fa-star text-warning"></i>
@@ -265,64 +265,6 @@
                     <i class="fas fa-star text-warning"></i>
                     <span class="ms-2">4.9 rating (based on 500+ reviews)</span>
                 </div>
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="filter-section p-3 bg-white rounded shadow-sm">
-                <form id="filterForm" class="row g-3">
-                    <!-- Pickup Location Filter -->
-                    <div class="col-md-3">
-                        <label for="pickup_location" class="form-label">Pickup Location</label>
-                        <select class="form-select filter-select" id="pickup_location" name="pickup_location">
-                            <option value="">All Locations</option>
-                            {% for location in locations %}
-                            <option value="{{ location.name }}" {% if location.name == selected_location %}selected{% endif %}>
-                                {{ location.name }}
-                            </option>
-                            {% endfor %}
-                        </select>
-                    </div>
-                    
-                    <!-- Fuel Type Filter -->
-                    <div class="col-md-3">
-                        <label for="fuel_type" class="form-label">Fuel Type</label>
-                        <select class="form-select filter-select" id="fuel_type" name="fuel_type">
-                            <option value="">All Types</option>
-                            {% for fuel in fuel_types %}
-                            <option value="{{ fuel.id }}" {% if fuel.id|stringformat:"i" == selected_fuel_type %}selected{% endif %}>
-                                {{ fuel.name }}
-                            </option>
-                            {% endfor %}
-                        </select>
-                    </div>
-                    
-                    <!-- Car Category Filter -->
-                    <div class="col-md-3">
-                        <label for="car_category" class="form-label">Car Category</label>
-                        <select class="form-select filter-select" id="car_category" name="car_category">
-                            <option value="">All Categories</option>
-                            {% for category in car_categories %}
-                            <option value="{{ category }}" {% if category == selected_car_category %}selected{% endif %}>
-                                {{ category }}
-                            </option>
-                            {% endfor %}
-                        </select>
-                    </div>
-                   
-                    <!-- Seat Number Filter -->
-                    <div class="col-md-3">
-                        <label for="seat_number" class="form-label">Seat Number</label>
-                        <select class="form-select filter-select" id="seat_number" name="seat_number">
-                            <option value="">All Seat Numbers</option>
-                            {% for seat in seat_numbers %}
-                            <option value="{{ seat }}" {% if seat|stringformat:"i" == selected_seat_number %}selected{% endif %}>
-                                {{ seat }} Seats
-                            </option>
-                            {% endfor %}
-                        </select>
-                    </div>
-                </form>
             </div>
         </div>
     </div>
@@ -337,25 +279,28 @@
                 <div class="subscription-card">
                     <div class="position-relative">
                         {% if subscription.status == 'available' %}
-                        <div class="great-value-badge">Available</div>
+                        <div class="great-value-badge text-white bg-success">Available</div>
                         {% else %}
-                        <div class="great-value-badge bg-danger">Unavailable</div>
+                        <div class="great-value-badge text-white bg-danger">Unavailable</div>
                         {% endif %}
-                        <img src="{{ subscription.image1.url }}" alt="{{ subscription.model }}" class="subscription-image">
+                        {% if subscription.image1 %}
+                            <img src="{{ subscription.image1.url }}" alt="{{ subscription.car.make|default:'Car' }} {{ subscription.car.model|default:'' }}" class="subscription-image">
+                        {% else %}
+                            <div class="subscription-image d-flex justify-content-center align-items-center text-muted">
+                                No Image
+                            </div>
+                        {% endif %}
                     </div>
                     <div class="p-3">
-                        <div class="availability-badge">
-                            <i class="fas fa-check-circle"></i> {{ subscription.status|title }}
-                        </div>
-                        <p class="vehicle-make">{{ subscription.model.make }}</p>
-                        <h3 class="vehicle-model">{{ subscription.model.model_name }}</h3>
-                        <p class="price-label">Weekly Rate</p>
-                        <p class="price-value">
-                            3 months: ${{ subscription.subscription_plan1 }}<br>
-                            6 months: ${{ subscription.subscription_plan2 }}<br>
-                            9 months: ${{ subscription.subscription_plan3 }}
-                        </p>
-                        <a href="{% url 'subscription_car_detail' make=subscription.model.make.name|lower model=subscription.model.model_name|lower %}" class="btn btn-primary w-100">View Details</a>
+                        <p class="vehicle-make"><i class="fas fa-car"></i> {{ subscription.car.model.make|default:"Unknown Make" }}</p>
+                        <h3 class="vehicle-model">{{ subscription.car.model|default:"Unknown Model" }}</h3>
+                        <p class="price-label">Weekly Rate from </p>
+                        <h3 class="price-value">${{ subscription.weekly_price3 }}</h3>
+                        {% if subscription.car.make and subscription.car.model %}
+                        <a href="{% url 'subscription_car_detail' make=subscription.car.make|lower model=subscription.car.model|lower %}" class="btn btn-primary w-100">View Details</a>
+                        {% else %}
+                        <button class="btn btn-secondary w-100">View more details</button>
+                        {% endif %}
                     </div>
                 </div>
             </div>
@@ -395,11 +340,11 @@
             <div class="col">
                 <div class="p-4 h-100">
                     <div class="d-flex align-items-center mb-3">
-                        <i class="fas fa-car text-warning me-3 fa-2x"></i>
-                        <h5 class="mb-0">Simple Subscription Model</h5>
+                        <i class="fas fa-shield-alt text-warning me-3 fa-2x"></i>
+                        <h5 class="mb-0">All-Inclusive Package</h5>
                     </div>
                     <p class="text-muted">
-                        Rush's all-inclusive car subscription model is different from others, offering only new cars and the option to upgrade or switch to another new car at the end of your plan. Our application process is fast, with no credit checks or large upfront payments.
+                        Our subscription includes registration, insurance, maintenance, and roadside assistance. You only need to worry about fuel and keeping the car clean!
                     </p>
                 </div>
             </div>
@@ -407,633 +352,15 @@
             <div class="col">
                 <div class="p-4 h-100">
                     <div class="d-flex align-items-center mb-3">
-                        <i class="fas fa-headset text-warning me-3 fa-2x"></i>
-                        <h5 class="mb-0">Professional Service Team</h5>
+                        <i class="fas fa-calendar-alt text-warning me-3 fa-2x"></i>
+                        <h5 class="mb-0">Flexible Terms</h5>
                     </div>
                     <p class="text-muted">
-                        You can pick up your new car from a local Rush service point the same day. Rest assured, we will take care of you throughout your subscription.
+                        Choose from 3, 6, or 9-month terms. Cancel anytime with just 30 days' notice. No long-term commitment required!
                     </p>
                 </div>
             </div>
         </div>
     </div>
 </section>
-
-<!-- All-Inclusive Service Section -->
-<section class="all-inclusive-section">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-5 mb-4 mb-lg-0">
-                <h2 class="all-inclusive-title">What Does All-Inclusive Mean?</h2>
-                <div class="mb-4">
-                    <h5 class="mb-3">A Brand New Car Experience</h5>
-                    <p class="text-muted">
-                        The cost of the car is included. Rush ensures our cars are always new, with a mileage limit of 15,000 km, giving you a permanent new car experience.
-                    </p>
-                </div>
-            </div>
-            
-            <div class="col-lg-7">
-                <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-                    <!-- Service Items -->
-                    <div class="col">
-                        <div class="benefit-card">
-                            <svg class="benefit-icon" style="width: 60px; height: 60px; fill: #5dcbb0;" viewBox="0 0 100 100">
-                                <rect x="20" y="20" width="60" height="60" rx="10" stroke="#5dcbb0" stroke-width="4" fill="none" />
-                                <circle cx="35" cy="40" r="8" fill="#5dcbb0" />
-                                <path d="M20 65 H80" stroke="#5dcbb0" stroke-width="4" />
-                            </svg>
-                            <h6>New Car Experience</h6>
-                        </div>
-                    </div>
-                    
-                    <div class="col">
-                        <div class="benefit-card">
-                            <svg class="benefit-icon" style="width: 60px; height: 60px; fill: #5dcbb0;" viewBox="0 0 100 100">
-                                <rect x="25" y="20" width="50" height="60" rx="5" stroke="#5dcbb0" stroke-width="4" fill="none" />
-                                <rect x="35" y="35" width="10" height="10" fill="#5dcbb0" />
-                                <rect x="55" y="35" width="10" height="10" fill="#5dcbb0" />
-                                <rect x="35" y="55" width="30" height="5" fill="#5dcbb0" />
-                            </svg>
-                            <h6>Vehicle Registration</h6>
-                        </div>
-                    </div>
-                    
-                    <div class="col">
-                        <div class="benefit-card">
-                            <svg class="benefit-icon" style="width: 60px; height: 60px; fill: #5dcbb0;" viewBox="0 0 100 100">
-                                <path d="M20 50 L40 30 L80 70 L60 90 Z" stroke="#5dcbb0" stroke-width="4" fill="none" />
-                                <path d="M60 40 L70 50" stroke="#5dcbb0" stroke-width="4" stroke-linecap="round" />
-                            </svg>
-                            <h6>Maintenance & Service</h6>
-                        </div>
-                    </div>
-                    
-                    <div class="col">
-                        <div class="benefit-card">
-                            <svg class="benefit-icon" style="width: 60px; height: 60px; fill: #5dcbb0;" viewBox="0 0 100 100">
-                                <path d="M30 60 H70" stroke="#5dcbb0" stroke-width="4" />
-                                <rect x="20" y="60" width="60" height="10" rx="5" fill="#5dcbb0" />
-                                <path d="M30 60 Q50 30 70 60" stroke="#5dcbb0" stroke-width="4" fill="none" />
-                                <rect x="45" y="40" width="10" height="10" rx="2" fill="#5dcbb0" />
-                            </svg>
-                            <h6>Roadside Assistance</h6>
-                        </div>
-                    </div>
-                    
-                    <div class="col">
-                        <div class="benefit-card">
-                            <svg class="benefit-icon" style="width: 60px; height: 60px; fill: #5dcbb0;" viewBox="0 0 100 100">
-                                <path d="M50 20 L85 40 L85 70 L50 90 L15 70 L15 40 Z" stroke="#5dcbb0" stroke-width="4" fill="none" />
-                                <circle cx="50" cy="55" r="10" fill="#5dcbb0" />
-                            </svg>
-                            <h6>Car Insurance</h6>
-                        </div>
-                    </div>
-                    
-                    <div class="col">
-                        <div class="benefit-card">
-                            <svg class="benefit-icon" style="width: 60px; height: 60px; fill: #5dcbb0;" viewBox="0 0 100 100">
-                                <rect x="20" y="20" width="30" height="60" rx="2" stroke="#5dcbb0" stroke-width="4" fill="none" />
-                                <rect x="50" y="20" width="30" height="60" rx="2" stroke="#5dcbb0" stroke-width="4" fill="none" />
-                            </svg>
-                            <h6>Flexible Plans</h6>
-                        </div>
-                    </div>
-                    
-                    <div class="col">
-                        <div class="benefit-card">
-                            <svg class="benefit-icon" style="width: 60px; height: 60px; fill: #5dcbb0;" viewBox="0 0 100 100">
-                                <circle cx="50" cy="50" r="30" stroke="#5dcbb0" stroke-width="4" fill="none" />
-                                <path d="M50 30 L50 50 L70 50" stroke="#5dcbb0" stroke-width="4" stroke-linecap="round" />
-                            </svg>
-                            <h6>High Mileage</h6>
-                        </div>
-                    </div>
-                    
-                    <div class="col">
-                        <div class="benefit-card">
-                            <svg class="benefit-icon" style="width: 60px; height: 60px; fill: #5dcbb0;" viewBox="0 0 100 100">
-                                <circle cx="50" cy="50" r="30" stroke="#5dcbb0" stroke-width="4" fill="none" />
-                                <path d="M35 50 L65 50" stroke="#5dcbb0" stroke-width="4" stroke-linecap="round" />
-                                <path d="M50 35 L50 65" stroke="#5dcbb0" stroke-width="4" stroke-linecap="round" />
-                            </svg>
-                            <h6>No Hidden Fees</h6>
-                        </div>
-                    </div>
-                    
-                    <div class="col">
-                        <div class="benefit-card">
-                            <svg class="benefit-icon" style="width: 60px; height: 60px; fill: #5dcbb0;" viewBox="0 0 100 100">
-                                <rect x="25" y="25" width="50" height="50" rx="5" stroke="#5dcbb0" stroke-width="4" fill="none" />
-                                <path d="M25 40 H75" stroke="#5dcbb0" stroke-width="4" />
-                                <rect x="45" y="15" width="10" height="20" fill="#5dcbb0" />
-                            </svg>
-                            <h6>No Long-Term Contracts</h6>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- Subscription Application Section -->
-<section class="apply-section py-5 bg-light">
-    <div class="container">
-        <div class="row align-items-center">
-            <div class="col-lg-6 mb-4 mb-lg-0">
-                <div class="car-top-view-container">
-                    <img src="{% static 'images/pics/bz.jpg' %}" alt="Car Top View" class="img-fluid rounded">
-                </div>
-            </div>
-            <div class="col-lg-6">
-                <h2 class="mb-4">Apply for Rush Car Subscription</h2>
-                <p class="mb-4">The Rush car subscription application process is quick and easy, just as a car subscription service should be. No credit checks or financing required, and you can complete your application in 5 minutes with instant pre-approval. No application fees, flexible cancellation policy, and you can easily subscribe to your dream car.</p>
-                
-                <div class="apply-steps">
-                    <div class="apply-step d-flex align-items-start mb-4">
-                        <div class="step-icon me-3 text-success">
-                            <i class="fas fa-clock"></i>
-                        </div>
-                        <div class="step-content">
-                            <h5>Complete Application in Minutes</h5>
-                            <p class="text-muted">No credit checks or financing required, and you can complete your application in 5 minutes with instant pre-approval.</p>
-                        </div>
-                    </div>
-                    
-                    <div class="apply-step d-flex align-items-start mb-4">
-                        <div class="step-icon me-3 text-success">
-                            <i class="fas fa-phone-alt"></i>
-                        </div>
-                        <div class="step-content">
-                            <h5>We Will Contact You</h5>
-                            <p class="text-muted">Your dedicated consultant will contact you to find the car and subscription plan that suits your needs.</p>
-                        </div>
-                    </div>
-                    
-                    <div class="apply-step d-flex align-items-start mb-4">
-                        <div class="step-icon me-3 text-success">
-                            <i class="fas fa-car"></i>
-                        </div>
-                        <div class="step-content">
-                            <h5>Pick Up and Drive Same Day</h5>
-                            <p class="text-muted">If your chosen car is in stock, you can pick it up and start your subscription journey the same day!</p>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="d-flex align-items-center">
-                    <a href="#" class="btn btn-dark px-4 py-2 me-3" data-bs-toggle="modal" data-bs-target="#subscriptionInquiryModal">
-                        Get Started <i class="fas fa-arrow-right ms-2"></i>
-                    </a>
-                    <span class="text-muted small"><i class="far fa-clock me-1"></i> 5 minutes to complete application</span>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- Subscription Comparison Section -->
-<section class="comparison-section py-5">
-    <div class="container">
-        <h2 class="text-center mb-5">Rush Subscription VS Other Subscriptions VS Rental</h2>
-        
-        <div class="mb-4 text-center">
-            <p class="lead">Rush car subscription is significantly different from traditional car rental and offers more advantages than other subscription services. Unlike traditional car rental or loans, Rush has no membership or high upfront fees. Our car subscription service is all-inclusive, flexible, and transparent, making it the best choice for personal use or fleet management, providing you with a convenient car experience.</p>
-        </div>
-        
-        <div class="table-responsive">
-            <table class="table comparison-table">
-                <thead>
-                    <tr>
-                        <th>Features</th>
-                        <th class="text-center bg-light">
-                            <div class="d-flex justify-content-center align-items-center">
-                                <span class="me-2 fw-bold">Rush</span>
-                                <img src="{% static 'images/logo.png' %}" alt="Rush Logo" style="height: 30px;">
-                            </div>
-                        </th>
-                        <th class="text-center">Other Subscriptions</th>
-                        <th class="text-center">Traditional Rental</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Brand New Cars</td>
-                        <td class="text-center bg-light"><i class="fas fa-check-circle text-success"></i></td>
-                        <td class="text-center"><i class="fas fa-times-circle text-danger"></i></td>
-                        <td class="text-center"><i class="fas fa-check-circle text-success"></i></td>
-                    </tr>
-                    <tr>
-                        <td>No Application, Registration, or Swap Fees</td>
-                        <td class="text-center bg-light"><i class="fas fa-check-circle text-success"></i></td>
-                        <td class="text-center"><i class="fas fa-times-circle text-danger"></i></td>
-                        <td class="text-center"><i class="fas fa-times-circle text-danger"></i></td>
-                    </tr>
-                    <tr>
-                        <td>No Credit Checks</td>
-                        <td class="text-center bg-light"><i class="fas fa-check-circle text-success"></i></td>
-                        <td class="text-center"><i class="fas fa-check-circle text-success"></i></td>
-                        <td class="text-center"><i class="fas fa-times-circle text-danger"></i></td>
-                    </tr>
-                    <tr>
-                        <td>New Car Replacement</td>
-                        <td class="text-center bg-light"><i class="fas fa-check-circle text-success"></i></td>
-                        <td class="text-center"><i class="fas fa-times-circle text-danger"></i></td>
-                        <td class="text-center"><i class="fas fa-times-circle text-danger"></i></td>
-                    </tr>
-                    <tr>
-                        <td>Registration & Insurance</td>
-                        <td class="text-center bg-light"><i class="fas fa-check-circle text-success"></i></td>
-                        <td class="text-center"><i class="fas fa-check-circle text-success"></i></td>
-                        <td class="text-center"><i class="fas fa-times-circle text-danger"></i></td>
-                    </tr>
-                    <tr>
-                        <td>Maintenance & Service</td>
-                        <td class="text-center bg-light"><i class="fas fa-check-circle text-success"></i></td>
-                        <td class="text-center"><i class="fas fa-check-circle text-success"></i></td>
-                        <td class="text-center"><i class="fas fa-times-circle text-danger"></i></td>
-                    </tr>
-                    <tr>
-                        <td>No Long-Term Commitment</td>
-                        <td class="text-center bg-light"><i class="fas fa-check-circle text-success"></i></td>
-                        <td class="text-center"><i class="fas fa-check-circle text-success"></i></td>
-                        <td class="text-center"><i class="fas fa-times-circle text-danger"></i></td>
-                    </tr>
-                    <tr>
-                        <td>No Hidden Fees</td>
-                        <td class="text-center bg-light"><i class="fas fa-check-circle text-success"></i></td>
-                        <td class="text-center"><i class="fas fa-times-circle text-danger"></i></td>
-                        <td class="text-center"><i class="fas fa-times-circle text-danger"></i></td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
-</section>
-
-<!-- Modal for Subscription Inquiry -->
-<div class="modal fade" id="subscriptionInquiryModal" tabindex="-1" aria-labelledby="subscriptionInquiryModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-lg modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="subscriptionInquiryModalLabel">Subscription Inquiry</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <form id="subscriptionInquiryForm">
-          <div id="inquiry-steps">
-            <!-- Step 1 -->
-            <div class="inquiry-step" data-step="1">
-              <div class="mb-4">
-                <label class="form-label fw-bold">1. What are you looking for?</label>
-                <div class="row g-3">
-                  <div class="col-12 col-md-6 col-lg-4">
-                    <div class="option-card" data-value="ridesharing">A car for ridesharing (uber driving)</div>
-                  </div>
-                  <div class="col-12 col-md-6 col-lg-4">
-                    <div class="option-card" data-value="daily use">A car for daily use (family use or personal use)</div>
-                  </div>
-                  <div class="col-12 col-md-6 col-lg-4">
-                    <div class="option-card" data-value="fleet">A fleet of more than 5 cars</div>
-                  </div>
-                  <div class="col-12 col-md-6 col-lg-4">
-                    <div class="option-card" data-value="Other">Other</div>
-                  </div>
-                </div>
-                <input type="hidden" name="car_type" required>
-              </div>
-            </div>
-            <!-- Step 2 -->
-            <div class="inquiry-step d-none" data-step="2">
-              <div class="mb-4">
-                <label class="form-label fw-bold">2. How long do you need the car for?</label>
-                <div class="row g-3">
-                  <div class="col-6 col-md-4">
-                    <div class="option-card" data-value="3 months">3 months</div>
-                  </div>
-                  <div class="col-6 col-md-4">
-                    <div class="option-card" data-value="6 months">6 months</div>
-                  </div>
-                  <div class="col-6 col-md-4">
-                    <div class="option-card" data-value="9 months">9 months</div>
-                  </div>
-                  <div class="col-6 col-md-4">
-                    <div class="option-card" data-value="12 months">12 months</div>
-                  </div>
-                  <div class="col-6 col-md-4">
-                    <div class="option-card" data-value="Other">Other</div>
-                  </div>
-                </div>
-                <input type="hidden" name="duration" required>
-              </div>
-            </div>
-            <!-- Step 3 -->
-            <div class="inquiry-step d-none" data-step="3">
-              <div class="mb-4">
-                <label class="form-label fw-bold">3. How many kilometers do you drive per week?</label>
-                <div class="row g-3">
-                  <div class="col-6 col-md-4">
-                    <div class="option-card" data-value="Less than 385km">Less than 385km</div>
-                  </div>
-                  <div class="col-6 col-md-4">
-                    <div class="option-card" data-value="385km-500km">385km-500km</div>
-                  </div>
-                  <div class="col-6 col-md-4">
-                    <div class="option-card" data-value="500km-750km">500km-750km</div>
-                  </div>
-                  <div class="col-6 col-md-4">
-                    <div class="option-card" data-value="More than 750km">More than 750km</div>
-                  </div>
-                </div>
-                <input type="hidden" name="mileage" required>
-              </div>
-            </div>
-            <!-- Step 4 -->
-            <div class="inquiry-step d-none" data-step="4">
-              <div class="mb-4">
-                <label class="form-label fw-bold">4. Do you need a driver?</label>
-                <div class="row g-3">
-                  <div class="col-6">
-                    <div class="option-card" data-value="Yes">Yes</div>
-                  </div>
-                  <div class="col-6">
-                    <div class="option-card" data-value="No">No</div>
-                  </div>
-                </div>
-                <input type="hidden" name="need_driver" required>
-              </div>
-            </div>
-            <!-- Step 5 -->
-            <div class="inquiry-step d-none" data-step="5">
-              <div class="mb-4">
-                <label class="form-label fw-bold">5. Do you have a preferred pickup location?</label>
-                <div class="row g-3">
-                  <div class="col-6 col-md-4">
-                    <div class="option-card" data-value="Sydney">Sydney</div>
-                  </div>
-                  <div class="col-6 col-md-4">
-                    <div class="option-card" data-value="Melbourne">Melbourne</div>
-                  </div>
-                  <div class="col-6 col-md-4">
-                    <div class="option-card" data-value="Brisbane">Brisbane</div>
-                  </div>
-                  <div class="col-6 col-md-4">
-                    <div class="option-card" data-value="Perth">Perth</div>
-                  </div>
-                  <div class="col-6 col-md-4">
-                    <div class="option-card" data-value="Adelaide">Adelaide</div>
-                  </div>
-                  <div class="col-6 col-md-4">
-                    <div class="option-card" data-value="Other">Other</div>
-                  </div>
-                </div>
-                <input type="hidden" name="pickup_location" required>
-              </div>
-            </div>
-            <!-- Step 6 -->
-            <div class="inquiry-step d-none" data-step="6">
-              <div class="mb-4">
-                <label class="form-label fw-bold">6. Do you have a preferred car brand?</label>
-                <div class="row g-3">
-                  <div class="col-6 col-md-4"><div class="option-card" data-value="Toyota">Toyota</div></div>
-                  <div class="col-6 col-md-4"><div class="option-card" data-value="Nissan">Nissan</div></div>
-                  <div class="col-6 col-md-4"><div class="option-card" data-value="Hyundai">Hyundai</div></div>
-                  <div class="col-6 col-md-4"><div class="option-card" data-value="Kia">Kia</div></div>
-                  <div class="col-6 col-md-4"><div class="option-card" data-value="Mazda">Mazda</div></div>
-                  <div class="col-6 col-md-4"><div class="option-card" data-value="Subaru">Subaru</div></div>
-                  <div class="col-6 col-md-4"><div class="option-card" data-value="Mercedes">Mercedes</div></div>
-                  <div class="col-6 col-md-4"><div class="option-card" data-value="Other">Other</div></div>
-                  <div class="col-6 col-md-4"><div class="option-card" data-value="">No preference</div></div>
-                </div>
-                <input type="hidden" name="brand" required>
-              </div>
-            </div>
-            <!-- Step 7 -->
-            <div class="inquiry-step d-none" data-step="7">
-              <div class="mb-4">
-                <label class="form-label fw-bold">7. Fuel type?</label>
-                <div class="row g-3">
-                  <div class="col-6 col-md-4"><div class="option-card" data-value="Petrol">Petrol</div></div>
-                  <div class="col-6 col-md-4"><div class="option-card" data-value="Diesel">Diesel</div></div>
-                  <div class="col-6 col-md-4"><div class="option-card" data-value="Electric">Electric</div></div>
-                  <div class="col-6 col-md-4"><div class="option-card" data-value="Hybrid">Hybrid</div></div>
-                  <div class="col-6 col-md-4"><div class="option-card" data-value="">No preference</div></div>
-                </div>
-                <input type="hidden" name="fuel_type" required>
-              </div>
-            </div>
-            <!-- Step 8 -->
-            <div class="inquiry-step d-none" data-step="8">
-              <div class="mb-4">
-                <label class="form-label fw-bold">8. I would like it to be:</label>
-                <div class="row g-3">
-                  <div class="col-6 col-md-4"><div class="option-card" data-value="Affordable">Affordable</div></div>
-                  <div class="col-6 col-md-4"><div class="option-card" data-value="Comfortable">Comfortable</div></div>
-                  <div class="col-6 col-md-4"><div class="option-card" data-value="Luxury">Luxury</div></div>
-                  <div class="col-6 col-md-4"><div class="option-card" data-value="Other">Other</div></div>
-                </div>
-                <input type="hidden" name="preference" required>
-              </div>
-            </div>
-            <!-- Step 9 -->
-            <div class="inquiry-step d-none" data-step="9">
-              <div class="mb-4">
-                <label class="form-label fw-bold">9. When do you want to start your subscription?</label>
-                <input type="date" class="form-control" name="start_date">
-              </div>
-            </div>
-            <!-- Step 10 -->
-            <div class="inquiry-step d-none" data-step="10">
-              <div class="mb-4">
-                <label class="form-label fw-bold">10. Any special requirements or comments?</label>
-                <textarea class="form-control" name="comments" rows="3" placeholder="Please specify if you have any special needs or requests."></textarea>
-              </div>
-            </div>
-            <!-- Step 11: Customer Info -->
-            <div class="inquiry-step d-none" data-step="11">
-              <h5 class="mb-3">Your Contact Information</h5>
-              <div class="row">
-                <div class="col-md-6 mb-3">
-                  <label class="form-label">Full Name *</label>
-                  <input type="text" class="form-control" name="full_name" required>
-                </div>
-                <div class="col-md-6 mb-3">
-                  <label class="form-label">Email Address *</label>
-                  <input type="email" class="form-control" name="email" required>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-md-6 mb-3">
-                  <label class="form-label">Phone Number *</label>
-                  <input type="tel" class="form-control" name="phone" required>
-                </div>
-                <div class="col-md-6 mb-3">
-                  <label class="form-label">Preferred Contact Method</label>
-                  <select class="form-select" name="contact_method">
-                    <option value="Email">Email</option>
-                    <option value="Phone">Phone</option>
-                  </select>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="d-flex justify-content-between mt-4">
-            <button type="button" class="btn btn-outline-secondary" id="inquiryPrevBtn" disabled>Previous</button>
-            <button type="button" class="btn btn-warning" id="inquiryNextBtn" disabled>Next</button>
-            <button type="submit" class="btn btn-success d-none" id="inquirySubmitBtn">Submit Inquiry</button>
-          </div>
-        </form>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- 全局感谢提醒 -->
-<div id="globalThankYou" class="d-none position-fixed top-50 start-50 translate-middle bg-white shadow-lg rounded p-4 text-center" style="z-index: 2000; min-width: 320px;">
-  <h4 class="mb-0">Thank you for your inquiry. Our team will contact you soon.</h4>
-</div>
-
-{% block extra_js %}
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    // 获取所有需要的元素
-    const form = document.getElementById('subscriptionInquiryForm');
-    const steps = document.querySelectorAll('.inquiry-step');
-    const nextBtn = document.getElementById('inquiryNextBtn');
-    const prevBtn = document.getElementById('inquiryPrevBtn');
-    const submitBtn = document.getElementById('inquirySubmitBtn');
-    const optionCards = document.querySelectorAll('.option-card');
-    const globalThankYou = document.getElementById('globalThankYou');
-    const modal = document.getElementById('subscriptionInquiryModal');
-    const modalInstance = new bootstrap.Modal(modal);
-
-    let currentStep = 1;
-    const totalSteps = steps.length;
-
-    // 更新按钮状态
-    function updateButtons() {
-        prevBtn.disabled = currentStep === 1;
-        nextBtn.disabled = !isStepValid(currentStep);
-        
-        if (currentStep === totalSteps) {
-            nextBtn.classList.add('d-none');
-            submitBtn.classList.remove('d-none');
-        } else {
-            nextBtn.classList.remove('d-none');
-            submitBtn.classList.add('d-none');
-        }
-    }
-
-    // 检查当前步骤是否有效
-    function isStepValid(step) {
-        const currentStepElement = document.querySelector(`.inquiry-step[data-step="${step}"]`);
-        const requiredInput = currentStepElement.querySelector('input[required]');
-        
-        if (requiredInput) {
-            if (requiredInput.type === 'hidden') {
-                return requiredInput.value !== '';
-            } else {
-                return requiredInput.value.trim() !== '';
-            }
-        }
-        return true;
-    }
-
-    // 显示指定步骤
-    function showStep(step) {
-        steps.forEach(s => s.classList.add('d-none'));
-        document.querySelector(`.inquiry-step[data-step="${step}"]`).classList.remove('d-none');
-        currentStep = step;
-        updateButtons();
-    }
-
-    // 下一步按钮点击事件
-    nextBtn.addEventListener('click', () => {
-        if (currentStep < totalSteps) {
-            showStep(currentStep + 1);
-        }
-    });
-
-    // 上一步按钮点击事件
-    prevBtn.addEventListener('click', () => {
-        if (currentStep > 1) {
-            showStep(currentStep - 1);
-        }
-    });
-
-    // 选项卡片点击事件
-    optionCards.forEach(card => {
-        card.addEventListener('click', function() {
-            const step = this.closest('.inquiry-step');
-            const input = step.querySelector('input[type="hidden"]');
-            
-            // 移除同一步骤中其他卡片的选中状态
-            step.querySelectorAll('.option-card').forEach(c => c.classList.remove('selected'));
-            
-            // 添加当前卡片的选中状态
-            this.classList.add('selected');
-            
-            // 更新隐藏输入框的值
-            if (input) {
-                input.value = this.dataset.value;
-                updateButtons();
-            }
-        });
-    });
-
-    // 表单提交事件
-    form.addEventListener('submit', function(e) {
-        e.preventDefault();
-        
-        // 收集表单数据
-        const formData = new FormData(form);
-        const data = Object.fromEntries(formData.entries());
-        
-        // 这里可以添加发送数据到服务器的代码
-        console.log('Form data:', data);
-        
-        // 显示感谢信息
-        modalInstance.hide();
-        globalThankYou.classList.remove('d-none');
-        
-        // 3秒后隐藏感谢信息
-        setTimeout(() => {
-            globalThankYou.classList.add('d-none');
-            // 重置表单
-            form.reset();
-            showStep(1);
-        }, 3000);
-    });
-
-    // 初始化
-    showStep(1);
-
-    // 获取所有过滤器select元素
-    const filterSelects = document.querySelectorAll('.filter-select');
-    
-    // 为每个select添加change事件监听器
-    filterSelects.forEach(select => {
-        select.addEventListener('change', function() {
-            // 构建URL参数
-            const form = document.getElementById('filterForm');
-            const formData = new FormData(form);
-            const params = new URLSearchParams();
-            
-            // 只添加有值的参数
-            for(let pair of formData.entries()) {
-                if(pair[1]) {
-                    params.append(pair[0], pair[1]);
-                }
-            }
-            
-            // 构建新的URL并跳转
-            const newUrl = `${window.location.pathname}${params.toString() ? '?' + params.toString() : ''}`;
-            window.location.href = newUrl;
-        });
-    });
-});
-</script>
-{% endblock %}
 {% endblock %}
