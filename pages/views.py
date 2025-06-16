@@ -70,7 +70,7 @@ def subscription(request):
 
     # 应用筛选
     if selected_location:
-        subscriptions = subscriptions.filter(car__currently_located__name=selected_location)
+        subscriptions = subscriptions.filter(car__currently_located__location_name=selected_location)
     if selected_make:
         subscriptions = subscriptions.filter(car__model__make__name=selected_make)
     if selected_fuel_type:
