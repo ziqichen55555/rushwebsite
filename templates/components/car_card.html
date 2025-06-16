@@ -1,8 +1,8 @@
 <div class="card h-100 shadow-sm">
-    <img src="{{ car.image_url }}" class="card-img-top" alt="{{ car.make }} {{ car.model }}">
+    <img src="{{ car.image_url }}" class="card-img-top" alt="{{ car.model.make.name }} {{ car.model.model_name }}">
     <div class="card-body">
         <div class="d-flex justify-content-between align-items-start mb-2">
-            <h5 class="card-title mb-0">{{ car.make }} {{ car.model }}</h5>
+            <h5 class="card-title mb-0">{{ car.model.make.name }} {{ car.model.model_name }}</h5>
             <span class="badge bg-dark">{{ car.category.name }}</span>
         </div>
         

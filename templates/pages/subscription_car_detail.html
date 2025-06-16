@@ -19,24 +19,59 @@
         <div class="row">
             <!-- Left: Vehicle Info -->
             <div class="col-lg-8">
-                <!-- Vehicle Image -->
-                <div class="card shadow-sm mb-4">
-                    <img src="{{ car.image_url }}" class="card-img-top" alt="{{ car.make }} {{ car.model }}" style="height: 300px; object-fit: cover; border-radius: 0.75rem;">
+                <!-- Car Images Carousel -->
+                <div id="carImageCarousel" class="carousel slide car-carousel" data-bs-ride="carousel">
+                    <!-- Availability Badge -->
                     {% if car.is_available %}
-                    <span class="badge bg-warning text-dark position-absolute top-0 start-0 m-3">Available Now</span>
+                    <span class="badge bg-success text-white availability-badge px-3 py-2 fs-5">Available Now</span>
                     {% else %}
-                    <span class="badge bg-danger text-white position-absolute top-0 start-0 m-3">Unavailable</span>
+                    <span class="badge bg-danger text-white availability-badge">Unavailable</span>
                     {% endif %}
+                    
+                    <!-- Carousel Indicators -->
+                    <div class="carousel-indicators">
+                        <button type="button" data-bs-target="#carImageCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                        <button type="button" data-bs-target="#carImageCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                        <button type="button" data-bs-target="#carImageCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                        <button type="button" data-bs-target="#carImageCarousel" data-bs-slide-to="3" aria-label="Slide 4"></button>
+                        <button type="button" data-bs-target="#carImageCarousel" data-bs-slide-to="4" aria-label="Slide 5"></button>
+                    </div>
+                    
+                    <!-- Carousel Items -->
+                    <div class="carousel-inner">
+                        <div class="carousel-item active">
+                            <img src="{{ car.image1 }}" class="d-block" alt="{{ car.model.make.name }} {{ car.model.model_name }} - Main">
+                        </div>
+                        <div class="carousel-item">
+                            <img src="{{ car.image2|default:car.image1 }}" class="d-block" alt="{{ car.model.make.name }} {{ car.model.model_name }} - Side">
+                        </div>
+                        <div class="carousel-item">
+                            <img src="{{ car.image3|default:car.image1 }}" class="d-block" alt="{{ car.model.make.name }} {{ car.model.model_name }} - Interior">
+                        </div>
+                        <div class="carousel-item">
+                            <img src="{{ car.image4|default:car.image1 }}" class="d-block" alt="{{ car.model.make.name }} {{ car.model.model_name }} - Back">
+                        </div>
+                        <div class="carousel-item">
+                            <img src="{{ car.image5|default:car.image1 }}" class="d-block" alt="{{ car.model.make.name }} {{ car.model.model_name }} - Detail">
+                        </div>
+                    </div>
+                    
+                    <!-- Carousel Controls -->
+                    <button class="carousel-control-prev" type="button" data-bs-target="#carImageCarousel" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#carImageCarousel" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                    </button>
                 </div>
 
                 <!-- Vehicle Description -->
                 <div class="card shadow-sm mb-4">
                     <div class="card-body">
-                        <h1 class="card-title">{{ car.make }} {{ car.model }} ({{ car.location }})</h1>
-                        <p class="text-muted mb-2">Type: {{ car.type }}</p>
-                        {% if car.is_great_value %}
-                        <span class="badge bg-warning text-dark mb-3">Great Value</span>
-                        {% endif %}
+                        <h1 class="card-title">{{ car.make }} {{ car.model }}</h1>
+                     
                         <h5 class="border-bottom pb-2 mb-3 mt-4">Description</h5>
                         <p>{{ car.description }}</p>
                     </div>
@@ -47,37 +82,27 @@
                     <div class="card-body">
                         <h5 class="border-bottom pb-2 mb-3">Vehicle Specifications</h5>
                         <div class="row g-3">
-                            <div class="col-6 col-md-4">
-                                <div class="spec-card p-3 bg-light rounded text-center h-100">
-                                    <div class="fw-bold mb-1">Status</div>
-                                    <div>{{ car.status|title }}</div>
-                                </div>
-                            </div>
-                            <div class="col-6 col-md-4">
+                           
+                            <div class="col-6 col-md-6">
                                 <div class="spec-card p-3 bg-light rounded text-center h-100">
                                     <div class="fw-bold mb-1">Model</div>
                                     <div>{{ car.model }}</div>
                                 </div>
                             </div>
-                            <div class="col-6 col-md-4">
+                            <div class="col-6 col-md-6">
                                 <div class="spec-card p-3 bg-light rounded text-center h-100">
                                     <div class="fw-bold mb-1">Year</div>
                                     <div>{{ car.year }}</div>
                                 </div>
                             </div>
-                            <div class="col-6 col-md-4">
-                                <div class="spec-card p-3 bg-light rounded text-center h-100">
-                                    <div class="fw-bold mb-1">Mileage</div>
-                                    <div>{{ car.mileage }} km</div>
-                                </div>
-                            </div>
-                            <div class="col-6 col-md-4">
+                           
+                            <div class="col-6 col-md-6">
                                 <div class="spec-card p-3 bg-light rounded text-center h-100">
                                     <div class="fw-bold mb-1">Fuel Type</div>
                                     <div>{{ car.type }}</div>
                                 </div>
                             </div>
-                            <div class="col-6 col-md-4">
+                            <div class="col-6 col-md-6">
                                 <div class="spec-card p-3 bg-light rounded text-center h-100">
                                     <div class="fw-bold mb-1">Location</div>
                                     <div>{{ car.location }}</div>
@@ -91,54 +116,61 @@
             <!-- Right: Subscription Plans -->
             <div class="col-lg-4">
                 <div class="card shadow-sm mb-4 sticky-top" style="top: 20px; z-index: 999;">
-                    <div class="card-header bg-warning text-dark">
-                        <h5 class="card-title mb-0">Subscription Plans</h5>
-                    </div>
+                   
                     <div class="card-body">
                         <!-- BEST VALUE -->
                         <div class="plan-card mb-4 border border-success rounded p-3 plan-select" data-value="BEST VALUE">
-                            <span class="badge bg-success position-absolute top-0 start-0 m-2">BEST VALUE</span>
-                            <div class="d-flex align-items-baseline mb-2">
-                                <span class="display-6 fw-bold me-2">${{ car.price_9_months }}</span>
-                                <span class="text-muted">PER WEEK</span>
+                            <input type="radio" name="subscription_plan" value="BEST VALUE" class="plan-select-radio" required>
+                            <span class="plan-badge">BEST VALUE</span>
+                            <div class="plan-price">
+                                <div class="d-flex align-items-baseline mb-2">
+                                    <span class="display-6 fw-bold me-2">${{ car.price_9_months }}</span>
+                                    <span class="text-muted">PER WEEK</span>
+                                </div>
+                                <ul class="list-unstyled mb-0">
+                                    <li>• 9 months minimum term Subscription</li>
+                                    <li>• 385 km weekly mileage included (30c per excess KM)</li>
+                                    <li>• 1x primary driver</li>
+                                </ul>
                             </div>
-                            <ul class="list-unstyled mb-0">
-                                <li>• 9 months minimum term Subscription</li>
-                                <li>• 385 km weekly mileage included (30c per excess KM)</li>
-                                <li>• 1x primary driver</li>
-                            </ul>
                         </div>
                         <!-- POPULAR -->
                         <div class="plan-card mb-4 border border-primary rounded p-3 plan-select" data-value="POPULAR">
-                            <span class="badge bg-primary position-absolute top-0 start-0 m-2">POPULAR</span>
-                            <div class="d-flex align-items-baseline mb-2">
-                                <span class="display-6 fw-bold me-2">${{ car.price_6_months }}</span>
-                                <span class="text-muted">PER WEEK</span>
+                            <input type="radio" name="subscription_plan" value="POPULAR" class="plan-select-radio" required>
+                            <span class="plan-badge">POPULAR</span>
+                            <div class="plan-price">
+                                <div class="d-flex align-items-baseline mb-2">
+                                    <span class="display-6 fw-bold me-2">${{ car.price_6_months }}</span>
+                                    <span class="text-muted">PER WEEK</span>
+                                </div>
+                                <ul class="list-unstyled mb-0">
+                                    <li>• 6 months minimum term Subscription</li>
+                                    <li>• 385 km weekly mileage included (30c per excess KM)</li>
+                                    <li>• 1x primary driver</li>
+                                </ul>
                             </div>
-                            <ul class="list-unstyled mb-0">
-                                <li>• 6 months minimum term Subscription</li>
-                                <li>• 385 km weekly mileage included (30c per excess KM)</li>
-                                <li>• 1x primary driver</li>
-                            </ul>
                         </div>
                         <!-- MOST FLEXIBLE -->
                         <div class="plan-card mb-4 border border-warning rounded p-3 plan-select" data-value="MOST FLEXIBLE">
-                            <span class="badge bg-warning text-dark position-absolute top-0 start-0 m-2">MOST FLEXIBLE</span>
-                            <div class="d-flex align-items-baseline mb-2">
-                                <span class="display-6 fw-bold me-2">${{ car.price_3_months }}</span>
-                                <span class="text-muted">PER WEEK</span>
+                            <input type="radio" name="subscription_plan" value="MOST FLEXIBLE" class="plan-select-radio" required>
+                            <span class="plan-badge">MOST FLEXIBLE</span>
+                            <div class="plan-price">
+                                <div class="d-flex align-items-baseline mb-2">
+                                    <span class="display-6 fw-bold me-2">${{ car.price_3_months }}</span>
+                                    <span class="text-muted">PER WEEK</span>
+                                </div>
+                                <ul class="list-unstyled mb-0">
+                                    <li>• 3 months minimum term Subscription</li>
+                                    <li>• 385 km weekly mileage included (30c per excess KM)</li>
+                                    <li>• 1x primary driver</li>
+                                </ul>
                             </div>
-                            <ul class="list-unstyled mb-0">
-                                <li>• 3 months minimum term Subscription</li>
-                                <li>• 385 km weekly mileage included (30c per excess KM)</li>
-                                <li>• 1x primary driver</li>
-                            </ul>
                         </div>
                         <input type="hidden" id="selectedPlan" name="selected_plan" required>
                         <!-- Enquiry Button -->
-                        <button type="button" class="btn btn-primary w-100" data-bs-toggle="modal" data-bs-target="#subscriptionInquiryModal">
-                            Make an Enquiry
-                        </button>
+                        <div class="text-center mt-4">
+                            <button id="startInquiryBtn" class="btn btn-primary btn-lg disabled" data-bs-toggle="modal" data-bs-target="#subscriptionInquiryModal" disabled>Make an Enquiry</button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -377,27 +409,92 @@
   border-color: #ffd000;
 }
 .plan-card {
-  background: #fff;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
-  min-height: 180px;
+  position: relative;
+  padding: 1rem;
   cursor: pointer;
-  border-width: 2px;
-  transition: box-shadow 0.2s, background 0.2s, border-color 0.2s;
+  transition: all 0.3s ease;
 }
 .plan-card:hover {
-  box-shadow: 0 4px 16px rgba(0,0,0,0.10);
-  background: #fffbe6;
-  border-color: #ffdd00 !important;
-}
-.plan-card.selected {
-  border-color: #ffdd00 !important;
-  background: #fffbe6;
+  transform: translateY(-2px);
   box-shadow: 0 4px 16px rgba(0,0,0,0.15);
 }
-.plan-card .badge {
-  font-size: 0.95rem;
-  padding: 0.5em 1em;
-  border-radius: 0.5em;
+.plan-card.selected {
+  box-shadow: 0 0 0 2px #0d6efd;
+  background-color: #f8f9fa;
+}
+.plan-badge {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  padding: 0.5rem 1rem;
+  border-radius: 0.25rem;
+  font-weight: 500;
+  font-size: 0.875rem;
+}
+.plan-card.border-success .plan-badge {
+  background-color: #198754;
+  color: white;
+}
+.plan-card.border-primary .plan-badge {
+  background-color: #0d6efd;
+  color: white;
+}
+.plan-card.border-warning .plan-badge {
+  background-color: #ffc107;
+  color: #000;
+}
+.plan-price {
+  margin-top: 1rem;
+}
+.plan-select-radio {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+}
+.car-carousel {
+    position: relative;
+    height: 400px;
+    border-radius: 0.75rem;
+    overflow: hidden;
+}
+
+.car-carousel .carousel-item {
+    height: 400px;
+}
+
+.car-carousel img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.car-carousel .carousel-control-prev,
+.car-carousel .carousel-control-next {
+    width: 50px;
+    height: 50px;
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 50%;
+    top: 50%;
+    transform: translateY(-50%);
+    margin: 0 20px;
+}
+
+.car-carousel .carousel-indicators {
+    margin-bottom: 1rem;
+}
+
+.car-carousel .carousel-indicators button {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    margin: 0 5px;
+}
+
+.availability-badge {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    z-index: 2;
 }
 </style>
 {% endblock %}
@@ -497,16 +594,29 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 
   // Plan select logic
-  const planCards = document.querySelectorAll('.plan-select');
+  const planCards = document.querySelectorAll('.plan-card');
   const planInput = document.getElementById('selectedPlan');
   const startBtn = document.getElementById('startInquiryBtn');
+  
+  // 初始状态禁用按钮
+  startBtn.classList.add('disabled');
+  startBtn.disabled = true;
+  
   planCards.forEach(card => {
     card.addEventListener('click', function() {
+      // 移除其他卡片的选中状态
       planCards.forEach(c => c.classList.remove('selected'));
-      card.classList.add('selected');
-      planInput.value = card.getAttribute('data-value');
+      // 添加当前卡片的选中状态
+      this.classList.add('selected');
+      // 选中对应的 radio input
+      const radio = this.querySelector('input[type="radio"]');
+      radio.checked = true;
+      // 更新隐藏的 input 值
+      document.getElementById('selectedPlan').value = this.dataset.value;
+      
+      // 启用按钮
       startBtn.classList.remove('disabled');
-      startBtn.removeAttribute('aria-disabled');
+      startBtn.disabled = false;
     });
   });
   // 禁止未选中时点击

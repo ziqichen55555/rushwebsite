@@ -39,7 +39,7 @@ class CarSubscription(models.Model):
         Car,
         on_delete=models.CASCADE,
         verbose_name=_('Car'),
-        related_name='rushwebsite_carsubscriptions'
+        related_name='rushwebsite_carsubscriptions',
     )
     
     

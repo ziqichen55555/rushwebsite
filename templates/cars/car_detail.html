@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% block title %}{{ car.year }} {{ car.make }} {{ car.model }} - Rush Car Rental{% endblock %}
+{% block title %}{{ car.year }} {{ car.model.make.name }} {{ car.model.model_name }} - Rush Car Rental{% endblock %}
 
 {% block content %}
 <!-- Breadcrumb -->
@@ -9,7 +9,7 @@
             <ol class="breadcrumb mb-0">
                 <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
                 <li class="breadcrumb-item"><a href="{% url 'car_list' %}">Cars</a></li>
-                <li class="breadcrumb-item active" aria-current="page">{{ car.make }} {{ car.model }}</li>
+                <li class="breadcrumb-item active" aria-current="page">{{ car.model.make.name }} {{ car.model.model_name }}</li>
             </ol>
         </nav>
     </div>
@@ -21,9 +21,9 @@
             <!-- Car Images and Details -->
             <div class="col-lg-8">
                 <div class="card shadow-sm mb-4">
-                    <img src="{{ car.image_url }}" class="card-img-top" alt="{{ car.make }} {{ car.model }}">
+                    <img src="{{ car.image_url }}" class="card-img-top" alt="{{ car.model.make.name }} {{ car.model.model_name }}">
                     <div class="card-body">
-                        <h1 class="card-title">{{ car.year }} {{ car.make }} {{ car.model }}</h1>
+                        <h1 class="card-title">{{ car.year }} {{ car.model.make.name }} {{ car.model.model_name }}</h1>
                         <p class="card-text text-muted mb-3">{{ car.category.name }}</p>
                         
                         <div class="row mb-4">
@@ -90,7 +90,7 @@
                         </div>
                         
                         <h5 class="border-bottom pb-2 mb-3 mt-4">Description</h5>
-                        <p>Experience the thrill of driving the {{ car.year }} {{ car.make }} {{ car.model }}. This {{ car.category.name|lower }} offers exceptional performance, comfort, and style for your journey.</p>
+                        <p>Experience the thrill of driving the {{ car.year }} {{ car.model.make.name }} {{ car.model.model_name }}. This {{ car.category.name|lower }} offers exceptional performance, comfort, and style for your journey.</p>
                     </div>
                 </div>
             </div>

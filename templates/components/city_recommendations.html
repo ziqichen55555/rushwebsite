@@ -16,30 +16,6 @@
                 </div>
             </div>
             {% empty %}
-            <div class="col-12">
-                <div class="card">
-                    <div class="card-body text-center">
-                        <h5>Explore Australia's Best Destinations</h5>
-                        <div class="row mt-4">
-                            <div class="col-md-4 mb-3">
-                                <h6>Melbourne</h6>
-                                <p class="text-muted small">Victoria's coastal capital with rich culture and arts scene</p>
-                                <a href="{% url 'car_list' %}?pickup_location=Melbourne" class="btn btn-sm btn-outline-warning">Find Cars</a>
-                            </div>
-                            <div class="col-md-4 mb-3">
-                                <h6>Sydney</h6>
-                                <p class="text-muted small">Stunning harbor city with iconic landmarks and beaches</p>
-                                <a href="{% url 'car_list' %}?pickup_location=Sydney" class="btn btn-sm btn-outline-warning">Find Cars</a>
-                            </div>
-                            <div class="col-md-4 mb-3">
-                                <h6>Brisbane</h6>
-                                <p class="text-muted small">Queensland's capital with beautiful river and sunny weather</p>
-                                <a href="{% url 'car_list' %}?pickup_location=Brisbane" class="btn btn-sm btn-outline-warning">Find Cars</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
             {% endfor %}
         </div>
     </div>

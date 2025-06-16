@@ -139,6 +139,7 @@ class VehicleFeature(models.Model):
         db_table = 'cars_vehiclefeature'
 
 
+
 # 保留旧模型以兼容现有代码，但将它们链接到新模型
 class CarCategory(models.Model):
     name = models.CharField(max_length=50)
@@ -213,6 +214,7 @@ class Country(AuditModelMixin):
         ordering = ['name']
         verbose_name_plural = "Countries"
         managed = False
+        db_table = 'app_country'
     def __str__(self):
         return self.name
 
@@ -227,6 +229,7 @@ class StateProvince(AuditModelMixin):
     class Meta:
         ordering = ['country', 'name']
         verbose_name_plural = "States/Provinces"
+        db_table = 'app_stateprovince'
         managed = False
     def __str__(self):
         return self.name
@@ -238,6 +241,7 @@ class City(AuditModelMixin):
     class Meta:
         ordering = ['state', 'name']
         verbose_name_plural = "Cities"
+        db_table = 'app_city'
         managed = False
     def __str__(self):
         return self.name
@@ -249,6 +253,7 @@ class Airport(AuditModelMixin):
 
     class Meta:
         ordering = ['city', 'name']
+        db_table = 'app_airport'
         managed = False
     def __str__(self):
         return self.name
@@ -258,6 +263,7 @@ class MasterLocation(AuditModelMixin):
 
     class Meta:
         ordering = ['master_location_name']
+        db_table = 'app_masterlocation'
         managed = False
     def __str__(self):
         return self.master_location_name
@@ -294,6 +300,7 @@ class Location(AuditModelMixin):
 
     class Meta:
         ordering = ['location_name']
+        db_table = 'app_location'
         managed = False 
     def __str__(self):
         return self.location_name
@@ -312,7 +319,6 @@ class Car(AuditModelMixin):
     category = models.ForeignKey(VehicleCategory, on_delete=models.CASCADE, null=True, blank=True, related_name='cars', verbose_name=('Category'))
     vehicle_type = models.ForeignKey(VehicleType, on_delete=models.SET_NULL, null=True, blank=True, related_name='cars', verbose_name=('Vehicle Type'))
     year = models.PositiveIntegerField(blank=True, null=True, verbose_name=('Year'))
-    make = models.ForeignKey(VehicleMake, on_delete=models.CASCADE, null=True, blank=True, related_name='cars', verbose_name=('Make'))
     # 位置信息
     owning_location = models.ForeignKey(Location, on_delete=models.SET_NULL, null=True, blank=True, related_name='owned_cars', verbose_name=('Owning Location'))
     currently_located = models.ForeignKey(Location, on_delete=models.SET_NULL, null=True, blank=True, related_name='current_cars', verbose_name=('Currently Located'))
@@ -345,6 +351,7 @@ class Car(AuditModelMixin):
         verbose_name = ('Car')
         verbose_name_plural = ('Cars')
         managed = False
+        db_table = 'app_car'
     def __str__(self):
         if self.registration_no:
             return f"{self.registration_no} ({self.model})"

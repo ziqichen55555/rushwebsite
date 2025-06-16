@@ -39,18 +39,28 @@ def about_us(request):
     
 def subscription(request):
     # 获取所有订阅车辆数据
-    subscriptions = CarSubscription.objects.all()
-    models = VehicleModel.objects.all()
-    # 获取所有位置
-    locations = Location.objects.all()
-    # 获取所有车辆类别
-    car_categories = VehicleCategory.objects.all()
-    # 获取所有燃料类型
-    fuel_types = VehicleFuel.objects.all()
-    # 获取所有车辆品牌
-    makes = VehicleMake.objects.all()
-    # 获取所有座位数
-    seat_numbers = CarSubscription.objects.values_list('seat_number', flat=True).distinct()
+    subscriptions = CarSubscription.objects.select_related(
+        'car__model__make',
+        'car__fuel_type',
+        'car__category',
+        'car__currently_located',
+    ).all()
+
+    # 获取去重后的选项数据
+    locations = list(set(
+    CarSubscription.objects.filter(car__currently_located__isnull=False)
+    .values_list('car__currently_located__location_name', flat=True)
+    ))
+    car_categories = list(set([c for c in VehicleCategory.objects.values_list('name', flat=True) if c]))
+    fuel_types = list(set([f for f in VehicleFuel.objects.values_list('fuel_type', flat=True) if f]))
+    makes = list(set([m for m in VehicleMake.objects.values_list('name', flat=True) if m]))
+    seat_numbers = list(set([s for s in CarSubscription.objects.values_list('seat_number', flat=True) if s]))
+    # 排序
+    locations.sort()
+    car_categories.sort()
+    fuel_types.sort()
+    makes.sort()
+    seat_numbers.sort()
     # 获取筛选参数
     selected_location = request.GET.get('pickup_location', '')
     selected_make = request.GET.get('make', '')
@@ -68,43 +78,46 @@ def subscription(request):
     if selected_car_category:
         subscriptions = subscriptions.filter(car__category__name=selected_car_category)
     if selected_seat_number:
-        subscriptions = subscriptions.filter(car__seats=selected_seat_number)
+        subscriptions = subscriptions.filter(seat_number=selected_seat_number)  
+
 
     context = {
         'subscriptions': subscriptions,
-        'models': models,
         'locations': locations,
         'car_categories': car_categories,
         'fuel_types': fuel_types,
         'makes': makes,
         'seat_numbers': seat_numbers,
         'selected_location': selected_location,
+        'selected_make': selected_make,
         'selected_fuel_type': selected_fuel_type,
         'selected_car_category': selected_car_category,
         'selected_seat_number': selected_seat_number,
-        'selected_make': selected_make,
     }
     return render(request, 'pages/subscription.html', context)
 
-def subscription_car_detail(request, make, model):
+def subscription_car_detail(request,subscription_id):
     """Subscription car detail page"""
     # Get the car subscription based on make and model
     car = get_object_or_404(
-        CarSubscription.objects.select_related('model__make', 'vehicle_category', 'fuel_type'),
-        model__make__name__iexact=make,
-        model__model_name__iexact=model
-    )
+        CarSubscription.objects.select_related('car__model__make', 'car__fuel_type', 'car__category'),
+        pk=subscription_id
+   )
     
     context = {
         'car': {
-            'make': car.model.make.name,
-            'model': car.model.model_name,
-            'type': car.fuel_type.name,
-            'image_url': car.image1.url if car.image1 else '',
-            'location': car.location.name,
+            'make': car.car.model.make.name,
+            'model': car.car.model.model_name,
+            'type': car.car.fuel_type.fuel_type if car.car.fuel_type else '',
+            'image1': car.image1.url if car.image1 else '',
+            'image2': car.image2.url if car.image2 else '',
+            'image3': car.image3.url if car.image3 else '',
+            'image4': car.image4.url if car.image4 else '',
+            'image5': car.image5.url if car.image5 else '',
+            'location': car.car.currently_located.location_name if car.car.currently_located else '',
             'description': car.description,
-            'year': car.year,
-            'mileage': car.mileage,
+            'year': car.car.year,
+            'mileage': car.car.current_kms,
             'status': car.status,
             'price_3_months': car.subscription_plan1,
             'price_6_months': car.subscription_plan2,

@@ -6,6 +6,14 @@
 
 {% block extra_css %}
 <style>
+    .rush-yellow-badge {
+    background-color: var(--rush-yellow) !important;
+    color: #000;
+    font-weight: 600;
+    font-size: 0.9rem;
+    border-radius: 0.5rem;
+    padding: 0.25rem 0.6rem;
+    }
     .subscription-header {
         background-color: #f8f9fa;
         padding: 60px 0 30px;
@@ -61,6 +69,8 @@
     
     .subscription-card .position-relative {
         flex: 0 0 auto;
+        position: relative;
+        height: 200px;
     }
     
     .subscription-card .p-3 {
@@ -83,10 +93,14 @@
     
     .subscription-image {
         width: 100%;
-        height: 200px;
-        aspect-ratio: 16/9;
+        height: 100%;
         object-fit: cover;
         display: block;
+    }
+    
+    .subscription-image.d-flex {
+        background-color: #f8f9fa;
+        height: 100%;
     }
     
     .availability-badge {
@@ -274,64 +288,83 @@
 </section>
 
 <!-- Filter Section -->
-<section class="container mb-10">
-  <form method="get" class="row g-4 align-items-end justify-content-center" id="filterForm">
-    <div class="col-md-2">
-      <label for="pickup_location" class="form-label">Location</label>
-      <select name="pickup_location" id="pickup_location" class="form-select">
-        <option value="">All</option>
-        {% for loc in locations %}
-          <option value="{{ loc.name }}" {% if loc.name == selected_location %}selected{% endif %}>{{ loc.name }}</option>
-        {% endfor %}
-      </select>
+<div class="container mb-4">
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <form method="get" id="filterForm">
+                <div class="row g-3">
+                    <!-- Location Filter -->
+                    <div class="col-md">
+                        <select class="form-select" name="pickup_location" id="pickup_location">
+                            <option value="">All Locations</option>
+                            {% for location in locations %}
+                            <option value="{{ location }}" {% if selected_location == location %}selected{% endif %}>
+                                {{ location }}
+                            </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    
+                    <!-- Make Filter -->
+                    <div class="col-md">
+                        <select class="form-select" name="make" id="make">
+                            <option value="">All Makes</option>
+                            {% for make in makes %}
+                            <option value="{{ make }}" {% if selected_make == make %}selected{% endif %}>
+                                {{ make }}
+                            </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    
+                    <!-- Fuel Type Filter -->
+                    <div class="col-md">
+                        <select class="form-select" name="fuel_type" id="fuel_type">
+                            <option value="">All Fuel Types</option>
+                            {% for fuel_type in fuel_types %}
+                            <option value="{{ fuel_type }}" {% if selected_fuel_type == fuel_type %}selected{% endif %}>
+                                {{ fuel_type }}
+                            </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    
+                    <!-- Category Filter -->
+                    <div class="col-md">
+                        <select class="form-select" name="car_category" id="car_category">
+                            <option value="">All Categories</option>
+                            {% for category in car_categories %}
+                            <option value="{{ category }}" {% if selected_car_category == category %}selected{% endif %}>
+                                {{ category }}
+                            </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    
+                    <!-- Seat Number Filter -->
+                    <div class="col-md">
+                        <select class="form-select" name="seat_number" id="seat_number">
+                            <option value="">All Seats</option>
+                            {% for seat in seat_numbers %}
+                            <option value="{{ seat }}" {% if selected_seat_number == seat|stringformat:"s" %}selected{% endif %}>
+                                {{ seat }} Seats
+                            </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+            </form>
+        </div>
     </div>
-    <div class="col-md-2">
-      <label for="make" class="form-label">Brand</label>
-      <select name="make" id="make" class="form-select">
-        <option value="">All</option>
-        {% for make in makes %}
-          <option value="{{ make.name }}" {% if make.name == selected_make %}selected{% endif %}>{{ make.name }}</option>
-        {% endfor %}
-      </select>
-    </div>
-    <div class="col-md-2">
-      <label for="fuel_type" class="form-label">Fuel Type</label>
-      <select name="fuel_type" id="fuel_type" class="form-select">
-        <option value="">All</option>
-        {% for fuel in fuel_types %}
-          <option value="{{ fuel.fuel_type }}" {% if fuel.fuel_type == selected_fuel_type %}selected{% endif %}>{{ fuel.fuel_type }}</option>
-        {% endfor %}
-      </select>
-    </div>
-    <div class="col-md-2">
-      <label for="car_category" class="form-label">Category</label>
-      <select name="car_category" id="car_category" class="form-select">
-        <option value="">All</option>
-        {% for cat in car_categories %}
-          <option value="{{ cat.name }}" {% if cat.name == selected_car_category %}selected{% endif %}>{{ cat.name }}</option>
-        {% endfor %}
-      </select>
-    </div>
-    <div class="col-md-2">
-      <label for="seat_number" class="form-label">Seats</label>
-      <select name="seat_number" id="seat_number" class="form-select">
-        <option value="">All</option>
-        {% for seat in seat_numbers %}
-          <option value="{{ seat }}" {% if seat|stringformat:'s' == selected_seat_number|stringformat:'s' %}selected{% endif %}>{{ seat }}</option>
-        {% endfor %}
-      </select>
-    </div>
-  </form>
-</section>
+</div>
+
 <script>
-  document.addEventListener('DOMContentLoaded', function() {
-    const form = document.getElementById('filterForm');
-    form.querySelectorAll('select').forEach(function(select) {
-      select.addEventListener('change', function() {
-        form.submit();
-      });
+    // 自动提交表单当选择改变时
+    document.querySelectorAll('select').forEach(select => {
+        select.addEventListener('change', () => {
+            document.getElementById('filterForm').submit();
+        });
     });
-  });
 </script>
 
 <!-- Subscription Cars Section -->
@@ -348,7 +381,7 @@
                         <div class="great-value-badge text-white bg-danger">Unavailable</div>
                         {% endif %}
                         {% if subscription.image1 %}
-                            <img src="{{ subscription.image1.url }}" alt="{{ subscription.car.make|default:'Car' }} {{ subscription.car.model|default:'' }}" class="subscription-image">
+                            <img src="{{ subscription.image1.url }}" alt="Car Image" class="subscription-image">
                         {% else %}
                             <div class="subscription-image d-flex justify-content-center align-items-center text-muted">
                                 No Image
@@ -356,16 +389,24 @@
                         {% endif %}
                     </div>
                     <div class="p-3">
-                        <p class="vehicle-make"><i class="fas fa-car"></i> {{ subscription.car.model.make|default:"Unknown Make" }}</p>
-                        <h3 class="vehicle-model">{{ subscription.car.model|default:"Unknown Model" }}</h3>
-                        <p class="price-label">Weekly Rate from </p>
-                        <h3 class="price-value">${{ subscription.weekly_price3 }}</h3>
-                        {% if subscription.car.make and subscription.car.model %}
-                        <a href="{% url 'subscription_car_detail' make=subscription.car.make|lower model=subscription.car.model|lower %}" class="btn btn-primary w-100">View Details</a>
+                        <p class="vehicle-make">
+                            <i class="fas fa-car"></i> {{ subscription.car.model.make.name|default:"Unknown Make" }}
+                        </p>
+                        <h3 class="vehicle-model">
+                            {{ subscription.car.model.model_name|default:"Unknown Model" }}
+                        </h3>
+                        <p class="price-label">Weekly Rate from</p>
+                        <h3 class="price-value">${{ subscription.subscription_plan3 }} <span class="badge rush-yellow-badge">Great Value</span></h3>
+                    
+                        {% if subscription.car.model.make.name and subscription.car.model.model_name %}
+                            <a href="{% url 'subscription_car_detail' subscription_id=subscription.id %}" class="btn btn-primary w-100">
+                                View Details
+                            </a>
                         {% else %}
-                        <button class="btn btn-secondary w-100">View more details</button>
+                            <button class="btn btn-secondary w-100">View more details</button>
                         {% endif %}
                     </div>
+                    
                 </div>
             </div>
             {% empty %}
